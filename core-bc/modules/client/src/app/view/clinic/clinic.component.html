@@ -1,0 +1,18 @@
+<div *ngIf="clinic">
+  <h1>{{clinic.name}}</h1>
+
+  <ul>
+    <li *ngFor="let unit of clinic.units">
+      <a [routerLink]="unit.id">{{unit.name}}</a>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!clinic && !error">
+  Hämtar...
+  <!--<div class="alert">Oops. Här fanns inget...</div>-->
+</div>
+
+<div *ngIf="error">
+  <div class="alert">{{error}}</div>
+</div>

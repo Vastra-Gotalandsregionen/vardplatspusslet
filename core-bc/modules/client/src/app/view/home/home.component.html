@@ -1,0 +1,7 @@
+<h1>Välj klinik</h1>
+
+<ul>
+  <li *ngFor="let clinic of clinics">
+    <a [routerLink]="clinic.id">{{clinic.name}}</a>
+  </li>
+</ul>

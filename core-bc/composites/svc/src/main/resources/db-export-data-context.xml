@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+>
+
+  <!-- Uses by default transaction bean with name transactionManager -->
+  <tx:annotation-driven transaction-manager="exportTransactionManager"/>
+
+  <bean id="exportTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="exportEntityManagerFactory"/>
+  </bean>
+
+  <bean id="exportEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="exportDataSource"/>
+    <!--<property name="dataSource" ref="dataSourceTest" />-->
+    <!--<property name="dataSource" ref="dataSourceStage" />-->
+    <!--<property name="dataSource" ref="dataSourceProd" />-->
+    <property name="persistenceXmlLocation" value="classpath:META-INF/persistence-for-data-export.xml"></property>
+    <property name="persistenceUnitName" value="export"/>
+    <property name="jpaVendorAdapter" ref="exportJpaVendor"/>
+    <!--<property name="jpaPropertyMap">
+        <map>
+            <entry key="hibernate.format_sql" value="false" />
+        </map>
+    </property>-->
+    <property name="jpaPropertyMap">
+      <map>
+        <!--<entry key="hibernate.format_sql" value="true" />-->
+        <!--<entry key="eclipselink.weaving" value="false"/>-->
+        <!--<entry key="eclipselink.target-database" value="HSQL"/>-->
+      </map>
+    </property>
+  </bean>
+
+  <bean id="exportJpaVendor" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+    <!--<property name="database" value="POSTGRESQL" />-->
+    <property name="databasePlatform" value="${jdbc.export.database.platform}"/>
+    <property name="generateDdl" value="true"/>
+    <property name="showSql" value="false"/>
+  </bean>
+
+  <bean id="exportDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="${jdbc.export.driver}"/>
+    <property name="url" value="${jdbc.export.url}"/>
+    <property name="username" value="${jdbc.export.user}"/>
+    <property name="password" value="${jdbc.export.password}"/>
+  </bean>
+
+
+</beans>

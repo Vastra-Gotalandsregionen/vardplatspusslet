@@ -1,0 +1,25 @@
+<span>
+  <a routerLink="..">Upp</a>
+</span>
+
+<div *ngIf="unit">
+  <h1>{{unit.name}}</h1>
+
+  <table>
+    <thead>
+    <tr><td>Rum/säng</td></tr>
+    </thead>
+    <tr *ngFor="let bed of unit.beds">
+      <td>{{bed.label}}</td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="!unit && !error">
+  Hämtar...
+  <!--<div class="alert">Oops. Här fanns inget...</div>-->
+</div>
+
+<div *ngIf="error">
+  <div class="alert">{{error}}</div>
+</div>
