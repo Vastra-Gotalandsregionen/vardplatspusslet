@@ -46,6 +46,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/vgr-komponentkartan/assets/komponentkartan.scss",
               "src/styles.scss"
             ],
             "scripts": []

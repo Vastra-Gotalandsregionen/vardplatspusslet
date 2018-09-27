@@ -1,5 +1,6 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -26,7 +27,10 @@ public class Bed {
     @Column
     private String label;
 
-    @OneToOne
+    @Column
+    private Boolean occupied;
+
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Patient patient;
 
     public Bed() {
@@ -48,4 +52,19 @@ public class Bed {
         this.label = label;
     }
 
+    public Boolean getOccupied() {
+        return occupied;
+    }
+
+    public void setOccupied(Boolean occupied) {
+        this.occupied = occupied;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 }

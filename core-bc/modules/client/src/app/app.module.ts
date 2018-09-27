@@ -6,21 +6,35 @@ import {AppComponent} from './app.component';
 import {ClinicComponent} from './view/clinic/clinic.component';
 import {HomeComponent} from './view/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
-import { UnitComponent } from './view/unit/unit.component';
+import {UnitComponent} from './view/unit/unit.component';
+import {KomponentkartanModule} from "vgr-komponentkartan";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { ChevronRightComponent } from './elements/chevron-right/chevron-right.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AuthService} from "./service/auth.service";
+import {JwtHelper} from "angular2-jwt";
 
 @NgModule({
   declarations: [
     AppComponent,
     ClinicComponent,
     HomeComponent,
-    UnitComponent
+    UnitComponent,
+    ChevronRightComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
+    KomponentkartanModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    JwtHelper
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

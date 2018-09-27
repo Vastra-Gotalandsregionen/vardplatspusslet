@@ -28,23 +28,12 @@ public class InitService {
 
     @PostConstruct
     public void init() {
+
+        if (clinicRepository.findAll().size() > 0) {
+            return;
+        }
+
         Clinic clinic1 = new Clinic("kli1", "Klinik 1");
-
-        ArrayList<Bed> beds = new ArrayList<>();
-
-        Bed bed11 = new Bed();
-        bed11.setLabel("1:1");
-
-        Bed bed21 = new Bed();
-        bed21.setLabel("2:1");
-
-        beds.add(bed11);
-        beds.add(bed21);
-
-        bedRepository.save(bed11);
-        bedRepository.save(bed21);
-
-//        clinic1.getUnits().add(unit1);
 
         clinicRepository.save(clinic1);
 
@@ -52,8 +41,24 @@ public class InitService {
         unit1.setId("avd1");
         unit1.setName("Avdelning 1");
         unit1.setHasLeftDateFeature(true);
-        unit1.setBeds(beds);
         unit1.setClinic(clinic1);
+
+        Bed bed11 = new Bed();
+        bed11.setLabel("1:1");
+        bed11.setOccupied(false);
+
+        Bed bed21 = new Bed();
+        bed21.setLabel("2:1");
+        bed21.setOccupied(false);
+
+        ArrayList<Bed> beds = new ArrayList<>();
+        beds.add(bed11);
+        beds.add(bed21);
+
+        unit1.setBeds(beds);
+
+        bedRepository.save(bed11);
+        bedRepository.save(bed21);
 
         unitRepository.save(unit1);
     }

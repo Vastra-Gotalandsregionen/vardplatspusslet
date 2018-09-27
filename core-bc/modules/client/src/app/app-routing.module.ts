@@ -9,6 +9,10 @@ const routes: Routes = [
     path: '',
     children: [
       {
+        path: '',
+        component: HomeComponent
+      },
+      {
         path: ':id',
         component: ClinicComponent
       },
@@ -18,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        component: HomeComponent
+        redirectTo: '/'
       }
     ]
   }

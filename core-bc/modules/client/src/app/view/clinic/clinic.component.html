@@ -1,18 +1,27 @@
-<div *ngIf="clinic">
-  <h1>{{clinic.name}}</h1>
+<vgr-page>
+  <vgr-page-header>
+    <h1>{{clinic?.name}}</h1>
+  </vgr-page-header>
 
-  <ul>
-    <li *ngFor="let unit of clinic.units">
-      <a [routerLink]="unit.id">{{unit.name}}</a>
-    </li>
-  </ul>
-</div>
+  <vgr-page-body>
 
-<div *ngIf="!clinic && !error">
-  Hämtar...
-  <!--<div class="alert">Oops. Här fanns inget...</div>-->
-</div>
+    <vgr-page-block>
+      <div *ngIf="clinic">
 
-<div *ngIf="error">
-  <div class="alert">{{error}}</div>
-</div>
+        <ul>
+          <li *ngFor="let unit of clinic.units">
+            <a [routerLink]="unit.id">{{unit.name}}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="!clinic && !error">
+        <vgr-loader [small]="false"></vgr-loader>
+      </div>
+
+      <div *ngIf="error">
+        <div class="alert">{{error}}</div>
+      </div>
+    </vgr-page-block>
+  </vgr-page-body>
+</vgr-page>

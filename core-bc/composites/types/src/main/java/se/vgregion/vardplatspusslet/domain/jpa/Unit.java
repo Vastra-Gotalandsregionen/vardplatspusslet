@@ -2,6 +2,7 @@ package se.vgregion.vardplatspusslet.domain.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,8 +31,8 @@ public class Unit {
     private String name;
 
     @JsonIgnore
-    @OrderColumn
-    @OneToMany(fetch = FetchType.EAGER)
+    @OrderColumn(name = "order_")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Bed> beds = new ArrayList<>();
 
     @JsonIgnore

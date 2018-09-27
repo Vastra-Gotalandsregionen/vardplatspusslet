@@ -1,25 +1,59 @@
-<span>
-  <a routerLink="..">Upp</a>
-</span>
+<vgr-page>
 
-<div *ngIf="unit">
-  <h1>{{unit.name}}</h1>
+  <vgr-page-header>
+    <h1><a routerLink="..">{{unit?.clinic.name}}</a><app-chevron-right></app-chevron-right>{{unit?.name}}</h1>
+  </vgr-page-header>
 
-  <table>
-    <thead>
-    <tr><td>Rum/säng</td></tr>
-    </thead>
-    <tr *ngFor="let bed of unit.beds">
-      <td>{{bed.label}}</td>
-    </tr>
-  </table>
-</div>
+  <vgr-page-body>
 
-<div *ngIf="!unit && !error">
-  Hämtar...
-  <!--<div class="alert">Oops. Här fanns inget...</div>-->
-</div>
+    <vgr-page-block>
+      <form *ngIf="unit" [formGroup]="bedForm">
 
-<div *ngIf="error">
-  <div class="alert">{{error}}</div>
-</div>
+        <vgr-list [flexibleHeader]="true" >
+          <vgr-list-header>
+            <vgr-list-column-header width="5">Rum/säng</vgr-list-column-header>
+            <vgr-list-column-header width="5">Status</vgr-list-column-header>
+            <vgr-list-column-header width="5">Patient</vgr-list-column-header>
+          </vgr-list-header>
+
+          <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem>
+
+            <vgr-list-item-header >
+              <vgr-list-column width="5">{{bed.label}}</vgr-list-column>
+              <vgr-list-column width="5">{{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
+              <vgr-list-column width="5">{{bed.patient?.label}}</vgr-list-column>
+            </vgr-list-item-header>
+
+            <vgr-list-item-content [indentContent]="true">
+              <div>
+                <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
+              </div>
+              <div formGroupName="patient">
+                <div>Patient</div>
+                <input formControlName="label"/>
+              </div>
+              <div>
+                <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(theListItem)" (save)="save()"></vgr-save-cancel>
+              </div>
+            </vgr-list-item-content>
+
+          </vgr-list-item>
+        </vgr-list>
+      </form>
+
+      <div *ngIf="!unit && !error">
+        <vgr-loader [small]="false"></vgr-loader>
+      </div>
+
+      <div *ngIf="error">
+        <div class="alert">{{error}}</div>
+      </div>
+    </vgr-page-block>
+
+    <vgr-page-block>
+      <div>
+        {{bedForm.getRawValue() | json}}
+      </div>
+    </vgr-page-block>
+  </vgr-page-body>
+</vgr-page>
