@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
-import se.vgregion.vardplatspusslet.domain.json.ClinicDTO;
-import se.vgregion.vardplatspusslet.domain.json.UnitDTO;
-import se.vgregion.vardplatspusslet.domain.util.DTOUtil;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,34 +21,29 @@ public class ClinicController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    public List<ClinicDTO> getClinics() {
+    public List<Clinic> getClinics() {
 //         PageRequest pageRequest = new PageRequest(0, Integer.MAX_VALUE, new Sort(new Sort.Order("verksamhettext").ignoreCase()));
 
         List<Clinic> all = clinicRepository.findAll();
-        List<ClinicDTO> dtos = new ArrayList<>();
+        /*List<ClinicDTO> dtos = new ArrayList<>();
 
         for (Clinic clinic : all) {
             ClinicDTO clinicDTO = new ClinicDTO(clinic.getId(), clinic.getName());
             dtos.add(clinicDTO);
-        }
-        return dtos;
+        }*/
+        return all;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ClinicDTO getClinic(@PathVariable("id") String id) {
+    public Clinic getClinic(@PathVariable("id") String id) {
         Clinic clinic = clinicRepository.findOne(id);
 
-        ClinicDTO clinicDTO = new ClinicDTO(clinic.getId(), clinic.getName());
-
-        List<UnitDTO> unitDTOS = new ArrayList<>();
         for (Unit unit : clinic.getUnits()) {
-            unitDTOS.add(DTOUtil.toDTO(unit));
+            unit.setBeds(null); // Don't need these here. Also avoid lazy initialization exception on json serialization.
         }
 
-        clinicDTO.setUnits(unitDTOS);
-
-        return clinicDTO;
+       return clinic;
     }
 
 }

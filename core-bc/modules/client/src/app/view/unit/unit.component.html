@@ -1,7 +1,7 @@
 <vgr-page>
 
   <vgr-page-header>
-    <h1><a routerLink="..">{{unit?.clinic.name}}</a><app-chevron-right></app-chevron-right>{{unit?.name}}</h1>
+    <h1><a routerLink="..">{{clinic?.name}}</a><app-chevron-right></app-chevron-right>{{unit?.name}}</h1>
   </vgr-page-header>
 
   <vgr-page-body>
@@ -25,18 +25,49 @@
             </vgr-list-item-header>
 
             <vgr-list-item-content [indentContent]="true">
+
               <div>
                 <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
               </div>
+
               <div formGroupName="patient">
                 <div>Patient</div>
                 <input formControlName="label"/>
               </div>
-              <div>
+
+              <div class="clearfix button-row save-cancel-delete">
                 <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(theListItem)" (save)="save()"></vgr-save-cancel>
+                <vgr-button class="error" (click)="openDeleteModel(bed)">Radera</vgr-button>
               </div>
+
             </vgr-list-item-content>
 
+          </vgr-list-item>
+
+          <vgr-list-item (expandedChanged)="setCurrentBed($event, null)" #addListItem>
+            <vgr-list-item-header >
+              <vgr-list-column width="5"><div class="add-bed vgr-icon-plus">Lägg till säng</div></vgr-list-column>
+            </vgr-list-item-header>
+
+            <vgr-list-item-content [indentContent]="true">
+              <div>
+                <div>Benämning</div>
+                <input formControlName="label" />
+              </div>
+
+              <div>
+                <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
+              </div>
+
+              <div formGroupName="patient">
+                <div>Patient</div>
+                <input formControlName="label"/>
+              </div>
+
+              <div class="clearfix button-row">
+                <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(addListItem)" (save)="save()"></vgr-save-cancel>
+              </div>
+            </vgr-list-item-content>
           </vgr-list-item>
         </vgr-list>
       </form>
@@ -50,10 +81,22 @@
       </div>
     </vgr-page-block>
 
-    <vgr-page-block>
+ <!--   <vgr-page-block>
       <div>
-        {{bedForm.getRawValue() | json}}
+        <pre>{{bedForm?.getRawValue() | json}}</pre>
       </div>
-    </vgr-page-block>
+    </vgr-page-block>-->
   </vgr-page-body>
+
 </vgr-page>
+
+<vgr-modal id="deleteModal">
+  <vgr-modal-header>Radera?</vgr-modal-header>
+  <vgr-modal-content>
+    Är du säker på att du vill radera <em>{{bedForDeletion?.label}}</em>?
+  </vgr-modal-content>
+  <vgr-modal-footer>
+    <vgr-button [secondary]="false" default="true" (click)="confirmDelete()" >Radera</vgr-button>
+    <vgr-button [secondary]="true" (click)="modalService.closeDialog('deleteModal')">Avbryt</vgr-button>
+  </vgr-modal-footer>
+</vgr-modal>

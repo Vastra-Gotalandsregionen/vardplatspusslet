@@ -8,8 +8,8 @@ import {HomeComponent} from './view/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
 import {UnitComponent} from './view/unit/unit.component';
 import {KomponentkartanModule} from "vgr-komponentkartan";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { ChevronRightComponent } from './elements/chevron-right/chevron-right.component';
+import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {ChevronRightComponent} from './elements/chevron-right/chevron-right.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./service/auth.service";
 import {JwtHelper} from "angular2-jwt";
@@ -24,7 +24,7 @@ import {JwtHelper} from "angular2-jwt";
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
+    NoopAnimationsModule,
     HttpClientModule,
     KomponentkartanModule,
     FormsModule,

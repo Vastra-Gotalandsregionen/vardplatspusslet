@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
-import {ListItemComponent} from "vgr-komponentkartan";
+import {ListItemComponent, ModalService} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {Patient} from "../../domain/patient";
+import {Clinic} from "../../domain/clinic";
 
 @Component({
   selector: 'app-unit',
@@ -15,24 +16,33 @@ import {Patient} from "../../domain/patient";
 export class UnitComponent implements OnInit {
 
   unit: Unit;
+  clinic: Clinic;
 
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
 
   bedForm: FormGroup;
+  bedForDeletion: Bed;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              protected modalService: ModalService) { }
 
   ngOnInit() {
-    this.initForm(null);
 
     this.route.params.subscribe(params => {
 
-      this.http.get<Unit>('/api/unit/' + params.clinicId + '/' + params.id).subscribe(unit => {
+      let clinicId = params.clinicId;
+
+      this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
+        this.clinic = clinic;
+      });
+
+      this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id).subscribe(unit => {
         if (unit) {
           this.unit = unit;
+          this.initForm(null);
         } else {
           this.error = this.notFoundText;
         }
@@ -56,7 +66,6 @@ export class UnitComponent implements OnInit {
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
-      clinic: [bed.clinic],
       label: [bed.label],
       patient: this.formBuilder.group({
         id: [bed.patient ? bed.patient.id : null],
@@ -66,7 +75,10 @@ export class UnitComponent implements OnInit {
   }
 
   setCurrentBed(event: any, bed: Bed) {
-    this.initForm(bed);
+    if (event) {
+      // Then the row is expanded and not collapsed.
+      this.initForm(bed);
+    }
   }
 
   save() {
@@ -81,7 +93,7 @@ export class UnitComponent implements OnInit {
     bed.patient.id = bedModel.patient.id;
     bed.patient.label = bedModel.patient.label;
 
-    this.http.put('/api/bed', bed)
+    this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {
         this.ngOnInit();
       });
@@ -91,4 +103,16 @@ export class UnitComponent implements OnInit {
     element.setExpandOrCollapsed();
   }
 
+  openDeleteModel(bed: Bed) {
+    this.bedForDeletion = bed;
+    this.modalService.openDialog('deleteModal');
+  }
+
+  confirmDelete() {
+    this.http.delete('/api/bed/'  + this.clinic.id + '/' + this.unit.id + '/' + this.bedForDeletion.id)
+      .subscribe(() => {
+        this.modalService.closeDialog('deleteModal');
+        this.ngOnInit();
+      }); // todo error handling
+  }
 }

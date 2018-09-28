@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/vgr-komponentkartan/assets/partials/_settings.colors.scss";
+
+vgr-button.error .text-button {
+  background-color: $primary-color--error;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.button-row {
+  margin-top: 24px;
+
+  &.save-cancel-delete {
+    vgr-save-cancel {
+      float: left;
+    }
+
+    .error {
+      float: right;
+    }
+  }
+}
+
+vgr-list-item.list-item.list-item--expanded:not(.list-item--compact) {
+  //box-shadow: 3px 3px 9px 0 rgba(0, 0, 0, 0.5);
+  margin-top: 2px;
+  margin-bottom: 0;
+}

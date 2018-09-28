@@ -55,10 +55,12 @@ public class InitService {
         beds.add(bed11);
         beds.add(bed21);
 
-        unit1.setBeds(beds);
+        unitRepository.save(unit1);
 
         bedRepository.save(bed11);
         bedRepository.save(bed21);
+
+        unit1.setBeds(beds);
 
         unitRepository.save(unit1);
     }

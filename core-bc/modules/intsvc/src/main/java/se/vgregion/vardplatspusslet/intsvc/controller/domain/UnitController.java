@@ -8,13 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
-import se.vgregion.vardplatspusslet.domain.json.UnitDTO;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 
 import java.util.List;
-
-import static se.vgregion.vardplatspusslet.domain.util.DTOUtil.toDTO;
 
 @Controller
 @RequestMapping("/unit")
@@ -34,14 +31,11 @@ public class UnitController {
 
     @RequestMapping(value = "/{clinicId}/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public UnitDTO getVardform(@PathVariable("clinicId") String clinicId, @PathVariable("id") String id) {
+    public Unit getUnit(@PathVariable("clinicId") String clinicId, @PathVariable("id") String id) {
         Clinic clinic = clinicRepository.getOne(clinicId);
         Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(id, clinic);
 
-        Clinic unitClinic = unit.getClinic();
-        unitClinic.getUnits().clear(); // To avoid circular JSON
-
-        return toDTO(unit);
+        return unit;
     }
 
 }

@@ -1,5 +1,6 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -19,20 +22,21 @@ import java.util.List;
  */
 @Entity
 @Table(name = "unit")
+@NamedEntityGraph(name = "Unit.beds", attributeNodes = @NamedAttributeNode("beds"))
 public class Unit {
 
     @Id
     private String id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     private Clinic clinic;
 
     @Column
     private String name;
 
-    @JsonIgnore
     @OrderColumn(name = "order_")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Bed> beds = new ArrayList<>();
 
     @JsonIgnore
