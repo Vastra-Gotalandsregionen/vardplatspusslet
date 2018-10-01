@@ -47,6 +47,10 @@ export class AppComponent {
     return this.authService.isAuthenticated();
   }
 
+  get admin() {
+    return this.authService.isAdmin();
+  }
+
   logout() {
     this.authService.resetAuth();
   }

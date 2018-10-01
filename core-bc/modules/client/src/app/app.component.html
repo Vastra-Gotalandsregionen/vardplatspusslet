@@ -3,8 +3,10 @@
 
   <vgr-sidebar-menu>
     <vgr-menu title="Meny">
-      <vgr-menu-item (click)="modalService.openDialog('loginModal')" text="Logga in" *ngIf="!isLoggedIn()"></vgr-menu-item>
-      <vgr-menu-item (click)="logout()" text="Logga ut" *ngIf="isLoggedIn()"></vgr-menu-item>
+      <vgr-menu-item link="/" text="Hem"></vgr-menu-item>
+      <vgr-menu-item link="/admin" text="Administration" *ngIf="admin" ></vgr-menu-item>
+      <div class="menu__item" *ngIf="!isLoggedIn()"><a (click)="modalService.openDialog('loginModal')">Logga in</a></div>
+      <vgr-menu-item (click)="logout()" link="logout" text="Logga ut" *ngIf="isLoggedIn()"></vgr-menu-item>
     </vgr-menu>
   </vgr-sidebar-menu>
 

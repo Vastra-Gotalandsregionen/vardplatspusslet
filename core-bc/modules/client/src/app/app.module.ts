@@ -13,6 +13,7 @@ import {ChevronRightComponent} from './elements/chevron-right/chevron-right.comp
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./service/auth.service";
 import {JwtHelper} from "angular2-jwt";
+import { AdminComponent } from './view/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {JwtHelper} from "angular2-jwt";
     ClinicComponent,
     HomeComponent,
     UnitComponent,
-    ChevronRightComponent
+    ChevronRightComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

@@ -26,7 +26,13 @@ public class UnitController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public List<Unit> getUnits() {
-        return unitRepository.findAll();
+        List<Unit> all = unitRepository.findAll();
+
+        for (Unit unit : all) {
+            unit.setBeds(null);
+        }
+
+        return all;
     }
 
     @RequestMapping(value = "/{clinicId}/{id}", method = RequestMethod.GET)
