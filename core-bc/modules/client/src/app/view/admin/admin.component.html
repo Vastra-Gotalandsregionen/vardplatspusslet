@@ -3,94 +3,10 @@
 
   <vgr-page-body>
     <vgr-page-block>
-      <!-- <vgr-panel-container>
 
-         <vgr-panel [width]="6" themecolor="green">-->
-      <h2 style="margin-bottom: 16px">Kliniker</h2>
-
-      <vgr-list [flexibleHeader]="true">
-        <vgr-list-header>
-          <vgr-list-column-header>
-          </vgr-list-column-header>
-        </vgr-list-header>
-
-        <vgr-list-item *ngFor="let clinic of clinics" (expandedChanged)="setCurrentClinic($event, clinic)" #theListItem>
-          <vgr-list-item-header>
-            <vgr-list-column [width]="3">{{clinic.id}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{clinic.name}}</vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content>
-            <form [formGroup]="clinicForm">
-              <div>Namn:</div>
-              <input formControlName="name" name="clinicName"/>
-
-              <vgr-save-cancel (save)="saveClinic()" (cancel)="theListItem.setExpandOrCollapsed()" [hideLock]="true"></vgr-save-cancel>
-            </form>
-          </vgr-list-item-content>
-        </vgr-list-item>
-      </vgr-list>
     </vgr-page-block>
     <vgr-page-block>
-      <!-- <vgr-panel-container>
 
-         <vgr-panel [width]="6" themecolor="green">-->
-      <h2 style="margin-bottom: 16px">Avdelningar</h2>
-
-      <vgr-list [flexibleHeader]="true">
-        <vgr-list-header>
-        </vgr-list-header>
-
-        <vgr-list-item *ngFor="let unit of units" (expandedChanged)="setCurrentUnit($event, unit)" #theListItem>
-          <vgr-list-item-header>
-            <vgr-list-column [width]="3">{{unit.id}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{unit.name}}</vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content>
-            <form [formGroup]="unitForm">
-              <vgr-panel-container>
-
-                <vgr-panel [width]="6" [noborder]="true">
-                  <div>Namn:</div>
-                  <input formControlName="name" name="unitName"/>
-                </vgr-panel>
-
-                <vgr-panel [width]="6" [noborder]="true">
-                  <label>Klinik:</label>
-                  <vgr-dropdown [items]="clinicsDropdownItems"></vgr-dropdown>
-                </vgr-panel>
-
-              </vgr-panel-container>
-
-
-
-              <vgr-card>
-                <!--<vgr-card-header>
-                  &lt;!&ndash;<vgr-save-cancel class="flex-right" [secondary]="true" (unlock)="unlocked = true"
-                                   (save)="unlocked = false" (cancel)="unlocked = false"></vgr-save-cancel>&ndash;&gt;
-                </vgr-card-header>-->
-                <vgr-card-column>
-                  <vgr-card-section [expanded]="true" [title]="'Funktionsval'" [readonly]="false">
-                    <vgr-title-value-layout>
-                      <vgr-checkbox label="Gick hem"></vgr-checkbox>
-                      <vgr-checkbox label="Annat"></vgr-checkbox>
-                    </vgr-title-value-layout>
-                  </vgr-card-section>
-                </vgr-card-column>
-
-                <vgr-card-column>
-                  <vgr-card-section [expanded]="false" [title]="'Rubrik'" [subtitle]="'Övrig information'">
-                    <span>Innehåll</span>
-                  </vgr-card-section>
-                </vgr-card-column>
-              </vgr-card>
-
-              <vgr-save-cancel (save)="saveClinic()" (cancel)="theListItem.setExpandOrCollapsed()" [hideLock]="true"></vgr-save-cancel>
-            </form>
-          </vgr-list-item-content>
-        </vgr-list-item>
-      </vgr-list>
     </vgr-page-block>
 
     <vgr-page-block>

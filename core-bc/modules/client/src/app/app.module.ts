@@ -14,6 +14,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./service/auth.service";
 import {JwtHelper} from "angular2-jwt";
 import { AdminComponent } from './view/admin/admin.component';
+import { ClinicsAdminComponent } from './view/admin/clinics-admin/clinics-admin.component';
+import { UnitsAdminComponent } from './view/admin/units-admin/units-admin.component';
+import { DeleteModalComponent } from './elements/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { AdminComponent } from './view/admin/admin.component';
     HomeComponent,
     UnitComponent,
     ChevronRightComponent,
-    AdminComponent
+    AdminComponent,
+    ClinicsAdminComponent,
+    UnitsAdminComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,

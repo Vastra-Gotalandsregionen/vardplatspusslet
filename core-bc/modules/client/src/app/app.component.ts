@@ -15,7 +15,7 @@ export class AppComponent {
   userId: string;
   password: string;
 
-  constructor(protected modalService: ModalService,
+  constructor(public modalService: ModalService,
               protected http: HttpClient,
               protected authService: AuthService) {}
 

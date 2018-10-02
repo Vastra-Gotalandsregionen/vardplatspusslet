@@ -1,0 +1,134 @@
+<vgr-page>
+  <vgr-page-header><h1>Administration</h1></vgr-page-header>
+
+  <vgr-page-body>
+    <vgr-page-block>
+      <h2 style="margin-bottom: 16px">Avdelningar</h2>
+
+      <vgr-list [flexibleHeader]="true">
+        <vgr-list-header>
+        </vgr-list-header>
+
+        <vgr-list-item *ngFor="let unit of units" (expandedChanged)="setCurrentUnit($event, unit)" #theListItem>
+          <vgr-list-item-header>
+            <vgr-list-column [width]="3">{{unit.id}}</vgr-list-column>
+            <vgr-list-column [width]="4">{{unit.name}}</vgr-list-column>
+            <vgr-list-column [width]="4">{{unit.clinic?.name}}</vgr-list-column>
+          </vgr-list-item-header>
+
+          <vgr-list-item-content>
+            <form [formGroup]="unitForm">
+              <vgr-panel-container>
+
+                <vgr-panel [width]="6" [noborder]="true">
+
+                  <div>Namn:</div>
+                  <vgr-input formControlName="name"></vgr-input>
+
+                </vgr-panel>
+
+                <vgr-panel [width]="6" [noborder]="true">
+
+                  <div>Klinik:</div>
+
+                  <select formControlName="clinic">
+                    <option [ngValue]="null">Välj klinik...</option>
+                    <option *ngFor="let clinic of clinics" [ngValue]="clinic.id">{{clinic.name}}</option>
+                  </select>
+
+                </vgr-panel>
+
+              </vgr-panel-container>
+
+              <vgr-card>
+                <vgr-card-column>
+
+                  <vgr-card-section [expanded]="true" [title]="'Funktionsval'" [readonly]="false">
+                    <vgr-title-value-layout>
+                      <vgr-checkbox label="Gick hem"></vgr-checkbox>
+                      <vgr-checkbox label="Annat"></vgr-checkbox>
+                    </vgr-title-value-layout>
+                  </vgr-card-section>
+                </vgr-card-column>
+
+                <vgr-card-column>
+                  <vgr-card-section [expanded]="false" [title]="'Rubrik'" [subtitle]="'Övrig information'">
+                    <span>Innehåll</span>
+                  </vgr-card-section>
+                </vgr-card-column>
+              </vgr-card>
+
+              <div class="clearfix button-row save-cancel-delete">
+                <vgr-save-cancel (save)="saveUnit()" (cancel)="theListItem.setExpandOrCollapsed()"
+                                 [hideLock]="true"></vgr-save-cancel>
+                <vgr-button class="error" (click)="openDeleteModal(unit)">Radera</vgr-button>
+              </div>
+            </form>
+          </vgr-list-item-content>
+        </vgr-list-item>
+
+        <vgr-list-item (expandedChanged)="setCurrentUnit($event, null)" #addListItem>
+          <vgr-list-item-header>
+            <vgr-list-column width="5">
+              <div class="add-row vgr-icon-plus">Lägg till avdelning</div>
+            </vgr-list-column>
+          </vgr-list-item-header>
+
+          <vgr-list-item-content>
+            <form [formGroup]="unitForm">
+              <vgr-panel-container>
+
+                <vgr-panel [width]="6" [noborder]="true">
+                  <div>
+                    <div>ID:</div>
+                    <vgr-input formControlName="id"></vgr-input>
+                  </div>
+                  <div>
+                    <div>Namn:</div>
+                    <vgr-input formControlName="name"></vgr-input>
+                  </div>
+                </vgr-panel>
+
+                <vgr-panel [width]="6" [noborder]="true">
+
+                  <div>Klinik:</div>
+
+                  <select formControlName="clinic">
+                    <option [ngValue]="null">Välj klinik...</option>
+                    <option *ngFor="let clinic of clinics" [ngValue]="clinic.id">{{clinic.name}}</option>
+                  </select>
+
+                </vgr-panel>
+
+              </vgr-panel-container>
+
+
+              <vgr-card>
+                <vgr-card-column>
+                  <vgr-card-section [expanded]="true" [title]="'Funktionsval'" [readonly]="false">
+                    <vgr-title-value-layout>
+                      <vgr-checkbox label="Gick hem"></vgr-checkbox>
+                      <vgr-checkbox label="Annat"></vgr-checkbox>
+                    </vgr-title-value-layout>
+                  </vgr-card-section>
+                </vgr-card-column>
+
+                <vgr-card-column>
+                  <vgr-card-section [expanded]="false" [title]="'Rubrik'" [subtitle]="'Övrig information'">
+                    <span>Innehåll</span>
+                  </vgr-card-section>
+                </vgr-card-column>
+              </vgr-card>
+
+              <vgr-save-cancel (save)="saveUnit()" (cancel)="addListItem.setExpandOrCollapsed()"
+                               [hideLock]="true"></vgr-save-cancel>
+            </form>
+          </vgr-list-item-content>
+        </vgr-list-item>
+      </vgr-list>
+
+    </vgr-page-block>
+  </vgr-page-body>
+</vgr-page>
+
+<app-delete-modal [itemLabel]="unitForDeletion?.name" (confirmDelete)="confirmDelete()"></app-delete-modal>

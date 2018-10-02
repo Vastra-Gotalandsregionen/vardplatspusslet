@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Clinic} from "../../domain/clinic";
+import {Unit} from "../../domain/unit";
 
 @Component({
   selector: 'app-clinic',
@@ -10,9 +11,8 @@ import {Clinic} from "../../domain/clinic";
 })
 export class ClinicComponent implements OnInit {
 
-  // id: string;
-  // clinicName: string;
   clinic: Clinic;
+  units: Unit[];
   error: string;
 
   notFoundText = 'Oops. Inget fanns här...';
@@ -36,6 +36,10 @@ export class ClinicComponent implements OnInit {
         } else {
           this.error = error1.message;
         }
+      });
+
+      this.http.get<Unit[]>('/api/unit?clinic=' + params.id).subscribe(units => {
+        this.units = units;
       });
 
     });

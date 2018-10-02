@@ -6,16 +6,16 @@
   <vgr-page-body>
 
     <vgr-page-block>
-      <div *ngIf="clinic">
+      <div *ngIf="units">
 
         <ul>
-          <li *ngFor="let unit of clinic.units">
+          <li *ngFor="let unit of units">
             <a [routerLink]="unit.id">{{unit.name}}</a>
           </li>
         </ul>
       </div>
 
-      <div *ngIf="!clinic && !error">
+      <div *ngIf="!units && !error">
         <vgr-loader [small]="false"></vgr-loader>
       </div>
 

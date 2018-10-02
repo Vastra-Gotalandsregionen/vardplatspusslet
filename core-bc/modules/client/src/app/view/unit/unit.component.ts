@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
-import {ListItemComponent, ModalService} from "vgr-komponentkartan";
+import {ListItemComponent} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
+import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
 
 @Component({
   selector: 'app-unit',
@@ -24,10 +25,11 @@ export class UnitComponent implements OnInit {
   bedForm: FormGroup;
   bedForDeletion: Bed;
 
+  @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
+
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              protected modalService: ModalService) { }
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -103,15 +105,14 @@ export class UnitComponent implements OnInit {
     element.setExpandOrCollapsed();
   }
 
-  openDeleteModel(bed: Bed) {
+  openDeleteModal(bed: Bed) {
     this.bedForDeletion = bed;
-    this.modalService.openDialog('deleteModal');
+    this.appDeleteModal.open();
   }
 
   confirmDelete() {
     this.http.delete('/api/bed/'  + this.clinic.id + '/' + this.unit.id + '/' + this.bedForDeletion.id)
       .subscribe(() => {
-        this.modalService.closeDialog('deleteModal');
         this.ngOnInit();
       }); // todo error handling
   }

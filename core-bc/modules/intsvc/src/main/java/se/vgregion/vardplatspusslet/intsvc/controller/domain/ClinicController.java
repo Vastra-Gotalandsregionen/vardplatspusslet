@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
-import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 
 import java.util.List;
@@ -24,38 +23,26 @@ public class ClinicController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public List<Clinic> getClinics() {
-//         PageRequest pageRequest = new PageRequest(0, Integer.MAX_VALUE, new Sort(new Sort.Order("verksamhettext").ignoreCase()));
-
-        List<Clinic> all = clinicRepository.findAll();
-
-        for (Clinic clinic : all) {
-            clinic.setUnits(null);
-        }
-        /*List<ClinicDTO> dtos = new ArrayList<>();
-
-        for (Clinic clinic : all) {
-            ClinicDTO clinicDTO = new ClinicDTO(clinic.getId(), clinic.getName());
-            dtos.add(clinicDTO);
-        }*/
-        return all;
+        return clinicRepository.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Clinic getClinic(@PathVariable("id") String id) {
-        Clinic clinic = clinicRepository.findOne(id);
-
-        for (Unit unit : clinic.getUnits()) {
-            unit.setBeds(null); // Don't need these here. Also avoid lazy initialization exception on json serialization.
-        }
-
-       return clinic;
+        return clinicRepository.findOne(id);
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Clinic> saveClinic(@RequestBody Clinic clinic) {
         return ResponseEntity.ok(clinicRepository.save(clinic));
+    }
+
+    @RequestMapping(value = "/{clinicId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteClinic(@PathVariable("clinicId") String clinicId) {
+        clinicRepository.delete(clinicId);
+
+        return ResponseEntity.noContent().build();
     }
 
 

@@ -1,0 +1,10 @@
+<vgr-modal id="deleteModal" >
+  <vgr-modal-header>Radera?</vgr-modal-header>
+  <vgr-modal-content>
+    Är du säker på att du vill radera <em>{{label}}</em>?
+  </vgr-modal-content>
+  <vgr-modal-footer>
+    <vgr-button [secondary]="false" default="true" (click)="confirm()" >Radera</vgr-button>
+    <vgr-button [secondary]="true" (click)="modalService.closeDialog('deleteModal')">Avbryt</vgr-button>
+  </vgr-modal-footer>
+</vgr-modal>

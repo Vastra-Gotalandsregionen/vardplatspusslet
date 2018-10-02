@@ -28,7 +28,6 @@ public class Unit {
     @Id
     private String id;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     private Clinic clinic;
 
