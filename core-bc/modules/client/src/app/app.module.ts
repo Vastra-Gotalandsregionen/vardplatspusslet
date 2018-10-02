@@ -12,11 +12,11 @@ import {NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {ChevronRightComponent} from './elements/chevron-right/chevron-right.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./service/auth.service";
-import {JwtHelper} from "angular2-jwt";
-import { AdminComponent } from './view/admin/admin.component';
-import { ClinicsAdminComponent } from './view/admin/clinics-admin/clinics-admin.component';
-import { UnitsAdminComponent } from './view/admin/units-admin/units-admin.component';
-import { DeleteModalComponent } from './elements/delete-modal/delete-modal.component';
+import {AdminComponent} from './view/admin/admin.component';
+import {ClinicsAdminComponent} from './view/admin/clinics-admin/clinics-admin.component';
+import {UnitsAdminComponent} from './view/admin/units-admin/units-admin.component';
+import {DeleteModalComponent} from './elements/delete-modal/delete-modal.component';
+import {JwtModule} from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -34,14 +34,14 @@ import { DeleteModalComponent } from './elements/delete-modal/delete-modal.compo
     BrowserModule,
     NoopAnimationsModule,
     HttpClientModule,
+    JwtModule,
     KomponentkartanModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [
-    AuthService,
-    JwtHelper
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

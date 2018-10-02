@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
-import {JwtHelper} from 'angular2-jwt/angular2-jwt';
 import {Router} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
 import {interval} from "rxjs";
 import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/retry";
 import {HttpClient} from "@angular/common/http";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable()
 export class AuthService {
 
   renewSubscription: Subscription;
+  jwtHelper = new JwtHelperService();
 
-  constructor(private jwtHelper: JwtHelper,
-              private http: HttpClient,
+  constructor(private http: HttpClient,
               private router: Router) {
 
     const localStorageToken = localStorage.getItem('jwtToken');
