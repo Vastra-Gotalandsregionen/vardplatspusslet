@@ -18,7 +18,7 @@
 		<class>se.vgregion.vardplatspusslet.domain.jpa.Patient</class>
 		<class>se.vgregion.vardplatspusslet.domain.jpa.PatientCategory</class>
 		<class>se.vgregion.vardplatspusslet.domain.jpa.Role</class>
-		<class>se.vgregion.vardplatspusslet.domain.jpa.Status</class>
+		<class>se.vgregion.vardplatspusslet.domain.jpa.LeaveStatus</class>
 		<class>se.vgregion.vardplatspusslet.domain.jpa.Unit</class>
 		<class>se.vgregion.vardplatspusslet.domain.jpa.User</class>
 	</persistence-unit>

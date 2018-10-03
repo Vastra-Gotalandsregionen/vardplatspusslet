@@ -31,10 +31,7 @@
 
                   <div>Klinik:</div>
 
-                  <select formControlName="clinic">
-                    <option [ngValue]="null">Välj klinik...</option>
-                    <option *ngFor="let clinic of clinics" [ngValue]="clinic.id">{{clinic.name}}</option>
-                  </select>
+                  <vgr-dropdown [items]="clinicDropdownItems" formControlName="clinic"></vgr-dropdown>
 
                 </vgr-panel>
 

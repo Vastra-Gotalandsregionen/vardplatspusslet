@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.vgregion.vardplatspusslet.domain.jpa.Bed;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
+import se.vgregion.vardplatspusslet.domain.jpa.Patient;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.repository.BedRepository;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
+import se.vgregion.vardplatspusslet.repository.PatientRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 
 import java.util.Arrays;
@@ -25,6 +27,9 @@ public class BedService {
 
     @Autowired
     private ClinicRepository clinicRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     public void deleteBed(String clinicId, String unitId, Integer bedId) {
         Clinic clinicRef = clinicRepository.getOne(clinicId);
@@ -46,5 +51,41 @@ public class BedService {
         unitRepository.save(unit);
 
         bedRepository.delete(bedId);
+    }
+
+    public void save(String clinicId, String unitId, Bed bed) {
+        if (bed.getId() == null) {
+            // New. Not assigned to unit yet.
+            Clinic clinicRef = clinicRepository.getOne(clinicId);
+            Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(unitId, clinicRef);
+            unit.getBeds().add(bed);
+
+            bedRepository.save(bed);
+            unitRepository.save(unit);
+        } else {
+            Patient patient = bed.getPatient();
+            Unit unit = unitRepository.findOne(unitId);
+
+            if (patient != null) {
+                if (bed.getOccupied() == null || !bed.getOccupied()) {
+                    // If there is a patient but it is set as unoccupied, the patient should be deleted.
+                    bed.setPatient(null);
+                    patientRepository.delete(patient);
+                } else if (patient.getLeaveStatus() != null) {
+                        // Put on leave means removing from bed and attaching to unit instead.
+                        bed.setPatient(null);
+                        bed.setOccupied(false);
+
+                        unit.getPatients().add(patient);
+                } else {
+                    // Put back from leave means attaching to bed (they already come attached) and removing from unit.
+                    unit.getPatients().remove(patient);
+                }
+
+                unitRepository.save(unit);
+            }
+
+            bedRepository.save(bed);
+        }
     }
 }

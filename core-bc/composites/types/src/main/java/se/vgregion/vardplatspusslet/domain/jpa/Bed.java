@@ -27,7 +27,7 @@ public class Bed {
     @Column
     private Boolean occupied;
 
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Patient patient;
 
     public Bed() {

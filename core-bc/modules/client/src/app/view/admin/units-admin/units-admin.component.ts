@@ -21,6 +21,8 @@ export class UnitsAdminComponent implements OnInit {
 
   unitForDeletion: Unit;
 
+  clinicDropdownItems: { displayName: string; value: string }[];
+
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
 
@@ -34,6 +36,13 @@ export class UnitsAdminComponent implements OnInit {
     this.http.get<Clinic[]>('/api/clinic')
       .subscribe((clinics: Clinic[]) => {
         this.clinics = clinics;
+
+        this.clinicDropdownItems = clinics.map((clinic) => {
+          return {
+            displayName: clinic.name,
+            value: clinic.id
+          }
+        });
       });
 
     this.initUnitForm(null);
@@ -54,9 +63,23 @@ export class UnitsAdminComponent implements OnInit {
 
   }
 
+  private reinitUnitForm(unit: Unit) {
+    if (!unit) {
+      unit = new Unit();
+      unit.clinic = new Clinic();
+    }
+
+    this.unitForm.setValue({
+      id: unit.id,
+      name: unit.name,
+      clinic: unit.clinic ? unit.clinic.id : null
+    });
+
+  }
+
   setCurrentUnit($event: any, unit: Unit) {
     if (event) {
-      this.initUnitForm(unit);
+      this.reinitUnitForm(unit);
     }
   }
 

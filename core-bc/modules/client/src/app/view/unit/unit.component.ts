@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
-import {ListItemComponent} from "vgr-komponentkartan";
+import {DropdownItem, ListItemComponent} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Patient} from "../../domain/patient";
@@ -25,7 +25,11 @@ export class UnitComponent implements OnInit {
   bedForm: FormGroup;
   bedForDeletion: Bed;
 
+  vacantBeds: DropdownItem<number>[];
+
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
+
+  chosenVacantBedId: number;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
@@ -44,6 +48,16 @@ export class UnitComponent implements OnInit {
       this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id).subscribe(unit => {
         if (unit) {
           this.unit = unit;
+
+          this.vacantBeds = unit.beds
+            .filter(bed => !bed.occupied)
+            .map(bed => {
+              return {
+                displayName: bed.label,
+                value: bed.id
+              }
+            });
+
           this.initForm(null);
         } else {
           this.error = this.notFoundText;
@@ -71,15 +85,34 @@ export class UnitComponent implements OnInit {
       label: [bed.label],
       patient: this.formBuilder.group({
         id: [bed.patient ? bed.patient.id : null],
-        label: [bed.patient ? bed.patient.label : null]
+        label: [bed.patient ? bed.patient.label : null],
+        leaveStatus: [bed.patient ? bed.patient.leaveStatus : null]
       })
+    });
+
+  }
+
+  private reinitForm(bed: Bed) {
+    if (!bed) {
+      bed = new Bed();
+    }
+
+    this.bedForm.setValue({
+      id: bed.id ? bed.id : null,
+      occupied: bed.occupied ? bed.occupied : null,
+      label: bed.label ? bed.label : null,
+      patient: {
+        id: bed.patient ? bed.patient.id : null,
+        label: bed.patient ? bed.patient.label : null,
+        leaveStatus: bed.patient ? bed.patient.leaveStatus : null
+      }
     });
   }
 
   setCurrentBed(event: any, bed: Bed) {
     if (event) {
       // Then the row is expanded and not collapsed.
-      this.initForm(bed);
+      this.reinitForm(bed);
     }
   }
 
@@ -89,11 +122,16 @@ export class UnitComponent implements OnInit {
 
     bed.id = bedModel.id;
     bed.label = bedModel.label;
-    bed.occupied = bedModel.occupied;
+    bed.occupied = !!bedModel.occupied;
 
-    bed.patient = new Patient();
-    bed.patient.id = bedModel.patient.id;
-    bed.patient.label = bedModel.patient.label;
+    if (bedModel.patient.label) {
+      bed.patient = new Patient();
+      bed.patient.id = bedModel.patient.id;
+      bed.patient.label = bedModel.patient.label;
+      bed.patient.leaveStatus = bedModel.patient.leaveStatus;
+    } else {
+      bed.patient = null;
+    }
 
     this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {
@@ -115,5 +153,18 @@ export class UnitComponent implements OnInit {
       .subscribe(() => {
         this.ngOnInit();
       }); // todo error handling
+  }
+
+  chooseBedForLeavePatient(patient) {
+    patient.leaveStatus = null;
+
+    let bed = this.unit.beds.find(bed => bed.id === this.chosenVacantBedId);
+    bed.patient = patient;
+    bed.occupied = true;
+    this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
+      .subscribe(bed => {
+        this.ngOnInit();
+      });
+
   }
 }

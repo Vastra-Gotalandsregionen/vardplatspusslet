@@ -6,12 +6,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "patient")
@@ -33,8 +33,8 @@ public class Patient {
     @OneToOne
     private Patient awaitingPatient;
 
-    @ManyToOne
-    private Status status;
+    @Enumerated
+    private LeaveStatus leaveStatus;
 
     @Column
     @Temporal(TemporalType.DATE) // TODO räcker dag?
@@ -84,12 +84,12 @@ public class Patient {
         this.awaitingPatient = awaitingPatient;
     }
 
-    public Status getStatus() {
-        return status;
+    public LeaveStatus getLeaveStatus() {
+        return leaveStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setLeaveStatus(LeaveStatus status) {
+        this.leaveStatus = status;
     }
 
     public Date getPlannedLeaveDate() {
@@ -106,5 +106,18 @@ public class Patient {
 
     public void setLeftDate(Date leftDate) {
         this.leftDate = leftDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return Objects.equals(id, patient.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

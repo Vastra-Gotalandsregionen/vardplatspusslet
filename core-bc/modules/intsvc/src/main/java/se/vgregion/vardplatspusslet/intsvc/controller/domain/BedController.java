@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Bed;
-import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
-import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.repository.BedRepository;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
@@ -45,18 +43,7 @@ public class BedController {
                                        @PathVariable("unitId") String unitId,
                                        @RequestBody Bed bed) {
 
-        if (bed.getId() == null) {
-            // New. Not assigned to unit yet.
-            Clinic clinicRef = clinicRepository.getOne(clinicId);
-            Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(unitId, clinicRef);
-            unit.getBeds().add(bed);
-
-            bedRepository.save(bed);
-            unitRepository.save(unit);
-//            bed.setUnit(unit);
-        } else {
-            bedRepository.save(bed);
-        }
+        bedService.save(clinicId, unitId, bed);
 
         return ResponseEntity.ok(bed);
     }
