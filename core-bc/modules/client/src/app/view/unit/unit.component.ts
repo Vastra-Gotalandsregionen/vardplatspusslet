@@ -18,7 +18,7 @@ export class UnitComponent implements OnInit {
 
   unit: Unit;
   clinic: Clinic;
-  dropdownItems: DropdownItem<string>[];
+  genderDropdownItems: DropdownItem<string>[];
 
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
@@ -39,11 +39,13 @@ export class UnitComponent implements OnInit {
               private formBuilder: FormBuilder,
               private route: ActivatedRoute) {
 
-    this.dropdownItems = [
-      { displayName: 'Kvinna', value: 'KVINNA' },
-      { displayName: 'Man', value: 'MAN' },
-      { displayName: 'Barn', value: 'BARN' }
+    this.genderDropdownItems = [
+      {displayName: 'Kvinna', value: 'KVINNA'},
+      {displayName: 'Man', value: 'MAN'},
+      {displayName: 'Barn', value: 'BARN'}
     ];
+
+    window.setInterval(() => this.checkForChanges(), 10000);
   }
 
   ngOnInit() {
@@ -60,14 +62,7 @@ export class UnitComponent implements OnInit {
         if (unit) {
           this.unit = unit;
 
-          this.vacantBeds = unit.beds
-            .filter(bed => !bed.occupied)
-            .map(bed => {
-              return {
-                displayName: bed.label,
-                value: bed.id
-              }
-            });
+          this.updateVacants(unit);
 
           this.initForm(null);
         } else {
@@ -82,6 +77,68 @@ export class UnitComponent implements OnInit {
         }
       });
 
+    });
+  }
+
+  private updateVacants(unit) {
+    this.vacantBeds = unit.beds
+      .filter(bed => !bed.occupied)
+      .map(bed => {
+        return {
+          displayName: bed.label,
+          value: bed.id
+        }
+      });
+  }
+
+  private checkForChanges() {
+    let params = this.route.snapshot.params;
+
+    let clinicId = params.clinicId;
+
+    this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
+      this.clinic = clinic;
+    });
+
+    this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id).subscribe(unit => {
+      for (let incomingBed of unit.beds) {
+        let thisBed = null as Bed;
+
+        let found = this.unit.beds.find(bed => bed.id === incomingBed.id);
+        if (found) {
+          thisBed = found;
+
+          thisBed.occupied = incomingBed.occupied;
+          thisBed.label = incomingBed.label;
+          thisBed.patient = incomingBed.patient;
+        }
+      }
+
+      for (let incomingPatient of unit.patients) {
+        let thisPatient = null as Patient;
+
+        let found = this.unit.patients.find(patient => patient.id === incomingPatient.id);
+        if (found) {
+          thisPatient = found;
+
+          thisPatient.leaveStatus = incomingPatient.leaveStatus;
+          thisPatient.label = incomingPatient.label;
+          thisPatient.gender = incomingPatient.gender;
+        } else {
+          // Not found means it is a new patient
+          this.unit.patients.push(incomingPatient);
+        }
+      }
+
+      // We also need to look for patients which should not belong to the unit anymore.
+      for (let thisPatient of this.unit.patients) {
+        let found = unit.patients.find(patient => patient.id === thisPatient.id);
+        if (!found) {
+          this.unit.patients.splice(this.unit.patients.indexOf(thisPatient), 1);
+        }
+      }
+
+      this.updateVacants(unit);
     });
   }
 
@@ -117,7 +174,7 @@ export class UnitComponent implements OnInit {
         id: bed.patient ? bed.patient.id : null,
         label: bed.patient ? bed.patient.label : null,
         leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
-        gender: [bed.patient ? bed.patient.gender : null]
+        gender: bed.patient ? bed.patient.gender : null
       }
     });
   }
@@ -181,7 +238,7 @@ export class UnitComponent implements OnInit {
   }
 
   confirmDelete() {
-    this.http.delete('/api/bed/'  + this.clinic.id + '/' + this.unit.id + '/' + this.bedForDeletion.id)
+    this.http.delete('/api/bed/' + this.clinic.id + '/' + this.unit.id + '/' + this.bedForDeletion.id)
       .subscribe(() => {
         this.ngOnInit();
       }); // todo error handling

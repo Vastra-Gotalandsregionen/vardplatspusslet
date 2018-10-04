@@ -72,18 +72,18 @@ public class BedService {
                     bed.setPatient(null);
                     patientRepository.delete(patient);
                 } else if (patient.getLeaveStatus() != null) {
-                        // Put on leave means removing from bed and attaching to unit instead.
-                        bed.setPatient(null);
-                        bed.setOccupied(false);
-                        bedRepository.save(bed);
+                    // Put on leave means removing from bed and attaching to unit instead.
+                    bed.setPatient(null);
+                    bed.setOccupied(false);
+                    bedRepository.save(bed);
 
-                        unit.getPatients().add(patient);
+                    unit.getPatients().add(patient);
+                    unitRepository.save(unit);
                 } else {
                     // Put back from leave means attaching to bed (they already come attached) and removing from unit.
                     unit.getPatients().remove(patient);
+                    unitRepository.save(unit);
                 }
-
-                unitRepository.save(unit);
             }
 
             bedRepository.save(bed);
