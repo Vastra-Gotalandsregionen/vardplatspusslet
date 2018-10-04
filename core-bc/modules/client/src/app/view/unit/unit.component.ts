@@ -18,6 +18,7 @@ export class UnitComponent implements OnInit {
 
   unit: Unit;
   clinic: Clinic;
+  dropdownItems: DropdownItem<string>[];
 
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
@@ -36,7 +37,14 @@ export class UnitComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute) {
+
+    this.dropdownItems = [
+      { displayName: 'Kvinna', value: 'KVINNA' },
+      { displayName: 'Man', value: 'MAN' },
+      { displayName: 'Barn', value: 'BARN' }
+    ];
+  }
 
   ngOnInit() {
 
@@ -89,7 +97,8 @@ export class UnitComponent implements OnInit {
       patient: this.formBuilder.group({
         id: [bed.patient ? bed.patient.id : null],
         label: [bed.patient ? bed.patient.label : null],
-        leaveStatus: [bed.patient ? bed.patient.leaveStatus : null]
+        leaveStatus: [bed.patient ? bed.patient.leaveStatus : null],
+        gender: [bed.patient ? bed.patient.gender : null]
       })
     });
 
@@ -107,7 +116,8 @@ export class UnitComponent implements OnInit {
       patient: {
         id: bed.patient ? bed.patient.id : null,
         label: bed.patient ? bed.patient.label : null,
-        leaveStatus: bed.patient ? bed.patient.leaveStatus : null
+        leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
+        gender: [bed.patient ? bed.patient.gender : null]
       }
     });
   }
@@ -150,6 +160,7 @@ export class UnitComponent implements OnInit {
       bed.patient.id = bedModel.patient.id;
       bed.patient.label = bedModel.patient.label;
       bed.patient.leaveStatus = bedModel.patient.leaveStatus;
+      bed.patient.gender = bedModel.patient.gender;
     } else {
       bed.patient = null;
     }
