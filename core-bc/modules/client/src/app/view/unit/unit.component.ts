@@ -31,9 +31,12 @@ export class UnitComponent implements OnInit {
 
   chosenVacantBedId: number;
 
+  showChangeBedOrder = false;
+  bedsOrder: Bed[] = [];
+
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
 
@@ -109,6 +112,24 @@ export class UnitComponent implements OnInit {
     });
   }
 
+  changeBedOrder() {
+    this.bedsOrder = this.unit.beds;
+    this.showChangeBedOrder = true;
+  }
+
+  hideChangeBedOrder() {
+    this.showChangeBedOrder = false;
+  }
+
+  saveBedOrder() {
+    this.unit.beds = this.bedsOrder;
+    this.showChangeBedOrder = false;
+    this.http.put('/api/unit', this.unit)
+      .subscribe(unit => {
+
+      });
+  }
+
   setCurrentBed(event: any, bed: Bed) {
     if (event) {
       // Then the row is expanded and not collapsed.
@@ -165,6 +186,5 @@ export class UnitComponent implements OnInit {
       .subscribe(bed => {
         this.ngOnInit();
       });
-
   }
 }

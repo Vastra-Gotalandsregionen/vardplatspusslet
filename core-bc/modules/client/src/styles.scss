@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/vgr-komponentkartan/assets/partials/_settings.colors.scss";
+@import "../node_modules/dragula/dist/dragula.min.css"; // todo try taking the css from https://github.com/valor-software/ng2-dragula and see if it is better.
 
 vgr-button.error .text-button {
   background-color: $primary-color--error;

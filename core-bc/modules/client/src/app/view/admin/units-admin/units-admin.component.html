@@ -90,10 +90,7 @@
 
                   <div>Klinik:</div>
 
-                  <select formControlName="clinic">
-                    <option [ngValue]="null">Välj klinik...</option>
-                    <option *ngFor="let clinic of clinics" [ngValue]="clinic.id">{{clinic.name}}</option>
-                  </select>
+                  <vgr-dropdown [items]="clinicDropdownItems" formControlName="clinic"></vgr-dropdown>
 
                 </vgr-panel>
 
@@ -125,6 +122,10 @@
       </vgr-list>
 
     </vgr-page-block>
+
+    <!--<vgr-page-block>
+      <pre>{{unitForm?.value | json}}</pre>
+    </vgr-page-block>-->
   </vgr-page-body>
 </vgr-page>
 

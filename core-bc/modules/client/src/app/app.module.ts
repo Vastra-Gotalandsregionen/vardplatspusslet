@@ -17,6 +17,7 @@ import {ClinicsAdminComponent} from './view/admin/clinics-admin/clinics-admin.co
 import {UnitsAdminComponent} from './view/admin/units-admin/units-admin.component';
 import {DeleteModalComponent} from './elements/delete-modal/delete-modal.component';
 import {JwtModule} from "@auth0/angular-jwt";
+import {DragulaModule} from "ng2-dragula";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {JwtModule} from "@auth0/angular-jwt";
     KomponentkartanModule,
     FormsModule,
     ReactiveFormsModule,
+    DragulaModule.forRoot(),
     AppRoutingModule
   ],
   providers: [

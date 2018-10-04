@@ -5,7 +5,9 @@ import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Patient;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UnitDTO {
 
@@ -17,7 +19,7 @@ public class UnitDTO {
 
     private List<Bed> beds = new ArrayList<>();
 
-    private List<Patient> vacantPatients = new ArrayList<>();
+    private Set<Patient> vacantPatients = new LinkedHashSet<>();
 
     private Boolean hasLeftDateFeature;
 
@@ -56,11 +58,11 @@ public class UnitDTO {
         this.beds = beds;
     }
 
-    public List<Patient> getVacantPatients() {
+    public Set<Patient> getVacantPatients() {
         return vacantPatients;
     }
 
-    public void setVacantPatients(List<Patient> vacantPatients) {
+    public void setVacantPatients(Set<Patient> vacantPatients) {
         this.vacantPatients = vacantPatients;
     }
 

@@ -1,8 +1,5 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Patrik Björk
@@ -35,11 +34,11 @@ public class Unit {
     private String name;
 
     @OrderColumn(name = "order_")
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Bed> beds = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Patient> patients = new ArrayList<>();
+    private Set<Patient> patients = new LinkedHashSet<>();
 
     @Column
     private Boolean hasLeftDateFeature;
@@ -79,11 +78,11 @@ public class Unit {
         this.beds = beds;
     }
 
-    public List<Patient> getPatients() {
+    public Set<Patient> getPatients() {
         return patients;
     }
 
-    public void setPatients(List<Patient> vacantPatients) {
+    public void setPatients(Set<Patient> vacantPatients) {
         this.patients = vacantPatients;
     }
 

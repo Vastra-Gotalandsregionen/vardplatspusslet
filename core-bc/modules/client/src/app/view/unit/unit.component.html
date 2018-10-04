@@ -12,70 +12,90 @@
     <vgr-page-block>
       <form *ngIf="unit" [formGroup]="bedForm">
 
-        <vgr-list [flexibleHeader]="true">
-          <vgr-list-header>
-            <vgr-list-column-header width="5">Rum/säng</vgr-list-column-header>
-            <vgr-list-column-header width="5">Status</vgr-list-column-header>
-            <vgr-list-column-header width="5">Patient</vgr-list-column-header>
-          </vgr-list-header>
+        <div *ngIf="showChangeBedOrder">
+          <p>Dra och släpp sängarna och spara sedan.</p>
+          <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
+            <div class="order-row" *ngFor="let bed of unit.beds">
+              {{bed.label}}
+            </div>
+          </div>
 
-          <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem>
+          <div class="button-row">
+            <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()" (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
+          </div>
+        </div>
 
-            <vgr-list-item-header>
-              <vgr-list-column width="5">{{bed.label}}</vgr-list-column>
-              <vgr-list-column width="5">{{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
-              <vgr-list-column width="5">{{bed.patient?.label}}</vgr-list-column>
-            </vgr-list-item-header>
+        <div *ngIf="!showChangeBedOrder">
+          <vgr-list [flexibleHeader]="true">
+            <vgr-list-header>
+              <vgr-list-column-header width="5">Rum/säng</vgr-list-column-header>
+              <vgr-list-column-header width="5">Status</vgr-list-column-header>
+              <vgr-list-column-header width="5">Patient</vgr-list-column-header>
+            </vgr-list-header>
 
-            <vgr-list-item-content [indentContent]="true">
+            <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem>
 
-              <div>
-                <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
-              </div>
+              <vgr-list-item-header>
+                <vgr-list-column width="5">{{bed.label}}</vgr-list-column>
+                <vgr-list-column width="5">{{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
+                <vgr-list-column width="5">{{bed.patient?.label}}</vgr-list-column>
+              </vgr-list-item-header>
 
-              <div formGroupName="patient">
+              <vgr-list-item-content [indentContent]="true">
+
                 <div>
-                  <div>Patient</div>
-                  <vgr-input formControlName="label"></vgr-input>
+                  <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
                 </div>
 
-                <div>
-                  <div>Permission/Teknisk plats</div>
-                  <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
-                                [items]="[{displayName: 'Permission', value: 'PERMISSION'}, {displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'}]"></vgr-dropdown>
+                <div formGroupName="patient">
+                  <div>
+                    <div>Patient</div>
+                    <vgr-input formControlName="label"></vgr-input>
+                  </div>
+
+                  <div>
+                    <div>Permission/Teknisk plats</div>
+                    <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
+                                  [items]="[{displayName: 'Permission', value: 'PERMISSION'}, {displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'}]"></vgr-dropdown>
+                  </div>
                 </div>
-              </div>
 
-              <div class="clearfix button-row save-cancel-delete">
-                <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(theListItem)"
-                                 (save)="save()"></vgr-save-cancel>
-                <vgr-button class="error" (click)="openDeleteModal(bed)">Radera</vgr-button>
-              </div>
+                <div class="clearfix button-row save-cancel-delete">
+                  <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(theListItem)"
+                                   (save)="save()"></vgr-save-cancel>
+                  <vgr-button class="error" (click)="openDeleteModal(bed)">Radera</vgr-button>
+                </div>
 
-            </vgr-list-item-content>
+              </vgr-list-item-content>
 
-          </vgr-list-item>
+            </vgr-list-item>
 
-          <vgr-list-item (expandedChanged)="setCurrentBed($event, null)" #addListItem>
-            <vgr-list-item-header>
-              <vgr-list-column width="5">
-                <div class="add-row vgr-icon-plus">Lägg till säng</div>
-              </vgr-list-column>
-            </vgr-list-item-header>
+            <vgr-list-item (expandedChanged)="setCurrentBed($event, null)" #addListItem>
+              <vgr-list-item-header>
+                <vgr-list-column width="5">
+                  <div class="add-row vgr-icon-plus">Lägg till säng</div>
+                </vgr-list-column>
+              </vgr-list-item-header>
 
-            <vgr-list-item-content [indentContent]="true">
-              <div>
-                <div>Benämning</div>
-                <input formControlName="label"/>
-              </div>
+              <vgr-list-item-content [indentContent]="true">
+                <div>
+                  <div>Benämning</div>
+                  <input formControlName="label"/>
+                </div>
 
-              <div class="clearfix button-row">
-                <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(addListItem)"
-                                 (save)="save()"></vgr-save-cancel>
-              </div>
-            </vgr-list-item-content>
-          </vgr-list-item>
-        </vgr-list>
+                <div class="clearfix button-row">
+                  <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(addListItem)"
+                                   (save)="save()"></vgr-save-cancel>
+                </div>
+              </vgr-list-item-content>
+            </vgr-list-item>
+          </vgr-list>
+
+          <div class="button-row">
+            <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
+          </div>
+        </div>
+
       </form>
 
       <div *ngIf="!unit && !error">
@@ -102,15 +122,21 @@
 
           <vgr-list-item-content>
             Välj ledig säng
-            <vgr-dropdown noItemSelectedLabel="Välj..." [items]="vacantBeds" [(ngModel)]="chosenVacantBedId"></vgr-dropdown>
-            <vgr-button (click)="chooseBedForLeavePatient(patient); collapse(leavePatientItem)">Spara</vgr-button>
+            <vgr-dropdown noItemSelectedLabel="Välj..." [items]="vacantBeds"
+                          [(ngModel)]="chosenVacantBedId"></vgr-dropdown>
+
+            <div class="button-row">
+              <vgr-button (click)="chooseBedForLeavePatient(patient); collapse(leavePatientItem)">Spara</vgr-button>
+            </div>
+
           </vgr-list-item-content>
         </vgr-list-item>
       </vgr-list>
     </vgr-page-block>
-    <vgr-page-block>
+
+    <!--<vgr-page-block>
       <pre>{{bedForm?.value | json}}</pre>
-    </vgr-page-block>
+    </vgr-page-block>-->
 
   </vgr-page-body>
 

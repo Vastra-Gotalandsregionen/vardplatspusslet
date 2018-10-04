@@ -75,6 +75,7 @@ public class BedService {
                         // Put on leave means removing from bed and attaching to unit instead.
                         bed.setPatient(null);
                         bed.setOccupied(false);
+                        bedRepository.save(bed);
 
                         unit.getPatients().add(patient);
                 } else {

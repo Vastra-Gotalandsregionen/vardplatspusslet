@@ -21,7 +21,7 @@ export class UnitsAdminComponent implements OnInit {
 
   unitForDeletion: Unit;
 
-  clinicDropdownItems: { displayName: string; value: string }[];
+  clinicDropdownItems: { displayName: string; value: string }[] = [];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -70,9 +70,9 @@ export class UnitsAdminComponent implements OnInit {
     }
 
     this.unitForm.setValue({
-      id: unit.id,
-      name: unit.name,
-      clinic: unit.clinic ? unit.clinic.id : null
+      id: unit.id ? unit.id : null,
+      name: unit.name ? unit.name : null,
+      clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null
     });
 
   }
