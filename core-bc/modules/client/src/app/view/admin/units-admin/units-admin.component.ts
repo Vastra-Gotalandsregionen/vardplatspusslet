@@ -58,7 +58,8 @@ export class UnitsAdminComponent implements OnInit {
     this.unitForm = this.formBuilder.group({
       id: [unit.id],
       name: [unit.name],
-      clinic: [unit.clinic ? unit.clinic.id : null]
+      clinic: [unit.clinic ? unit.clinic.id : null],
+      hasLeftDateFeature: [unit.hasLeftDateFeature]
     });
 
   }
@@ -72,7 +73,8 @@ export class UnitsAdminComponent implements OnInit {
     this.unitForm.setValue({
       id: unit.id ? unit.id : null,
       name: unit.name ? unit.name : null,
-      clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null
+      clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
+      hasLeftDateFeature: unit.hasLeftDateFeature
     });
 
   }
@@ -89,13 +91,14 @@ export class UnitsAdminComponent implements OnInit {
 
     unit.id = unitModel.id;
     unit.name = unitModel.name;
+    unit.hasLeftDateFeature = unitModel.hasLeftDateFeature;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();
       unit.clinic.id = unitModel.clinic;
     }
 
-    this.http.put('/api/unit', unit)
+    this.http.put('/api/unit?keepBeds=true', unit)
       .subscribe(() => {
         this.ngOnInit();
       });

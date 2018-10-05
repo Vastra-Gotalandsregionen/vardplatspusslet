@@ -155,7 +155,8 @@ export class UnitComponent implements OnInit {
         id: [bed.patient ? bed.patient.id : null],
         label: [bed.patient ? bed.patient.label : null],
         leaveStatus: [bed.patient ? bed.patient.leaveStatus : null],
-        gender: [bed.patient ? bed.patient.gender : null]
+        gender: [bed.patient ? bed.patient.gender : null],
+        leftDate: [bed.patient ? bed.patient.leftDate : null]
       })
     });
 
@@ -174,7 +175,8 @@ export class UnitComponent implements OnInit {
         id: bed.patient ? bed.patient.id : null,
         label: bed.patient ? bed.patient.label : null,
         leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
-        gender: bed.patient ? bed.patient.gender : null
+        gender: bed.patient ? bed.patient.gender : null,
+        leftDate: bed.patient ? bed.patient.leftDate : null
       }
     });
   }
@@ -218,6 +220,7 @@ export class UnitComponent implements OnInit {
       bed.patient.label = bedModel.patient.label;
       bed.patient.leaveStatus = bedModel.patient.leaveStatus;
       bed.patient.gender = bedModel.patient.gender;
+      bed.patient.leftDate = bedModel.patient.leftDate;
     } else {
       bed.patient = null;
     }
@@ -245,6 +248,10 @@ export class UnitComponent implements OnInit {
   }
 
   chooseBedForLeavePatient(patient) {
+    if (!this.chosenVacantBedId) {
+      return;
+    }
+
     patient.leaveStatus = null;
 
     let bed = this.unit.beds.find(bed => bed.id === this.chosenVacantBedId);

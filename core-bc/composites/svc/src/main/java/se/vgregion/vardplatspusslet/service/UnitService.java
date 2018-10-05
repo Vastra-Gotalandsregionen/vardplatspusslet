@@ -24,9 +24,17 @@ public class UnitService {
     @Autowired
     private ClinicRepository clinicRepository;
 
-    public Unit save(Unit unit) {
+    public Unit save(Unit unit, Boolean keepBeds) {
         // We need to remove all beds from the unit first, or we will get a constraint exception.
-        List<Bed> beds = unit.getBeds();
+        List<Bed> beds;
+        if (keepBeds != null && keepBeds) {
+            // Take currently persisted, i.e. keep persisted.
+            beds = unitRepository.findOne(unit.getId()).getBeds();
+        } else {
+            // Take from the request.
+            beds = unit.getBeds();
+        }
+
         unit.setBeds(null);
         unitRepository.save(unit);
         unit.setBeds(beds);

@@ -21,7 +21,8 @@
           </div>
 
           <div class="button-row">
-            <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()" (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
+            <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
+                             (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
           </div>
         </div>
 
@@ -49,23 +50,35 @@
                   <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
                 </div>
 
-                <div formGroupName="patient">
-                  <div>
-                    <div>Patient</div>
-                    <vgr-input formControlName="label"></vgr-input>
-                  </div>
+                <vgr-card formGroupName="patient">
+                  <vgr-card-column>
+                    <div>
+                      <div>
+                        <div>Patient</div>
+                        <vgr-input formControlName="label"></vgr-input>
+                      </div>
 
-                  <div>
-                    <div>Kön</div>
-                    <vgr-dropdown formControlName="gender" noItemSelectedLabel="Välj kön" [items]="genderDropdownItems"></vgr-dropdown>
-                  </div>
+                      <div>
+                        <div>Kön</div>
+                        <vgr-dropdown formControlName="gender" noItemSelectedLabel="Välj kön"
+                                      [items]="genderDropdownItems"></vgr-dropdown>
+                      </div>
 
-                  <div>
-                    <div>Permission/Teknisk plats</div>
-                    <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
-                                  [items]="[{displayName: 'Permission', value: 'PERMISSION'}, {displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'}]"></vgr-dropdown>
-                  </div>
-                </div>
+                      <div>
+                        <div>Permission/Teknisk plats</div>
+                        <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
+                                      [items]="[{displayName: 'Permission', value: 'PERMISSION'}, {displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'}]"></vgr-dropdown>
+                      </div>
+                    </div>
+                  </vgr-card-column>
+                  <vgr-card-column>
+                    <div *ngIf="unit.hasLeftDateFeature">
+                      <p>Gick hem</p>
+                      <vgr-datepicker formControlName="leftDate"></vgr-datepicker>
+                    </div>
+                  </vgr-card-column>
+                </vgr-card>
+
 
                 <div class="clearfix button-row save-cancel-delete">
                   <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(theListItem)"

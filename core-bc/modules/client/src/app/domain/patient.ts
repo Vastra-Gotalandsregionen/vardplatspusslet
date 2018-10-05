@@ -3,6 +3,7 @@ export class Patient {
   label: string;
   leaveStatus: LeaveStatus;
   gender: string;
+  leftDate: Date;
 }
 
 enum LeaveStatus {

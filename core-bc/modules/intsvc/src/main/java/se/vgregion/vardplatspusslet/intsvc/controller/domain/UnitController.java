@@ -58,8 +58,9 @@ public class UnitController {
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Unit> saveUnit(@RequestBody Unit unit) {
-        unitService.save(unit);
+    public ResponseEntity<Unit> saveUnit(@RequestBody Unit unit,
+                                         @RequestParam(value = "keepBeds", required = false) Boolean keepBeds) {
+        unitService.save(unit, keepBeds);
 
         return ResponseEntity.ok().build();
     }
