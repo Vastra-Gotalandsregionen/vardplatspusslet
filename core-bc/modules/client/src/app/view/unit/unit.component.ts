@@ -156,7 +156,8 @@ export class UnitComponent implements OnInit {
         label: [bed.patient ? bed.patient.label : null],
         leaveStatus: [bed.patient ? bed.patient.leaveStatus : null],
         gender: [bed.patient ? bed.patient.gender : null],
-        leftDate: [bed.patient ? bed.patient.leftDate : null]
+        leftDate: [bed.patient ? bed.patient.leftDate : null],
+        plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null]
       })
     });
 
@@ -176,7 +177,8 @@ export class UnitComponent implements OnInit {
         label: bed.patient ? bed.patient.label : null,
         leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
         gender: bed.patient ? bed.patient.gender : null,
-        leftDate: bed.patient ? bed.patient.leftDate : null
+        leftDate: bed.patient ? bed.patient.leftDate : null,
+        plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null]
       }
     });
   }
@@ -219,8 +221,9 @@ export class UnitComponent implements OnInit {
       bed.patient.id = bedModel.patient.id;
       bed.patient.label = bedModel.patient.label;
       bed.patient.leaveStatus = bedModel.patient.leaveStatus;
-      bed.patient.gender = bedModel.patient.gender;
       bed.patient.leftDate = bedModel.patient.leftDate;
+      bed.patient.gender = bedModel.patient.gender ? bedModel.patient.gender : null;
+      bed.patient.plannedLeaveDate = bedModel.patient.plannedLeaveDate ? bedModel.patient.plannedLeaveDate: null;
     } else {
       bed.patient = null;
     }
