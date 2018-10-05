@@ -178,7 +178,7 @@ export class UnitComponent implements OnInit {
         leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
         gender: bed.patient ? bed.patient.gender : null,
         leftDate: bed.patient ? bed.patient.leftDate : null,
-        plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null]
+        plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null
       }
     });
   }
