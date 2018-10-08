@@ -23,7 +23,7 @@ public class ClinicController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public List<Clinic> getClinics() {
-        return clinicRepository.findAll();
+        return clinicRepository.findAllByOrderById();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

@@ -18,6 +18,7 @@ import {UnitsAdminComponent} from './view/admin/units-admin/units-admin.componen
 import {DeleteModalComponent} from './elements/delete-modal/delete-modal.component';
 import {JwtModule} from "@auth0/angular-jwt";
 import {DragulaModule} from "ng2-dragula";
+import {UsersAdminComponent} from './view/admin/users-admin/users-admin.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {DragulaModule} from "ng2-dragula";
     AdminComponent,
     ClinicsAdminComponent,
     UnitsAdminComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    UsersAdminComponent
   ],
   imports: [
     BrowserModule,

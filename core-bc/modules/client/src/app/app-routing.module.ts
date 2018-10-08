@@ -6,6 +6,7 @@ import {UnitComponent} from "./view/unit/unit.component";
 import {AdminComponent} from "./view/admin/admin.component";
 import {ClinicsAdminComponent} from "./view/admin/clinics-admin/clinics-admin.component";
 import {UnitsAdminComponent} from "./view/admin/units-admin/units-admin.component";
+import {UsersAdminComponent} from "./view/admin/users-admin/users-admin.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'admin/units',
         component: UnitsAdminComponent
+      },
+      {
+        path: 'admin/users',
+        component: UsersAdminComponent
       },
       {
         path: ':id',

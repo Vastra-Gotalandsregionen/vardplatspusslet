@@ -59,7 +59,7 @@ public class LoginController {
 
             String[] roles = getRoles(user);
 
-            String token = JwtUtil.createToken(user.getId(), user.getDisplayName(), roles);
+            String token = JwtUtil.createToken(user.getId(), user.getName(), roles);
 
             return ResponseEntity.ok(token);
         } catch (FailedLoginException e) {
@@ -78,7 +78,7 @@ public class LoginController {
 
             String[] roles = getRoles(user);
 
-            String token = JwtUtil.createToken(user.getId(), user.getDisplayName(), roles);
+            String token = JwtUtil.createToken(user.getId(), user.getName(), roles);
 
             return ResponseEntity.ok(token);
         } catch (JWTVerificationException e) {
@@ -120,7 +120,7 @@ public class LoginController {
 
                 String[] impersonatedRoles = getRoles(impersonated);
 
-                String token = JwtUtil.createToken(impersonated.getId(), impersonated.getDisplayName(),
+                String token = JwtUtil.createToken(impersonated.getId(), impersonated.getName(),
                         impersonatedRoles);
 
                 return ResponseEntity.ok(token);
