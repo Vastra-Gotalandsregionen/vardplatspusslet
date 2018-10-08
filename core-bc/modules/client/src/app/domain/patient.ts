@@ -4,6 +4,7 @@ export class Patient {
   leaveStatus: LeaveStatus;
   gender: string;
   leftDate: Date;
+  plannedLeaveDate: Date;
 }
 
 enum LeaveStatus {

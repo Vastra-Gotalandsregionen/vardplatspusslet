@@ -29,42 +29,44 @@
         <div *ngIf="!showChangeBedOrder">
           <vgr-list [flexibleHeader]="true">
             <vgr-list-header>
-              <vgr-list-column-header width="5">Rum/säng</vgr-list-column-header>
-              <vgr-list-column-header width="5">Status</vgr-list-column-header>
-              <vgr-list-column-header width="5">Patient</vgr-list-column-header>
-              <vgr-list-column-header width="5">Kön</vgr-list-column-header>
+              <vgr-list-column-header width="3">Rum/säng</vgr-list-column-header>
+              <vgr-list-column-header width="3">Status</vgr-list-column-header>
+              <vgr-list-column-header width="3">Patient</vgr-list-column-header>
+              <vgr-list-column-header width="3">Kön</vgr-list-column-header>
+              <vgr-list-column-header width="4">Planerad hemgång</vgr-list-column-header>
             </vgr-list-header>
 
             <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem>
 
               <vgr-list-item-header>
-                <vgr-list-column width="5">{{bed.label}}</vgr-list-column>
-                <vgr-list-column width="5">{{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
-                <vgr-list-column width="5">{{bed.patient?.label}}</vgr-list-column>
-                <vgr-list-column width="5">{{bed.patient?.gender}}</vgr-list-column>
+                <vgr-list-column width="3">{{bed.label}}</vgr-list-column>
+                <vgr-list-column width="3">{{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
+                <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
+                <vgr-list-column width="3">{{bed.patient?.gender}}</vgr-list-column>
+                <vgr-list-column width="4">{{bed.patient?.plannedLeaveDate}}</vgr-list-column>
               </vgr-list-item-header>
 
               <vgr-list-item-content [indentContent]="true">
 
-                <div>
+                <div style="margin-bottom: 7px">
                   <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
                 </div>
 
                 <vgr-card formGroupName="patient">
                   <vgr-card-column>
                     <div>
-                      <div>
+                      <div style="margin-bottom: 10px">
                         <div>Patient</div>
                         <vgr-input formControlName="label"></vgr-input>
                       </div>
 
-                      <div>
+                      <div style="margin-bottom: 10px">
                         <div>Kön</div>
                         <vgr-dropdown formControlName="gender" noItemSelectedLabel="Välj kön"
                                       [items]="genderDropdownItems"></vgr-dropdown>
                       </div>
 
-                      <div>
+                      <div style="margin-bottom: 7px">
                         <div>Permission/Teknisk plats</div>
                         <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
                                       [items]="[{displayName: 'Permission', value: 'PERMISSION'}, {displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'}]"></vgr-dropdown>
@@ -72,9 +74,14 @@
                     </div>
                   </vgr-card-column>
                   <vgr-card-column>
-                    <div *ngIf="unit.hasLeftDateFeature">
+                    <div *ngIf="unit.hasLeftDateFeature" style="margin-bottom: 10px">
                       <p>Gick hem</p>
                       <vgr-datepicker formControlName="leftDate"></vgr-datepicker>
+                    </div>
+
+                    <div style="margin-bottom: 10px">
+                      <p>Planerad hemgång</p>
+                      <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
                     </div>
                   </vgr-card-column>
                 </vgr-card>
