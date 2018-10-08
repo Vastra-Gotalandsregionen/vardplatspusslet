@@ -19,6 +19,10 @@ import {DeleteModalComponent} from './elements/delete-modal/delete-modal.compone
 import {JwtModule} from "@auth0/angular-jwt";
 import {DragulaModule} from "ng2-dragula";
 import {UsersAdminComponent} from './view/admin/users-admin/users-admin.component';
+import {registerLocaleData} from "@angular/common";
+import localeSv from "@angular/common/locales/sv";
+
+registerLocaleData(localeSv, "sv-SE");
 
 @NgModule({
   declarations: [
