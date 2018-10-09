@@ -1,0 +1,89 @@
+<vgr-page>
+  <vgr-page-header><h1>Administration</h1></vgr-page-header>
+
+  <vgr-page-body>
+    <vgr-page-block>
+
+      <h2 style="margin-bottom: 16px">Användare</h2>
+
+      <vgr-list [flexibleHeader]="true">
+        <vgr-list-header>
+          <vgr-list-column-header [width]="3">VGR-ID</vgr-list-column-header>
+          <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
+          <vgr-list-column-header [width]="4">Roll</vgr-list-column-header>
+          <vgr-list-column-header [width]="4">Enheter</vgr-list-column-header>
+        </vgr-list-header>
+
+        <vgr-list-item *ngFor="let user of users" (expandedChanged)="setCurrentUser($event, user)" #theListItem>
+          <vgr-list-item-header>
+            <vgr-list-column [width]="3">{{user.id}}</vgr-list-column>
+            <vgr-list-column [width]="4">{{user.name}}</vgr-list-column>
+            <vgr-list-column [width]="4">{{user.role}}</vgr-list-column>
+            <vgr-list-column [width]="4">{{toUnitString(user.units)}}</vgr-list-column>
+          </vgr-list-item-header>
+
+          <vgr-list-item-content>
+            <form [formGroup]="userForm">
+
+              <div>
+                <div>Roll:</div>
+                <vgr-radio-group formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+
+                </vgr-radio-group>
+              </div>
+
+              <div>
+                <div>Enheter:</div>
+                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems"></vgr-dropdown-multiselect>
+              </div>
+
+              <div class="clearfix button-row save-cancel-delete">
+                <vgr-save-cancel (save)="saveUser()" (cancel)="theListItem.setExpandOrCollapsed()"
+                                 [hideLock]="true"></vgr-save-cancel>
+                <vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>
+              </div>
+            </form>
+          </vgr-list-item-content>
+        </vgr-list-item>
+
+        <vgr-list-item (expandedChanged)="setCurrentUser($event, null)" #addListItem>
+          <vgr-list-item-header>
+            <vgr-list-column width="5">
+              <div class="add-row vgr-icon-plus">Lägg till användare</div>
+            </vgr-list-column>
+          </vgr-list-item-header>
+
+          <vgr-list-item-content [indentContent]="true">
+            <form [formGroup]="userForm">
+
+              <div>
+                <div>VGR-ID:</div>
+                <input formControlName="id">
+              </div>
+              <div>
+                <div>Roll:</div>
+                <vgr-radio-group formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+
+                </vgr-radio-group>
+              </div>
+
+              <div>
+                <div>Enheter:</div>
+                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems"></vgr-dropdown-multiselect>
+              </div>
+
+              <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.setExpandOrCollapsed()"
+                               [hideLock]="true"></vgr-save-cancel>
+            </form>
+          </vgr-list-item-content>
+        </vgr-list-item>
+      </vgr-list>
+    </vgr-page-block>
+
+    <vgr-page-block>
+      <pre>{{userForm?.value | json}}</pre>
+    </vgr-page-block>
+  </vgr-page-body>
+</vgr-page>
+
+<app-delete-modal [itemLabel]="userForDeletion?.name" (confirmDelete)="confirmDelete()"></app-delete-modal>

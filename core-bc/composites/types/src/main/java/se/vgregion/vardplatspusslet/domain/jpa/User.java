@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * @author Patrik Björk
@@ -19,16 +23,7 @@ public class User {
     private String id;
 
     @Column
-    private String firstName;
-
-    @Column
-    private String lastName;
-
-    @Column
-    private String mail;
-
-    @Column
-    private String displayName;
+    private String name;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -36,6 +31,9 @@ public class User {
 
     @Column
     private byte[] thumbnailPhoto;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Unit> units = new LinkedHashSet<>();
 
     @Column
     private Boolean inactivated = false;
@@ -48,36 +46,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Role getRole() {
@@ -94,6 +68,14 @@ public class User {
 
     public byte[] getThumbnailPhoto() {
         return thumbnailPhoto;
+    }
+
+    public Set<Unit> getUnits() {
+        return units;
+    }
+
+    public void setUnits(Set<Unit> units) {
+        this.units = units;
     }
 
     public Boolean getInactivated() {

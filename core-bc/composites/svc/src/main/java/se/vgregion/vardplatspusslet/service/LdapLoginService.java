@@ -77,13 +77,14 @@ public class LdapLoginService {
 
             User user = new User();
             user.setId(defaultAdminUsername);
-            user.setFirstName("Admin");
-            user.setDisplayName("Admin");
+            user.setName("Admin");
             user.setRole(Role.ADMIN);
 
             if (userRepository.findOne(user.getId()) == null) {
                 userRepository.save(user);
             }
+
+            saveUserButKeepSystemSpecificProperties(user);
 
             return user;
         }
@@ -94,6 +95,7 @@ public class LdapLoginService {
 
         // first create the service context
         DirContext serviceCtx = null;
+        SearchResult result;
         try {
             // use the service user to authenticate
             serviceCtx = createInitialDirContext();
@@ -101,37 +103,13 @@ public class LdapLoginService {
             NamingEnumeration<SearchResult> results = findUser(username, serviceCtx);
 
             if (results.hasMore()) {
-                // generate the users DN (distinguishedName) from the result
-                SearchResult result = results.next();
-                String distinguishedName = result.getNameInNamespace();
-
-                if (verifyPassword) {
-                    verifyPassword(password, distinguishedName);
-                }
-
-                User user = new User();
-                user.setId(username);
-                user.setFirstName((String) (result).getAttributes().get("givenName").get());
-                user.setLastName((String) (result).getAttributes().get("sn").get());
-                user.setMail((String) (result).getAttributes().get("mail").get());
-                user.setDisplayName((String) (result).getAttributes().get("displayName").get());
-
-                Attribute thumbnailPhoto = result.getAttributes().get("thumbnailPhoto");
-                if (thumbnailPhoto != null) {
-                    user.setThumbnailPhoto((byte[]) thumbnailPhoto.get());
-                }
-
-                user = syncUser(user);
-
-                return user;
+                result = results.next();
             } else {
                 throw new AccountNotFoundException("Nu user found with given username.");
             }
         } catch (CommunicationException e) {
             throw new RuntimeException(e);
-        } catch (AccountNotFoundException e) {
-            throw new FailedLoginException(e.getMessage());
-        } catch (AuthenticationException e) {
+        } catch (AccountNotFoundException | AuthenticationException e) {
             throw new FailedLoginException(e.getMessage());
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -145,6 +123,42 @@ public class LdapLoginService {
                 }
             }
         }
+
+        String distinguishedName = result.getNameInNamespace();
+
+        if (verifyPassword) {
+            try {
+                verifyPassword(password, distinguishedName);
+            } catch (NamingException e) {
+                throw new FailedLoginException(e.getMessage());
+            }
+        }
+
+        try {
+            User user = mapToUser(username, result);
+
+            saveUserButKeepSystemSpecificProperties(user);
+
+            return user;
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private User mapToUser(String username, SearchResult result) throws NamingException {
+        User user = new User();
+        user.setId(username);
+        user.setName((String) (result).getAttributes().get("displayName").get());
+//                user.setLastName((String) (result).getAttributes().get("sn").get());
+//                user.setMail((String) (result).getAttributes().get("mail").get());
+//                user.setDisplayName((String) (result).getAttributes().get("displayName").get());
+
+        Attribute thumbnailPhoto = result.getAttributes().get("thumbnailPhoto");
+        if (thumbnailPhoto != null) {
+            user.setThumbnailPhoto((byte[]) thumbnailPhoto.get());
+        }
+
+        return user;
     }
 
     private void verifyPassword(String password, String distinguishedName) throws NamingException {
@@ -184,7 +198,7 @@ public class LdapLoginService {
         return new InitialDirContext(serviceEnv);
     }
 
-    private User syncUser(User user) throws NamingException {
+    private User saveUserButKeepSystemSpecificProperties(User user) {
 
         User foundUser = userRepository.findOne(user.getId());
 
@@ -199,4 +213,18 @@ public class LdapLoginService {
         }
     }
 
+    public void synchronizeUserFieldsFromLdap(User user) {
+        try {
+            NamingEnumeration<SearchResult> result = findUser(user.getId(), createInitialDirContext());
+
+            if (result.hasMore()) {
+                User found = mapToUser(user.getId(), result.next());
+
+                user.setName(found.getName());
+                user.setThumbnailPhoto(found.getThumbnailPhoto());
+            }
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

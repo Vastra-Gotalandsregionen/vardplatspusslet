@@ -1,6 +1,7 @@
 package se.vgregion.vardplatspusslet.intsvc.controller.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,7 @@ public class UnitController {
 
         List<Unit> units;
         if (clinicId == null) {
-             units = unitRepository.findAll();
+             units = unitRepository.findAll(new Sort("clinic.name", "name"));
         } else {
             units = unitRepository.findUnitsByClinicIsLike(clinicRepository.getOne(clinicId));
         }
