@@ -1,3 +1,5 @@
+@import "../../../../node_modules/vgr-komponentkartan/assets/partials/_settings.colors.scss";
+
 .order-row {
   padding: 8px 20px;
   border-bottom: 2px solid #f0f0f0;
@@ -7,4 +9,8 @@
     box-shadow: 3px 3px 9px 0 rgba(0, 0, 0, 0.5);
     cursor: move;
   }
+}
+
+vgr-list-item.vacant {
+  background-color: $secondary-color--green;
 }

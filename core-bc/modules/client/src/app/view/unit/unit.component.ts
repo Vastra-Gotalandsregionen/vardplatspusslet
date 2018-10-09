@@ -265,4 +265,10 @@ export class UnitComponent implements OnInit {
         this.ngOnInit();
       });
   }
+
+  calculateRowClass(bed: Bed) {
+    if (!bed.occupied) {
+      return 'vacant';
+    }
+  }
 }

@@ -36,7 +36,7 @@
               <vgr-list-column-header width="4">Planerad hemgång</vgr-list-column-header>
             </vgr-list-header>
 
-            <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem>
+            <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem [ngClass]="calculateRowClass(bed)">
 
               <vgr-list-item-header>
                 <vgr-list-column width="3">{{bed.label}}</vgr-list-column>
