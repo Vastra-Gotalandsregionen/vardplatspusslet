@@ -1,0 +1,44 @@
+<form [formGroup]="unitForm">
+  <vgr-panel-container>
+
+    <vgr-panel [width]="6" [noborder]="true">
+      <div *ngIf="showId">
+        <div>ID:</div>
+        <vgr-input formControlName="id"></vgr-input>
+      </div>
+      <div>
+        <div>Namn:</div>
+        <vgr-input formControlName="name"></vgr-input>
+      </div>
+    </vgr-panel>
+
+    <vgr-panel [width]="6" [noborder]="true">
+
+      <div>Klinik:</div>
+
+      <vgr-dropdown [items]="clinicDropdownItems" formControlName="clinic"></vgr-dropdown>
+
+    </vgr-panel>
+
+  </vgr-panel-container>
+
+  <vgr-card>
+    <vgr-card-column>
+      <vgr-card-section [expanded]="true" [title]="'Funktionsval'" [readonly]="false">
+        <vgr-title-value-layout>
+          <vgr-checkbox label="Gick hem" formControlName="hasLeftDateFeature"></vgr-checkbox>
+          <vgr-checkbox label="Annat"></vgr-checkbox>
+        </vgr-title-value-layout>
+      </vgr-card-section>
+    </vgr-card-column>
+
+    <vgr-card-column>
+      <vgr-card-section [expanded]="false" [title]="'Rubrik'" [subtitle]="'Övrig information'">
+        <span>Innehåll</span>
+      </vgr-card-section>
+    </vgr-card-column>
+  </vgr-card>
+
+  <vgr-save-cancel (save)="saveUnit()" (cancel)="cancel()"
+                   [hideLock]="true"></vgr-save-cancel>
+</form>

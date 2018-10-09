@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Unit} from "../../../domain/unit";
-import {HttpClient} from "../../../../../node_modules/@angular/common/http";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Clinic} from "../../../domain/clinic";
+import {HttpClient} from "@angular/common/http";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
 
 @Component({
@@ -12,19 +10,13 @@ import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.
 })
 export class UnitsAdminComponent implements OnInit {
 
-  clinics: Clinic[] = [];
-
-  unitForm: FormGroup;
   units: Unit[];
 
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
 
   unitForDeletion: Unit;
 
-  clinicDropdownItems: { displayName: string; value: string }[] = [];
-
-  constructor(private http: HttpClient,
-              private formBuilder: FormBuilder) { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
 
@@ -32,81 +24,15 @@ export class UnitsAdminComponent implements OnInit {
       .subscribe((units: Unit[]) => {
         this.units = units;
       });
-
-    this.http.get<Clinic[]>('/api/clinic')
-      .subscribe((clinics: Clinic[]) => {
-        this.clinics = clinics;
-
-        this.clinicDropdownItems = clinics.map((clinic) => {
-          return {
-            displayName: clinic.name,
-            value: clinic.id
-          }
-        });
-      });
-
-    this.initUnitForm(null);
-
-  }
-
-  private initUnitForm(unit: Unit) {
-    if (!unit) {
-      unit = new Unit();
-      unit.clinic = new Clinic();
-    }
-
-    this.unitForm = this.formBuilder.group({
-      id: [unit.id],
-      name: [unit.name],
-      clinic: [unit.clinic ? unit.clinic.id : null],
-      hasLeftDateFeature: [unit.hasLeftDateFeature]
-    });
-
-  }
-
-  private reinitUnitForm(unit: Unit) {
-    if (!unit) {
-      unit = new Unit();
-      unit.clinic = new Clinic();
-    }
-
-    this.unitForm.setValue({
-      id: unit.id ? unit.id : null,
-      name: unit.name ? unit.name : null,
-      clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
-      hasLeftDateFeature: unit.hasLeftDateFeature
-    });
-
-  }
-
-  setCurrentUnit($event: any, unit: Unit) {
-    if (event) {
-      this.reinitUnitForm(unit);
-    }
-  }
-
-  saveUnit() {
-    let unit = new Unit();
-    let unitModel = this.unitForm.value;
-
-    unit.id = unitModel.id;
-    unit.name = unitModel.name;
-    unit.hasLeftDateFeature = unitModel.hasLeftDateFeature;
-
-    if (unitModel.clinic) {
-      unit.clinic = new Clinic();
-      unit.clinic.id = unitModel.clinic;
-    }
-
-    this.http.put('/api/unit?keepBeds=true', unit)
-      .subscribe(() => {
-        this.ngOnInit();
-      });
   }
 
   openDeleteModal(unit: Unit) {
     this.unitForDeletion = unit;
     this.appDeleteModal.open();
+  }
+
+  save() {
+    this.ngOnInit();
   }
 
   confirmDelete() {

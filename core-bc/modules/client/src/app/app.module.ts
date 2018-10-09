@@ -21,6 +21,7 @@ import {DragulaModule} from "ng2-dragula";
 import {UsersAdminComponent} from './view/admin/users-admin/users-admin.component';
 import {registerLocaleData} from "@angular/common";
 import localeSv from "@angular/common/locales/sv";
+import {UnitsAdminFormComponent} from './view/admin/units-admin/units-admin-form/units-admin-form.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -35,7 +36,8 @@ registerLocaleData(localeSv, "sv-SE");
     ClinicsAdminComponent,
     UnitsAdminComponent,
     DeleteModalComponent,
-    UsersAdminComponent
+    UsersAdminComponent,
+    UnitsAdminFormComponent
   ],
   imports: [
     BrowserModule,
