@@ -12,9 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Patrik Björk
@@ -38,7 +38,11 @@ public class Unit {
     private List<Bed> beds = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Patient> patients = new LinkedHashSet<>();
+    private Set<Patient> patients = new TreeSet<>();
+
+    @OrderColumn(name = "orderSsks")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ssk> ssks = new ArrayList<>();
 
     @Column
     private Boolean hasLeftDateFeature;
@@ -84,6 +88,14 @@ public class Unit {
 
     public void setPatients(Set<Patient> vacantPatients) {
         this.patients = vacantPatients;
+    }
+
+    public List<Ssk> getSsks() {
+        return ssks;
+    }
+
+    public void setSsks(List<Ssk> ssks) {
+        this.ssks = ssks;
     }
 
     public Boolean getHasLeftDateFeature() {

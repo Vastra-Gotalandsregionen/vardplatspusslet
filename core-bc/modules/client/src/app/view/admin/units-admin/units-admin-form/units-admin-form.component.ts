@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {Unit} from "../../../../domain/unit";
 import {Clinic} from "../../../../domain/clinic";
+import {Ssk} from "../../../../domain/ssk";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -13,7 +14,7 @@ export class UnitsAdminFormComponent implements OnInit {
 
   @Input('showId') showId: boolean;
   @Input('showDelete') showDelete: boolean;
-  @Input('unit') unit: boolean;
+  @Input('unit') unit: Unit;
 
   @Output() openDeleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
@@ -24,6 +25,8 @@ export class UnitsAdminFormComponent implements OnInit {
   unitForm: FormGroup;
 
   clinicDropdownItems: { displayName: string; value: string }[] = [];
+
+  editSsks: boolean;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -40,9 +43,9 @@ export class UnitsAdminFormComponent implements OnInit {
             value: clinic.id
           }
         });
-      });
 
-    this.initUnitForm(null);
+        this.initUnitForm(this.unit);
+      });
   }
 
   private initUnitForm(unit: Unit) {
@@ -55,6 +58,7 @@ export class UnitsAdminFormComponent implements OnInit {
       id: [unit.id],
       name: [unit.name],
       clinic: [unit.clinic ? unit.clinic.id : null],
+      ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       hasLeftDateFeature: [unit.hasLeftDateFeature]
     });
 
@@ -70,6 +74,7 @@ export class UnitsAdminFormComponent implements OnInit {
       id: unit.id ? unit.id : null,
       name: unit.name ? unit.name : null,
       clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
+      ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       hasLeftDateFeature: unit.hasLeftDateFeature
     });
 
@@ -79,6 +84,22 @@ export class UnitsAdminFormComponent implements OnInit {
     if (event) {
       this.reinitUnitForm(unit);
     }
+  }
+
+  addSsk() {
+    (this.unitForm.get('ssks') as FormArray).push(this.createSsk());
+  }
+
+  createSsk(): FormGroup {
+    return this.formBuilder.group({
+      id: null,
+      label: null,
+      color: null
+    });
+  }
+
+  deleteSsk(index: number) {
+    (this.unitForm.get('ssks') as FormArray).removeAt(index);
   }
 
   saveUnit() {
@@ -94,6 +115,8 @@ export class UnitsAdminFormComponent implements OnInit {
       unit.clinic.id = unitModel.clinic;
     }
 
+    unit.ssks = unitModel.ssks;
+
     this.http.put('/api/unit?keepBeds=true', unit)
       .subscribe(() => {
         this.saveEvent.emit();
@@ -104,12 +127,22 @@ export class UnitsAdminFormComponent implements OnInit {
     this.openDeleteEvent.emit(unit);
   }
 
-  // confirmDelete() {
-  //   this.deleteEvent.emit();
-  // }
-
   cancel() {
     this.cancelEvent.emit();
   }
 
+  private toFormGroups(ssks: Ssk[]): FormGroup[] {
+
+    if (!ssks || ssks.length === 0) {
+      return [];
+    }
+
+    return ssks.map(ssk => {
+      return this.formBuilder.group( {
+        id: ssk.id,
+        label: ssk.label,
+        color: ssk.color
+      })
+    });
+  }
 }

@@ -7,6 +7,10 @@
 
       <vgr-list [flexibleHeader]="true">
         <vgr-list-header>
+          <vgr-list-column-header [width]="3">ID</vgr-list-column-header>
+          <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
+          <vgr-list-column-header [width]="4">Klinik</vgr-list-column-header>
+          <vgr-list-column-header [width]="4">Antal vårdlag</vgr-list-column-header>
         </vgr-list-header>
 
         <vgr-list-item *ngFor="let unit of units" #theListItem>
@@ -14,6 +18,7 @@
             <vgr-list-column [width]="3">{{unit.id}}</vgr-list-column>
             <vgr-list-column [width]="4">{{unit.name}}</vgr-list-column>
             <vgr-list-column [width]="4">{{unit.clinic?.name}}</vgr-list-column>
+            <vgr-list-column [width]="4">{{unit.ssks?.length}}</vgr-list-column>
           </vgr-list-item-header>
 
           <vgr-list-item-content>

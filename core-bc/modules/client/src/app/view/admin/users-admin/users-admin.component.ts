@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {HttpClient} from "../../../../../node_modules/@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {User} from "../../../domain/user";
 import {DropdownItem} from "vgr-komponentkartan";
@@ -35,7 +35,10 @@ export class UsersAdminComponent implements OnInit {
     this.http.get<Unit[]>('/api/unit').subscribe(units => {
       this.unitDropdownItems = units.map(unit => {
         this.unitMap.set(unit.id, unit);
-        return {displayName: unit.clinic.name + ' > ' + unit.name, value: unit.id}
+
+        let clinicName = unit.clinic ? unit.clinic.name : 'N/A';
+
+        return {displayName: clinicName + ' > ' + unit.name, value: unit.id}
       });
     });
 

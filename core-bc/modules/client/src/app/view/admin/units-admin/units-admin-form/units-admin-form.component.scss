@@ -1,0 +1,11 @@
+.edit-ssk-row {
+
+  height: 48px;
+
+  > div {
+    > input, > vgr-dropdown, > a {
+      float: left;
+      margin-right: 12px;
+    }
+  }
+}
