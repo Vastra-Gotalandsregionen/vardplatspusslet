@@ -26,11 +26,11 @@ vgr-button.error .text-button {
   }
 }
 
-vgr-list-item.list-item.list-item--expanded:not(.list-item--compact) {
+/*vgr-list-item.list-item.list-item--expanded:not(.list-item--compact) {
   //box-shadow: 3px 3px 9px 0 rgba(0, 0, 0, 0.5);
   margin-top: 2px;
   margin-bottom: 0;
-}
+}*/
 
 .icon-link-with-text {
   .icon-text {
@@ -50,7 +50,7 @@ vgr-list-item.list-item.list-item--expanded:not(.list-item--compact) {
   padding-left: 32px;
 }
 
-.ssk-color {
+.ssk-color, .status-color {
   display: inline-block;
   width: 24px;
   height: 24px;
@@ -61,6 +61,14 @@ vgr-list-item.list-item.list-item--expanded:not(.list-item--compact) {
   line-height: 25px;
   /* box-sizing: border-box; */
   margin-left: 12px;
+}
+
+.status-VACANT {
+  background-color: $secondary-color--green;
+}
+
+.status-OCCUPIED {
+  background-color: $secondary-color--red;
 }
 
 .ssk-BLUE {
