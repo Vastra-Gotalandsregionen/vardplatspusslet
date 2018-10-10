@@ -22,6 +22,8 @@ import {UsersAdminComponent} from './view/admin/users-admin/users-admin.componen
 import {registerLocaleData} from "@angular/common";
 import localeSv from "@angular/common/locales/sv";
 import {UnitsAdminFormComponent} from './view/admin/units-admin/units-admin-form/units-admin-form.component';
+import {CalloutComponent} from './shared/callout.component';
+import {CalloutDirective} from './shared/callout.directive';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -37,7 +39,9 @@ registerLocaleData(localeSv, "sv-SE");
     UnitsAdminComponent,
     DeleteModalComponent,
     UsersAdminComponent,
-    UnitsAdminFormComponent
+    UnitsAdminFormComponent,
+    CalloutComponent,
+    CalloutDirective
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,10 @@ registerLocaleData(localeSv, "sv-SE");
     FormsModule,
     ReactiveFormsModule,
     DragulaModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+  ],
+  entryComponents: [
+    CalloutComponent
   ],
   providers: [
     AuthService
