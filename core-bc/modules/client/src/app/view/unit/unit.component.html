@@ -46,8 +46,12 @@
                 <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
                 <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
                 <vgr-list-column width="4" #mydiv>
-                  <div class="tooltip" *ngIf="bed.patient?.plannedLeaveDate != null"
-                       appCallout  [appCallout]="bed.patient?.plannedLeaveDate" style><span class="material-icons ike">home</span>
+                  <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
+                       appCallout  [appCallout]="bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
+                  </div>
+
+                  <div  class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
+                        appCallout  [appCallout]="bed.patient?.plannedLeaveDate"><i class="fa fa-wheelchair rod"></i>
                   </div>
                 </vgr-list-column>
               </vgr-list-item-header>
@@ -100,6 +104,12 @@
                     <div style="margin-bottom: 10px">
                       <p>Planerad hemgång</p>
                       <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
+                    </div>
+
+                    <div style="margin-bottom: 7px">
+                      <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
+                      <vgr-dropdown  formControlName="kliniker" noItemSelectedLabel="Välj klinik"
+                                     [items]="genderDropdownItems"></vgr-dropdown>
                     </div>
                   </vgr-card-column>
                 </vgr-card>

@@ -24,6 +24,7 @@ import localeSv from "@angular/common/locales/sv";
 import {UnitsAdminFormComponent} from './view/admin/units-admin/units-admin-form/units-admin-form.component';
 import {CalloutComponent} from './shared/callout.component';
 import {CalloutDirective} from './shared/callout.directive';
+import {AngularFontAwesomeModule} from "angular-font-awesome";
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -53,6 +54,7 @@ registerLocaleData(localeSv, "sv-SE");
     ReactiveFormsModule,
     DragulaModule.forRoot(),
     AppRoutingModule,
+    AngularFontAwesomeModule
   ],
   entryComponents: [
     CalloutComponent

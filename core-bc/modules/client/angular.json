@@ -47,6 +47,7 @@
             ],
             "styles": [
               "node_modules/vgr-komponentkartan/assets/komponentkartan.scss",
+              "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.scss"
             ],
             "scripts": []
