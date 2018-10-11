@@ -61,6 +61,8 @@ vgr-button.error .text-button {
   line-height: 25px;
   /* box-sizing: border-box; */
   margin-left: 12px;
+  position: relative;
+  bottom: 1px;
 }
 
 .status-VACANT {
@@ -86,4 +88,28 @@ vgr-button.error .text-button {
 a.icon-link {
   border-bottom: none;
   text-decoration: none;
+}
+
+tbody td, thead th {
+  border-bottom: 1px solid #aaa;
+}
+
+td {
+  padding: 4px 8px;
+}
+
+th {
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(assets/font/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+  local('MaterialIcons-Regular'),
+  url(assets/font/MaterialIcons-Regular.woff2) format('woff2'),
+  url(assets/font/MaterialIcons-Regular.woff) format('woff'),
+  url(assets/font/MaterialIcons-Regular.ttf) format('truetype');
 }

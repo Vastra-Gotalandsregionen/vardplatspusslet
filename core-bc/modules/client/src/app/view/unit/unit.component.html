@@ -16,7 +16,7 @@
           <p>Dra och släpp sängarna och spara sedan.</p>
           <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
             <div class="order-row" *ngFor="let bed of unit.beds">
-              {{bed.label}}
+              {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
             </div>
           </div>
 
@@ -29,32 +29,46 @@
         <div *ngIf="!showChangeBedOrder">
           <vgr-list [flexibleHeader]="true">
             <vgr-list-header>
-              <vgr-list-column-header width="3">Rum/säng</vgr-list-column-header>
+              <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
+              <vgr-list-column-header width="1">SSK</vgr-list-column-header>
               <vgr-list-column-header width="3">Status</vgr-list-column-header>
               <vgr-list-column-header width="3">Patient</vgr-list-column-header>
               <vgr-list-column-header width="3">Kön</vgr-list-column-header>
               <vgr-list-column-header width="4">Status</vgr-list-column-header>
             </vgr-list-header>
 
-            <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem [ngClass]="calculateRowClass(bed)">
+            <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem>
 
               <vgr-list-item-header>
-                <vgr-list-column width="3">{{bed.label}}</vgr-list-column>
+                <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
+                <vgr-list-column width="1"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
                 <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
                 <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
-                <vgr-list-column width="3">{{bed.patient?.gender}}</vgr-list-column>
+                <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
                 <vgr-list-column width="4" #mydiv>
                   <div class="tooltip" *ngIf="bed.patient?.plannedLeaveDate != null"
-                       appCallout  [appCallut]="bed.patient?.plannedLeaveDate" style><span class="material-icons ike">home</span>
+                       appCallout  [appCallout]="bed.patient?.plannedLeaveDate" style><span class="material-icons ike">home</span>
                   </div>
                 </vgr-list-column>
               </vgr-list-item-header>
 
               <vgr-list-item-content [indentContent]="true">
 
-                <div style="margin-bottom: 7px">
-                  <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
-                </div>
+                <vgr-card>
+                  <vgr-card-column>
+                    <label for="bedName">Namn:</label>
+                    <vgr-input id="bedName" formControlName="label"></vgr-input>
+                    <div style="margin-bottom: 7px">
+                      <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
+                    </div>
+
+                  </vgr-card-column>
+                  <vgr-card-column>
+                    <vgr-dropdown formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
+                  </vgr-card-column>
+                </vgr-card>
+
+                <hr/>
 
                 <vgr-card formGroupName="patient">
                   <vgr-card-column>
@@ -148,7 +162,7 @@
         <vgr-list-item *ngFor="let patient of unit?.patients" #leavePatientItem>
           <vgr-list-item-header>
             <vgr-list-column width="5">{{patient.label}}</vgr-list-column>
-            <vgr-list-column width="5">{{patient.leaveStatus}}</vgr-list-column>
+            <vgr-list-column width="5">{{format(patient.leaveStatus)}}</vgr-list-column>
           </vgr-list-item-header>
 
           <vgr-list-item-content>
@@ -163,6 +177,21 @@
           </vgr-list-item-content>
         </vgr-list-item>
       </vgr-list>
+    </vgr-page-block>
+
+    <vgr-page-block *ngIf="unit?.ssks.length > 0">
+      <table>
+        <thead>
+        <tr>
+          <th>Vårdlag</th>
+          <th>Antal sängar</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let ssk of unit?.ssks">
+          <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
+          <td>{{countBeds(ssk)}}</td>
+        </tr>
+      </table>
     </vgr-page-block>
 
     <!--<vgr-page-block>

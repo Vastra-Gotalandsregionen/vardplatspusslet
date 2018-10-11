@@ -3,9 +3,11 @@ package se.vgregion.vardplatspusslet.domain.jpa;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -29,6 +31,9 @@ public class Bed {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Patient patient;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Ssk ssk;
 
     public Bed() {
     }
@@ -63,6 +68,14 @@ public class Bed {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public Ssk getSsk() {
+        return ssk;
+    }
+
+    public void setSsk(Ssk ssk) {
+        this.ssk = ssk;
     }
 
     @Override

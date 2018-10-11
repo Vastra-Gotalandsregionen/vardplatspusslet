@@ -20,7 +20,7 @@ class Point {
   selector: '[appCallout]'
 })
 export class CalloutDirective implements OnDestroy{
-  @Input() appCallut: String = '';
+  @Input() appCallout: String = '';
 
   private element: HTMLElement;
   private calloutRef: ComponentRef<CalloutComponent>;
@@ -37,7 +37,7 @@ export class CalloutDirective implements OnDestroy{
 
   @HostListener('mouseenter') onmouseenter()
   {
-    this.calloutRef = this.createCallout(this.appCallut);
+    this.calloutRef = this.createCallout(this.appCallout);
     let calloutEl = this.calloutRef.location.nativeElement;
     let targetPos = this.elementRef.nativeElement.offsetLeft;
     calloutEl.style.left = targetPos.x + 'px';

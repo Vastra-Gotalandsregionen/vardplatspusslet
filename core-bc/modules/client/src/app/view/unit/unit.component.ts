@@ -8,6 +8,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
+import {Ssk} from "../../domain/ssk";
 
 @Component({
   selector: 'app-unit',
@@ -19,6 +20,7 @@ export class UnitComponent implements OnInit {
   unit: Unit;
   clinic: Clinic;
   genderDropdownItems: DropdownItem<string>[];
+  sskDropdownItems: DropdownItem<number>[];
 
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
@@ -61,6 +63,10 @@ export class UnitComponent implements OnInit {
       this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id).subscribe(unit => {
         if (unit) {
           this.unit = unit;
+
+          this.sskDropdownItems = unit.ssks.map(ssk => {
+            return {displayName: ssk.label, value: ssk.id};
+          });
 
           this.updateVacants(unit);
 
@@ -158,7 +164,8 @@ export class UnitComponent implements OnInit {
         gender: [bed.patient ? bed.patient.gender : null],
         leftDate: [bed.patient ? bed.patient.leftDate : null],
         plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null]
-      })
+      }),
+      ssk: bed.ssk ? bed.ssk.id : null
     });
 
   }
@@ -179,7 +186,8 @@ export class UnitComponent implements OnInit {
         gender: bed.patient ? bed.patient.gender : null,
         leftDate: bed.patient ? bed.patient.leftDate : null,
         plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null
-      }
+      },
+      ssk: bed.ssk ? bed.ssk.id : null
     });
   }
 
@@ -228,6 +236,10 @@ export class UnitComponent implements OnInit {
       bed.patient = null;
     }
 
+    if (bedModel.ssk) {
+      bed.ssk = this.unit.ssks.find(ssk => ssk.id === bedModel.ssk);
+    }
+
     this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {
         this.ngOnInit();
@@ -266,9 +278,21 @@ export class UnitComponent implements OnInit {
       });
   }
 
-  calculateRowClass(bed: Bed) {
-    if (!bed.occupied) {
-      return 'vacant';
+  countBeds(sskArg: Ssk) {
+    // Map to ssk, then filter out those with the same id and count the result.
+    return this.unit.beds.map(bed => bed.ssk).filter(ssk => ssk ? ssk.id === sskArg.id : false).length;
+  }
+
+  // To initial capital letter and lower case after first letter.
+  format(input: string) {
+    if (!input) {
+      return null;
     }
+
+    if (input.length === 0) {
+      return '';
+    }
+
+    return input.substr(0, 1).toUpperCase() + input.substr(1, input.length - 1).toLowerCase();
   }
 }

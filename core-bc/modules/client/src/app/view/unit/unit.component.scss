@@ -13,7 +13,12 @@
 
 .tooltip {
   display: inline-block;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
+  float: left;
+
+  .material-icons {
+    float: left;
+  }
 }
 
 .tooltip .tooltiptext {

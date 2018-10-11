@@ -41,9 +41,10 @@
             <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
           </tr>
 
+          <tfoot>
           <tr>
-            <td><a (click)="editSsks = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td>
-          </tr>
+            <td><a (click)="editSsks = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+          </tfoot>
         </table>
 
         <div *ngIf="editSsks">
