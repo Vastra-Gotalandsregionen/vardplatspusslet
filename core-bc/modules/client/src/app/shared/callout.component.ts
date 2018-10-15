@@ -1,9 +1,5 @@
 import {
-  Component,
-  NgModule,
-  VERSION,
-  Optional,
-  ChangeDetectorRef
+  Component
 } from '@angular/core'
 
 @Component({
@@ -14,11 +10,10 @@ import {
   styles: [`
     :host {
       visibility: visible;
-      width: 120px;
       background-color: royalblue;
       color: #fff;
       text-align: center;
-      padding: 5px 0;
+      padding: 5px;
       border-radius: 6px;
       position:absolute;
       z-index: 1;

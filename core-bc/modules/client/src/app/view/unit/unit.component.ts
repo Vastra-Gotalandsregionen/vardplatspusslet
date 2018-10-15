@@ -42,7 +42,7 @@ export class UnitComponent implements OnInit {
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
 
-  bedForm: FormGroup;
+  addBedForm: FormGroup;
   bedForDeletion: Bed;
 
   vacantBeds: DropdownItem<number>[];
@@ -53,6 +53,7 @@ export class UnitComponent implements OnInit {
 
   showChangeBedOrder = false;
   bedsOrder: Bed[] = [];
+  inited: boolean;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
@@ -87,7 +88,7 @@ export class UnitComponent implements OnInit {
 
           this.updateVacants(unit);
 
-          this.initForm(null);
+          this.inited = true;
         } else {
           this.error = this.notFoundText;
         }
@@ -100,6 +101,10 @@ export class UnitComponent implements OnInit {
         }
       });
 
+      this.addBedForm = this.formBuilder.group({
+        id: null,
+        label: null
+      })
     });
   }
 
@@ -165,51 +170,6 @@ export class UnitComponent implements OnInit {
     });
   }
 
-  private initForm(bed: Bed) {
-    if (!bed) {
-      bed = new Bed();
-    }
-
-    this.bedForm = this.formBuilder.group({
-      id: [bed.id],
-      occupied: [bed.occupied],
-      label: [bed.label],
-      patient: this.formBuilder.group({
-        id: [bed.patient ? bed.patient.id : null],
-        label: [bed.patient ? bed.patient.label : null],
-        leaveStatus: [bed.patient ? bed.patient.leaveStatus : null],
-        gender: [bed.patient ? bed.patient.gender : null],
-        leftDate: [bed.patient ? bed.patient.leftDate : null],
-        plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null],
-        carePlan: [bed.patient ? bed.patient.carePlan : null]
-      }),
-      ssk: bed.ssk ? bed.ssk.id : null
-    });
-
-  }
-
-  private reinitForm(bed: Bed) {
-    if (!bed) {
-      bed = new Bed();
-    }
-
-    this.bedForm.setValue({
-      id: bed.id ? bed.id : null,
-      occupied: bed.occupied ? bed.occupied : null,
-      label: bed.label ? bed.label : null,
-      patient: {
-        id: bed.patient ? bed.patient.id : null,
-        label: bed.patient ? bed.patient.label : null,
-        leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
-        gender: bed.patient ? bed.patient.gender : null,
-        leftDate: bed.patient ? bed.patient.leftDate : null,
-        plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null,
-        carePlan: [bed.patient ? bed.patient.carePlan : null]
-      },
-      ssk: bed.ssk ? bed.ssk.id : null
-    });
-  }
-
   changeBedOrder() {
     this.bedsOrder = this.unit.beds;
     this.showChangeBedOrder = true;
@@ -228,37 +188,11 @@ export class UnitComponent implements OnInit {
       });
   }
 
-  setCurrentBed(event: any, bed: Bed) {
-    if (event) {
-      // Then the row is expanded and not collapsed.
-      this.reinitForm(bed);
-    }
-  }
-
-  save() {
+  saveAddBed() {
     let bed = new Bed();
-    let bedModel = this.bedForm.value;
+    let bedModel = this.addBedForm.value;
 
-    bed.id = bedModel.id;
     bed.label = bedModel.label;
-    bed.occupied = !!bedModel.occupied;
-
-    if (bedModel.patient.label) {
-      bed.patient = new Patient();
-      bed.patient.id = bedModel.patient.id;
-      bed.patient.label = bedModel.patient.label;
-      bed.patient.leaveStatus = bedModel.patient.leaveStatus;
-      bed.patient.leftDate = bedModel.patient.leftDate;
-      bed.patient.gender = bedModel.patient.gender ? bedModel.patient.gender : null;
-      bed.patient.plannedLeaveDate = bedModel.patient.plannedLeaveDate ? bedModel.patient.plannedLeaveDate : null;
-      bed.patient.carePlan = bedModel.patient.carePlan ? bedModel.patient.carePlan : null;
-    } else {
-      bed.patient = null;
-    }
-
-    if (bedModel.ssk) {
-      bed.ssk = this.unit.ssks.find(ssk => ssk.id === bedModel.ssk);
-    }
 
     this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {

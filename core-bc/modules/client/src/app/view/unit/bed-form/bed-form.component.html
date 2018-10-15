@@ -1,0 +1,66 @@
+<form [formGroup]="bedForm" *ngIf="bedForm">
+  <vgr-card>
+    <vgr-card-column>
+      <label for="bedName">Namn:</label>
+      <vgr-input id="bedName" formControlName="label"></vgr-input>
+      <div style="margin-bottom: 7px">
+        <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
+      </div>
+
+    </vgr-card-column>
+    <vgr-card-column>
+      <div *ngIf="sskDropdownItems.length > 0">
+        <label for="sskDropdown">SSK / Vårdlag:</label>
+        <vgr-dropdown id="sskDropdown" formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
+      </div>
+    </vgr-card-column>
+  </vgr-card>
+
+  <hr/>
+
+  <vgr-card formGroupName="patient">
+    <vgr-card-column>
+      <div>
+        <div style="margin-bottom: 10px">
+          <div>Patient</div>
+          <vgr-input formControlName="label"></vgr-input>
+        </div>
+
+        <div style="margin-bottom: 10px">
+          <div>Kön</div>
+          <vgr-dropdown formControlName="gender" noItemSelectedLabel="Välj kön"
+                        [items]="genderDropdownItems"></vgr-dropdown>
+        </div>
+
+        <div style="margin-bottom: 7px">
+          <div>Permission/Teknisk plats</div>
+          <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
+                        [items]="leaveStatusesDropdownItems"></vgr-dropdown>
+        </div>
+      </div>
+    </vgr-card-column>
+    <vgr-card-column>
+      <div *ngIf="unit.hasLeftDateFeature" style="margin-bottom: 10px">
+        <div class="row-with-icon"><span>Gick hem</span> <span class="material-icons" appCallout="Gör sängen ledig">info</span></div>
+        <vgr-datepicker formControlName="leftDate"></vgr-datepicker>
+      </div>
+
+      <div style="margin-bottom: 10px">
+        <p>Planerad hemgång</p>
+        <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
+      </div>
+
+      <div *ngIf="unit.hasCarePlan">
+        <label for="carePlan">Vårdplan</label>
+        <vgr-input id="carePlan" formControlName="carePlan"></vgr-input>
+      </div>
+    </vgr-card-column>
+  </vgr-card>
+
+
+  <div class="clearfix button-row save-cancel-delete">
+    <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="cancel()"
+                     (save)="save()"></vgr-save-cancel>
+    <vgr-button class="error" (click)="openDeleteModal()">Radera</vgr-button>
+  </div>
+</form>

@@ -90,16 +90,19 @@ a.icon-link {
   text-decoration: none;
 }
 
-tbody td, thead th {
-  border-bottom: 1px solid #aaa;
-}
+.vpp-table {
+  tbody td, thead th {
+    border-bottom: 1px solid #aaa;
+  }
 
-td {
-  padding: 4px 8px;
-}
+  td {
+    padding: 4px 8px;
+  }
 
-th {
-  font-weight: bold;
+  th {
+    font-weight: bold;
+  }
+
 }
 
 @font-face {
@@ -112,4 +115,15 @@ th {
   url(assets/font/MaterialIcons-Regular.woff2) format('woff2'),
   url(assets/font/MaterialIcons-Regular.woff) format('woff'),
   url(assets/font/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  overflow: hidden;
+  width: 24px;
+}
+
+.row-with-icon {
+  .material-icons {
+    position: absolute;
+  }
 }

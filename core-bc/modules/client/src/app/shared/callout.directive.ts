@@ -39,9 +39,11 @@ export class CalloutDirective implements OnDestroy{
   {
     this.calloutRef = this.createCallout(this.appCallout);
     let calloutEl = this.calloutRef.location.nativeElement;
-    let targetPos = this.elementRef.nativeElement.offsetLeft;
-    calloutEl.style.left = targetPos.x + 'px';
-    calloutEl.style.top = targetPos.y + 'px';
+    let targetPosX = this.elementRef.nativeElement.offsetLeft;
+    let targetPosY = this.elementRef.nativeElement.offsetTop;
+
+    calloutEl.style.left = (targetPosX + this.elementRef.nativeElement.offsetWidth + 12) + 'px';
+    calloutEl.style.top = (targetPosY) + 'px';
   }
 
   @HostListener('mouseleave') onmouseleave(){

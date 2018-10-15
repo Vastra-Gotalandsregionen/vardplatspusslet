@@ -9,126 +9,80 @@
 
   <vgr-page-body>
 
-    <vgr-page-block>
-      <form *ngIf="unit" [formGroup]="bedForm">
+    <vgr-page-block *ngIf="inited">
 
-        <div *ngIf="showChangeBedOrder">
-          <p>Dra och släpp sängarna och spara sedan.</p>
-          <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
-            <div class="order-row" *ngFor="let bed of unit.beds">
-              {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
-            </div>
-          </div>
-
-          <div class="button-row">
-            <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
-                             (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
+      <div *ngIf="showChangeBedOrder">
+        <p>Dra och släpp sängarna och spara sedan.</p>
+        <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
+          <div class="order-row" *ngFor="let bed of unit.beds">
+            {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
           </div>
         </div>
 
-        <div *ngIf="!showChangeBedOrder">
-          <vgr-list [flexibleHeader]="true">
-            <vgr-list-header>
-              <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
-              <vgr-list-column-header width="2">SSK</vgr-list-column-header>
-              <vgr-list-column-header width="3">Status</vgr-list-column-header>
-              <vgr-list-column-header width="3">Patient</vgr-list-column-header>
-              <vgr-list-column-header width="3">Kön</vgr-list-column-header>
-              <vgr-list-column-header width="4">Status</vgr-list-column-header>
-            </vgr-list-header>
+        <div class="button-row">
+          <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
+                           (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
+        </div>
+      </div>
 
-            <vgr-list-item *ngFor="let bed of unit.beds" (expandedChanged)="setCurrentBed($event, bed)" #theListItem>
+      <div *ngIf="!showChangeBedOrder">
+        <vgr-list [flexibleHeader]="true">
+          <vgr-list-header>
+            <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
+            <vgr-list-column-header width="2">SSK</vgr-list-column-header>
+            <vgr-list-column-header width="3">Status</vgr-list-column-header>
+            <vgr-list-column-header width="3">Patient</vgr-list-column-header>
+            <vgr-list-column-header width="3">Kön</vgr-list-column-header>
+            <vgr-list-column-header width="4">Status</vgr-list-column-header>
+          </vgr-list-header>
 
-              <vgr-list-item-header>
-                <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
-                <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
-                <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
-                <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
-                <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
-                <vgr-list-column width="4" #mydiv>
-                  <div class="tooltip" *ngIf="bed.patient?.plannedLeaveDate != null"
-                       appCallout  [appCallout]="bed.patient?.plannedLeaveDate" style><span class="material-icons ike">home</span>
-                  </div>
-                </vgr-list-column>
-              </vgr-list-item-header>
+          <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
 
-              <vgr-list-item-content [indentContent]="true">
-
-                <vgr-card>
-                  <vgr-card-column>
-                    <label for="bedName">Namn:</label>
-                    <vgr-input id="bedName" formControlName="label"></vgr-input>
-                    <div style="margin-bottom: 7px">
-                      <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
-                    </div>
-
-                  </vgr-card-column>
-                  <vgr-card-column>
-                    <label for="sskDropdown">SSK / Vårdlag:</label>
-                    <vgr-dropdown id="sskDropdown" formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
-                  </vgr-card-column>
-                </vgr-card>
-
-                <hr/>
-
-                <vgr-card formGroupName="patient">
-                  <vgr-card-column>
-                    <div>
-                      <div style="margin-bottom: 10px">
-                        <div>Patient</div>
-                        <vgr-input formControlName="label"></vgr-input>
-                      </div>
-
-                      <div style="margin-bottom: 10px">
-                        <div>Kön</div>
-                        <vgr-dropdown formControlName="gender" noItemSelectedLabel="Välj kön"
-                                      [items]="genderDropdownItems"></vgr-dropdown>
-                      </div>
-
-                      <div style="margin-bottom: 7px">
-                        <div>Permission/Teknisk plats</div>
-                        <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
-                                      [items]="leaveStatusesDropdownItems"></vgr-dropdown>
-                      </div>
-                    </div>
-                  </vgr-card-column>
-                  <vgr-card-column>
-                    <div *ngIf="unit.hasLeftDateFeature" style="margin-bottom: 10px">
-                      <p>Gick hem</p>
-                      <vgr-datepicker formControlName="leftDate"></vgr-datepicker>
-                    </div>
-
-                    <div style="margin-bottom: 10px">
-                      <p>Planerad hemgång</p>
-                      <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
-                    </div>
-
-                    <div *ngIf="unit.hasCarePlan">
-                      <label for="carePlan">Vårdplan</label>
-                      <vgr-input id="carePlan" formControlName="carePlan"></vgr-input>
-                    </div>
-                  </vgr-card-column>
-                </vgr-card>
-
-
-                <div class="clearfix button-row save-cancel-delete">
-                  <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(theListItem)"
-                                   (save)="save()"></vgr-save-cancel>
-                  <vgr-button class="error" (click)="openDeleteModal(bed)">Radera</vgr-button>
+            <vgr-list-item-header>
+              <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
+              <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
+              <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
+              <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
+              <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
+              <vgr-list-column width="4" #mydiv>
+                <div class="tooltip" *ngIf="bed.patient?.plannedLeaveDate != null"
+                     appCallout  [appCallout]="bed.patient?.plannedLeaveDate" style><span class="material-icons ike">home</span>
                 </div>
+                <div class="tooltip" *ngIf="bed.patient?.carePlan?.length > 0"
+                      [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons">list_alt</span>
+                </div>
+              </vgr-list-column>
+            </vgr-list-item-header>
 
-              </vgr-list-item-content>
+            <vgr-list-item-content [indentContent]="true">
 
-            </vgr-list-item>
+              <app-bed-form [clinicId]="clinic.id"
+                            [unit]="unit"
+                            [bed]="bed"
+                            [genderDropdownItems]="genderDropdownItems"
+                            [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
+                            [sskDropdownItems]="sskDropdownItems"
+                            (collapse)="collapse(theListItem)"
+                            (openDeleteModal)="openDeleteModal(bed)"
+                            (save)="ngOnInit()"
+                            *ngIf="theListItem.expanded"> <!-- Speeds up page performance -->
 
-            <vgr-list-item (expandedChanged)="setCurrentBed($event, null)" #addListItem>
-              <vgr-list-item-header>
-                <vgr-list-column width="5">
-                  <div class="add-row vgr-icon-plus">Lägg till säng</div>
-                </vgr-list-column>
-              </vgr-list-item-header>
+              </app-bed-form>
 
-              <vgr-list-item-content [indentContent]="true">
+
+            </vgr-list-item-content>
+
+          </vgr-list-item>
+
+          <vgr-list-item #addListItem>
+            <vgr-list-item-header>
+              <vgr-list-column width="5">
+                <div class="add-row vgr-icon-plus">Lägg till säng</div>
+              </vgr-list-column>
+            </vgr-list-item-header>
+
+            <vgr-list-item-content [indentContent]="true">
+              <form [formGroup]="addBedForm">
                 <div>
                   <div>Benämning</div>
                   <input formControlName="label"/>
@@ -136,18 +90,18 @@
 
                 <div class="clearfix button-row">
                   <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(addListItem)"
-                                   (save)="save()"></vgr-save-cancel>
+                                   (save)="saveAddBed()"></vgr-save-cancel>
                 </div>
-              </vgr-list-item-content>
-            </vgr-list-item>
-          </vgr-list>
 
-          <div class="button-row">
-            <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
-          </div>
+              </form>
+            </vgr-list-item-content>
+          </vgr-list-item>
+        </vgr-list>
+
+        <div class="button-row">
+          <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
         </div>
-
-      </form>
+      </div>
 
       <div *ngIf="!unit && !error">
         <vgr-loader [small]="false"></vgr-loader>
@@ -186,7 +140,7 @@
     </vgr-page-block>
 
     <vgr-page-block *ngIf="unit?.ssks.length > 0">
-      <table>
+      <table class="vpp-table">
         <thead>
         <tr>
           <th>Vårdlag</th>

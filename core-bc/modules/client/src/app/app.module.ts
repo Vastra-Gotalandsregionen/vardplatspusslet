@@ -23,6 +23,7 @@ import {UnitsAdminFormComponent} from './view/admin/units-admin/units-admin-form
 import {CalloutComponent} from './shared/callout.component';
 import {CalloutDirective} from './shared/callout.directive';
 import {AppRoutingModule} from "./app-routing.module";
+import {BedFormComponent} from './view/unit/bed-form/bed-form.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -40,7 +41,8 @@ registerLocaleData(localeSv, "sv-SE");
     UsersAdminComponent,
     UnitsAdminFormComponent,
     CalloutComponent,
-    CalloutDirective
+    CalloutDirective,
+    BedFormComponent
   ],
   imports: [
     BrowserModule,

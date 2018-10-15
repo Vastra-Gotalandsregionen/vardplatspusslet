@@ -34,7 +34,7 @@
 
     <vgr-card-column>
       <vgr-card-section [expanded]="true" [title]="'Vårdlag'" [subtitle]="">
-        <table *ngIf="!editSsks">
+        <table class="vpp-table" *ngIf="!editSsks">
 
           <tr *ngFor="let ssk of unit?.ssks || []">
             <td>{{ssk.label}}</td>
