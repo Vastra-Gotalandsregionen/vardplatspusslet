@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
+import {Clinic} from "../../../domain/clinic";
 
 @Component({
   selector: 'app-units-admin',
@@ -15,6 +16,7 @@ export class UnitsAdminComponent implements OnInit {
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
 
   unitForDeletion: Unit;
+  clinics: Clinic[];
 
   constructor(private http: HttpClient) {}
 
@@ -23,6 +25,11 @@ export class UnitsAdminComponent implements OnInit {
     this.http.get<Unit[]>('/api/unit')
       .subscribe((units: Unit[]) => {
         this.units = units;
+      });
+
+    this.http.get<Clinic[]>('/api/clinic')
+      .subscribe((clinics: Clinic[]) => {
+        this.clinics = clinics;
       });
   }
 

@@ -19,8 +19,25 @@ export class UnitComponent implements OnInit {
 
   unit: Unit;
   clinic: Clinic;
+
   genderDropdownItems: DropdownItem<string>[];
   sskDropdownItems: DropdownItem<number>[];
+  leaveStatusesDropdownItems = [
+    {
+      displayName: 'Permission', value: 'PERMISSION'
+    },
+    {
+      displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'
+    },
+    {
+      displayName: 'Tillfällig hemgång', value: 'TILLFÄLLIG_HEMGÅNG'
+    },
+    {
+      displayName: 'Bebis???', value: 'BEBIS'
+    },
+    {
+      displayName: 'Föräldrarum', value: 'FÖRÄLDRARUM'
+    }];
 
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
@@ -163,7 +180,8 @@ export class UnitComponent implements OnInit {
         leaveStatus: [bed.patient ? bed.patient.leaveStatus : null],
         gender: [bed.patient ? bed.patient.gender : null],
         leftDate: [bed.patient ? bed.patient.leftDate : null],
-        plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null]
+        plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null],
+        carePlan: [bed.patient ? bed.patient.carePlan : null]
       }),
       ssk: bed.ssk ? bed.ssk.id : null
     });
@@ -185,7 +203,8 @@ export class UnitComponent implements OnInit {
         leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
         gender: bed.patient ? bed.patient.gender : null,
         leftDate: bed.patient ? bed.patient.leftDate : null,
-        plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null
+        plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null,
+        carePlan: [bed.patient ? bed.patient.carePlan : null]
       },
       ssk: bed.ssk ? bed.ssk.id : null
     });
@@ -231,7 +250,8 @@ export class UnitComponent implements OnInit {
       bed.patient.leaveStatus = bedModel.patient.leaveStatus;
       bed.patient.leftDate = bedModel.patient.leftDate;
       bed.patient.gender = bedModel.patient.gender ? bedModel.patient.gender : null;
-      bed.patient.plannedLeaveDate = bedModel.patient.plannedLeaveDate ? bedModel.patient.plannedLeaveDate: null;
+      bed.patient.plannedLeaveDate = bedModel.patient.plannedLeaveDate ? bedModel.patient.plannedLeaveDate : null;
+      bed.patient.carePlan = bedModel.patient.carePlan ? bedModel.patient.carePlan : null;
     } else {
       bed.patient = null;
     }
@@ -283,7 +303,7 @@ export class UnitComponent implements OnInit {
     return this.unit.beds.map(bed => bed.ssk).filter(ssk => ssk ? ssk.id === sskArg.id : false).length;
   }
 
-  // To initial capital letter and lower case after first letter.
+  // To initial capital letter and lower case after first letter. Also replace underscore with space.
   format(input: string) {
     if (!input) {
       return null;
@@ -293,6 +313,6 @@ export class UnitComponent implements OnInit {
       return '';
     }
 
-    return input.substr(0, 1).toUpperCase() + input.substr(1, input.length - 1).toLowerCase();
+    return input.substr(0, 1).toUpperCase() + input.substr(1, input.length - 1).toLowerCase().replace('_', ' ');
   }
 }

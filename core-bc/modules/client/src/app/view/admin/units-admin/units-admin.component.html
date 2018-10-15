@@ -23,10 +23,14 @@
 
           <vgr-list-item-content>
             <app-units-admin-form [unit]="unit"
+                                  [clinics]="clinics"
                                   [showId]="false"
                                   [showDelete]="true"
                                   (cancelEvent)="theListItem.setExpandOrCollapsed()"
-                                  (openDeleteEvent)="openDeleteModal(unit)" (saveEvent)="save()">
+                                  (openDeleteEvent)="openDeleteModal(unit)"
+                                  (saveEvent)="save()"
+                                  *ngIf="clinics"
+            >
 
             </app-units-admin-form>
           </vgr-list-item-content>

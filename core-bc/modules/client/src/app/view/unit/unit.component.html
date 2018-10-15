@@ -30,7 +30,7 @@
           <vgr-list [flexibleHeader]="true">
             <vgr-list-header>
               <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
-              <vgr-list-column-header width="1">SSK</vgr-list-column-header>
+              <vgr-list-column-header width="2">SSK</vgr-list-column-header>
               <vgr-list-column-header width="3">Status</vgr-list-column-header>
               <vgr-list-column-header width="3">Patient</vgr-list-column-header>
               <vgr-list-column-header width="3">Kön</vgr-list-column-header>
@@ -41,7 +41,7 @@
 
               <vgr-list-item-header>
                 <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
-                <vgr-list-column width="1"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
+                <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
                 <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
                 <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
                 <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
@@ -64,7 +64,8 @@
 
                   </vgr-card-column>
                   <vgr-card-column>
-                    <vgr-dropdown formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
+                    <label for="sskDropdown">SSK / Vårdlag:</label>
+                    <vgr-dropdown id="sskDropdown" formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
                   </vgr-card-column>
                 </vgr-card>
 
@@ -87,7 +88,7 @@
                       <div style="margin-bottom: 7px">
                         <div>Permission/Teknisk plats</div>
                         <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
-                                      [items]="[{displayName: 'Permission', value: 'PERMISSION'}, {displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'}]"></vgr-dropdown>
+                                      [items]="leaveStatusesDropdownItems"></vgr-dropdown>
                       </div>
                     </div>
                   </vgr-card-column>
@@ -100,6 +101,11 @@
                     <div style="margin-bottom: 10px">
                       <p>Planerad hemgång</p>
                       <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
+                    </div>
+
+                    <div *ngIf="unit.hasCarePlan">
+                      <label for="carePlan">Vårdplan</label>
+                      <vgr-input id="carePlan" formControlName="carePlan"></vgr-input>
                     </div>
                   </vgr-card-column>
                 </vgr-card>

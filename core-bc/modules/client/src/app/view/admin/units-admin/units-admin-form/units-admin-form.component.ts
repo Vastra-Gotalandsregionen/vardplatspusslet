@@ -15,12 +15,11 @@ export class UnitsAdminFormComponent implements OnInit {
   @Input('showId') showId: boolean;
   @Input('showDelete') showDelete: boolean;
   @Input('unit') unit: Unit;
+  @Input('clinics') clinics: Clinic[] = [];
 
   @Output() openDeleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
   @Output() saveEvent: EventEmitter<any> = new EventEmitter();
-
-  clinics: Clinic[] = [];
 
   unitForm: FormGroup;
 
@@ -33,19 +32,14 @@ export class UnitsAdminFormComponent implements OnInit {
 
   ngOnInit() {
 
-    this.http.get<Clinic[]>('/api/clinic')
-      .subscribe((clinics: Clinic[]) => {
-        this.clinics = clinics;
+    this.clinicDropdownItems = this.clinics.map((clinic) => {
+      return {
+        displayName: clinic.name,
+        value: clinic.id
+      }
+    });
 
-        this.clinicDropdownItems = clinics.map((clinic) => {
-          return {
-            displayName: clinic.name,
-            value: clinic.id
-          }
-        });
-
-        this.initUnitForm(this.unit);
-      });
+    this.initUnitForm(this.unit);
   }
 
   private initUnitForm(unit: Unit) {
@@ -59,7 +53,8 @@ export class UnitsAdminFormComponent implements OnInit {
       name: [unit.name],
       clinic: [unit.clinic ? unit.clinic.id : null],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
-      hasLeftDateFeature: [unit.hasLeftDateFeature]
+      hasLeftDateFeature: [unit.hasLeftDateFeature],
+      hasCarePlan: unit.hasCarePlan
     });
 
   }
@@ -75,7 +70,8 @@ export class UnitsAdminFormComponent implements OnInit {
       name: unit.name ? unit.name : null,
       clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
-      hasLeftDateFeature: unit.hasLeftDateFeature
+      hasLeftDateFeature: unit.hasLeftDateFeature,
+      hasCarePlan: unit.hasCarePlan
     });
 
   }
@@ -109,6 +105,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.id = unitModel.id;
     unit.name = unitModel.name;
     unit.hasLeftDateFeature = unitModel.hasLeftDateFeature;
+    unit.hasCarePlan = unitModel.hasCarePlan;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();

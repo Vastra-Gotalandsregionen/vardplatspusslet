@@ -47,6 +47,9 @@ public class Unit {
     @Column
     private Boolean hasLeftDateFeature;
 
+    @Column
+    private Boolean hasCarePlan;
+
     public Unit() {
     }
 
@@ -104,5 +107,13 @@ public class Unit {
 
     public void setHasLeftDateFeature(Boolean hasLeftDateFeature) {
         this.hasLeftDateFeature = hasLeftDateFeature;
+    }
+
+    public Boolean getHasCarePlan() {
+        return hasCarePlan;
+    }
+
+    public void setHasCarePlan(Boolean hasCarePlan) {
+        this.hasCarePlan = hasCarePlan;
     }
 }

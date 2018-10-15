@@ -11,4 +11,5 @@ export class Unit {
   patients: Patient[];
   ssks: Ssk[];
   hasLeftDateFeature: boolean;
+  hasCarePlan: boolean;
 }

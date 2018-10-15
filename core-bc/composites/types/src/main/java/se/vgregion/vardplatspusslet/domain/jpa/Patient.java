@@ -44,6 +44,9 @@ public class Patient {
     @Temporal(TemporalType.DATE)
     private Date leftDate;
 
+    @Column
+    private String carePlan;
+
     public Long getId() {
         return id;
     }
@@ -106,6 +109,14 @@ public class Patient {
 
     public void setLeftDate(Date leftDate) {
         this.leftDate = leftDate;
+    }
+
+    public String getCarePlan() {
+        return carePlan;
+    }
+
+    public void setCarePlan(String carePlan) {
+        this.carePlan = carePlan;
     }
 
     @Override
