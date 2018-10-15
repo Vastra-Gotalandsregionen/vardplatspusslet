@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ssk")
-public class Ssk {
+public class Ssk implements Comparable<Ssk> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -54,4 +54,8 @@ public class Ssk {
         this.color = color;
     }
 
+    @Override
+    public int compareTo(Ssk o) {
+        return this.label.compareTo(o.getLabel());
+    }
 }

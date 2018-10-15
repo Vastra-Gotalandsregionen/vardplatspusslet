@@ -25,51 +25,15 @@ export class BedFormComponent implements OnInit {
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
-  @Input('leaveStatusesDropdownItems') leaveStatusesDropdownItems = [
-    {
-      displayName: 'Permission', value: 'PERMISSION'
-    },
-    {
-      displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'
-    },
-    {
-      displayName: 'Tillfällig hemgång', value: 'TILLFÄLLIG_HEMGÅNG'
-    },
-    {
-      displayName: 'Bebis???', value: 'BEBIS'
-    },
-    {
-      displayName: 'Föräldrarum', value: 'FÖRÄLDRARUM'
-    }];
+  @Input('leaveStatusesDropdownItems') leaveStatusesDropdownItems: DropdownItem<string>;
+  @Input('servingKlinikerDropdownItems') servingKlinikerDropdownItems: DropdownItem<number>[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-
-    /*this.http.get<Unit>('/api/unit/' + this.clinicId + '/' + this.unitId).subscribe(unit => {
-      if (unit) {*/
-    // this.unit = unit;
-
-    /*this.sskDropdownItems = this.unit.ssks.map(ssk => {
-      return {displayName: ssk.label, value: ssk.id};
-    });*/
-
-    // this.updateVacants(unit);
-
     this.initForm(this.bed);
-    // } else {
-    // this.error = this.notFoundText;
-    // }
-    /*}, (error1: HttpErrorResponse) => {
-      console.log(error1);
-      /!*if (error1.status === 404) {
-        this.error = this.notFoundText;
-      } else {
-        this.error = error1.message;
-      }*!/
-    });*/
   }
 
   private initForm(bed: Bed) {
@@ -90,7 +54,9 @@ export class BedFormComponent implements OnInit {
         plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null],
         carePlan: [bed.patient ? bed.patient.carePlan : null]
       }),
-      ssk: bed.ssk ? bed.ssk.id : null
+      ssk: bed.ssk ? bed.ssk.id : null,
+      servingKlinik: [bed.servingClinic!= null ? bed.servingClinic.id: null],
+      waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
     });
 
   }
@@ -113,27 +79,11 @@ export class BedFormComponent implements OnInit {
         plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null,
         carePlan: [bed.patient ? bed.patient.carePlan : null]
       },
-      ssk: bed.ssk ? bed.ssk.id : null
+      ssk: bed.ssk ? bed.ssk.id : null,
+      servingKlinik: [bed.servingClinic!= null ? bed.servingClinic.id: null],
+      waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
     });
   }
-
-  /*changeBedOrder() {
-    this.bedsOrder = this.unit.beds;
-    this.showChangeBedOrder = true;
-  }
-
-  hideChangeBedOrder() {
-    this.showChangeBedOrder = false;
-  }
-
-  saveBedOrder() {
-    this.unit.beds = this.bedsOrder;
-    this.showChangeBedOrder = false;
-    this.http.put('/api/unit', this.unit)
-      .subscribe(unit => {
-
-      });
-  }*/
 
   save() {
     let bed = new Bed();
@@ -159,6 +109,11 @@ export class BedFormComponent implements OnInit {
     if (bedModel.ssk) {
       bed.ssk = this.unit.ssks.find(ssk => ssk.id === bedModel.ssk);
     }
+
+    if (bedModel.servingKlinik) {
+      bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.servingKlinik);
+    }
+    bed.patientWaits = bedModel.waitingpatient;
 
     this.http.put('/api/bed/' + this.clinicId + '/' + this.unit.id, bed)
       .subscribe(bed => {

@@ -1,5 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+
+import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ClinicComponent} from './view/clinic/clinic.component';
 import {HomeComponent} from './view/home/home.component';
@@ -22,7 +24,7 @@ import localeSv from "@angular/common/locales/sv";
 import {UnitsAdminFormComponent} from './view/admin/units-admin/units-admin-form/units-admin-form.component';
 import {CalloutComponent} from './shared/callout.component';
 import {CalloutDirective} from './shared/callout.directive';
-import {AppRoutingModule} from "./app-routing.module";
+import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {BedFormComponent} from './view/unit/bed-form/bed-form.component';
 
 registerLocaleData(localeSv, "sv-SE");
@@ -54,6 +56,7 @@ registerLocaleData(localeSv, "sv-SE");
     ReactiveFormsModule,
     DragulaModule.forRoot(),
     AppRoutingModule,
+    AngularFontAwesomeModule
   ],
   entryComponents: [
     CalloutComponent

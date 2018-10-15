@@ -13,6 +13,12 @@
         <label for="sskDropdown">SSK / Vårdlag:</label>
         <vgr-dropdown id="sskDropdown" formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
       </div>
+
+      <div style="margin-bottom: 7px">
+        <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
+        <vgr-dropdown  *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="servingKlinik" noItemSelectedLabel="Välj klinik"
+                       [items]="servingKlinikerDropdownItems"></vgr-dropdown>
+      </div>
     </vgr-card-column>
   </vgr-card>
 

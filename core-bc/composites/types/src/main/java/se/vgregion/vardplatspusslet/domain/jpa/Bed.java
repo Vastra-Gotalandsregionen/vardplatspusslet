@@ -35,6 +35,13 @@ public class Bed {
     @ManyToOne(fetch = FetchType.EAGER)
     private Ssk ssk;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private ServingClinic servingClinic;
+
+    @Column
+    private Boolean patientWaits;
+
+
     public Bed() {
     }
 
@@ -76,6 +83,22 @@ public class Bed {
 
     public void setSsk(Ssk ssk) {
         this.ssk = ssk;
+    }
+
+    public ServingClinic getServingClinic() {
+        return servingClinic;
+    }
+
+    public void setServingClinic(ServingClinic servingClinic) {
+        this.servingClinic = servingClinic;
+    }
+
+    public Boolean getPatientWaits() {
+        return patientWaits;
+    }
+
+    public void setPatientWaits(Boolean patientWaits) {
+        this.patientWaits = patientWaits;
     }
 
     @Override

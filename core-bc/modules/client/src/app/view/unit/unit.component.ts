@@ -21,6 +21,7 @@ export class UnitComponent implements OnInit {
   clinic: Clinic;
 
   genderDropdownItems: DropdownItem<string>[];
+  servingKlinikerDropdownItems: DropdownItem<number>[];
   sskDropdownItems: DropdownItem<number>[];
   leaveStatusesDropdownItems = [
     {
@@ -69,7 +70,6 @@ export class UnitComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.route.params.subscribe(params => {
 
       let clinicId = params.clinicId;
@@ -82,9 +82,13 @@ export class UnitComponent implements OnInit {
         if (unit) {
           this.unit = unit;
 
-          this.sskDropdownItems = unit.ssks.map(ssk => {
+          this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
             return {displayName: ssk.label, value: ssk.id};
-          });
+          }));
+
+         this.servingKlinikerDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.servingClinics.map(klinik => {
+            return {displayName: klinik.name, value: klinik.id};
+          }));
 
           this.updateVacants(unit);
 

@@ -30,6 +30,9 @@ public class Unit {
     @ManyToOne(fetch = FetchType.EAGER)
     private Clinic clinic;
 
+    @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ServingClinic> servingClinics = new TreeSet<>();
+
     @Column
     private String name;
 
@@ -40,9 +43,8 @@ public class Unit {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Patient> patients = new TreeSet<>();
 
-    @OrderColumn(name = "orderSsks")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ssk> ssks = new ArrayList<>();
+    private Set<Ssk> ssks = new TreeSet<>();
 
     @Column
     private Boolean hasLeftDateFeature;
@@ -93,11 +95,19 @@ public class Unit {
         this.patients = vacantPatients;
     }
 
-    public List<Ssk> getSsks() {
+    public Set<ServingClinic> getServingClinics() {
+        return servingClinics;
+    }
+
+    public void setServingClinics(Set<ServingClinic> servingClinics) {
+        this.servingClinics = servingClinics;
+    }
+
+    public Set<Ssk> getSsks() {
         return ssks;
     }
 
-    public void setSsks(List<Ssk> ssks) {
+    public void setSsks(Set<Ssk> ssks) {
         this.ssks = ssks;
     }
 

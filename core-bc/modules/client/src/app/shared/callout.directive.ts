@@ -12,9 +12,6 @@ import {
 
 import {CalloutComponent} from './callout.component';
 
-class Point {
-  constructor(public x: number, public y: number) {};
-}
 
 @Directive({
   selector: '[appCallout]'
