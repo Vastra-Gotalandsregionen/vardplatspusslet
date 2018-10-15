@@ -45,13 +45,17 @@
                 <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
                 <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
                 <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
-                <vgr-list-column width="4" #mydiv>
+                <vgr-list-column width="4">
                   <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
-                       appCallout  [appCallout]="bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
+                       appCallout  [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
                   </div>
 
-                  <div  class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
-                        appCallout  [appCallout]="bed.patient?.plannedLeaveDate"><i class="fa fa-wheelchair rod"></i>
+                  <div  class="ikon" *ngIf="unit.servingClinics.length != 0"
+                        appCallout  [appCallout]="'Ny patient väntar från: ' + bed.servingClinic?.name"><i class="fa fa-wheelchair rod"></i>
+                  </div>
+
+                  <div  class="ikon" *ngIf="unit.servingClinics.length == 0 && bed.patientWaits === true"
+                        appCallout  [appCallout]="'Ny patient väntar'"><i class="fa fa-wheelchair rod"></i>
                   </div>
                 </vgr-list-column>
               </vgr-list-item-header>
@@ -68,7 +72,14 @@
 
                   </vgr-card-column>
                   <vgr-card-column>
+                    <div style="margin-bottom: 7px">
                     <vgr-dropdown formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
+                    </div>
+                    <div style="margin-bottom: 7px">
+                      <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
+                        <vgr-dropdown  *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="servingKlinik" noItemSelectedLabel="Välj klinik"
+                                       [items]="servingKlinikerDropdownItems"></vgr-dropdown>
+                    </div>
                   </vgr-card-column>
                 </vgr-card>
 
@@ -107,9 +118,9 @@
                     </div>
 
                     <div style="margin-bottom: 7px">
-                      <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
-                      <vgr-dropdown  formControlName="kliniker" noItemSelectedLabel="Välj klinik"
-                                     [items]="genderDropdownItems"></vgr-dropdown>
+                    <!--  <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
+                      <vgr-dropdown  formControlName="servingKlinik" noItemSelectedLabel="Välj klinik"
+                                     [items]="genderDropdownItems"></vgr-dropdown>-->
                     </div>
                   </vgr-card-column>
                 </vgr-card>

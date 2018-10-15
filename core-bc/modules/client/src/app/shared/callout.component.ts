@@ -14,7 +14,7 @@ import {
   styles: [`
     :host {
       visibility: visible;
-      width: 120px;
+      width: 240px;
       background-color: royalblue;
       color: #fff;
       text-align: center;

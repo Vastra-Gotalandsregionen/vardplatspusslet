@@ -1,5 +1,6 @@
 import {Patient} from "./patient";
 import {Ssk} from "./ssk";
+import {ServingClinic} from "./servingclinic";
 
 export class Bed {
   id: number;
@@ -7,4 +8,6 @@ export class Bed {
   occupied: boolean;
   patient: Patient;
   ssk: Ssk;
+  servingClinic: ServingClinic;
+  patientWaits: boolean;
 }

@@ -20,6 +20,7 @@ export class UnitComponent implements OnInit {
   unit: Unit;
   clinic: Clinic;
   genderDropdownItems: DropdownItem<string>[];
+  servingKlinikerDropdownItems: DropdownItem<number>[];
   sskDropdownItems: DropdownItem<number>[];
 
   error: string;
@@ -51,7 +52,6 @@ export class UnitComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.route.params.subscribe(params => {
 
       let clinicId = params.clinicId;
@@ -64,9 +64,13 @@ export class UnitComponent implements OnInit {
         if (unit) {
           this.unit = unit;
 
-          this.sskDropdownItems = unit.ssks.map(ssk => {
+          this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
             return {displayName: ssk.label, value: ssk.id};
-          });
+          }));
+
+         this.servingKlinikerDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.servingClinics.map(klinik => {
+            return {displayName: klinik.name, value: klinik.id};
+          }));
 
           this.updateVacants(unit);
 
@@ -165,7 +169,9 @@ export class UnitComponent implements OnInit {
         leftDate: [bed.patient ? bed.patient.leftDate : null],
         plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null]
       }),
-      ssk: bed.ssk ? bed.ssk.id : null
+      ssk: bed.ssk ? bed.ssk.id : null,
+      servingKlinik: [bed.servingClinic!= null ? bed.servingClinic.id: null],
+      waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
     });
 
   }
@@ -186,8 +192,11 @@ export class UnitComponent implements OnInit {
         gender: bed.patient ? bed.patient.gender : null,
         leftDate: bed.patient ? bed.patient.leftDate : null,
         plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null
+
       },
-      ssk: bed.ssk ? bed.ssk.id : null
+      ssk: bed.ssk ? bed.ssk.id : null,
+      servingKlinik: bed.servingClinic!= null ? bed.servingClinic.id: null,
+      waitingpatient: bed.patientWaits ? bed.patientWaits: null
     });
   }
 
@@ -222,7 +231,7 @@ export class UnitComponent implements OnInit {
 
     bed.id = bedModel.id;
     bed.label = bedModel.label;
-    bed.occupied = !!bedModel.occupied;
+    bed.occupied = bedModel.occupied;
 
     if (bedModel.patient.label) {
       bed.patient = new Patient();
@@ -239,6 +248,11 @@ export class UnitComponent implements OnInit {
     if (bedModel.ssk) {
       bed.ssk = this.unit.ssks.find(ssk => ssk.id === bedModel.ssk);
     }
+    if (bedModel.servingKlinik) {
+      bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.servingKlinik);
+    }
+debugger;
+    bed.patientWaits = bedModel.waitingpatient;
 
     this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {

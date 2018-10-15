@@ -1,16 +1,10 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Patrik Björk
@@ -34,6 +28,13 @@ public class Bed {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Ssk ssk;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private ServingClinic servingClinic;
+
+    @Column
+    private Boolean patientWaits;
+
 
     public Bed() {
     }
@@ -76,6 +77,22 @@ public class Bed {
 
     public void setSsk(Ssk ssk) {
         this.ssk = ssk;
+    }
+
+    public ServingClinic getServingClinic() {
+        return servingClinic;
+    }
+
+    public void setServingClinic(ServingClinic servingClinic) {
+        this.servingClinic = servingClinic;
+    }
+
+    public Boolean getPatientWaits() {
+        return patientWaits;
+    }
+
+    public void setPatientWaits(Boolean patientWaits) {
+        this.patientWaits = patientWaits;
     }
 
     @Override
