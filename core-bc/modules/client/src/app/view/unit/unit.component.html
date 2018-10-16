@@ -49,7 +49,7 @@
                      appCallout  [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
                 </div>
 
-                <div  class="ikon" *ngIf="unit.servingClinics.length != 0"
+                <div  class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null"
                       appCallout  [appCallout]="'Ny patient väntar från: ' + bed.servingClinic?.name"><i class="fa fa-wheelchair rod"></i>
                 </div>
 

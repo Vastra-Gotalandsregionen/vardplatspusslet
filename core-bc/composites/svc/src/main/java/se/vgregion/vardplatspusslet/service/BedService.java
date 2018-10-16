@@ -65,7 +65,8 @@ public class BedService {
         } else {
             Patient patient = bed.getPatient();
             Unit unit = unitRepository.findOne(unitId);
-
+            if(bed.getPatientWaits() == null || !bed.getPatientWaits())
+                bed.setServingClinic(null);
             if (patient != null) {
                 if (bed.getOccupied() == null || !bed.getOccupied()) {
                     // If there is a patient but it is set as unoccupied, the patient should be deleted.
@@ -85,7 +86,6 @@ public class BedService {
                     unitRepository.save(unit);
                 }
             }
-
             bedRepository.save(bed);
         }
     }

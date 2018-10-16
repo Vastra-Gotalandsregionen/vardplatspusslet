@@ -86,9 +86,9 @@ export class UnitComponent implements OnInit {
             return {displayName: ssk.label, value: ssk.id};
           }));
 
-         this.servingKlinikerDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.servingClinics.map(klinik => {
+         this.servingKlinikerDropdownItems = unit.servingClinics.map(klinik => {
             return {displayName: klinik.name, value: klinik.id};
-          }));
+          });
 
           this.updateVacants(unit);
 
