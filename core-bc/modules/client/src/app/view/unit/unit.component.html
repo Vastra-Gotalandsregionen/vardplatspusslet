@@ -49,13 +49,10 @@
                      appCallout  [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
                 </div>
 
-                <div  class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null"
-                      appCallout  [appCallout]="'Ny patient väntar från: ' + bed.servingClinic?.name"><i class="fa fa-wheelchair rod"></i>
+                <div  class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
+                      appCallout  [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'"><i class="fa fa-wheelchair rod"></i>
                 </div>
 
-                <div  class="ikon" *ngIf="unit.servingClinics.length == 0 && bed.patientWaits === true"
-                      appCallout  [appCallout]="'Ny patient väntar'"><i class="fa fa-wheelchair rod"></i>
-                </div>
 
                 <div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
                       [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons">list_alt</span>

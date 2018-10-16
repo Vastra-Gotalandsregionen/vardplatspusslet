@@ -55,8 +55,11 @@ export class BedFormComponent implements OnInit {
         carePlan: [bed.patient ? bed.patient.carePlan : null]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
-      servingKlinik: [bed.servingClinic!= null ? bed.servingClinic.id: null],
-      waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
+      waitingforbedGroup: this.formBuilder.group({
+        servingKlinik: [bed.servingClinic!= null ? bed.servingClinic.id: null],
+        waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
+        }
+      )
     });
 
   }
@@ -80,8 +83,10 @@ export class BedFormComponent implements OnInit {
         carePlan: [bed.patient ? bed.patient.carePlan : null]
       },
       ssk: bed.ssk ? bed.ssk.id : null,
-      servingKlinik: [bed.servingClinic!= null ? bed.servingClinic.id: null],
-      waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
+      waitingforbedGroup:{
+        servingKlinik: bed.servingClinic!= null ? bed.servingClinic.id: null,
+        waitingpatient: bed.patientWaits ? bed.patientWaits: null
+      }
     });
   }
 
@@ -110,10 +115,10 @@ export class BedFormComponent implements OnInit {
       bed.ssk = this.unit.ssks.find(ssk => ssk.id === bedModel.ssk);
     }
 
-    if (bedModel.servingKlinik) {
-      bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.servingKlinik);
+    if (bedModel.waitingforbedGroup.servingKlinik) {
+      bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.waitingforbedGroup.servingKlinik);
     }
-    bed.patientWaits = bedModel.waitingpatient;
+    bed.patientWaits = bedModel.waitingforbedGroup.waitingpatient;
 
     this.http.put('/api/bed/' + this.clinicId + '/' + this.unit.id, bed)
       .subscribe(bed => {
