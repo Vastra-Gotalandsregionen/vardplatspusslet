@@ -29,15 +29,6 @@ export class UnitComponent implements OnInit {
     },
     {
       displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'
-    },
-    {
-      displayName: 'Tillfällig hemgång', value: 'TILLFÄLLIG_HEMGÅNG'
-    },
-    {
-      displayName: 'Bebis???', value: 'BEBIS'
-    },
-    {
-      displayName: 'Föräldrarum', value: 'FÖRÄLDRARUM'
     }];
 
   error: string;
