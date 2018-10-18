@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Bed} from "../../../domain/bed";
 import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
-import {HttpClient} from "../../../../../node_modules/@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DropdownItem} from "vgr-komponentkartan";
 
