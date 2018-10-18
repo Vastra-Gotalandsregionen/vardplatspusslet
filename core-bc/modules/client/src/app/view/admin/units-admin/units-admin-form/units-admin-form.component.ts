@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {Unit} from "../../../../domain/unit";
 import {Clinic} from "../../../../domain/clinic";
 import {Ssk} from "../../../../domain/ssk";
+import {ServingClinic} from "../../../../domain/servingclinic";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -26,6 +27,7 @@ export class UnitsAdminFormComponent implements OnInit {
   clinicDropdownItems: { displayName: string; value: string }[] = [];
 
   editSsks: boolean;
+  editKlinik: boolean;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -54,7 +56,8 @@ export class UnitsAdminFormComponent implements OnInit {
       clinic: [unit.clinic ? unit.clinic.id : null],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       hasLeftDateFeature: [unit.hasLeftDateFeature],
-      hasCarePlan: unit.hasCarePlan
+      hasCarePlan: unit.hasCarePlan,
+      servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics))
     });
 
   }
@@ -71,7 +74,8 @@ export class UnitsAdminFormComponent implements OnInit {
       clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       hasLeftDateFeature: unit.hasLeftDateFeature,
-      hasCarePlan: unit.hasCarePlan
+      hasCarePlan: unit.hasCarePlan,
+      servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics))
     });
 
   }
@@ -85,7 +89,6 @@ export class UnitsAdminFormComponent implements OnInit {
   addSsk() {
     (this.unitForm.get('ssks') as FormArray).push(this.createSsk());
   }
-
   createSsk(): FormGroup {
     return this.formBuilder.group({
       id: null,
@@ -113,6 +116,7 @@ export class UnitsAdminFormComponent implements OnInit {
     }
 
     unit.ssks = unitModel.ssks;
+    unit.servingClinics = unitModel.servingClinics;
 
     this.http.put('/api/unit?keepBeds=true', unit)
       .subscribe(() => {
@@ -129,7 +133,6 @@ export class UnitsAdminFormComponent implements OnInit {
   }
 
   private toFormGroups(ssks: Ssk[]): FormGroup[] {
-
     if (!ssks || ssks.length === 0) {
       return [];
     }
@@ -141,5 +144,38 @@ export class UnitsAdminFormComponent implements OnInit {
         color: ssk.color
       })
     });
+  }
+
+  addServingClinic(){
+    this.servingClinics.push(this.CreateServingClinics());
+    //(this.unitForm.get('servingClinics') as FormArray).push(this.CreateServingClinics());
+  }
+
+  CreateServingClinics(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      name: null
+    });
+  }
+
+  private buildKlinikGroup(servingKliniks: ServingClinic[]): FormGroup[]
+  {
+    if (!servingKliniks || servingKliniks.length === 0) {
+      return [];
+    }
+    return servingKliniks.map(servingklinik => {
+      return this.formBuilder.group( {
+        id: servingklinik.id,
+        name: servingklinik.name
+      })
+    });
+  }
+
+  deleteServingClinic(index: number) {
+    this.servingClinics.removeAt(index);
+  }
+
+  get servingClinics(): FormArray{
+    return <FormArray>this.unitForm.get('servingClinics')
   }
 }

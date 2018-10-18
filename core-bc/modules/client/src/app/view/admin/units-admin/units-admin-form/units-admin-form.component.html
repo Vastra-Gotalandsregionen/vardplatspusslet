@@ -33,7 +33,7 @@
     </vgr-card-column>
 
     <vgr-card-column>
-      <vgr-card-section [expanded]="true" [title]="'Vårdlag'" [subtitle]="">
+      <vgr-card-section [expanded]="true" [title]="'Vårdlag'" [subtitle]="" class="clearfix">
         <table class="vpp-table" *ngIf="!editSsks">
 
           <tr *ngFor="let ssk of unit?.ssks || []">
@@ -57,6 +57,32 @@
           </div>
           <div>
             <a (click)="addSsk()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdlag</span></a>
+          </div>
+        </div>
+      </vgr-card-section>
+
+      <vgr-card-section [expanded]="true" [title]="'Ursprungs kliniker'" [subtitle]="" class="clearfix">
+        <table class="vpp-table" *ngIf="!editKlinik">
+
+          <tr *ngFor="let klinik of unit?.servingClinics || []">
+            <td>{{klinik.name}}</td>
+          </tr>
+
+          <tfoot>
+          <tr>
+            <td><a (click)="editKlinik = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+          </tfoot>
+        </table>
+
+        <div *ngIf="editKlinik">
+          <div formArrayName="servingClinics" *ngFor="let klinik of servingClinics.controls let i = index;" class="edit-ssk-row">
+            <div [formGroupName]="i">
+              <input formControlName="name" placeholder="Klinik..."/>
+              <a (click)="deleteServingClinic(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            </div>
+          </div>
+          <div>
+            <a (click)="addServingClinic()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till upsprungs klinik</span></a>
           </div>
         </div>
       </vgr-card-section>
