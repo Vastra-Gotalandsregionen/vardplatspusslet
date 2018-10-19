@@ -22,6 +22,8 @@ export class BedFormComponent implements OnInit {
   @Output('save') saveEvent = new EventEmitter();
 
   bedForm: FormGroup;
+  prevDate: Date;
+  prevInfo: string;
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -71,8 +73,19 @@ export class BedFormComponent implements OnInit {
     this.bedForm.get('patient.tolkGroup.interpreter').valueChanges
       .subscribe((checked: boolean) => {
         if (!checked || checked == null) {
+          this.prevDate = this.bedForm.get('patient.tolkGroup.interpretDate').value;
+          this.prevInfo = this.bedForm.get('patient.tolkGroup.interpretInfo').value;
           this.bedForm.get('patient.tolkGroup.interpretDate').setValue(null);
           this.bedForm.get('patient.tolkGroup.interpretInfo').setValue(null);
+        }
+        else if (checked)
+        {
+          if (this.bedForm.get('patient.tolkGroup.interpretDate').value == null
+          && this.bedForm.get('patient.tolkGroup.interpretInfo').value == null)
+          {
+            this.bedForm.get('patient.tolkGroup.interpretDate').setValue(this.prevDate);
+            this.bedForm.get('patient.tolkGroup.interpretInfo').setValue(this.prevInfo);
+          }
         }
       });
   }
