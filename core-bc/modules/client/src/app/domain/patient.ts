@@ -6,6 +6,9 @@ export class Patient {
   leftDate: Date;
   plannedLeaveDate: Date;
   carePlan: string;
+  interpreter: boolean;
+  interpretInfo: string;
+  interpretDate: Date;
 }
 
 enum LeaveStatus {

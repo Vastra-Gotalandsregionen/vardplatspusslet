@@ -47,6 +47,16 @@ public class Patient {
     @Column
     private String carePlan;
 
+    @Column
+    private Boolean interpreter;
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date interpretDate;
+
+    @Column
+    private String interpretInfo;
+
     public Long getId() {
         return id;
     }
@@ -118,6 +128,31 @@ public class Patient {
     public void setCarePlan(String carePlan) {
         this.carePlan = carePlan;
     }
+
+    public Date getInterpretDate() {
+        return interpretDate;
+    }
+
+    public Boolean getInterpreter() {
+        return interpreter;
+    }
+
+    public void setInterpreter(Boolean interpreter) {
+        this.interpreter = interpreter;
+    }
+
+    public void setInterpretDate(Date interpretDate) {
+        this.interpretDate = interpretDate;
+    }
+
+    public String getInterpretInfo() {
+        return interpretInfo;
+    }
+
+    public void setInterpretInfo(String interpretInfo) {
+        this.interpretInfo = interpretInfo;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -45,6 +45,17 @@
           <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
                         [items]="leaveStatusesDropdownItems"></vgr-dropdown>
         </div>
+
+        <div style="margin-bottom: 10px">
+          <p>Tolk</p>
+          <div class="tolk" formGroupName="tolkGroup">
+            <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
+            <vgr-datepicker formControlName="interpretDate"></vgr-datepicker>
+            <vgr-input formControlName="interpretInfo" id = "comment"></vgr-input>
+          </div>
+          
+
+        </div>
       </div>
     </vgr-card-column>
     <vgr-card-column>
