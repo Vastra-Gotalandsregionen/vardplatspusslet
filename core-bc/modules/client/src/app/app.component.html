@@ -2,24 +2,6 @@
 
   <vgr-header textColor="black" circleColor="#ffffff" [userName]="getLoggedInDisplayName()"></vgr-header>
 
-  <vgr-modal id="loginModal">
-    <vgr-modal-header>Logga in</vgr-modal-header>
-    <vgr-modal-content>
-      <div>
-        VGR-ID:
-        <div><input [(ngModel)]="userId" name="USER"/></div>
-      </div>
-      <div>
-        Lösenord:
-        <div><input [(ngModel)]="password" name="PASSWORD" type="password"/></div>
-      </div>
-    </vgr-modal-content>
-    <vgr-modal-footer>
-      <vgr-button [secondary]="false" default="true" (click)="login()">Logga in</vgr-button>
-      <vgr-button [secondary]="true" (click)="modalService.closeDialog('loginModal')">Avbryt</vgr-button>
-    </vgr-modal-footer>
-  </vgr-modal>
-
   <div class="container">
     <router-outlet></router-outlet>
   </div>

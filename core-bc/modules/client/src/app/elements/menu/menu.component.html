@@ -3,7 +3,7 @@
   <div class="menu">
     <ul>
       <li><a routerLink="/">Hem</a></li>
-      <li class="sub-menu">
+      <li class="sub-menu" *ngIf="authService.isAdmin()">
         <span class="sub-menu-title">Administration <span class="bg-image-icon-chevron"></span></span>
         <ul>
           <li><a routerLink="/admin/clinics">Kliniker</a></li>
@@ -11,6 +11,10 @@
           <li><a routerLink="/admin/users">Användare</a></li>
         </ul>
       </li>
+      <li><a (click)="logout()" [routerLink]="null" *ngIf="authService.isAuthenticated()">Logga ut</a></li>
+      <li><a (click)="openLoginModal()" [routerLink]="null" *ngIf="!authService.isAuthenticated()">Logga in</a></li>
     </ul>
   </div>
 </div>
+
+<app-login-modal></app-login-modal>

@@ -31,6 +31,7 @@ import {LeftColumnComponent} from './elements/left-column/left-column.component'
 import {MenuComponent} from './elements/menu/menu.component';
 import {MenuTitleRowComponent} from './elements/menu-title-row/menu-title-row.component';
 import {RightColumnComponent} from './elements/right-column/right-column.component';
+import {LoginModalComponent} from './elements/login-modal/login-modal.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -54,7 +55,8 @@ registerLocaleData(localeSv, "sv-SE");
     LeftColumnComponent,
     MenuComponent,
     MenuTitleRowComponent,
-    RightColumnComponent
+    RightColumnComponent,
+    LoginModalComponent
   ],
   imports: [
     BrowserModule,

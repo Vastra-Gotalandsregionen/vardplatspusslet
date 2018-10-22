@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ModalService} from "vgr-komponentkartan";
+import {AuthService} from "../../service/auth.service";
+import {LoginModalComponent} from "../login-modal/login-modal.component";
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(LoginModalComponent) loginModal: LoginModalComponent;
+
+  constructor(protected authService: AuthService,
+              public modalService: ModalService) { }
 
   ngOnInit() {
   }
 
+  openLoginModal() {
+    this.loginModal.openDialog();
+  }
+
+  logout() {
+    this.authService.resetAuth();
+  }
 }
