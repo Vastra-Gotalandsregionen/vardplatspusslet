@@ -26,6 +26,11 @@ import {CalloutComponent} from './shared/callout.component';
 import {CalloutDirective} from './shared/callout.directive';
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {BedFormComponent} from './view/unit/bed-form/bed-form.component';
+import {RowComponent} from './elements/row/row.component';
+import {LeftColumnComponent} from './elements/left-column/left-column.component';
+import {MenuComponent} from './elements/menu/menu.component';
+import {MenuTitleRowComponent} from './elements/menu-title-row/menu-title-row.component';
+import {RightColumnComponent} from './elements/right-column/right-column.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -44,7 +49,12 @@ registerLocaleData(localeSv, "sv-SE");
     UnitsAdminFormComponent,
     CalloutComponent,
     CalloutDirective,
-    BedFormComponent
+    BedFormComponent,
+    RowComponent,
+    LeftColumnComponent,
+    MenuComponent,
+    MenuTitleRowComponent,
+    RightColumnComponent
   ],
   imports: [
     BrowserModule,

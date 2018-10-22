@@ -1,9 +1,13 @@
-<vgr-page>
-  <vgr-page-header><h1>Administration</h1></vgr-page-header>
+<app-menu-title-row>
+  <h1>Administration</h1>
+</app-menu-title-row>
 
-  <vgr-page-body>
+<app-row>
+  <app-left-column>
+
+  </app-left-column>
+  <app-right-column>
     <vgr-page-block>
-
       <h2 style="margin-bottom: 16px">Kliniker</h2>
 
       <vgr-list [flexibleHeader]="true">
@@ -60,9 +64,8 @@
           </vgr-list-item-content>
         </vgr-list-item>
       </vgr-list>
-
     </vgr-page-block>
-  </vgr-page-body>
-</vgr-page>
+  </app-right-column>
+</app-row>
 
 <app-delete-modal [itemLabel]="clinicForDeletion?.name" (confirmDelete)="confirmDelete()"></app-delete-modal>

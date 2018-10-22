@@ -1,23 +1,4 @@
 <div id="theme-root" class="theme--blue">
-  <vgr-scroll-to-top></vgr-scroll-to-top>
-
-  <vgr-sidebar-menu>
-    <vgr-menu title="Meny">
-      <vgr-menu-item link="/" text="Hem"></vgr-menu-item>
-
-      <vgr-submenu [expanded]="true" text="Administration" *ngIf="admin" >
-        <!--<vgr-menu-item link="/admin" text="Administration" *ngIf="admin" ></vgr-menu-item>-->
-        <vgr-menu-item link="/admin/clinics" text="Kliniker"></vgr-menu-item>
-        <vgr-menu-item link="/admin/units" text="Avdelningar"></vgr-menu-item>
-        <vgr-menu-item link="/admin/users" text="Användare"></vgr-menu-item>
-
-      </vgr-submenu>
-
-      <div class="menu__item" *ngIf="!isLoggedIn()"><a (click)="modalService.openDialog('loginModal')">Logga in</a></div>
-
-      <vgr-menu-item (click)="logout()" link="logout" text="Logga ut" *ngIf="isLoggedIn()"></vgr-menu-item>
-    </vgr-menu>
-  </vgr-sidebar-menu>
 
   <vgr-header textColor="black" circleColor="#ffffff" [userName]="getLoggedInDisplayName()"></vgr-header>
 
@@ -25,10 +6,12 @@
     <vgr-modal-header>Logga in</vgr-modal-header>
     <vgr-modal-content>
       <div>
-        VGR-ID: <div><input [(ngModel)]="userId" name="USER"/></div>
+        VGR-ID:
+        <div><input [(ngModel)]="userId" name="USER"/></div>
       </div>
       <div>
-        Lösenord: <div><input [(ngModel)]="password" name="PASSWORD" type="password" /></div>
+        Lösenord:
+        <div><input [(ngModel)]="password" name="PASSWORD" type="password"/></div>
       </div>
     </vgr-modal-content>
     <vgr-modal-footer>
@@ -37,6 +20,8 @@
     </vgr-modal-footer>
   </vgr-modal>
 
-  <router-outlet></router-outlet>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 
 </div>
