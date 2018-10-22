@@ -22,6 +22,8 @@ export class BedFormComponent implements OnInit {
   @Output('save') saveEvent = new EventEmitter();
 
   bedForm: FormGroup;
+  prevDate: Date;
+  prevInfo: string;
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -52,7 +54,13 @@ export class BedFormComponent implements OnInit {
         gender: [bed.patient ? bed.patient.gender : null],
         leftDate: [bed.patient ? bed.patient.leftDate : null],
         plannedLeaveDate: [bed.patient ? bed.patient.plannedLeaveDate : null],
-        carePlan: [bed.patient ? bed.patient.carePlan : null]
+        carePlan: [bed.patient ? bed.patient.carePlan : null],
+        tolkGroup: this.formBuilder.group({
+          interpreter : [bed.patient? bed.patient.interpreter: null ],
+          interpretDate: [bed.patient? bed.patient.interpretDate: null],
+          interpretInfo: [bed.patient? bed.patient.interpretInfo: null]
+        })
+
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -62,6 +70,24 @@ export class BedFormComponent implements OnInit {
       )
     });
 
+    this.bedForm.get('patient.tolkGroup.interpreter').valueChanges
+      .subscribe((checked: boolean) => {
+        if (!checked || checked == null) {
+          this.prevDate = this.bedForm.get('patient.tolkGroup.interpretDate').value;
+          this.prevInfo = this.bedForm.get('patient.tolkGroup.interpretInfo').value;
+          this.bedForm.get('patient.tolkGroup.interpretDate').setValue(null);
+          this.bedForm.get('patient.tolkGroup.interpretInfo').setValue(null);
+        }
+        else if (checked)
+        {
+          if (this.bedForm.get('patient.tolkGroup.interpretDate').value == null
+          && this.bedForm.get('patient.tolkGroup.interpretInfo').value == null)
+          {
+            this.bedForm.get('patient.tolkGroup.interpretDate').setValue(this.prevDate);
+            this.bedForm.get('patient.tolkGroup.interpretInfo').setValue(this.prevInfo);
+          }
+        }
+      });
   }
 
   private reinitForm(bed: Bed) {
@@ -69,25 +95,6 @@ export class BedFormComponent implements OnInit {
       bed = new Bed();
     }
 
-    this.bedForm.setValue({
-      id: bed.id ? bed.id : null,
-      occupied: bed.occupied ? bed.occupied : null,
-      label: bed.label ? bed.label : null,
-      patient: {
-        id: bed.patient ? bed.patient.id : null,
-        label: bed.patient ? bed.patient.label : null,
-        leaveStatus: bed.patient ? bed.patient.leaveStatus : null,
-        gender: bed.patient ? bed.patient.gender : null,
-        leftDate: bed.patient ? bed.patient.leftDate : null,
-        plannedLeaveDate: bed.patient ? bed.patient.plannedLeaveDate : null,
-        carePlan: [bed.patient ? bed.patient.carePlan : null]
-      },
-      ssk: bed.ssk ? bed.ssk.id : null,
-      waitingforbedGroup:{
-        servingKlinik: bed.servingClinic!= null ? bed.servingClinic.id: null,
-        waitingpatient: bed.patientWaits ? bed.patientWaits: null
-      }
-    });
   }
 
   save() {
@@ -107,6 +114,9 @@ export class BedFormComponent implements OnInit {
       bed.patient.gender = bedModel.patient.gender ? bedModel.patient.gender : null;
       bed.patient.plannedLeaveDate = bedModel.patient.plannedLeaveDate ? bedModel.patient.plannedLeaveDate : null;
       bed.patient.carePlan = bedModel.patient.carePlan ? bedModel.patient.carePlan : null;
+      bed.patient.interpreter = bedModel.patient.tolkGroup.interpreter? bedModel.patient.tolkGroup.interpreter : null;
+      bed.patient.interpretDate = bedModel.patient.tolkGroup.interpretDate? bedModel.patient.tolkGroup.interpretDate: null;
+      bed.patient.interpretInfo = bedModel.patient.tolkGroup.interpretInfo? bedModel.patient.tolkGroup.interpretInfo: null;
     } else {
       bed.patient = null;
     }
