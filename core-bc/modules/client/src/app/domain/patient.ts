@@ -1,3 +1,5 @@
+import {Patientexamination} from "./patientexamination";
+
 export class Patient {
   id: number;
   label: string;
@@ -9,6 +11,7 @@ export class Patient {
   interpreter: boolean;
   interpretInfo: string;
   interpretDate: Date;
+  patientExaminations: Patientexamination[];
 }
 
 enum LeaveStatus {
