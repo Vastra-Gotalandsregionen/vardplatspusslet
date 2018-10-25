@@ -57,11 +57,12 @@
                 <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
                 <vgr-list-column width="4">
                   <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
-                     appCallout  [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
+                     [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
                   </div>
 
-                <div  class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
-                      appCallout  [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'"><i class="fa fa-wheelchair rod"></i>
+                  <div class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
+                       [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
+                    <i class="fa fa-wheelchair rod"></i>
                   </div>
 
 
@@ -69,9 +70,13 @@
                        [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons">list_alt</span>
                   </div>
 
-                <div class="ikon bule" *ngIf="bed.patient?.interpreter"
-                     [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons">translate</i>
-                </div>
+                  <div class="ikon blue" *ngIf="bed.patient?.interpreter"
+                       [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons">translate</i>
+                  </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"
+                       [appCallout]="'Patient har bokade undersökningar'"><i class="fa fa-user-md purpule"></i>
+                  </div>
 
 
                 </vgr-list-column>

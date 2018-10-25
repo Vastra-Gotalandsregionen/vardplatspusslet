@@ -62,7 +62,7 @@ export class BedFormComponent implements OnInit {
           interpretDate: [bed.patient? bed.patient.interpretDate: null],
           interpretInfo: [bed.patient? bed.patient.interpretInfo: null]
         }),
-        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient.patientExaminations))
+        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
