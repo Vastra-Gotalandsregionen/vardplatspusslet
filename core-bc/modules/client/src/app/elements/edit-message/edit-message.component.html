@@ -12,7 +12,7 @@
 
 <div class="button-row">
   <label>Datum:</label>
-  <vgr-datepicker [(ngModel)]="message.date" [selectedDate]="toDate(message.date)"></vgr-datepicker>
+  <vgr-datepicker [(ngModel)]="message.date" [selectedDate]="toDate()"></vgr-datepicker>
   <a (click)="message.date = null">Rensa datum</a>
 </div>
 

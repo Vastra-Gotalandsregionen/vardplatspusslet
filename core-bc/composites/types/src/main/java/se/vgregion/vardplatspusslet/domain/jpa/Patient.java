@@ -1,17 +1,10 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "patient")
@@ -56,6 +49,9 @@ public class Patient {
 
     @Column
     private String interpretInfo;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PatientExamination> patientExaminations = new TreeSet<>();
 
     public Long getId() {
         return id;
@@ -153,6 +149,13 @@ public class Patient {
         this.interpretInfo = interpretInfo;
     }
 
+    public Set<PatientExamination> getPatientExaminations() {
+        return patientExaminations;
+    }
+
+    public void setPatientExaminations(Set<PatientExamination> patientExaminations) {
+        this.patientExaminations = patientExaminations;
+    }
 
     @Override
     public boolean equals(Object o) {

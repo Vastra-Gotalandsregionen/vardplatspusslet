@@ -69,9 +69,9 @@
                        [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons">list_alt</span>
                   </div>
 
-                  <div class="ikon" *ngIf="bed.patient?.interpreter"
-                       [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons">translate</i>
-                  </div>
+                <div class="ikon bule" *ngIf="bed.patient?.interpreter"
+                     [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons">translate</i>
+                </div>
 
 
                 </vgr-list-column>

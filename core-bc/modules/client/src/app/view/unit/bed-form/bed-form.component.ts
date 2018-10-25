@@ -3,8 +3,10 @@ import {Bed} from "../../../domain/bed";
 import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {DropdownItem} from "vgr-komponentkartan";
+import {Patientexamination} from "../../../domain/patientexamination";
+import {e} from "@angular/core/src/render3";
 
 @Component({
   selector: 'app-bed-form',
@@ -59,8 +61,8 @@ export class BedFormComponent implements OnInit {
           interpreter : [bed.patient? bed.patient.interpreter: null ],
           interpretDate: [bed.patient? bed.patient.interpretDate: null],
           interpretInfo: [bed.patient? bed.patient.interpretInfo: null]
-        })
-
+        }),
+        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient.patientExaminations))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -117,6 +119,8 @@ export class BedFormComponent implements OnInit {
       bed.patient.interpreter = bedModel.patient.tolkGroup.interpreter? bedModel.patient.tolkGroup.interpreter : null;
       bed.patient.interpretDate = bedModel.patient.tolkGroup.interpretDate? bedModel.patient.tolkGroup.interpretDate: null;
       bed.patient.interpretInfo = bedModel.patient.tolkGroup.interpretInfo? bedModel.patient.tolkGroup.interpretInfo: null;
+      bed.patient.patientExaminations = bedModel.patient.patientExaminations? bedModel.patient.patientExaminations: null;
+
     } else {
       bed.patient = null;
     }
@@ -143,5 +147,41 @@ export class BedFormComponent implements OnInit {
 
   openDeleteModal(bed: Bed) {
     this.openDeleteModalEvent.emit();
+  }
+
+  private buildExaminationGroup(examinations: Patientexamination[]): FormGroup[]{
+    if (!examinations || examinations.length === 0) {
+      return [];
+    }
+    return examinations.map(examinationklinik => {
+      return this.formBuilder.group({
+        id: examinationklinik.id,
+        examination: examinationklinik.examination,
+        examinationDate: examinationklinik.examinationDate,
+        examinationtime: examinationklinik.examinationtime
+      })
+    });
+  }
+
+  CreateSPatientExamination(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      examination: null,
+      examinationDate: null,
+      examinationtime: null
+    });
+  }
+
+  deleteExamination(index: number) {
+    this.patientExaminations.removeAt(index);
+  }
+
+  get patientExaminations(): FormArray{
+    return <FormArray>this.bedForm.get('patient.patientExaminations');
+  }
+
+
+  addExamination(){
+    this.patientExaminations.push(this.CreateSPatientExamination());
   }
 }
