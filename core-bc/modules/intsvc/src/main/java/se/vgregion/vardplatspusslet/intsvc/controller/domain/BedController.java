@@ -51,7 +51,7 @@ public class BedController {
     @RequestMapping(value = "/{clinicId}/{unitId}/{bedId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteBed(@PathVariable("clinicId") String clinicId,
                                     @PathVariable("unitId") String unitId,
-                                    @PathVariable("bedId") Integer bedId) {
+                                    @PathVariable("bedId") Long bedId) {
 
         bedService.deleteBed(clinicId, unitId, bedId);
 

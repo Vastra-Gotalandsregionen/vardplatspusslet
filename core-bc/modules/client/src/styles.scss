@@ -1,15 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/vgr-komponentkartan/assets/partials/_settings.colors.scss";
+@import "../node_modules/vgr-komponentkartan/assets/partials/_settings.sizes.scss";
 @import "../node_modules/dragula/dist/dragula.min.css"; // todo try taking the css from https://github.com/valor-software/ng2-dragula and see if it is better.
 
 @import "assets/scss/utilities/variables";
 
+@import "assets/scss/atoms/link";
 @import "assets/scss/molecules/breadcrumbs";
 @import "assets/scss/molecules/menu";
+@import "assets/scss/molecules/panel";
 @import "assets/scss/molecules/vgr-list";
 @import "assets/scss/organisms/block";
 @import "assets/scss/organisms/grid";
 @import "assets/scss/organisms/header";
+@import "assets/scss/utilities/overrides";
 
 vgr-button.error .text-button {
   background-color: $primary-color--error;
@@ -45,6 +49,12 @@ vgr-button.error .text-button {
   margin-top: 2px;
   margin-bottom: 0;
 }*/
+
+.icon-with-text {
+  background-position: left;
+  padding-left: 30px;
+  width: auto;
+}
 
 .icon-link-with-text {
   .icon-text {
@@ -140,4 +150,12 @@ a.icon-link {
   .material-icons {
     position: absolute;
   }
+}
+
+.page-block {
+  @extend .clearfix;
+}
+
+b {
+  font-weight: bold;
 }

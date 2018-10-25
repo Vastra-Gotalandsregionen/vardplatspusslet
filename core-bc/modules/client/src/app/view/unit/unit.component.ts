@@ -9,6 +9,8 @@ import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
 import {Ssk} from "../../domain/ssk";
+import {Message} from "../../domain/message";
+import "rxjs-compat/add/operator/do";
 
 @Component({
   selector: 'app-unit',
@@ -16,6 +18,8 @@ import {Ssk} from "../../domain/ssk";
   styleUrls: ['./unit.component.scss']
 })
 export class UnitComponent implements OnInit {
+
+  @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
 
   unit: Unit;
   clinic: Clinic;
@@ -39,13 +43,13 @@ export class UnitComponent implements OnInit {
 
   vacantBeds: DropdownItem<number>[];
 
-  @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
-
   chosenVacantBedId: number;
 
   showChangeBedOrder = false;
   bedsOrder: Bed[] = [];
   inited: boolean;
+
+  messages: Message[] = [];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
@@ -69,24 +73,29 @@ export class UnitComponent implements OnInit {
         this.clinic = clinic;
       });
 
-      this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id).subscribe(unit => {
-        if (unit) {
-          this.unit = unit;
+      this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id)
+        .do(unit => {
+          if (unit) {
+            this.unit = unit;
 
-          this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
-            return {displayName: ssk.label, value: ssk.id};
-          }));
+            this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
+              return {displayName: ssk.label, value: ssk.id};
+            }));
 
-         this.servingKlinikerDropdownItems = unit.servingClinics.map(klinik => {
-            return {displayName: klinik.name, value: klinik.id};
-          });
+            this.servingKlinikerDropdownItems = unit.servingClinics.map(klinik => {
+              return {displayName: klinik.name, value: klinik.id};
+            });
 
-          this.updateVacants(unit);
+            this.updateVacants(unit);
 
-          this.inited = true;
-        } else {
-          this.error = this.notFoundText;
-        }
+            this.inited = true;
+          } else {
+            this.error = this.notFoundText;
+          }
+        })
+        .switchMap((unit: Unit) => this.http.get<Message[]>('/api/message/' + unit.id + '/today'))
+        .subscribe((messages: Message[]) => {
+          this.messages = messages;
       }, (error1: HttpErrorResponse) => {
         console.log(error1);
         if (error1.status === 404) {

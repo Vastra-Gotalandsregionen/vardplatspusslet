@@ -38,14 +38,11 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private HttpServletRequest request;
-
 //    @Value("${impersonate.enabled}")
 //    private boolean impersonateEnabled;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         try {
             User user = null;
             if (request.getHeader("iv-user") != null) {
@@ -100,7 +97,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/impersonate", method = RequestMethod.POST)
-    public ResponseEntity<String> impersonate(@RequestBody User userToImpersonate) {
+    public ResponseEntity<String> impersonate(@RequestBody User userToImpersonate, HttpServletRequest request) {
 
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {

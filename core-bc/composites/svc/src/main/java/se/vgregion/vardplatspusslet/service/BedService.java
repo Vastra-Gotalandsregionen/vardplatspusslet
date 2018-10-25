@@ -31,7 +31,7 @@ public class BedService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public void deleteBed(String clinicId, String unitId, Integer bedId) {
+    public void deleteBed(String clinicId, String unitId, Long bedId) {
         Clinic clinicRef = clinicRepository.getOne(clinicId);
 
         Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(unitId, clinicRef);

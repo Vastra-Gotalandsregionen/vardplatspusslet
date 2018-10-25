@@ -1,0 +1,18 @@
+@import "../../../../assets/scss/utilities/variables";
+
+vgr-panel .vgr-icon-plus {
+  font-size: 3em;
+  height: 142px;
+  background-size: 100%;
+  width: 142px;
+  margin: 0 auto;
+
+  &:hover {
+    box-shadow: $standard-box-shadow;
+    cursor: pointer;
+  }
+}
+
+a.delete {
+  float: right;
+}

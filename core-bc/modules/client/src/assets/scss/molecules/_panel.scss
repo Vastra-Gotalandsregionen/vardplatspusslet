@@ -1,0 +1,50 @@
+vgr-panel-container {
+
+  flex-wrap: wrap;
+
+  .flex-width--4 {
+    flex: none;
+    width: 290px;
+  }
+
+  @media screen and (min-width: $desktop-width--medium) {
+    .flex-width--4 {
+      width: 340px;
+    }
+  }
+
+  &.edit-messages-container vgr-panel {
+    width: calc(#{$app-left-column-width-medium} + 80px);
+    margin-bottom: 18px;
+  }
+
+  vgr-panel {
+    width: calc(#{$app-left-column-width-medium} - 40px);
+    margin-bottom: 18px;
+  }
+
+  .panel {
+    height: auto;
+  }
+
+  //@media screen and (min-width: $desktop-width--medium) {
+  &.panel-container > *:first-child .panel__wrapper {
+    padding-left: 10px;
+  }
+  //}
+
+  //@media screen and (min-width: $desktop-width--medium) {
+  &.panel-container > *:last-child .panel__wrapper {
+    padding-right: 10px;
+  }
+  //}
+
+  > *:first-child .panel__wrapper {
+    padding-left: 5px;
+  }
+
+  > *:last-child .panel__wrapper {
+    padding-right: 5px;
+  }
+
+}

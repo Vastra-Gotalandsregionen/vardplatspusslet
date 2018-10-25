@@ -1,7 +1,6 @@
 body, textarea, input, select {
   background: 0;
   border-radius: 0;
-  //font: 16px sans-serif;
   margin: 0
 }
 
@@ -23,31 +22,12 @@ body, textarea, input, select {
   width: auto
 }
 
-/*@media(min-width: 1310px) {
-  .container {
-    margin: auto;
-    width: 1270px
-  }
-}*/
-
-/*@media(min-width: 1710px) {
-  .container {
-    margin: auto;
-    width: 1670px
-  }
-}*/
-
-.btn, h2 {
-  //font-size: 2em
-}
-
 .row {
-  //margin: 1% 0;
-  //overflow: auto
+  @extend .clearfix;
   padding: 8px 0;
 }
 
-.col {
+.col, app-left-column, app-right-column {
   float: left
 }
 
@@ -89,7 +69,6 @@ body, textarea, input, select {
 
 .c3 {
   width: 25%;
-  max-width: 326.5px;
 }
 
 .c2 {
@@ -106,12 +85,32 @@ body, textarea, input, select {
   }
 }
 
-.app-left-column {
-  @extend .c3;
+app-left-column {
+  min-height: 1px;
   padding-right: 10px;
+  width: $app-left-column-width-medium;
 }
 
-.app-right-column {
-  float: none;
-  margin-left: 326.5px;
+app-right-column {
+  width: calc(100% - #{$app-left-column-width-medium});
+
+  &.full-width {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: $desktop-width--medium) {
+  app-left-column {
+    width: $app-left-column-width-small;
+  }
+
+  app-right-column {
+    width: calc(100% - #{$app-left-column-width-small});
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  app-left-column, app-right-column {
+    width: 100%;
+  }
 }

@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
 
   @ViewChild(LoginModalComponent) loginModal: LoginModalComponent;
 
-  constructor(protected authService: AuthService,
+  constructor(public authService: AuthService,
               public modalService: ModalService) { }
 
   ngOnInit() {

@@ -3,6 +3,7 @@ import {Bed} from "./bed";
 import {Clinic} from "./clinic";
 import {Ssk} from "./ssk";
 import {ServingClinic} from "./servingclinic";
+import {Message} from "./message";
 
 export class Unit {
   id: string;
@@ -11,6 +12,7 @@ export class Unit {
   clinic: Clinic;
   patients: Patient[];
   ssks: Ssk[];
+  messages: Message[];
   servingClinics: ServingClinic[];
   hasLeftDateFeature: boolean;
   hasCarePlan: boolean;

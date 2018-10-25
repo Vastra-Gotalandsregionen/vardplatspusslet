@@ -1,0 +1,38 @@
+<app-menu-title-row>
+  <div class="col app-right-column breadcrumbs">
+    <a routerLink="../..">{{clinic?.name}}</a>
+    <app-chevron-right></app-chevron-right>
+    <a routerLink="..">{{unit?.name}}</a>
+    <app-chevron-right></app-chevron-right>
+    Redigera meddelanden
+  </div>
+</app-menu-title-row>
+
+<div class="row">
+  <!--<app-left-column></app-left-column>-->
+  <app-right-column class="full-width">
+    <vgr-panel-container class="edit-messages-container">
+      <vgr-panel *ngFor="let message of messages">
+        <div *ngIf="editMessages.indexOf(message) === -1">
+          <app-message [message]="message"></app-message>
+
+          <div class="button-row">
+            <a appCallout="Redigera" class="tooltip-icon" (click)="editMessage(message)"><span
+              class="vgr-icon-edit"></span></a>
+            <a appCallout="Radera" class="tooltip-icon delete" (click)="delete(message)"><span
+              class="vgr-icon-trashcan"></span></a>
+          </div>
+        </div>
+
+        <div *ngIf="editMessages.indexOf(message) > -1">
+          <app-edit-message [message]="message" (save)="save(message)"
+                            (cancel)="editMessages.splice(editMessages.indexOf(message), 1)"></app-edit-message>
+        </div>
+      </vgr-panel>
+
+      <vgr-panel>
+        <div (click)="addNewMessage()" appCallout="Lägg till meddelande" class="vgr-icon-plus"></div>
+      </vgr-panel>
+    </vgr-panel-container>
+  </app-right-column>
+</div>

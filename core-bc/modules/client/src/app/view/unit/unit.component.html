@@ -8,9 +8,15 @@
 
 <app-row>
   <app-left-column>
-    <vgr-page-block>
-      Meddelanden etc.
-    </vgr-page-block>
+    <h3>Dagens meddelanden:</h3>
+    <vgr-panel-container class="button-row">
+      <vgr-panel *ngFor="let message of messages">
+        <app-message [message]="message"></app-message>
+      </vgr-panel>
+    </vgr-panel-container>
+    <a routerLink="editMessages">
+      <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
+    </a>
   </app-left-column>
 
   <app-right-column>
@@ -43,33 +49,33 @@
 
             <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
 
-            <vgr-list-item-header>
-              <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
-              <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
+              <vgr-list-item-header>
+                <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
+                <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
               <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
-              <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
-              <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
-              <vgr-list-column width="4">
-                <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
+                <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
+                <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
+                <vgr-list-column width="4">
+                  <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
                      appCallout  [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
-                </div>
+                  </div>
 
                 <div  class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
                       appCallout  [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'"><i class="fa fa-wheelchair rod"></i>
-                </div>
+                  </div>
 
 
-                <div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
-                      [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons">list_alt</span>
-                </div>
+                  <div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
+                       [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons">list_alt</span>
+                  </div>
 
-                <div class="ikon" *ngIf="bed.patient?.interpreter"
-                     [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons">translate</i>
-                </div>
+                  <div class="ikon" *ngIf="bed.patient?.interpreter"
+                       [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons">translate</i>
+                  </div>
 
 
-              </vgr-list-column>
-            </vgr-list-item-header>
+                </vgr-list-column>
+              </vgr-list-item-header>
 
               <vgr-list-item-content [indentContent]="true">
 

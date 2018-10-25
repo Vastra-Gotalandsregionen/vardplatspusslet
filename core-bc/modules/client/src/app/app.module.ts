@@ -32,6 +32,10 @@ import {MenuComponent} from './elements/menu/menu.component';
 import {MenuTitleRowComponent} from './elements/menu-title-row/menu-title-row.component';
 import {RightColumnComponent} from './elements/right-column/right-column.component';
 import {LoginModalComponent} from './elements/login-modal/login-modal.component';
+import {EditMessagesComponent} from './view/unit/edit-messages/edit-messages.component';
+import {MessageComponent} from './elements/message/message.component';
+import {EditMessageComponent} from './elements/edit-message/edit-message.component';
+import {CKEditorModule} from "ng2-ckeditor";
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -56,7 +60,10 @@ registerLocaleData(localeSv, "sv-SE");
     MenuComponent,
     MenuTitleRowComponent,
     RightColumnComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    EditMessagesComponent,
+    MessageComponent,
+    EditMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +75,8 @@ registerLocaleData(localeSv, "sv-SE");
     ReactiveFormsModule,
     DragulaModule.forRoot(),
     AppRoutingModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    CKEditorModule
   ],
   entryComponents: [
     CalloutComponent

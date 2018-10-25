@@ -1,0 +1,27 @@
+<div>
+  <label for="heading">Rubrik:</label>
+  <vgr-input id="heading" [(ngModel)]="message.heading"></vgr-input>
+</div>
+
+<div class="button-row">
+  <label>Innehåll:</label>
+  <ckeditor [(ngModel)]="message.text">
+
+  </ckeditor>
+</div>
+
+<div class="button-row">
+  <label>Datum:</label>
+  <vgr-datepicker [(ngModel)]="message.date" [selectedDate]="toDate(message.date)"></vgr-datepicker>
+  <a (click)="message.date = null">Rensa datum</a>
+</div>
+
+<div class="button-row">
+  <label>Veckodag:</label>
+  <vgr-dropdown [(ngModel)]="message.dayOfWeek" [items]="allWeekdays"></vgr-dropdown>
+  <a (click)="message.dayOfWeek = null">Rensa veckodag</a>
+</div>
+
+<div class="button-row">
+  <vgr-save-cancel (save)="save()" (cancel)="cancel()" [hideLock]="true"></vgr-save-cancel>
+</div>
