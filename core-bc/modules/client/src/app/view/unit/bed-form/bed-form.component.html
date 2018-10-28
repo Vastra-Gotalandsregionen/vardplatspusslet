@@ -91,10 +91,9 @@
     </vgr-card-column>
   </vgr-card>
 
-
-  <div class="clearfix button-row save-cancel-delete">
+  <div class="clearfix button-row save-cancel-delete" >
     <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="cancel()"
                      (save)="save()"></vgr-save-cancel>
-    <vgr-button class="error" (click)="openDeleteModal()">Radera</vgr-button>
+    <vgr-button class="error" (click)="openDeleteModal()" style="margin-right: 30px;">Radera</vgr-button>
   </div>
 </form>

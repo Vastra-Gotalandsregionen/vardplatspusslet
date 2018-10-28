@@ -3,7 +3,7 @@ import {Bed} from "../../../domain/bed";
 import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DropdownItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {e} from "@angular/core/src/render3";
@@ -119,7 +119,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.interpreter = bedModel.patient.tolkGroup.interpreter? bedModel.patient.tolkGroup.interpreter : null;
       bed.patient.interpretDate = bedModel.patient.tolkGroup.interpretDate? bedModel.patient.tolkGroup.interpretDate: null;
       bed.patient.interpretInfo = bedModel.patient.tolkGroup.interpretInfo? bedModel.patient.tolkGroup.interpretInfo: null;
-      bed.patient.patientExaminations = bedModel.patient.patientExaminations? bedModel.patient.patientExaminations: null;
+      bed.patient.patientExaminations = bedModel.patient.patientExaminations? this.filterExams(bedModel.patient.patientExaminations): null;
 
     } else {
       bed.patient = null;
@@ -183,5 +183,10 @@ export class BedFormComponent implements OnInit {
 
   addExamination(){
     this.patientExaminations.push(this.CreateSPatientExamination());
+  }
+
+  private filterExams(src: Patientexamination[])
+  {
+    return src.filter(exam => exam.examination != null && exam.examinationDate != null)
   }
 }
