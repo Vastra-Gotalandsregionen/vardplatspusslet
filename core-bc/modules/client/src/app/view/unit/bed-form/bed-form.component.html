@@ -74,18 +74,18 @@
       </div>
 
       <div>
-        <label for="carePlan">Undersökningar</label>
+        <div>
+          <label for="carePlan">Undersökningar</label>
+          <i (click)="addExamination()" class="fa fa-plus-square left"></i>
+        </div>
         <div  formArrayName="patientExaminations" *ngFor="let examination of patientExaminations.controls let i = index;" class="clearfix">
           <div [formGroupName]="i" class="examin">
-            <input formControlName="examination" placeholder="Undersökning..." class="child1"/>
+            <input formControlName="examination" class="child1"/>
             <vgr-datepicker formControlName="examinationDate"></vgr-datepicker>
             <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
 
             <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons">delete</span></a>
           </div>
-        </div>
-        <div>
-          <a (click)="addExamination()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till undersökning</span></a>
         </div>
       </div>
     </vgr-card-column>

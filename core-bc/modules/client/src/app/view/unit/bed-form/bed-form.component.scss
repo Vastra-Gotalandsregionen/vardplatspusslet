@@ -12,7 +12,7 @@
 }
 
 .child1{
-  width: 300px;
+  width: 200px;
   flex: 0 1 auto;
   margin-right: 5px;
   flex: 0 1 auto;
@@ -28,4 +28,10 @@
   width: 75px;
   flex: 0 1 auto;
   margin-left: 5px;
+}
+
+.left{
+  margin-left: 5px;
+  font-size: 20px;
+  color: #0055aa;
 }
