@@ -78,6 +78,9 @@
                        [appCallout]="'Patient har bokade undersökningar'"><i class="fa fa-user-md purpule"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.relatedInformation?.length > 0"
+                       [appCallout]="'Övrig information finns'"><i class="fa fa-info-circle purpule"></i>
+                  </div>
 
                 </vgr-list-column>
               </vgr-list-item-header>

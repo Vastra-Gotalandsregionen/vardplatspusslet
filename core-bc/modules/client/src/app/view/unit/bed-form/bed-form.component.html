@@ -24,7 +24,7 @@
     </vgr-card-column>
   </vgr-card>
 
-  <hr/>
+  <hr style="width: 95%; margin-left: 0"/>
 
   <vgr-card formGroupName="patient">
     <vgr-card-column>
@@ -53,8 +53,8 @@
             <vgr-datepicker formControlName="interpretDate"></vgr-datepicker>
             <vgr-input formControlName="interpretInfo" id = "comment"></vgr-input>
           </div>
-
         </div>
+
       </div>
     </vgr-card-column>
     <vgr-card-column>
@@ -89,6 +89,17 @@
         </div>
       </div>
     </vgr-card-column>
+  </vgr-card>
+
+  <hr style="width: 95%; margin-left: 0"/>
+  <vgr-card>
+    <vgr-card-column>
+      <div style="margin-bottom: 10px">
+        <div>Övriga anteckningar</div>
+        <vgr-textarea formControlName="relatedInformation" width="90%"></vgr-textarea>
+      </div>
+    </vgr-card-column>
+    <vgr-card-column></vgr-card-column>
   </vgr-card>
 
   <div class="clearfix button-row save-cancel-delete" >

@@ -10,4 +10,5 @@ export class Bed {
   ssk: Ssk;
   servingClinic: ServingClinic;
   patientWaits: boolean;
+  relatedInformation: string;
 }

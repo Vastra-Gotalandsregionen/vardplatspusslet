@@ -41,6 +41,9 @@ public class Bed {
     @Column
     private Boolean patientWaits;
 
+    @Column
+    private String relatedInformation;
+
 
     public Bed() {
     }
@@ -99,6 +102,14 @@ public class Bed {
 
     public void setPatientWaits(Boolean patientWaits) {
         this.patientWaits = patientWaits;
+    }
+
+    public String getRelatedInformation() {
+        return relatedInformation;
+    }
+
+    public void setRelatedInformation(String relatedInformation) {
+        this.relatedInformation = relatedInformation;
     }
 
     @Override

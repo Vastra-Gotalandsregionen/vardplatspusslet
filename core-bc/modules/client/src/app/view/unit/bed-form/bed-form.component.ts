@@ -69,7 +69,8 @@ export class BedFormComponent implements OnInit {
         servingKlinik: [bed.servingClinic!= null ? bed.servingClinic.id: null],
         waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
         }
-      )
+      ),
+      relatedInformation: [bed.relatedInformation]
     });
 
     this.bedForm.get('patient.tolkGroup.interpreter').valueChanges
@@ -133,6 +134,7 @@ export class BedFormComponent implements OnInit {
       bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.waitingforbedGroup.servingKlinik);
     }
     bed.patientWaits = bedModel.waitingforbedGroup.waitingpatient;
+    bed.relatedInformation = bedModel.relatedInformation;
 
     this.http.put('/api/bed/' + this.clinicId + '/' + this.unit.id, bed)
       .subscribe(bed => {
