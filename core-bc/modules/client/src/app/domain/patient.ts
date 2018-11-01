@@ -13,6 +13,8 @@ export class Patient {
   interpretDate: Date;
   patientExaminations: Patientexamination[];
   akutPatient: boolean;
+  electiv23O: boolean;
+  electiv24O: boolean;
 }
 
 enum LeaveStatus {

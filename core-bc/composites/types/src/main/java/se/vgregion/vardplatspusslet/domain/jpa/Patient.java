@@ -52,6 +52,12 @@ public class Patient {
 
     @Column
     private Boolean akutPatient;
+    @Column
+    private Boolean Electiv23O;
+    @Column
+    private Boolean Electiv24O;
+
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new TreeSet<>();
@@ -166,6 +172,22 @@ public class Patient {
 
     public void setAkutPatient(Boolean akutPatient) {
         this.akutPatient = akutPatient;
+    }
+
+    public Boolean getElectiv23O() {
+        return Electiv23O;
+    }
+
+    public void setElectiv23O(Boolean electiv23O) {
+        Electiv23O = electiv23O;
+    }
+
+    public Boolean getElectiv24O() {
+        return Electiv24O;
+    }
+
+    public void setElectiv24O(Boolean electiv24O) {
+        Electiv24O = electiv24O;
     }
 
     @Override

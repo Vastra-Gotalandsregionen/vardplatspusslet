@@ -44,7 +44,7 @@ export class BedFormComponent implements OnInit {
     if (!bed) {
       bed = new Bed();
     }
-
+    debugger;
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
@@ -62,9 +62,10 @@ export class BedFormComponent implements OnInit {
           interpretDate: [bed.patient? bed.patient.interpretDate: null],
           interpretInfo: [bed.patient? bed.patient.interpretInfo: null]
         }),
-        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null)),
-        akutPatient: [bed.patient? bed.patient.akutPatient: null]
-
+        akutPatient: [bed.patient? bed.patient.akutPatient: null],
+        electiv23O: [bed.patient? bed.patient.electiv23O: null],
+        electiv24O: [bed.patient? bed.patient.electiv24O: null],
+        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -122,8 +123,11 @@ export class BedFormComponent implements OnInit {
       bed.patient.interpreter = bedModel.patient.tolkGroup.interpreter? bedModel.patient.tolkGroup.interpreter : null;
       bed.patient.interpretDate = bedModel.patient.tolkGroup.interpretDate? bedModel.patient.tolkGroup.interpretDate: null;
       bed.patient.interpretInfo = bedModel.patient.tolkGroup.interpretInfo? bedModel.patient.tolkGroup.interpretInfo: null;
-      bed.patient.patientExaminations = bedModel.patient.patientExaminations? this.filterExams(bedModel.patient.patientExaminations): null;
       bed.patient.akutPatient = bedModel.patient.akutPatient? bedModel.patient.akutPatient: null;
+      bed.patient.electiv23O = bedModel.patient.electiv23O? bedModel.patient.electiv23O: null;
+      bed.patient.electiv24O = bedModel.patient.electiv24O? bedModel.patient.electiv24O: null;
+      bed.patient.patientExaminations = bedModel.patient.patientExaminations? this.filterExams(bedModel.patient.patientExaminations): null;
+
     } else {
       bed.patient = null;
     }

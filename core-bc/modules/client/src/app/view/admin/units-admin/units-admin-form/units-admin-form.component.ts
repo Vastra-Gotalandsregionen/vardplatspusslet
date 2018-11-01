@@ -58,7 +58,9 @@ export class UnitsAdminFormComponent implements OnInit {
       hasLeftDateFeature: [unit.hasLeftDateFeature],
       hasCarePlan: unit.hasCarePlan,
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
-      hasAkutPatientFeature: [unit.hasAkutPatientFeature]
+      hasAkutPatientFeature: [unit.hasAkutPatientFeature],
+      has23oFeature: [unit.has23oFeature],
+      has24oFeature: [unit.has24oFeature]
     });
 
   }
@@ -77,7 +79,9 @@ export class UnitsAdminFormComponent implements OnInit {
       hasLeftDateFeature: unit.hasLeftDateFeature,
       hasCarePlan: unit.hasCarePlan,
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
-      hasAkutPatientFeature: unit.hasAkutPatientFeature
+      hasAkutPatientFeature: unit.hasAkutPatientFeature,
+      has23oFeature: unit.has23oFeature,
+      has24oFeature: unit.has24oFeature
     });
 
   }
@@ -113,6 +117,8 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasLeftDateFeature = unitModel.hasLeftDateFeature;
     unit.hasCarePlan = unitModel.hasCarePlan;
     unit.hasAkutPatientFeature = unitModel.hasAkutPatientFeature;
+    unit.has23oFeature = unitModel.has23oFeature;
+    unit.has24oFeature = unitModel.has24oFeature;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();

@@ -59,6 +59,14 @@
           <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
         </div>
 
+        <div *ngIf="unit.has23oFeature" style="margin-bottom: 7px">
+          <vgr-checkbox formControlName="electiv23O" label="Electiv 23O"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.has24oFeature" style="margin-bottom: 7px">
+          <vgr-checkbox formControlName="electiv24O" label="Electiv 24O"></vgr-checkbox>
+        </div>
+
       </div>
     </vgr-card-column>
     <vgr-card-column>

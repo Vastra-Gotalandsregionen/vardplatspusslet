@@ -86,6 +86,14 @@
                        [appCallout]="'Akut patient'"><i class="fa fa-ambulance purpule"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.patient?.electiv23O"
+                       [appCallout]="'Electiv 23O'"><i class="material-icons purpule">local_hotel</i>
+                  </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.electiv24O"
+                       [appCallout]="'Electiv 24O'"><i class="material-icons purpule">local_hotel</i>
+                  </div>
+
 
                 </vgr-list-column>
               </vgr-list-item-header>
