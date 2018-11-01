@@ -57,21 +57,21 @@
                 <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
                 <vgr-list-column width="4">
                   <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
-                     [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home gron"></i>
+                     [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
                   </div>
 
                   <div class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
                        [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
-                    <i class="fa fa-wheelchair rod"></i>
+                    <i class="fa fa-wheelchair purpule"></i>
                   </div>
 
 
                   <div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
-                       [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons">list_alt</span>
+                       [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons purpule">list_alt</span>
                   </div>
 
-                  <div class="ikon blue" *ngIf="bed.patient?.interpreter"
-                       [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons">translate</i>
+                  <div class="ikon" *ngIf="bed.patient?.interpreter"
+                       [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons purpule">translate</i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"
@@ -81,6 +81,11 @@
                   <div class="ikon" *ngIf="bed.relatedInformation?.length > 0"
                        [appCallout]="'Övrig information finns'"><i class="fa fa-info-circle purpule"></i>
                   </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.akutPatient"
+                       [appCallout]="'Akut patient'"><i class="fa fa-ambulance purpule"></i>
+                  </div>
+
 
                 </vgr-list-column>
               </vgr-list-item-header>

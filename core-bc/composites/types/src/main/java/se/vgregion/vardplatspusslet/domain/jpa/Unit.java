@@ -52,6 +52,9 @@ public class Unit {
     @Column
     private Boolean hasCarePlan;
 
+    @Column
+    private Boolean hasAkutPatientFeature;
+
     public Unit() {
     }
 
@@ -125,5 +128,13 @@ public class Unit {
 
     public void setHasCarePlan(Boolean hasCarePlan) {
         this.hasCarePlan = hasCarePlan;
+    }
+
+    public Boolean getHasAkutPatientFeature() {
+        return hasAkutPatientFeature;
+    }
+
+    public void setHasAkutPatientFeature(Boolean hasAkutPatientFeature) {
+        this.hasAkutPatientFeature = hasAkutPatientFeature;
     }
 }

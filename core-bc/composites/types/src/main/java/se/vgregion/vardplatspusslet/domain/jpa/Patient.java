@@ -50,6 +50,9 @@ public class Patient {
     @Column
     private String interpretInfo;
 
+    @Column
+    private Boolean akutPatient;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new TreeSet<>();
 
@@ -155,6 +158,14 @@ public class Patient {
 
     public void setPatientExaminations(Set<PatientExamination> patientExaminations) {
         this.patientExaminations = patientExaminations;
+    }
+
+    public Boolean getAkutPatient() {
+        return akutPatient;
+    }
+
+    public void setAkutPatient(Boolean akutPatient) {
+        this.akutPatient = akutPatient;
     }
 
     @Override

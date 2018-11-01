@@ -12,6 +12,7 @@ export class Patient {
   interpretInfo: string;
   interpretDate: Date;
   patientExaminations: Patientexamination[];
+  akutPatient: boolean;
 }
 
 enum LeaveStatus {

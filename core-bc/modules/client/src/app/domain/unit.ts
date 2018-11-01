@@ -16,4 +16,5 @@ export class Unit {
   servingClinics: ServingClinic[];
   hasLeftDateFeature: boolean;
   hasCarePlan: boolean;
+  hasAkutPatientFeature: boolean;
 }

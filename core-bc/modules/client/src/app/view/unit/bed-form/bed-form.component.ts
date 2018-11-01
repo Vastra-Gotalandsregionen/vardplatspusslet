@@ -62,7 +62,9 @@ export class BedFormComponent implements OnInit {
           interpretDate: [bed.patient? bed.patient.interpretDate: null],
           interpretInfo: [bed.patient? bed.patient.interpretInfo: null]
         }),
-        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null))
+        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null)),
+        akutPatient: [bed.patient? bed.patient.akutPatient: null]
+
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -121,7 +123,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.interpretDate = bedModel.patient.tolkGroup.interpretDate? bedModel.patient.tolkGroup.interpretDate: null;
       bed.patient.interpretInfo = bedModel.patient.tolkGroup.interpretInfo? bedModel.patient.tolkGroup.interpretInfo: null;
       bed.patient.patientExaminations = bedModel.patient.patientExaminations? this.filterExams(bedModel.patient.patientExaminations): null;
-
+      bed.patient.akutPatient = bedModel.patient.akutPatient? bedModel.patient.akutPatient: null;
     } else {
       bed.patient = null;
     }
