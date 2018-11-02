@@ -26,6 +26,7 @@ export class BedFormComponent implements OnInit {
   bedForm: FormGroup;
   prevDate: Date;
   prevInfo: string;
+  prevklinik: string;
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -94,6 +95,20 @@ export class BedFormComponent implements OnInit {
           }
         }
       });
+    this.bedForm.get('waitingforbedGroup.waitingpatient').valueChanges.subscribe(
+      (checked: boolean) => {
+        if(!checked || checked == null)
+        {
+          this.prevklinik = this.bedForm.get('waitingforbedGroup.servingKlinik').value;
+          this.bedForm.get('waitingforbedGroup.servingKlinik').setValue(null);
+        }
+        else if (checked) {
+          if(this.bedForm.get('waitingforbedGroup.servingKlinik').value == null){
+            this.bedForm.get('waitingforbedGroup.servingKlinik').setValue(this.prevklinik);
+          }
+        }
+      });
+
   }
 
   private reinitForm(bed: Bed) {
@@ -196,5 +211,11 @@ export class BedFormComponent implements OnInit {
   private filterExams(src: Patientexamination[])
   {
     return src.filter(exam => exam.examination != null && exam.examinationDate != null)
+  }
+
+  deleteDate()
+  {
+    debugger;
+    this.bedForm.get('patient.plannedLeaveDate').setValue(null);
   }
 }

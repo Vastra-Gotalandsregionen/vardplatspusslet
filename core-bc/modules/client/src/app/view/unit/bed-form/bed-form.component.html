@@ -18,7 +18,7 @@
           <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
           <vgr-dropdown *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="servingKlinik"
                         noItemSelectedLabel="Välj klinik"
-                        [items]="servingKlinikerDropdownItems"></vgr-dropdown>
+                        [items]="servingKlinikerDropdownItems" [disabled]="!bedForm.get('waitingforbedGroup.waitingpatient').value"></vgr-dropdown>
         </div>
       </div>
     </vgr-card-column>
@@ -48,9 +48,9 @@
 
         <div style="margin-bottom: 10px">
           <p>Tolk</p>
-          <div class="tolk" formGroupName="tolkGroup">
+          <div class="containers" formGroupName="tolkGroup">
             <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
-            <vgr-datepicker formControlName="interpretDate"></vgr-datepicker>
+            <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
             <vgr-input formControlName="interpretInfo" id = "comment"></vgr-input>
           </div>
         </div>
@@ -77,7 +77,11 @@
 
       <div style="margin-bottom: 10px">
         <p>Planerad hemgång</p>
-        <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
+        <div class="containers">
+          <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
+          <i (click)="deleteDate()" class="fa fa-times-rectangle-o child"></i>
+        </div>
+
       </div>
 
       <div *ngIf="unit.hasCarePlan" style="margin-bottom: 10px">
@@ -88,10 +92,10 @@
       <div>
         <div>
           <label for="carePlan">Undersökningar</label>
-          <i (click)="addExamination()" class="fa fa-plus-square left"></i>
+          <i (click)="addExamination()" class="fa fa-plus-square child"></i>
         </div>
         <div  formArrayName="patientExaminations" *ngFor="let examination of patientExaminations.controls let i = index;" class="clearfix">
-          <div [formGroupName]="i" class="examin">
+          <div [formGroupName]="i" class="containers">
             <input formControlName="examination" class="child1"/>
             <vgr-datepicker formControlName="examinationDate"></vgr-datepicker>
             <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
