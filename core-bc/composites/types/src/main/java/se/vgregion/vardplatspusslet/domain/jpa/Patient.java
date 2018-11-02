@@ -52,10 +52,15 @@ public class Patient {
 
     @Column
     private Boolean akutPatient;
+
     @Column
     private Boolean Electiv23O;
+
     @Column
     private Boolean Electiv24O;
+
+    @Column
+    private Boolean vuxenPatient;
 
 
 
@@ -188,6 +193,14 @@ public class Patient {
 
     public void setElectiv24O(Boolean electiv24O) {
         Electiv24O = electiv24O;
+    }
+
+    public Boolean getVuxenPatient() {
+        return vuxenPatient;
+    }
+
+    public void setVuxenPatient(Boolean vuxenPatient) {
+        this.vuxenPatient = vuxenPatient;
     }
 
     @Override

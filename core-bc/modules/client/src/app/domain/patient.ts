@@ -15,6 +15,7 @@ export class Patient {
   akutPatient: boolean;
   electiv23O: boolean;
   electiv24O: boolean;
+  vuxenPatient: boolean;
 }
 
 enum LeaveStatus {

@@ -45,7 +45,6 @@ export class BedFormComponent implements OnInit {
     if (!bed) {
       bed = new Bed();
     }
-    debugger;
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
@@ -66,6 +65,7 @@ export class BedFormComponent implements OnInit {
         akutPatient: [bed.patient? bed.patient.akutPatient: null],
         electiv23O: [bed.patient? bed.patient.electiv23O: null],
         electiv24O: [bed.patient? bed.patient.electiv24O: null],
+        vuxenPatient:[bed.patient? bed.patient.vuxenPatient: null],
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
@@ -141,6 +141,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.akutPatient = bedModel.patient.akutPatient? bedModel.patient.akutPatient: null;
       bed.patient.electiv23O = bedModel.patient.electiv23O? bedModel.patient.electiv23O: null;
       bed.patient.electiv24O = bedModel.patient.electiv24O? bedModel.patient.electiv24O: null;
+      bed.patient.vuxenPatient = bedModel.patient.vuxenPatient? bedModel.patient.vuxenPatient: null;
       bed.patient.patientExaminations = bedModel.patient.patientExaminations? this.filterExams(bedModel.patient.patientExaminations): null;
 
     } else {
@@ -215,7 +216,6 @@ export class BedFormComponent implements OnInit {
 
   deleteDate()
   {
-    debugger;
     this.bedForm.get('patient.plannedLeaveDate').setValue(null);
   }
 }

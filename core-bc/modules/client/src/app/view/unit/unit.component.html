@@ -82,16 +82,21 @@
                        [appCallout]="'Övrig information finns'"><i class="fa fa-info-circle purpule"></i>
                   </div>
 
-                  <div class="ikon" *ngIf="bed.patient?.akutPatient"
+                  <div class="ikon" *ngIf="bed.patient?.akutPatient && unit.hasAkutPatientFeature"
                        [appCallout]="'Akut patient'"><i class="fa fa-ambulance purpule"></i>
                   </div>
 
-                  <div class="ikon" *ngIf="bed.patient?.electiv23O"
+                  <div class="ikon" *ngIf="bed.patient?.electiv23O && unit.has23oFeature"
                        [appCallout]="'Electiv 23O'"><i class="material-icons purpule">local_hotel</i>
                   </div>
 
-                  <div class="ikon" *ngIf="bed.patient?.electiv24O"
+                  <div class="ikon" *ngIf="bed.patient?.electiv24O && unit.has24oFeature"
                        [appCallout]="'Electiv 24O'"><i class="material-icons purpule">local_hotel</i>
+                  </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.vuxenPatient && unit.hasVuxenPatientFeature"
+                       [appCallout]="'Vuxen Patient'"> <i class="fa fa-male purpule" *ngIf="bed.patient.gender === 'MAN'"></i>
+                    <i class="fa fa-female purpule" *ngIf="bed.patient.gender === 'KVINNA'"></i>
                   </div>
 
 

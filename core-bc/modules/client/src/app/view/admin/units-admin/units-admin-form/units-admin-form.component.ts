@@ -60,7 +60,8 @@ export class UnitsAdminFormComponent implements OnInit {
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       hasAkutPatientFeature: [unit.hasAkutPatientFeature],
       has23oFeature: [unit.has23oFeature],
-      has24oFeature: [unit.has24oFeature]
+      has24oFeature: [unit.has24oFeature],
+      hasVuxenPatientFeature: [unit.hasVuxenPatientFeature]
     });
 
   }
@@ -81,7 +82,8 @@ export class UnitsAdminFormComponent implements OnInit {
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       hasAkutPatientFeature: unit.hasAkutPatientFeature,
       has23oFeature: unit.has23oFeature,
-      has24oFeature: unit.has24oFeature
+      has24oFeature: unit.has24oFeature,
+      hasVuxenPatientFeature: unit.hasVuxenPatientFeature
     });
 
   }
@@ -108,7 +110,6 @@ export class UnitsAdminFormComponent implements OnInit {
   }
 
   saveUnit() {
-    debugger;
     let unit = new Unit();
     let unitModel = this.unitForm.value;
 
@@ -119,6 +120,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasAkutPatientFeature = unitModel.hasAkutPatientFeature;
     unit.has23oFeature = unitModel.has23oFeature;
     unit.has24oFeature = unitModel.has24oFeature;
+    unit.hasVuxenPatientFeature = unitModel.hasVuxenPatientFeature;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();

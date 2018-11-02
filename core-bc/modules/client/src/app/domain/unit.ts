@@ -19,4 +19,5 @@ export class Unit {
   hasAkutPatientFeature: boolean;
   has23oFeature: boolean;
   has24oFeature: boolean;
+  hasVuxenPatientFeature;
 }
