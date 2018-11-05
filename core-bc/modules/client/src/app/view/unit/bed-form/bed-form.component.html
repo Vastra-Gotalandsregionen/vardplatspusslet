@@ -55,6 +55,15 @@
           </div>
         </div>
 
+        <div  *ngIf="unit.hasSekretessFeature" style="margin-bottom:10px">
+          <p>Sekretess</p>
+          <div class="containers" formGroupName="sekretessGroup">
+            <vgr-checkbox formControlName="sekretess"></vgr-checkbox>
+            <vgr-input formControlName="sekretessInfo"></vgr-input>
+          </div>
+
+        </div>
+
         <div *ngIf="unit.hasAkutPatientFeature" style="margin-bottom: 7px">
           <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
         </div>
@@ -71,9 +80,7 @@
           <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
         </div>
 
-        <div *ngIf="unit.hasSekretessFeature" style="margin-bottom: 7px">
-          <vgr-checkbox formControlName="sekretess" label="Sekretess"></vgr-checkbox>
-        </div>
+
 
       </div>
     </vgr-card-column>

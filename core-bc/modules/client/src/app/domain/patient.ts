@@ -17,6 +17,7 @@ export class Patient {
   electiv24O: boolean;
   vuxenPatient: boolean;
   sekretess: boolean;
+  sekretessInfo: string;
 }
 
 enum LeaveStatus {

@@ -87,11 +87,11 @@
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.electiv23O && unit.has23oFeature"
-                       [appCallout]="'Electiv 23O'"><i class="material-icons purpule"></i>
+                       [appCallout]="'Electiv 23O'"><i class="fa fa-bed purpule"></i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.electiv24O && unit.has24oFeature"
-                       [appCallout]="'Electiv 24O'"><i class="material-icons purpule"></i>
+                       [appCallout]="'Electiv 24O'"><i class="fa fa-bed purpule"></i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender !== 'BARN' && unit.hasVuxenPatientFeature"
@@ -107,8 +107,6 @@
                   <div class="ikon" *ngIf="bed.patient?.sekretess && unit.hasSekretessFeature"
                        [appCallout]="'Sekretess'"><i class="fa fa-user-secret purpule"></i>
                   </div>
-
-
 
                 </vgr-list-column>
               </vgr-list-item-header>

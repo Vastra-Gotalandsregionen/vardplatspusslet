@@ -65,6 +65,8 @@ public class Patient {
     @Column
     private Boolean sekretess;
 
+    @Column
+    private String sekretessInfo;
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -212,6 +214,14 @@ public class Patient {
 
     public void setSekretess(Boolean sekretess) {
         this.sekretess = sekretess;
+    }
+
+    public String getSekretessInfo() {
+        return sekretessInfo;
+    }
+
+    public void setSekretessInfo(String sekretessInfo) {
+        this.sekretessInfo = sekretessInfo;
     }
 
     @Override

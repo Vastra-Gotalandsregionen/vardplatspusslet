@@ -27,6 +27,7 @@ export class BedFormComponent implements OnInit {
   prevDate: Date;
   prevInfo: string;
   prevklinik: string;
+  prevSekret: string;
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -66,7 +67,10 @@ export class BedFormComponent implements OnInit {
         electiv23O: [bed.patient? bed.patient.electiv23O: null],
         electiv24O: [bed.patient? bed.patient.electiv24O: null],
         vuxenPatient:[bed.patient? bed.patient.vuxenPatient: null],
-        sekretess: [bed.patient? bed.patient.sekretess: null],
+        sekretessGroup: this.formBuilder.group({
+          sekretess: [bed.patient? bed.patient.sekretess: null],
+          sekretessInfo: [bed.patient? bed.patient.sekretessInfo: null]
+        }),
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
@@ -110,6 +114,21 @@ export class BedFormComponent implements OnInit {
         }
       });
 
+    this.bedForm.get('patient.sekretessGroup.sekretess').valueChanges
+      .subscribe((checked: boolean) => {
+        if (!checked || checked == null) {
+          this.prevSekret = this.bedForm.get('patient.sekretessGroup.sekretessInfo').value;
+          this.bedForm.get('patient.sekretessGroup.sekretessInfo').setValue(null);
+        }
+        else if (checked)
+        {
+          if (this.bedForm.get('patient.sekretessGroup.sekretessInfo').value == null)
+          {
+            this.bedForm.get('patient.sekretessGroup.sekretessInfo').setValue(this.prevSekret);
+          }
+        }
+      });
+
   }
 
   private reinitForm(bed: Bed) {
@@ -126,7 +145,7 @@ export class BedFormComponent implements OnInit {
     bed.id = bedModel.id;
     bed.label = bedModel.label;
     bed.occupied = !!bedModel.occupied;
-
+    debugger;
     if (bedModel.patient.label) {
       bed.patient = new Patient();
       bed.patient.id = bedModel.patient.id;
@@ -144,7 +163,10 @@ export class BedFormComponent implements OnInit {
       bed.patient.electiv24O = bedModel.patient.electiv24O? bedModel.patient.electiv24O: null;
       bed.patient.vuxenPatient = bedModel.patient.vuxenPatient? bedModel.patient.vuxenPatient: null;
       bed.patient.patientExaminations = bedModel.patient.patientExaminations? this.filterExams(bedModel.patient.patientExaminations): null;
-      bed.patient.sekretess = bedModel.patient.sekretess? bedModel.patient.sekretess: null;
+      bed.patient.sekretess = bedModel.patient.sekretessGroup.sekretess? bedModel.patient.sekretessGroup.sekretess: null;
+      bed.patient.sekretessInfo = bedModel.patient.sekretessGroup.sekretessInfo? bedModel.patient.sekretessGroup.sekretessInfo: null;
+
+
 
     } else {
       bed.patient = null;
