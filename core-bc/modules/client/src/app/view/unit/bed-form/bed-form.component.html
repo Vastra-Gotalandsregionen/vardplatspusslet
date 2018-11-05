@@ -51,7 +51,7 @@
           <div class="containers" formGroupName="tolkGroup">
             <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
             <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
-            <vgr-input formControlName="interpretInfo" id = "comment"></vgr-input>
+            <vgr-input formControlName="interpretInfo" style="margin-left: 5px"></vgr-input>
           </div>
         </div>
 
@@ -71,6 +71,10 @@
           <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
         </div>
 
+        <div *ngIf="unit.hasSekretessFeature" style="margin-bottom: 7px">
+          <vgr-checkbox formControlName="sekretess" label="Sekretess"></vgr-checkbox>
+        </div>
+
       </div>
     </vgr-card-column>
     <vgr-card-column>
@@ -83,7 +87,7 @@
         <p>Planerad hemgång</p>
         <div class="containers">
           <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
-          <i (click)="deleteDate()" class="fa fa-times-rectangle-o child"></i>
+          <a (click)="deleteDate()"><i class="fa fa-times-rectangle-o child"></i></a>
         </div>
 
       </div>

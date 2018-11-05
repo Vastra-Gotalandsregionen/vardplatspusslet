@@ -87,11 +87,11 @@
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.electiv23O && unit.has23oFeature"
-                       [appCallout]="'Electiv 23O'"><i class="material-icons purpule">local_hotel</i>
+                       [appCallout]="'Electiv 23O'"><i class="material-icons purpule"></i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.electiv24O && unit.has24oFeature"
-                       [appCallout]="'Electiv 24O'"><i class="material-icons purpule">local_hotel</i>
+                       [appCallout]="'Electiv 24O'"><i class="material-icons purpule"></i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender !== 'BARN' && unit.hasVuxenPatientFeature"
@@ -102,6 +102,10 @@
                   <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender === 'BARN' && unit.hasVuxenPatientFeature"
                        [appCallout]="'Vuxen barn'"> <i class="fa fa-child purpule" *ngIf="bed.patient.gender === 'BARN'"></i>
 
+                  </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.sekretess && unit.hasSekretessFeature"
+                       [appCallout]="'Sekretess'"><i class="fa fa-user-secret purpule"></i>
                   </div>
 
 

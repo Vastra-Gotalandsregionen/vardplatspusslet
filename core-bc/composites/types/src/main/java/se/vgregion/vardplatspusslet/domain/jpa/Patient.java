@@ -62,6 +62,9 @@ public class Patient {
     @Column
     private Boolean vuxenPatient;
 
+    @Column
+    private Boolean sekretess;
+
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -201,6 +204,14 @@ public class Patient {
 
     public void setVuxenPatient(Boolean vuxenPatient) {
         this.vuxenPatient = vuxenPatient;
+    }
+
+    public Boolean getSekretess() {
+        return sekretess;
+    }
+
+    public void setSekretess(Boolean sekretess) {
+        this.sekretess = sekretess;
     }
 
     @Override

@@ -66,6 +66,7 @@ export class BedFormComponent implements OnInit {
         electiv23O: [bed.patient? bed.patient.electiv23O: null],
         electiv24O: [bed.patient? bed.patient.electiv24O: null],
         vuxenPatient:[bed.patient? bed.patient.vuxenPatient: null],
+        sekretess: [bed.patient? bed.patient.sekretess: null],
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
@@ -143,6 +144,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.electiv24O = bedModel.patient.electiv24O? bedModel.patient.electiv24O: null;
       bed.patient.vuxenPatient = bedModel.patient.vuxenPatient? bedModel.patient.vuxenPatient: null;
       bed.patient.patientExaminations = bedModel.patient.patientExaminations? this.filterExams(bedModel.patient.patientExaminations): null;
+      bed.patient.sekretess = bedModel.patient.sekretess? bedModel.patient.sekretess: null;
 
     } else {
       bed.patient = null;

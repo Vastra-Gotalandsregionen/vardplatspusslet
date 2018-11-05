@@ -64,6 +64,10 @@ public class Unit {
     @Column
     private Boolean hasVuxenPatientFeature;
 
+    @Column
+    private Boolean hasSekretessFeature;
+
+
     public Unit() {
     }
 
@@ -161,6 +165,14 @@ public class Unit {
 
     public void setHas24oFeature(Boolean has24oFeature) {
         this.has24oFeature = has24oFeature;
+    }
+
+    public Boolean getHasSekretessFeature() {
+        return hasSekretessFeature;
+    }
+
+    public void setHasSekretessFeature(Boolean hasSekretessFeature) {
+        this.hasSekretessFeature = hasSekretessFeature;
     }
 
     public Boolean getHasVuxenPatientFeature() {
