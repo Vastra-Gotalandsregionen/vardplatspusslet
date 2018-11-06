@@ -145,7 +145,6 @@ export class BedFormComponent implements OnInit {
     bed.id = bedModel.id;
     bed.label = bedModel.label;
     bed.occupied = !!bedModel.occupied;
-    debugger;
     if (bedModel.patient.label) {
       bed.patient = new Patient();
       bed.patient.id = bedModel.patient.id;
@@ -241,5 +240,10 @@ export class BedFormComponent implements OnInit {
   deleteDate()
   {
     this.bedForm.get('patient.plannedLeaveDate').setValue(null);
+  }
+
+  deleteGickHemDate()
+  {
+    this.bedForm.get('patient.leftDate').setValue(null);
   }
 }

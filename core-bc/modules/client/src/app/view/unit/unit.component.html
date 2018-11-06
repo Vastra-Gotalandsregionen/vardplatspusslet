@@ -43,8 +43,8 @@
               <vgr-list-column-header width="2">SSK</vgr-list-column-header>
               <vgr-list-column-header width="3">Status</vgr-list-column-header>
               <vgr-list-column-header width="3">Patient</vgr-list-column-header>
-              <vgr-list-column-header width="3">Kön</vgr-list-column-header>
-              <vgr-list-column-header width="7">Status</vgr-list-column-header>
+              <vgr-list-column-header width="2">Kön</vgr-list-column-header>
+              <vgr-list-column-header width="5">Status</vgr-list-column-header>
             </vgr-list-header>
 
             <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
@@ -52,12 +52,12 @@
               <vgr-list-item-header>
                 <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
                 <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
-              <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
+                <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
                 <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
-                <vgr-list-column width="3">{{format(bed.patient?.gender)}}</vgr-list-column>
-                <vgr-list-column width="7">
+                <vgr-list-column width="2">{{format(bed.patient?.gender)}}</vgr-list-column>
+                <vgr-list-column width="5">
                   <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
-                     [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
+                       [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
                   </div>
 
                   <div class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
@@ -95,12 +95,12 @@
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender !== 'BARN' && unit.hasVuxenPatientFeature"
-                       [appCallout]="'Vuxen Patient'"> <i class="fa fa-male purpule" *ngIf="bed.patient.gender === 'MAN'"></i>
+                       [appCallout]="'Vuxen Patient'"><i class="fa fa-male purpule" *ngIf="bed.patient.gender === 'MAN'"></i>
                     <i class="fa fa-female purpule" *ngIf="bed.patient.gender === 'KVINNA'"></i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender === 'BARN' && unit.hasVuxenPatientFeature"
-                       [appCallout]="'Vuxen barn'"> <i class="fa fa-child purpule" *ngIf="bed.patient.gender === 'BARN'"></i>
+                       [appCallout]="'Vuxen barn'"><i class="fa fa-child purpule" *ngIf="bed.patient.gender === 'BARN'"></i>
 
                   </div>
 

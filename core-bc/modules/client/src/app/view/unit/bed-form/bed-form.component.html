@@ -51,17 +51,18 @@
           <div class="containers" formGroupName="tolkGroup">
             <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
             <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
-            <vgr-input formControlName="interpretInfo" style="margin-left: 5px"></vgr-input>
+            <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" style="margin-left: 5px" [placeholder]="'TT:MM'"/>
+            <input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" style="margin-left: 5px" [placeholder]="'TT:MM'"/>
           </div>
         </div>
 
-        <div  *ngIf="unit.hasSekretessFeature" style="margin-bottom:10px">
+        <div  *ngIf="unit.hasSekretessFeature" style="margin-bottom:10px" dis>
           <p>Sekretess</p>
           <div class="containers" formGroupName="sekretessGroup">
             <vgr-checkbox formControlName="sekretess"></vgr-checkbox>
-            <vgr-input formControlName="sekretessInfo"></vgr-input>
+            <input formControlName="sekretessInfo" disabled *ngIf="!bedForm.get('patient.sekretessGroup.sekretess').value" style="width: 50%;"/>
+            <input formControlName="sekretessInfo" *ngIf="bedForm.get('patient.sekretessGroup.sekretess').value" style="width: 50%;"/>
           </div>
-
         </div>
 
         <div *ngIf="unit.hasAkutPatientFeature" style="margin-bottom: 7px">
@@ -80,21 +81,23 @@
           <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
         </div>
 
-
-
       </div>
     </vgr-card-column>
     <vgr-card-column>
       <div *ngIf="unit.hasLeftDateFeature" style="margin-bottom: 10px">
         <div class="row-with-icon"><span>Gick hem</span> <span class="material-icons" appCallout="Gör sängen ledig">info</span></div>
-        <vgr-datepicker formControlName="leftDate"></vgr-datepicker>
+        <div class="containers">
+          <vgr-datepicker formControlName="leftDate"></vgr-datepicker>
+          <a (click)="deleteGickHemDate()" style="margin-left: 2px"><i class="fa fa-times-rectangle-o child"></i></a>
+        </div>
+
       </div>
 
       <div style="margin-bottom: 10px">
         <p>Planerad hemgång</p>
         <div class="containers">
           <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
-          <a (click)="deleteDate()"><i class="fa fa-times-rectangle-o child"></i></a>
+          <a (click)="deleteDate()" style="margin-left: 2px"><i class="fa fa-times-rectangle-o child"></i></a>
         </div>
 
       </div>
@@ -105,9 +108,9 @@
       </div>
 
       <div>
-        <div>
+        <div class="containers">
           <label for="carePlan">Undersökningar</label>
-          <i (click)="addExamination()" class="fa fa-plus-square child"></i>
+          <a (click)="addExamination()"><i class="fa fa-plus-square child"></i></a>
         </div>
         <div  formArrayName="patientExaminations" *ngFor="let examination of patientExaminations.controls let i = index;" class="clearfix">
           <div [formGroupName]="i" class="containers">
