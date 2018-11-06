@@ -68,6 +68,9 @@ public class Patient {
     @Column
     private String sekretessInfo;
 
+    @Column
+    private Boolean infekterad;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new TreeSet<>();
@@ -222,6 +225,14 @@ public class Patient {
 
     public void setSekretessInfo(String sekretessInfo) {
         this.sekretessInfo = sekretessInfo;
+    }
+
+    public Boolean getInfekterad() {
+        return infekterad;
+    }
+
+    public void setInfekterad(Boolean infekterad) {
+        this.infekterad = infekterad;
     }
 
     @Override

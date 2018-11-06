@@ -2,15 +2,6 @@
   display: flex;
 }
 
-#comment{
-  margin-left: 5px;
-}
-
-.examin
-{
-  display: flex;
-}
-
 .child1{
   width: 200px;
   flex: 0 1 auto;
@@ -38,5 +29,10 @@
 .containers a{
   text-decoration: none;
   border-bottom: none;
+}
+
+input[disabled]
+{
+  background-color: #efefef;
 }
 

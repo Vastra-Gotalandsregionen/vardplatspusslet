@@ -24,7 +24,7 @@
 
   <vgr-card>
     <vgr-card-column>
-      <vgr-card-section [expanded]="true" [title]="'Funktionsval'" [readonly]="false">
+      <vgr-card-section [expanded]="true" [title]="'Funktionsval 1'" [readonly]="false">
         <vgr-title-value-layout>
           <vgr-checkbox label="Gick hem" formControlName="hasLeftDateFeature"></vgr-checkbox>
           <vgr-checkbox label="Vårdplan" formControlName="hasCarePlan"></vgr-checkbox>
@@ -33,7 +33,12 @@
           <vgr-checkbox label="Electiv 24O" formControlName="has24oFeature"></vgr-checkbox>
           <vgr-checkbox label="Vuxen patient" formControlName="hasVuxenPatientFeature"></vgr-checkbox>
           <vgr-checkbox label="Sekretess" formControlName="hasSekretessFeature"></vgr-checkbox>
+        </vgr-title-value-layout>
+      </vgr-card-section>
 
+      <vgr-card-section [expanded]="true" [title]="'Funktionsval 2'" [readonly]="false">
+        <vgr-title-value-layout>
+          <vgr-checkbox label="Infekterad" formControlName="hasInfekteradFeature"></vgr-checkbox>
         </vgr-title-value-layout>
       </vgr-card-section>
     </vgr-card-column>

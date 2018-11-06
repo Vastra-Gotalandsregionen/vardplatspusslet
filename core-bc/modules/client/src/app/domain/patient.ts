@@ -18,6 +18,7 @@ export class Patient {
   vuxenPatient: boolean;
   sekretess: boolean;
   sekretessInfo: string;
+  infekterad: boolean;
 }
 
 enum LeaveStatus {

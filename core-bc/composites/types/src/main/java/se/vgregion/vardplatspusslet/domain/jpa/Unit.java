@@ -67,6 +67,8 @@ public class Unit {
     @Column
     private Boolean hasSekretessFeature;
 
+    @Column Boolean hasInfekteradFeature;
+
 
     public Unit() {
     }
@@ -181,5 +183,13 @@ public class Unit {
 
     public void setHasVuxenPatientFeature(Boolean hasVuxenPatientFeature) {
         this.hasVuxenPatientFeature = hasVuxenPatientFeature;
+    }
+
+    public Boolean getHasInfekteradFeature() {
+        return hasInfekteradFeature;
+    }
+
+    public void setHasInfekteradFeature(Boolean hasInfekteradFeature) {
+        this.hasInfekteradFeature = hasInfekteradFeature;
     }
 }

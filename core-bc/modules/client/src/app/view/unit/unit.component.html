@@ -108,6 +108,12 @@
                        [appCallout]="'Sekretess'"><i class="fa fa-user-secret purpule"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
+                       [appCallout]="'Infekterad'"><i class="fa fa-male rod" *ngIf="bed.patient.gender === 'MAN'"></i>
+                    <i class="fa fa-female rod" *ngIf="bed.patient.gender === 'KVINNA'"></i>
+                    <i class="fa fa-child rod" *ngIf="bed.patient.gender === 'BARN'"></i>
+                  </div>
+
                 </vgr-list-column>
               </vgr-list-item-header>
 

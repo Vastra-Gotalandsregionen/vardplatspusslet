@@ -81,6 +81,11 @@
           <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
         </div>
 
+        <div *ngIf="unit.hasInfekteradFeature" style="margin-bottom: 7px">
+          <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
+        </div>
+
+
       </div>
     </vgr-card-column>
     <vgr-card-column>
