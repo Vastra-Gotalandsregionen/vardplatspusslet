@@ -28,6 +28,7 @@ export class BedFormComponent implements OnInit {
   prevInfo: string;
   prevklinik: string;
   prevSekret: string;
+  prevSmitta: string;
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -73,7 +74,11 @@ export class BedFormComponent implements OnInit {
         }),
         infekterad: [bed.patient? bed.patient.infekterad: null],
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null)),
-        infectionSensitive: [bed.patient? bed.patient.infectionSensitive: null]
+        infectionSensitive: [bed.patient? bed.patient.infectionSensitive: null],
+        smittaGroup: this.formBuilder.group({
+          smitta: [bed.patient? bed.patient.smitta: null],
+          smittaInfo: [bed.patient? bed.patient.smittaInfo: null]
+        })
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -131,6 +136,20 @@ export class BedFormComponent implements OnInit {
         }
       });
 
+    this.bedForm.get('patient.smittaGroup.smitta').valueChanges
+      .subscribe((checked: boolean) => {
+        if (!checked || checked == null) {
+          this.prevSmitta = this.bedForm.get('patient.smittaGroup.smitta').value;
+          this.bedForm.get('patient.sekretessGroup.smittaInfo').setValue(null);
+        }
+        else if (checked)
+        {
+          if (this.bedForm.get('patient.smittaGroup.smittaInfo').value == null)
+          {
+            this.bedForm.get('patient.smittaGroup.smittaInfo').setValue(this.prevSmitta);
+          }
+        }
+      });
   }
 
   private reinitForm(bed: Bed) {
@@ -168,7 +187,8 @@ export class BedFormComponent implements OnInit {
       bed.patient.sekretessInfo = bedModel.patient.sekretessGroup.sekretessInfo? bedModel.patient.sekretessGroup.sekretessInfo: null;
       bed.patient.infekterad = bedModel.patient.infekterad? bedModel.patient.infekterad: null;
       bed.patient.infectionSensitive = bedModel.patient.infectionSensitive? bedModel.patient.infectionSensitive: null;
-
+      bed.patient.smitta = bedModel.patient.smittaGroup.smitta? bedModel.patient.smittaGroup.smitta:null;
+      bed.patient.smittaInfo = bedModel.patient.smittaGroup.smittaInfo? bedModel.patient.smittaGroup.smittaInfo:null;
 
     } else {
       bed.patient = null;

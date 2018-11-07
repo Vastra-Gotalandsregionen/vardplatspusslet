@@ -64,7 +64,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasVuxenPatientFeature: [unit.hasVuxenPatientFeature],
       hasSekretessFeature: [unit.hasSekretessFeature],
       hasInfekteradFeature: [unit.hasInfekteradFeature],
-      hasInfectionSensitiveFeature: [unit.hasInfectionSensitiveFeature]
+      hasInfectionSensitiveFeature: [unit.hasInfectionSensitiveFeature],
+      hasSmittaFeature: [unit.hasSmittaFeature]
     });
 
   }
@@ -89,7 +90,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasVuxenPatientFeature: unit.hasVuxenPatientFeature,
       hasSekretessFeature: unit.hasSekretessFeature,
       hasInfekteradFeature: unit.hasInfekteradFeature,
-      hasInfectionSensitiveFeature: unit.hasInfectionSensitiveFeature
+      hasInfectionSensitiveFeature: unit.hasInfectionSensitiveFeature,
+      hasSmittaFeature: unit.hasSmittaFeature
     });
 
   }
@@ -130,6 +132,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasSekretessFeature = unitModel.hasSekretessFeature;
     unit.hasInfekteradFeature = unitModel.hasInfekteradFeature;
     unit.hasInfectionSensitiveFeature = unitModel.hasInfectionSensitiveFeature;
+    unit.hasSmittaFeature = unitModel.hasSmittaFeature;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();

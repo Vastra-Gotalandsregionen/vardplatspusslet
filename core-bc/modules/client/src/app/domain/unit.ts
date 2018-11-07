@@ -23,4 +23,5 @@ export class Unit {
   hasSekretessFeature: boolean;
   hasInfekteradFeature: boolean;
   hasInfectionSensitiveFeature: boolean;
+  hasSmittaFeature: boolean;
 }

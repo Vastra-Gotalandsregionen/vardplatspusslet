@@ -74,6 +74,10 @@ public class Patient {
     @Column
     private Boolean infectionSensitive;
 
+    @Column Boolean smitta;
+
+    @Column String smittaInfo;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new TreeSet<>();
@@ -240,6 +244,22 @@ public class Patient {
 
     public Boolean getInfectionSensitive() {
         return infectionSensitive;
+    }
+
+    public Boolean getSmitta() {
+        return smitta;
+    }
+
+    public void setSmitta(Boolean smitta) {
+        this.smitta = smitta;
+    }
+
+    public String getSmittaInfo() {
+        return smittaInfo;
+    }
+
+    public void setSmittaInfo(String smittaInfo) {
+        this.smittaInfo = smittaInfo;
     }
 
     public void setInfectionSensitive(Boolean infectionSensitive) {

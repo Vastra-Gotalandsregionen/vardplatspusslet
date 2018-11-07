@@ -44,7 +44,7 @@
               <vgr-list-column-header width="3">Status</vgr-list-column-header>
               <vgr-list-column-header width="3">Patient</vgr-list-column-header>
               <vgr-list-column-header width="2">Kön</vgr-list-column-header>
-              <vgr-list-column-header width="5">Status</vgr-list-column-header>
+              <vgr-list-column-header width="7">Status</vgr-list-column-header>
             </vgr-list-header>
 
             <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
@@ -55,7 +55,7 @@
                 <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
                 <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
                 <vgr-list-column width="2">{{format(bed.patient?.gender)}}</vgr-list-column>
-                <vgr-list-column width="5">
+                <vgr-list-column width="7">
                   <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
                        [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
                   </div>
@@ -116,6 +116,10 @@
 
                   <div class="ikon" *ngIf="bed.patient?.infectionSensitive && unit.hasInfectionSensitiveFeature"
                        [appCallout]="'Infektionskänslig'"><i class="material-icons rod">grain</i>
+                  </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
+                       [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
                   </div>
 
                 </vgr-list-column>
