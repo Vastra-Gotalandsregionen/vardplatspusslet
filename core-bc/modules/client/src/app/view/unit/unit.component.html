@@ -114,6 +114,10 @@
                     <i class="fa fa-child rod" *ngIf="bed.patient.gender === 'BARN'"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.patient?.infectionSensitive && unit.hasInfectionSensitiveFeature"
+                       [appCallout]="'Infektionskänslig'"><i class="material-icons rod">grain</i>
+                  </div>
+
                 </vgr-list-column>
               </vgr-list-item-header>
 

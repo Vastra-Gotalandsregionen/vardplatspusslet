@@ -72,7 +72,8 @@ export class BedFormComponent implements OnInit {
           sekretessInfo: [bed.patient? bed.patient.sekretessInfo: null]
         }),
         infekterad: [bed.patient? bed.patient.infekterad: null],
-        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null))
+        patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null)),
+        infectionSensitive: [bed.patient? bed.patient.infectionSensitive: null]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -166,6 +167,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.sekretess = bedModel.patient.sekretessGroup.sekretess? bedModel.patient.sekretessGroup.sekretess: null;
       bed.patient.sekretessInfo = bedModel.patient.sekretessGroup.sekretessInfo? bedModel.patient.sekretessGroup.sekretessInfo: null;
       bed.patient.infekterad = bedModel.patient.infekterad? bedModel.patient.infekterad: null;
+      bed.patient.infectionSensitive = bedModel.patient.infectionSensitive? bedModel.patient.infectionSensitive: null;
 
 
     } else {

@@ -71,6 +71,9 @@ public class Patient {
     @Column
     private Boolean infekterad;
 
+    @Column
+    private Boolean infectionSensitive;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new TreeSet<>();
@@ -233,6 +236,14 @@ public class Patient {
 
     public void setInfekterad(Boolean infekterad) {
         this.infekterad = infekterad;
+    }
+
+    public Boolean getInfectionSensitive() {
+        return infectionSensitive;
+    }
+
+    public void setInfectionSensitive(Boolean infectionSensitive) {
+        this.infectionSensitive = infectionSensitive;
     }
 
     @Override

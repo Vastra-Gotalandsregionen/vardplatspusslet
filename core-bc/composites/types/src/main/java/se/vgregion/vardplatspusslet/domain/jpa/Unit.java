@@ -70,6 +70,9 @@ public class Unit {
     @Column Boolean hasInfekteradFeature;
 
 
+    @Column Boolean hasInfectionSensitiveFeature;
+
+
     public Unit() {
     }
 
@@ -191,5 +194,13 @@ public class Unit {
 
     public void setHasInfekteradFeature(Boolean hasInfekteradFeature) {
         this.hasInfekteradFeature = hasInfekteradFeature;
+    }
+
+    public Boolean getHasInfectionSensitiveFeature() {
+        return hasInfectionSensitiveFeature;
+    }
+
+    public void setHasInfectionSensitiveFeature(Boolean hasInfectionSensitiveFeature) {
+        this.hasInfectionSensitiveFeature = hasInfectionSensitiveFeature;
     }
 }

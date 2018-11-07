@@ -19,6 +19,7 @@ export class Patient {
   sekretess: boolean;
   sekretessInfo: string;
   infekterad: boolean;
+  infectionSensitive: boolean;
 }
 
 enum LeaveStatus {

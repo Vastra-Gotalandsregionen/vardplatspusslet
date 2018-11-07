@@ -85,6 +85,10 @@
           <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
         </div>
 
+        <div *ngIf="unit.hasInfectionSensitiveFeature" style="margin-bottom: 7px">
+          <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
+        </div>
+
 
       </div>
     </vgr-card-column>
