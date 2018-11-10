@@ -150,7 +150,20 @@
         <vgr-textarea formControlName="relatedInformation" width="90%"></vgr-textarea>
       </div>
     </vgr-card-column>
-    <vgr-card-column></vgr-card-column>
+
+    <vgr-card-column>
+      <div  *ngIf="unit.hasCleaningFeature" style="margin-bottom:10px" dis>
+        <p>Städning</p>
+      <div class="containers" formGroupName="cleaningGroup">
+        <vgr-checkbox formControlName="cleaningalternativeExists"></vgr-checkbox>
+        <vgr-dropdown *ngIf="cleaningAlternativesDropdownItems?.length != 0" formControlName="cleaningAlternative"
+                      noItemSelectedLabel="Välj"
+                      [items]="cleaningAlternativesDropdownItems" [disabled]="!bedForm.get('cleaningGroup.cleaningalternativeExists').value"></vgr-dropdown>
+        <input formControlName="cleaningInfo" *ngIf="bedForm.get('cleaningGroup.cleaningalternativeExists').value" style="width: 40%; margin-left: 5px"/>
+        <input formControlName="cleaningInfo" disabled *ngIf="!bedForm.get('cleaningGroup.cleaningalternativeExists').value" style="width: 40%; margin-left: 5px"/>
+      </div>
+      </div>
+    </vgr-card-column>
   </vgr-card>
 
   <div class="clearfix button-row save-cancel-delete" >

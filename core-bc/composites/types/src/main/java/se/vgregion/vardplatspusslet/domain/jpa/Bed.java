@@ -38,14 +38,23 @@ public class Bed {
     @ManyToOne(fetch = FetchType.EAGER)
     private ServingClinic servingClinic;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CleaningAlternative cleaningAlternative;
+
     @Column
     private Boolean patientWaits;
 
     @Column
     private String relatedInformation;
 
+    @Column
+    private Boolean cleaningalternativeExists;
 
-    public Bed() {
+    @Column
+    private String cleaningInfo;
+
+
+    public Bed(){
     }
 
     public Long getId() {
@@ -110,6 +119,30 @@ public class Bed {
 
     public void setRelatedInformation(String relatedInformation) {
         this.relatedInformation = relatedInformation;
+    }
+
+    public CleaningAlternative getCleaningAlternative() {
+        return cleaningAlternative;
+    }
+
+    public void setCleaningAlternative(CleaningAlternative cleaningAlternative) {
+        this.cleaningAlternative = cleaningAlternative;
+    }
+
+    public Boolean getCleaningalternativeExists() {
+        return cleaningalternativeExists;
+    }
+
+    public void setCleaningalternativeExists(Boolean cleaningalternativeExists) {
+        this.cleaningalternativeExists = cleaningalternativeExists;
+    }
+
+    public String getCleaningInfo() {
+        return cleaningInfo;
+    }
+
+    public void setCleaningInfo(String cleaningInfo) {
+        this.cleaningInfo = cleaningInfo;
     }
 
     @Override

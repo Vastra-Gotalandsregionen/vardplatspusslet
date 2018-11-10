@@ -27,6 +27,7 @@ export class UnitComponent implements OnInit {
   genderDropdownItems: DropdownItem<string>[];
   servingKlinikerDropdownItems: DropdownItem<number>[];
   sskDropdownItems: DropdownItem<number>[];
+  cleaningAlternativesDropdownItems: DropdownItem<number>[];
   leaveStatusesDropdownItems = [
     {
       displayName: 'Permission', value: 'PERMISSION'
@@ -84,6 +85,9 @@ export class UnitComponent implements OnInit {
 
             this.servingKlinikerDropdownItems = unit.servingClinics.map(klinik => {
               return {displayName: klinik.name, value: klinik.id};
+            });
+            this.cleaningAlternativesDropdownItems = unit.cleaningAlternatives.map(cg => {
+              return {displayName: cg.description, value: cg.id};
             });
 
             this.updateVacants(unit);

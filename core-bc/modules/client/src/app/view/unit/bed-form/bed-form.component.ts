@@ -29,11 +29,14 @@ export class BedFormComponent implements OnInit {
   prevklinik: string;
   prevSekret: string;
   prevSmitta: string;
+  prevCleanGroup: string;
+  prevCleanInfo: string;
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
   @Input('leaveStatusesDropdownItems') leaveStatusesDropdownItems: DropdownItem<string>;
   @Input('servingKlinikerDropdownItems') servingKlinikerDropdownItems: DropdownItem<number>[];
+  @Input('cleaningAlternativesDropdownItems') cleaningAlternativesDropdownItems: DropdownItem<number>[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) {
@@ -86,6 +89,12 @@ export class BedFormComponent implements OnInit {
         waitingpatient: [bed.patientWaits ? bed.patientWaits: null]
         }
       ),
+      cleaningGroup: this.formBuilder.group({
+        cleaningAlternative:[bed.cleaningAlternative != null ? bed.cleaningAlternative.id: null],
+        cleaningInfo: [bed.cleaningInfo ? bed.cleaningInfo: null],
+        cleaningalternativeExists:[bed.cleaningalternativeExists? bed.cleaningalternativeExists: null]
+      }),
+
       relatedInformation: [bed.relatedInformation]
     });
 
@@ -104,6 +113,25 @@ export class BedFormComponent implements OnInit {
           {
             this.bedForm.get('patient.tolkGroup.interpretDate').setValue(this.prevDate);
             this.bedForm.get('patient.tolkGroup.interpretInfo').setValue(this.prevInfo);
+          }
+        }
+      });
+
+    this.bedForm.get('cleaningGroup.cleaningalternativeExists').valueChanges
+      .subscribe((checked: boolean) => {
+        if (!checked || checked == null) {
+          this.prevCleanGroup = this.bedForm.get('cleaningGroup.cleaningAlternative').value;
+          this.prevCleanInfo = this.bedForm.get('cleaningGroup.cleaningInfo').value;
+          this.bedForm.get('cleaningGroup.cleaningAlternative').setValue(null);
+          this.bedForm.get('cleaningGroup.cleaningInfo').setValue(null);
+        }
+        else if (checked)
+        {
+          if (this.bedForm.get('cleaningGroup.cleaningAlternative').value == null
+            && this.bedForm.get('cleaningGroup.cleaningInfo').value == null)
+          {
+            this.bedForm.get('cleaningGroup.cleaningAlternative').setValue(this.prevCleanGroup);
+            this.bedForm.get('cleaningGroup.cleaningInfo').setValue(this.prevCleanInfo);
           }
         }
       });
@@ -200,6 +228,12 @@ export class BedFormComponent implements OnInit {
 
     if (bedModel.waitingforbedGroup.servingKlinik) {
       bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.waitingforbedGroup.servingKlinik);
+    }
+    debugger;
+    if (bedModel.cleaningGroup.cleaningalternativeExists && bedModel.cleaningGroup.cleaningAlternative){
+      bed.cleaningalternativeExists = bedModel.cleaningGroup.cleaningalternativeExists;
+      bed.cleaningAlternative = this.unit.cleaningAlternatives.find(cg => cg.id === bedModel.cleaningGroup.cleaningAlternative);
+      bed.cleaningInfo = bedModel.cleaningGroup.cleaningInfo;
     }
     bed.patientWaits = bedModel.waitingforbedGroup.waitingpatient;
     bed.relatedInformation = bedModel.relatedInformation;

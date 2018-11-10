@@ -122,6 +122,10 @@
                        [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.cleaningalternativeExists && unit.cleaningAlternatives"
+                       [appCallout]="'Städning'"><i class="fa fa-leaf purpule"></i>
+                  </div>
+
                 </vgr-list-column>
               </vgr-list-item-header>
 
@@ -134,6 +138,7 @@
                               [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
                               [sskDropdownItems]="sskDropdownItems"
                               [servingKlinikerDropdownItems]="servingKlinikerDropdownItems"
+                              [cleaningAlternativesDropdownItems]="cleaningAlternativesDropdownItems"
                               (collapse)="collapse(theListItem)"
                               (openDeleteModal)="openDeleteModal(bed)"
                               (save)="ngOnInit()"

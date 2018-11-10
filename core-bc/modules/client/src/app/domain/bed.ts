@@ -1,6 +1,7 @@
 import {Patient} from "./patient";
 import {Ssk} from "./ssk";
 import {ServingClinic} from "./servingclinic";
+import {CleaningAlternative} from "./cleaning-alternative";
 
 export class Bed {
   id: number;
@@ -11,4 +12,8 @@ export class Bed {
   servingClinic: ServingClinic;
   patientWaits: boolean;
   relatedInformation: string;
+  cleaningalternativeExists: boolean;
+  cleaningInfo: string;
+  cleaningAlternative: CleaningAlternative;
+
 }

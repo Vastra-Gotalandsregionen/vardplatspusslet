@@ -4,6 +4,7 @@ import {Clinic} from "./clinic";
 import {Ssk} from "./ssk";
 import {ServingClinic} from "./servingclinic";
 import {Message} from "./message";
+import {CleaningAlternative} from "./cleaning-alternative";
 
 export class Unit {
   id: string;
@@ -24,4 +25,6 @@ export class Unit {
   hasInfekteradFeature: boolean;
   hasInfectionSensitiveFeature: boolean;
   hasSmittaFeature: boolean;
+  cleaningAlternatives: CleaningAlternative[];
+  hasCleaningFeature: boolean;
 }

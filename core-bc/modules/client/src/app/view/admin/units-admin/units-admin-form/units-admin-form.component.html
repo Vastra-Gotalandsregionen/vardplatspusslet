@@ -41,6 +41,7 @@
           <vgr-checkbox label="Infekterad" formControlName="hasInfekteradFeature"></vgr-checkbox>
           <vgr-checkbox label="Infektionskäsnlig" formControlName="hasInfectionSensitiveFeature"></vgr-checkbox>
           <vgr-checkbox label="Smitta" formControlName="hasSmittaFeature"></vgr-checkbox>
+          <vgr-checkbox label="Städning" formControlName="hasCleaningFeature"></vgr-checkbox>
 
         </vgr-title-value-layout>
       </vgr-card-section>
@@ -97,6 +98,32 @@
           </div>
           <div>
             <a (click)="addServingClinic()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till upsprungs klinik</span></a>
+          </div>
+        </div>
+      </vgr-card-section>
+
+      <vgr-card-section [expanded]="true" [title]="'Städning'" [subtitle]="" class="clearfix">
+        <table class="vpp-table" *ngIf="!editCleanGroup">
+
+          <tr *ngFor="let cleanalternative of unit?.cleaningAlternatives || []">
+            <td>{{cleanalternative.description}}</td>
+          </tr>
+
+          <tfoot>
+          <tr>
+            <td><a (click)="editCleanGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+          </tfoot>
+        </table>
+
+        <div *ngIf="editCleanGroup">
+          <div formArrayName="cleaningAlternatives" *ngFor="let cleanAlt of cleaningAlternatives.controls let i = index;" class="edit-ssk-row">
+            <div [formGroupName]="i">
+              <input formControlName="description" placeholder="städ alternative..."/>
+              <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            </div>
+          </div>
+          <div>
+            <a (click)="addCleaningAlternative()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till städning alternative</span></a>
           </div>
         </div>
       </vgr-card-section>

@@ -33,6 +33,9 @@ public class Unit {
     @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ServingClinic> servingClinics = new TreeSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CleaningAlternative> cleaningAlternatives= new TreeSet<>();;
+
     @Column
     private String name;
 
@@ -67,14 +70,21 @@ public class Unit {
     @Column
     private Boolean hasSekretessFeature;
 
-    @Column Boolean hasInfekteradFeature;
+    @Column
+    private Boolean hasInfekteradFeature;
 
 
-    @Column Boolean hasInfectionSensitiveFeature;
+    @Column
+    private Boolean hasInfectionSensitiveFeature;
 
-    @Column Boolean hasSmittaFeature;
+    @Column
+    private Boolean hasSmittaFeature;
+
+    @Column
+    private Boolean hasCleaningFeature;
 
     public Unit() {
+
     }
 
     public String getId() {
@@ -211,5 +221,21 @@ public class Unit {
 
     public void setHasSmittaFeature(Boolean hasSmittaFeature) {
         this.hasSmittaFeature = hasSmittaFeature;
+    }
+
+    public Set<CleaningAlternative> getCleaningAlternatives() {
+        return cleaningAlternatives;
+    }
+
+    public void setCleaningAlternatives(Set<CleaningAlternative> cleaningAlternatives) {
+        this.cleaningAlternatives = cleaningAlternatives;
+    }
+
+    public Boolean getHasCleaningFeature() {
+        return hasCleaningFeature;
+    }
+
+    public void setHasCleaningFeature(Boolean hasCleaningFeature) {
+        this.hasCleaningFeature = hasCleaningFeature;
     }
 }
