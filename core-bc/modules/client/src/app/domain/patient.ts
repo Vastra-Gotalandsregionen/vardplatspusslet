@@ -22,6 +22,7 @@ export class Patient {
   infectionSensitive: boolean;
   smitta: boolean;
   smittaInfo: string;
+  pal: string;
 }
 
 enum LeaveStatus {

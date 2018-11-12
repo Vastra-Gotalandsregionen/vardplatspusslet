@@ -42,9 +42,9 @@
               <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
               <vgr-list-column-header width="2">SSK</vgr-list-column-header>
               <vgr-list-column-header width="3">Status</vgr-list-column-header>
-              <vgr-list-column-header width="3">Patient</vgr-list-column-header>
+              <vgr-list-column-header width="2">Patient</vgr-list-column-header>
               <vgr-list-column-header width="2">Kön</vgr-list-column-header>
-              <vgr-list-column-header width="7">Status</vgr-list-column-header>
+              <vgr-list-column-header width="8">Status</vgr-list-column-header>
             </vgr-list-header>
 
             <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
@@ -53,9 +53,9 @@
                 <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
                 <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
                 <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
-                <vgr-list-column width="3">{{bed.patient?.label}}</vgr-list-column>
+                <vgr-list-column width="2">{{bed.patient?.label}}</vgr-list-column>
                 <vgr-list-column width="2">{{format(bed.patient?.gender)}}</vgr-list-column>
-                <vgr-list-column width="7">
+                <vgr-list-column width="8">
                   <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
                        [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
                   </div>
@@ -75,7 +75,7 @@
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"
-                       [appCallout]="'Patient har bokade undersökningar'"><i class="fa fa-user-md purpule"></i>
+                       [appCallout]="'Patient har bokade undersökningar'"><i class="fa fa-stethoscope purpule"></i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.relatedInformation?.length > 0"
@@ -126,6 +126,9 @@
                        [appCallout]="'Städning'"><i class="fa fa-leaf purpule"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.patient?.pal && unit.hasPalFeature"
+                       [appCallout]="'PAL: ' + bed.patient.pal"><i class="fa fa-user-md purpule"></i>
+                  </div>
                 </vgr-list-column>
               </vgr-list-item-header>
 

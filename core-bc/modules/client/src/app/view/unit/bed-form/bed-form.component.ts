@@ -81,7 +81,8 @@ export class BedFormComponent implements OnInit {
         smittaGroup: this.formBuilder.group({
           smitta: [bed.patient? bed.patient.smitta: null],
           smittaInfo: [bed.patient? bed.patient.smittaInfo: null]
-        })
+        }),
+        pal: [bed.patient? bed.patient.pal: null]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -190,7 +191,6 @@ export class BedFormComponent implements OnInit {
   save() {
     let bed = new Bed();
     let bedModel = this.bedForm.value;
-
     bed.id = bedModel.id;
     bed.label = bedModel.label;
     bed.occupied = !!bedModel.occupied;
@@ -217,6 +217,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.infectionSensitive = bedModel.patient.infectionSensitive? bedModel.patient.infectionSensitive: null;
       bed.patient.smitta = bedModel.patient.smittaGroup.smitta? bedModel.patient.smittaGroup.smitta:null;
       bed.patient.smittaInfo = bedModel.patient.smittaGroup.smittaInfo? bedModel.patient.smittaGroup.smittaInfo:null;
+      bed.patient.pal = bedModel.patient.pal? bedModel.patient.pal: null;
 
     } else {
       bed.patient = null;
@@ -229,7 +230,6 @@ export class BedFormComponent implements OnInit {
     if (bedModel.waitingforbedGroup.servingKlinik) {
       bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.waitingforbedGroup.servingKlinik);
     }
-    debugger;
     if (bedModel.cleaningGroup.cleaningalternativeExists && bedModel.cleaningGroup.cleaningAlternative){
       bed.cleaningalternativeExists = bedModel.cleaningGroup.cleaningalternativeExists;
       bed.cleaningAlternative = this.unit.cleaningAlternatives.find(cg => cg.id === bedModel.cleaningGroup.cleaningAlternative);

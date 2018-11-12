@@ -74,9 +74,14 @@ public class Patient {
     @Column
     private Boolean infectionSensitive;
 
-    @Column Boolean smitta;
+    @Column
+    private Boolean smitta;
 
-    @Column String smittaInfo;
+    @Column
+    private String smittaInfo;
+
+    @Column
+    private String Pal;
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -264,6 +269,14 @@ public class Patient {
 
     public void setInfectionSensitive(Boolean infectionSensitive) {
         this.infectionSensitive = infectionSensitive;
+    }
+
+    public String getPal() {
+        return Pal;
+    }
+
+    public void setPal(String pal) {
+        Pal = pal;
     }
 
     @Override

@@ -27,4 +27,5 @@ export class Unit {
   hasSmittaFeature: boolean;
   cleaningAlternatives: CleaningAlternative[];
   hasCleaningFeature: boolean;
+  hasPalFeature: boolean;
 }

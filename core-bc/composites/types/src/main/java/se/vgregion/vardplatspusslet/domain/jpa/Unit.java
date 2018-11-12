@@ -83,6 +83,9 @@ public class Unit {
     @Column
     private Boolean hasCleaningFeature;
 
+    @Column
+    private Boolean hasPalFeature;
+
     public Unit() {
 
     }
@@ -237,5 +240,13 @@ public class Unit {
 
     public void setHasCleaningFeature(Boolean hasCleaningFeature) {
         this.hasCleaningFeature = hasCleaningFeature;
+    }
+
+    public Boolean getHasPalFeature() {
+        return hasPalFeature;
+    }
+
+    public void setHasPalFeature(Boolean hasPalFeature) {
+        this.hasPalFeature = hasPalFeature;
     }
 }
