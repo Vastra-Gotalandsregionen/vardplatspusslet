@@ -7,6 +7,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DropdownItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {e} from "@angular/core/src/render3";
+import {PatientEvent} from "../../../domain/patient-event";
 
 @Component({
   selector: 'app-bed-form',
@@ -77,6 +78,7 @@ export class BedFormComponent implements OnInit {
         }),
         infekterad: [bed.patient? bed.patient.infekterad: null],
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(bed.patient? bed.patient.patientExaminations: null)),
+        patientEvents: this.formBuilder.array(this.buildEventGroup(bed.patient? bed.patient.patientEvents:null)),
         infectionSensitive: [bed.patient? bed.patient.infectionSensitive: null],
         smittaGroup: this.formBuilder.group({
           smitta: [bed.patient? bed.patient.smitta: null],
@@ -218,6 +220,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.smitta = bedModel.patient.smittaGroup.smitta? bedModel.patient.smittaGroup.smitta:null;
       bed.patient.smittaInfo = bedModel.patient.smittaGroup.smittaInfo? bedModel.patient.smittaGroup.smittaInfo:null;
       bed.patient.pal = bedModel.patient.pal? bedModel.patient.pal: null;
+      bed.patient.patientEvents = bedModel.patient.patientEvents? this.filterEvents(bedModel.patient.patientEvents): null;
 
     } else {
       bed.patient = null;
@@ -292,6 +295,49 @@ export class BedFormComponent implements OnInit {
   private filterExams(src: Patientexamination[])
   {
     return src.filter(exam => exam.examination != null && exam.examinationDate != null)
+  }
+
+  private buildEventGroup(patientEvents: PatientEvent[]): FormGroup[]{
+    if (!patientEvents || patientEvents.length === 0) {
+      return [];
+    }
+    return patientEvents.map(patientevent => {
+      return this.formBuilder.group({
+        id: patientevent.id,
+        event: patientevent.event,
+        eventDate: patientevent.eventDate,
+        eventTime: patientevent.eventTime,
+        eventInfo: patientevent.eventInfo
+      })
+    });
+  }
+
+  CreateSPatientEvent(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      event: null,
+      eventDate: null,
+      eventTime: null,
+      eventInfo:null
+    });
+  }
+
+  deletePatientEvent(index: number) {
+    this.patientEvents.removeAt(index);
+  }
+
+  get patientEvents(): FormArray{
+    return <FormArray>this.bedForm.get('patient.patientEvents');
+  }
+
+
+  addPatientEvent(){
+    this.patientEvents.push(this.CreateSPatientEvent());
+  }
+
+  private filterEvents(src: PatientEvent[])
+  {
+    return src.filter(event => event.event != null && event.eventDate != null)
   }
 
   deleteDate()

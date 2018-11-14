@@ -68,7 +68,7 @@
           <vgr-input id="carePlan" formControlName="carePlan"></vgr-input>
         </div>
 
-        <div>
+        <div class="div-button10">
           <div class="containers">
             <label>Undersökningar</label>
             <a (click)="addExamination()"><i class="fa fa-plus-square child"></i></a>
@@ -80,6 +80,22 @@
               <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
 
               <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="unit.hasHendelseFeature" class="div-button10">
+          <div class="containers">
+            <label>Händelser</label>
+            <a (click)="addPatientEvent()"><i class="fa fa-plus-square child"></i></a>
+          </div>
+          <div  formArrayName="patientEvents" *ngFor="let event of patientEvents.controls let i = index;" class="clearfix">
+            <div [formGroupName]="i" class="containers">
+              <input formControlName="event" class="child1"/>
+              <vgr-datepicker formControlName="eventDate"></vgr-datepicker>
+              <input formControlName="eventTime" placeholder="tid..." class="child3"/>
+              <input formControlName="eventInfo" class="child4"/>
+              <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
         </div>
@@ -143,6 +159,7 @@
       <div *ngIf="unit.hasInfectionSensitiveFeature" class="div-button7">
         <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
       </div>
+
 
     </vgr-card-column>
   </vgr-card>

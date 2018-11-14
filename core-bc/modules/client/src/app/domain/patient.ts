@@ -1,4 +1,5 @@
 import {Patientexamination} from "./patientexamination";
+import {PatientEvent} from "./patient-event";
 
 export class Patient {
   id: number;
@@ -23,6 +24,7 @@ export class Patient {
   smitta: boolean;
   smittaInfo: string;
   pal: string;
+  patientEvents: PatientEvent[];
 }
 
 enum LeaveStatus {

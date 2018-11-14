@@ -87,6 +87,11 @@ public class Patient {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new TreeSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PatientEvent> patientEvents = new TreeSet<>();
+
+
+
     public Long getId() {
         return id;
     }
@@ -277,6 +282,14 @@ public class Patient {
 
     public void setPal(String pal) {
         Pal = pal;
+    }
+
+    public Set<PatientEvent> getPatientEvents() {
+        return patientEvents;
+    }
+
+    public void setPatientEvents(Set<PatientEvent> patientEvents) {
+        this.patientEvents = patientEvents;
     }
 
     @Override

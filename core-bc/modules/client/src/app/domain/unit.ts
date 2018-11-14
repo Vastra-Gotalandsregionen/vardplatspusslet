@@ -28,4 +28,5 @@ export class Unit {
   cleaningAlternatives: CleaningAlternative[];
   hasCleaningFeature: boolean;
   hasPalFeature: boolean;
+  hasHendelseFeature: boolean;
 }

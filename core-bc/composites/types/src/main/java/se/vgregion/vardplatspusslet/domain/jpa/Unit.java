@@ -86,6 +86,9 @@ public class Unit {
     @Column
     private Boolean hasPalFeature;
 
+    @Column
+    private Boolean hasHendelseFeature;
+
     public Unit() {
 
     }
@@ -248,5 +251,13 @@ public class Unit {
 
     public void setHasPalFeature(Boolean hasPalFeature) {
         this.hasPalFeature = hasPalFeature;
+    }
+
+    public Boolean getHasHendelseFeature() {
+        return hasHendelseFeature;
+    }
+
+    public void setHasHendelseFeature(Boolean hasHendelseFeature) {
+        this.hasHendelseFeature = hasHendelseFeature;
     }
 }

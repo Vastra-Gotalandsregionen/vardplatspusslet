@@ -129,6 +129,12 @@
                   <div class="ikon" *ngIf="bed.patient?.pal && unit.hasPalFeature"
                        [appCallout]="'PAL: ' + bed.patient.pal"><i class="fa fa-user-md purpule"></i>
                   </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.patientEvents.length > 0 && unit.hasHendelseFeature"
+                       [appCallout]="'Händelser finns'"><i class="fa fa-tasks purpule"></i>
+                  </div>
+
+
                 </vgr-list-column>
               </vgr-list-item-header>
 
