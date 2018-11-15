@@ -134,6 +134,18 @@
                        [appCallout]="'Händelser finns'"><i class="fa fa-tasks purpule"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.patient?.barnRond && unit.hasRondFeature"
+                       [appCallout]="'Rond Barn'"><i class="material-icons purpule">child_care</i>
+                  </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.morRond && unit.hasRondFeature"
+                       [appCallout]="'Rond Mor'"><i class="fa fa-user purpule"></i>
+                  </div>
+
+                  <div class="ikon" *ngIf="bed.patient?.rond && unit.hasRondFeature"
+                       [appCallout]="'Rond'"><i class="fa fa-user-circle purpule"></i>
+                  </div>
+
 
                 </vgr-list-column>
               </vgr-list-item-header>

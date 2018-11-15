@@ -90,6 +90,11 @@ public class Patient {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientEvent> patientEvents = new TreeSet<>();
 
+    @Column
+    private Boolean morRond;
+    private Boolean barnRond;
+    private Boolean rond;
+
 
 
     public Long getId() {
@@ -290,6 +295,30 @@ public class Patient {
 
     public void setPatientEvents(Set<PatientEvent> patientEvents) {
         this.patientEvents = patientEvents;
+    }
+
+    public Boolean getMorRond() {
+        return morRond;
+    }
+
+    public void setMorRond(Boolean morRond) {
+        this.morRond = morRond;
+    }
+
+    public Boolean getBarnRond() {
+        return barnRond;
+    }
+
+    public void setBarnRond(Boolean barnRond) {
+        this.barnRond = barnRond;
+    }
+
+    public Boolean getRond() {
+        return rond;
+    }
+
+    public void setRond(Boolean rond) {
+        this.rond = rond;
     }
 
     @Override

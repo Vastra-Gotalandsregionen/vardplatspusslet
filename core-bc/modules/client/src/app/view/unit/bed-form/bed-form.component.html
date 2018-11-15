@@ -160,6 +160,17 @@
         <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
       </div>
 
+      <div *ngIf="unit.hasMorRondFeature" class="div-button7">
+        <vgr-checkbox formControlName="morRond" label="Rond Mor"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasBarnRondFeature" class="div-button7">
+        <vgr-checkbox formControlName="barnRond" label="Rond Barn"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasRondFeature" class="div-button7">
+        <vgr-checkbox formControlName="rond" label="Rond"></vgr-checkbox>
+      </div>
 
     </vgr-card-column>
   </vgr-card>

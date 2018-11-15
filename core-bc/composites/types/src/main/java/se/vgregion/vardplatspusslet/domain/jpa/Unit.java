@@ -89,6 +89,15 @@ public class Unit {
     @Column
     private Boolean hasHendelseFeature;
 
+    @Column
+    private  Boolean hasMorRondFeature;
+
+    @Column
+    private  Boolean hasBarnRondFeature;
+
+    @Column
+    private  Boolean hasRondFeature;
+
     public Unit() {
 
     }
@@ -259,5 +268,29 @@ public class Unit {
 
     public void setHasHendelseFeature(Boolean hasHendelseFeature) {
         this.hasHendelseFeature = hasHendelseFeature;
+    }
+
+    public Boolean getHasMorRondFeature() {
+        return hasMorRondFeature;
+    }
+
+    public void setHasMorRondFeature(Boolean hasMorRondFeature) {
+        this.hasMorRondFeature = hasMorRondFeature;
+    }
+
+    public Boolean getHasBarnRondFeature() {
+        return hasBarnRondFeature;
+    }
+
+    public void setHasBarnRondFeature(Boolean hasBarnRondFeature) {
+        this.hasBarnRondFeature = hasBarnRondFeature;
+    }
+
+    public Boolean getHasRondFeature() {
+        return hasRondFeature;
+    }
+
+    public void setHasRondFeature(Boolean hasRondFeature) {
+        this.hasRondFeature = hasRondFeature;
     }
 }

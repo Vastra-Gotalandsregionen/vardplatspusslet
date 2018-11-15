@@ -25,6 +25,10 @@ export class Patient {
   smittaInfo: string;
   pal: string;
   patientEvents: PatientEvent[];
+  morRond: boolean;
+  barnRond: boolean;
+  rond: boolean;
+
 }
 
 enum LeaveStatus {

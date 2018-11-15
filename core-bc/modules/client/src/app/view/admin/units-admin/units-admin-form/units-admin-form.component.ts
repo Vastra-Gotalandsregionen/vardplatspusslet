@@ -70,7 +70,10 @@ export class UnitsAdminFormComponent implements OnInit {
       hasSmittaFeature: [unit.hasSmittaFeature],
       hasCleaningFeature: [unit.hasCleaningFeature],
       hasPalFeature: [unit.hasPalFeature],
-      hasHendelseFeature: [unit.hasHendelseFeature]
+      hasHendelseFeature: [unit.hasHendelseFeature],
+      hasMorRondFeature: [unit.hasMorRondFeature],
+      hasBarnRondFeature: [unit.hasBarnRondFeature],
+      hasRondFeature: [unit.hasRondFeature]
     });
 
   }
@@ -100,7 +103,11 @@ export class UnitsAdminFormComponent implements OnInit {
       hasSmittaFeature: unit.hasSmittaFeature,
       hasCleaningFeature: unit.hasCleaningFeature,
       hasPalFeature: unit.hasPalFeature,
-      hasHendelseFeature: unit.hasHendelseFeature
+      hasHendelseFeature: unit.hasHendelseFeature,
+      hasMorRondFeature: unit.hasMorRondFeature,
+      hasBarnRondFeature: unit.hasBarnRondFeature,
+      hasRondFeature: unit.hasRondFeature
+
     });
 
   }
@@ -145,6 +152,10 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasCleaningFeature = unitModel.hasCleaningFeature;
     unit.hasPalFeature = unitModel.hasPalFeature;
     unit.hasHendelseFeature = unitModel.hasHendelseFeature;
+    unit.hasMorRondFeature = unitModel.hasMorRondFeature;
+    unit.hasBarnRondFeature = unitModel.hasBarnRondFeature;
+    unit.hasRondFeature = unitModel.hasRondFeature;
+
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();

@@ -51,6 +51,7 @@ export class BedFormComponent implements OnInit {
     if (!bed) {
       bed = new Bed();
     }
+    debugger;
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
@@ -84,7 +85,11 @@ export class BedFormComponent implements OnInit {
           smitta: [bed.patient? bed.patient.smitta: null],
           smittaInfo: [bed.patient? bed.patient.smittaInfo: null]
         }),
-        pal: [bed.patient? bed.patient.pal: null]
+        pal: [bed.patient? bed.patient.pal: null],
+        morRond: [bed.patient? bed.patient.morRond: null],
+        barnRond:[bed.patient? bed.patient.barnRond: null],
+        rond:[bed.patient? bed.patient.rond: null]
+
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -221,6 +226,9 @@ export class BedFormComponent implements OnInit {
       bed.patient.smittaInfo = bedModel.patient.smittaGroup.smittaInfo? bedModel.patient.smittaGroup.smittaInfo:null;
       bed.patient.pal = bedModel.patient.pal? bedModel.patient.pal: null;
       bed.patient.patientEvents = bedModel.patient.patientEvents? this.filterEvents(bedModel.patient.patientEvents): null;
+      bed.patient.morRond= bedModel.patient.morRond? bedModel.patient.morRond: null;
+      bed.patient.barnRond= bedModel.patient.barnRond? bedModel.patient.barnRond: null;
+      bed.patient.rond= bedModel.patient.rond? bedModel.patient.rond: null;
 
     } else {
       bed.patient = null;

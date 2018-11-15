@@ -29,4 +29,8 @@ export class Unit {
   hasCleaningFeature: boolean;
   hasPalFeature: boolean;
   hasHendelseFeature: boolean;
+  hasMorRondFeature: boolean;
+  hasBarnRondFeature: boolean;
+  hasRondFeature: boolean;
+
 }
