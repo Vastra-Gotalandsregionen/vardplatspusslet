@@ -98,6 +98,9 @@ public class Unit {
     @Column
     private  Boolean hasRondFeature;
 
+    @Column
+    private Boolean hasAmningFeature;
+
     public Unit() {
 
     }
@@ -292,5 +295,13 @@ public class Unit {
 
     public void setHasRondFeature(Boolean hasRondFeature) {
         this.hasRondFeature = hasRondFeature;
+    }
+
+    public Boolean getHasAmningFeature() {
+        return hasAmningFeature;
+    }
+
+    public void setHasAmningFeature(Boolean hasAmningFeature) {
+        this.hasAmningFeature = hasAmningFeature;
     }
 }

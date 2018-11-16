@@ -146,6 +146,16 @@
                        [appCallout]="'Rond'"><i class="fa fa-user-circle purpule"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.patient?.amning === '1' && unit.hasAmningFeature"
+                       [appCallout]="'Normal amning'"><i class="fa fa-circle-o purpule"></i>
+                  </div>
+                  <div class="ikon" *ngIf="bed.patient?.amning === '2' && unit.hasAmningFeature"
+                       [appCallout]="'Amningshjälp'"><i class="fa fa-dot-circle-o purpule"></i>
+                  </div>
+                  <div class="ikon" *ngIf="bed.patient?.amning === '3' && unit.hasAmningFeature"
+                       [appCallout]="'Amnings mottagning'"><i class="fa fa-dot-circle-o purpule"></i> <i class="fa fa-dot-circle-o purpule__np"></i>
+                  </div>
+
 
                 </vgr-list-column>
               </vgr-list-item-header>
@@ -154,7 +164,9 @@
 
                 <app-bed-form [clinicId]="clinic.id"
                               [unit]="unit"
+
                               [bed]="bed"
+                              [amningOptions]="amningOptions"
                               [genderDropdownItems]="genderDropdownItems"
                               [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
                               [sskDropdownItems]="sskDropdownItems"

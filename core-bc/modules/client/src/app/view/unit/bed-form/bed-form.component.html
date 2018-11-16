@@ -68,6 +68,7 @@
           <vgr-input id="carePlan" formControlName="carePlan"></vgr-input>
         </div>
 
+
         <div class="div-button10">
           <div class="containers">
             <label>Undersökningar</label>
@@ -133,6 +134,12 @@
           <input formControlName="smittaInfo" disabled *ngIf="!bedForm.get('patient.smittaGroup.smitta').value" class="width30"/>
           <input formControlName="smittaInfo" *ngIf="bedForm.get('patient.smittaGroup.smitta').value" class="width50"/>
         </div>
+      </div>
+
+      <div *ngIf="unit.hasAmningFeature" class="div-button10">
+        <div>Amning</div>
+        <vgr-radio-group formControlName="amning" [options]="amningOptions" [vertical]="false">
+        </vgr-radio-group>
       </div>
 
 

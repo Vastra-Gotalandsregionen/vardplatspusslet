@@ -32,5 +32,6 @@ export class Unit {
   hasMorRondFeature: boolean;
   hasBarnRondFeature: boolean;
   hasRondFeature: boolean;
+  hasAmningFeature: boolean;
 
 }

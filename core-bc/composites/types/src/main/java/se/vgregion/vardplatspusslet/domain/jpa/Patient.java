@@ -92,10 +92,15 @@ public class Patient {
 
     @Column
     private Boolean morRond;
+
+    @Column
     private Boolean barnRond;
+
+    @Column
     private Boolean rond;
 
-
+    @Column
+    private String amning;
 
     public Long getId() {
         return id;
@@ -319,6 +324,14 @@ public class Patient {
 
     public void setRond(Boolean rond) {
         this.rond = rond;
+    }
+
+    public String getAmning() {
+        return amning;
+    }
+
+    public void setAmning(String amning) {
+        this.amning = amning;
     }
 
     @Override

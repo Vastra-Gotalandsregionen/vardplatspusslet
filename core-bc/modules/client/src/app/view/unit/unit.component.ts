@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
-import {DropdownItem, ListItemComponent} from "vgr-komponentkartan";
+import {DropdownItem, ListItemComponent, SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Patient} from "../../domain/patient";
@@ -24,6 +24,7 @@ export class UnitComponent implements OnInit {
   unit: Unit;
   clinic: Clinic;
 
+  amningOptions: SelectableItem<number>[];
   genderDropdownItems: DropdownItem<string>[];
   servingKlinikerDropdownItems: DropdownItem<number>[];
   sskDropdownItems: DropdownItem<number>[];
@@ -61,6 +62,12 @@ export class UnitComponent implements OnInit {
       {displayName: 'Man', value: 'MAN'},
       {displayName: 'Barn', value: 'BARN'}
     ];
+
+    this.amningOptions = [
+      {displayName: 'Normal amning', value: 1},
+      {displayName: 'Amningshjälp', value: 2},
+      {displayName: 'AmningsMottagning ', value: 3}
+    ]
 
     window.setInterval(() => this.checkForChanges(), 10000);
   }

@@ -4,7 +4,7 @@ import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DropdownItem} from "vgr-komponentkartan";
+import {DropdownItem, SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {e} from "@angular/core/src/render3";
 import {PatientEvent} from "../../../domain/patient-event";
@@ -38,6 +38,7 @@ export class BedFormComponent implements OnInit {
   @Input('leaveStatusesDropdownItems') leaveStatusesDropdownItems: DropdownItem<string>;
   @Input('servingKlinikerDropdownItems') servingKlinikerDropdownItems: DropdownItem<number>[];
   @Input('cleaningAlternativesDropdownItems') cleaningAlternativesDropdownItems: DropdownItem<number>[];
+  @Input('amningOptions') amningOptions: SelectableItem<number>[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) {
@@ -88,7 +89,8 @@ export class BedFormComponent implements OnInit {
         pal: [bed.patient? bed.patient.pal: null],
         morRond: [bed.patient? bed.patient.morRond: null],
         barnRond:[bed.patient? bed.patient.barnRond: null],
-        rond:[bed.patient? bed.patient.rond: null]
+        rond:[bed.patient? bed.patient.rond: null],
+        amning: +[bed.patient? bed.patient.amning: null]
 
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
@@ -229,6 +231,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.morRond= bedModel.patient.morRond? bedModel.patient.morRond: null;
       bed.patient.barnRond= bedModel.patient.barnRond? bedModel.patient.barnRond: null;
       bed.patient.rond= bedModel.patient.rond? bedModel.patient.rond: null;
+      bed.patient.amning = bedModel.patient.amning? bedModel.patient.amning: null;
 
     } else {
       bed.patient = null;
