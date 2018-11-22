@@ -25,6 +25,7 @@ export class UnitComponent implements OnInit {
   clinic: Clinic;
 
   amningOptions: SelectableItem<number>[];
+  informationOptions: SelectableItem<number>[];
   genderDropdownItems: DropdownItem<string>[];
   servingKlinikerDropdownItems: DropdownItem<number>[];
   sskDropdownItems: DropdownItem<number>[];
@@ -67,7 +68,13 @@ export class UnitComponent implements OnInit {
       {displayName: 'Normal amning', value: 1},
       {displayName: 'Amningshjälp', value: 2},
       {displayName: 'AmningsMottagning ', value: 3}
-    ]
+    ];
+
+    this.informationOptions = [
+      {displayName: 'THG', value: 1},
+      {displayName: 'THG/Barn', value: 2},
+      {displayName: 'Föräldrarum', value: 3}
+    ];
 
     window.setInterval(() => this.checkForChanges(), 10000);
   }

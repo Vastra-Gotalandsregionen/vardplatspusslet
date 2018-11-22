@@ -101,6 +101,9 @@ public class Unit {
     @Column
     private Boolean hasAmningFeature;
 
+    @Column
+    private Boolean hasInfoFeature;
+
     public Unit() {
 
     }
@@ -303,5 +306,13 @@ public class Unit {
 
     public void setHasAmningFeature(Boolean hasAmningFeature) {
         this.hasAmningFeature = hasAmningFeature;
+    }
+
+    public Boolean getHasInfoFeature() {
+        return hasInfoFeature;
+    }
+
+    public void setHasInfoFeature(Boolean hasInfoFeature) {
+        this.hasInfoFeature = hasInfoFeature;
     }
 }

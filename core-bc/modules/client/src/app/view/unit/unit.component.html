@@ -156,6 +156,18 @@
                        [appCallout]="'Amnings mottagning'"><i class="fa fa-dot-circle-o purpule"></i> <i class="fa fa-dot-circle-o purpule__np"></i>
                   </div>
 
+                  <div class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasInfoFeature"
+                       [appCallout]="'THG'"><i class="fa fa-undo purpule"></i>
+                  </div>
+                  <div class="ikon" *ngIf="bed.patient?.information === '2' && unit.hasInfoFeature"
+                       [appCallout]="'THG med barn'"><i class="fa fa-odnoklassniki purpule"></i>
+                  </div>
+                  <div class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasInfoFeature"
+                       [appCallout]="'Föräldrarum'"><i class="fa fa-weixin purpule"></i>
+                  </div>
+
+
+
 
                 </vgr-list-column>
               </vgr-list-item-header>
@@ -167,6 +179,7 @@
 
                               [bed]="bed"
                               [amningOptions]="amningOptions"
+                              [informationOptions] = "informationOptions"
                               [genderDropdownItems]="genderDropdownItems"
                               [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
                               [sskDropdownItems]="sskDropdownItems"

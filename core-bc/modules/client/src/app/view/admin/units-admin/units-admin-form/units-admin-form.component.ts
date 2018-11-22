@@ -74,7 +74,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMorRondFeature: [unit.hasMorRondFeature],
       hasBarnRondFeature: [unit.hasBarnRondFeature],
       hasRondFeature: [unit.hasRondFeature],
-      hasAmningFeature: [unit.hasAmningFeature]
+      hasAmningFeature: [unit.hasAmningFeature],
+      hasInfoFeature: [unit.hasInfoFeature]
     });
 
   }
@@ -108,7 +109,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMorRondFeature: unit.hasMorRondFeature,
       hasBarnRondFeature: unit.hasBarnRondFeature,
       hasRondFeature: unit.hasRondFeature,
-      hasAmningFeature: unit.hasAmningFeature
+      hasAmningFeature: unit.hasAmningFeature,
+      hasInfoFeature: unit.hasInfoFeature
 
     });
 
@@ -158,6 +160,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasBarnRondFeature = unitModel.hasBarnRondFeature;
     unit.hasRondFeature = unitModel.hasRondFeature;
     unit.hasAmningFeature = unitModel.hasAmningFeature;
+    unit.hasInfoFeature = unitModel.hasInfoFeature;
 
 
     if (unitModel.clinic) {

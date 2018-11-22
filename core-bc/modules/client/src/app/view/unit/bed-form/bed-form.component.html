@@ -142,6 +142,15 @@
         </vgr-radio-group>
       </div>
 
+      <div *ngIf="unit.hasInfoFeature" class="div-button10">
+        <div>Information</div>
+        <div class="info" formGroupName="infoGroup">
+          <vgr-radio-group formControlName="information" [options]="informationOptions" [vertical]="true">
+          </vgr-radio-group>
+          <vgr-input formControlName="kommentar"></vgr-input>
+        </div>
+      </div>
+
 
       <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
         <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>

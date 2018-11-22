@@ -29,6 +29,8 @@ export class Patient {
   barnRond: boolean;
   rond: boolean;
   amning: string;
+  information: string;
+  kommentar: string;
 
 }
 

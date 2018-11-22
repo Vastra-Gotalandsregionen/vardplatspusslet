@@ -83,6 +83,13 @@ public class Patient {
     @Column
     private String Pal;
 
+    @Column
+    private String information;
+
+    @Column
+    private String kommentar;
+
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new TreeSet<>();
@@ -332,6 +339,22 @@ public class Patient {
 
     public void setAmning(String amning) {
         this.amning = amning;
+    }
+
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
+    }
+
+    public String getKommentar() {
+        return kommentar;
+    }
+
+    public void setKommentar(String kommentar) {
+        this.kommentar = kommentar;
     }
 
     @Override

@@ -39,6 +39,7 @@ export class BedFormComponent implements OnInit {
   @Input('servingKlinikerDropdownItems') servingKlinikerDropdownItems: DropdownItem<number>[];
   @Input('cleaningAlternativesDropdownItems') cleaningAlternativesDropdownItems: DropdownItem<number>[];
   @Input('amningOptions') amningOptions: SelectableItem<number>[];
+  @Input('informationOptions') informationOptions: SelectableItem<number>[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) {
@@ -52,7 +53,6 @@ export class BedFormComponent implements OnInit {
     if (!bed) {
       bed = new Bed();
     }
-    debugger;
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
@@ -90,7 +90,12 @@ export class BedFormComponent implements OnInit {
         morRond: [bed.patient? bed.patient.morRond: null],
         barnRond:[bed.patient? bed.patient.barnRond: null],
         rond:[bed.patient? bed.patient.rond: null],
-        amning: +[bed.patient? bed.patient.amning: null]
+        amning: +[bed.patient? bed.patient.amning: null],
+        infoGroup: this.formBuilder.group({
+          information: +[bed.patient? bed.patient.information: null],
+          kommentar: [bed.patient? bed.patient.kommentar: null]
+        })
+
 
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
@@ -196,7 +201,6 @@ export class BedFormComponent implements OnInit {
     }
 
   }
-
   save() {
     let bed = new Bed();
     let bedModel = this.bedForm.value;
@@ -232,6 +236,8 @@ export class BedFormComponent implements OnInit {
       bed.patient.barnRond= bedModel.patient.barnRond? bedModel.patient.barnRond: null;
       bed.patient.rond= bedModel.patient.rond? bedModel.patient.rond: null;
       bed.patient.amning = bedModel.patient.amning? bedModel.patient.amning: null;
+      bed.patient.information = bedModel.patient.infoGroup.information? bedModel.patient.infoGroup.information: null;
+      bed.patient.kommentar= bedModel.patient.infoGroup.kommentar? bedModel.patient.infoGroup.kommentar: null;
 
     } else {
       bed.patient = null;
