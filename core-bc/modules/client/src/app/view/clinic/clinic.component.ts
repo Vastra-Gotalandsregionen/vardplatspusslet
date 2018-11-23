@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Clinic} from "../../domain/clinic";
 import {Unit} from "../../domain/unit";
+import {AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-clinic',
@@ -18,7 +19,12 @@ export class ClinicComponent implements OnInit {
   notFoundText = 'Oops. Inget fanns här...';
 
   constructor(private http: HttpClient,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private authService: AuthService) {
+    this.authService.isUserLoggedIn.subscribe(value => {
+      this.ngOnInit();
+    });
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

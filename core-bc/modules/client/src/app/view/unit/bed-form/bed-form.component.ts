@@ -6,7 +6,6 @@ import {HttpClient} from "@angular/common/http";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DropdownItem, SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
-import {e} from "@angular/core/src/render3";
 import {PatientEvent} from "../../../domain/patient-event";
 
 @Component({
@@ -52,7 +51,7 @@ export class BedFormComponent implements OnInit {
     if (!bed) {
       bed = new Bed();
     }
-    debugger;
+
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],

@@ -30,16 +30,20 @@ vgr-button.error .text-button {
   display: table;
 }
 
+div.save-cancel {
+  justify-content: flex-end;
+}
+
 .button-row {
   margin-top: 24px;
 
   &.save-cancel-delete {
     vgr-save-cancel {
-      float: left;
+      float: right;
     }
 
     .error {
-      float: right;
+      float: left;
     }
   }
 }

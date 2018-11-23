@@ -4,18 +4,19 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import se.vgregion.vardplatspusslet.service.JwtUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * @author Patrik Björk
  */
 public class HttpUtil {
 
-    public static String getUserIdFromRequest(HttpServletRequest request) {
+    public static Optional<String> getUserIdFromRequest(HttpServletRequest request) {
         String userId;
 
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            userId = null;
+            return Optional.empty();
         } else {
 
             String jwtToken = authorizationHeader.substring("Bearer".length()).trim();
@@ -25,6 +26,6 @@ public class HttpUtil {
 
             userId = jwt.getSubject();
         }
-        return userId;
+        return Optional.of(userId);
     }
 }

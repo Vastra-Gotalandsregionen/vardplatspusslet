@@ -13,6 +13,7 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -303,5 +304,18 @@ public class Unit {
 
     public void setHasAmningFeature(Boolean hasAmningFeature) {
         this.hasAmningFeature = hasAmningFeature;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Unit unit = (Unit) o;
+        return Objects.equals(id, unit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

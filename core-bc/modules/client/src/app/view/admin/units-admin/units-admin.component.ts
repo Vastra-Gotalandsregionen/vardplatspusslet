@@ -3,6 +3,7 @@ import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
 import {Clinic} from "../../../domain/clinic";
+import {AuthService} from "../../../service/auth.service";
 
 @Component({
   selector: 'app-units-admin',
@@ -18,7 +19,8 @@ export class UnitsAdminComponent implements OnInit {
   unitForDeletion: Unit;
   clinics: Clinic[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private authService: AuthService) {}
 
   ngOnInit() {
 
@@ -47,6 +49,10 @@ export class UnitsAdminComponent implements OnInit {
       .subscribe(() => {
         this.ngOnInit();
       });
+  }
+
+  get admin(): boolean {
+    return this.authService.isAdmin();
   }
 
 }

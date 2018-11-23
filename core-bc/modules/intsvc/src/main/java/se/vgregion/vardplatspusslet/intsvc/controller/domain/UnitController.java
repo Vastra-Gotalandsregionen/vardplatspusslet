@@ -11,12 +11,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
+import se.vgregion.vardplatspusslet.domain.jpa.Role;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
+import se.vgregion.vardplatspusslet.domain.jpa.User;
+import se.vgregion.vardplatspusslet.intsvc.controller.util.HttpUtil;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
+import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.UnitService;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/unit")
@@ -31,22 +40,49 @@ public class UnitController {
     @Autowired
     private ClinicRepository clinicRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    public List<Unit> getUnits(@RequestParam(value = "clinic", required = false) String clinicId) {
+    public List<Unit> getUnits(@RequestParam(value = "clinic", required = false) String clinicId,
+                               HttpServletRequest request) {
 
-        List<Unit> units;
-        if (clinicId == null) {
-             units = unitRepository.findAll(new Sort("clinic.name", "name"));
+        User user = getUser(request);
+
+        if (user == null) {
+            return Collections.emptyList();
+        }
+
+        if (user.getRole().equals(Role.USER)) {
+            List<Unit> usersUnits = new ArrayList<>(user.getUnits());
+
+            if (clinicId == null) {
+                return usersUnits;
+            } else {
+                return usersUnits.stream()
+                        .filter(unit -> unit.getClinic() != null && unit.getClinic().getId().equals(clinicId))
+                        .collect(Collectors.toList());
+            }
+
+        } else if (user.getRole().equals(Role.ADMIN)) {
+
+            List<Unit> units;
+            if (clinicId == null) {
+                units = unitRepository.findAll(new Sort("clinic.name", "name"));
+            } else {
+                units = unitRepository.findUnitsByClinicIsLike(clinicRepository.getOne(clinicId));
+            }
+
+            // TODO Why? Performance.
+            for (Unit unit : units) {
+                unit.setBeds(null);
+            }
+
+            return units;
         } else {
-            units = unitRepository.findUnitsByClinicIsLike(clinicRepository.getOne(clinicId));
+            throw new RuntimeException("Unexpected role: " + user.getRole().name());
         }
-
-        for (Unit unit : units) {
-            unit.setBeds(null);
-        }
-
-        return units;
     }
 
     @RequestMapping(value = "/{clinicId}/{id}", method = RequestMethod.GET)
@@ -72,5 +108,11 @@ public class UnitController {
         unitRepository.delete(unitId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    private User getUser(HttpServletRequest request) {
+        Optional<String> userIdFromRequest = HttpUtil.getUserIdFromRequest(request);
+
+        return userIdFromRequest.map(s -> userRepository.findOne(s)).orElse(null);
     }
 }
