@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ClinicComponent} from './view/clinic/clinic.component';
 import {HomeComponent} from './view/home/home.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UnitComponent} from './view/unit/unit.component';
 import {KomponentkartanModule} from "vgr-komponentkartan";
 import {NoopAnimationsModule} from "@angular/platform-browser/animations";
@@ -36,6 +36,7 @@ import {EditMessagesComponent} from './view/unit/edit-messages/edit-messages.com
 import {MessageComponent} from './elements/message/message.component';
 import {EditMessageComponent} from './elements/edit-message/edit-message.component';
 import {CKEditorModule} from "ng2-ckeditor";
+import {JwtHttpInterceptor} from "./interceptor/jwt-http-interceptor";
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -82,7 +83,8 @@ registerLocaleData(localeSv, "sv-SE");
     CalloutComponent
   ],
   providers: [
-    AuthService
+    AuthService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

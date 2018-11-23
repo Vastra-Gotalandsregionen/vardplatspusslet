@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
-import {interval} from "rxjs";
+import {BehaviorSubject, interval} from "rxjs";
 import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/retry";
 import {HttpClient} from "@angular/common/http";
@@ -12,6 +12,8 @@ export class AuthService {
 
   renewSubscription: Subscription;
   jwtHelper = new JwtHelperService();
+
+  public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient,
               private router: Router) {
@@ -83,6 +85,7 @@ export class AuthService {
       localStorage.removeItem('jwtToken');
     }
 
+    this.isUserLoggedIn.next(this.isAuthenticated());
   }
 
   resetAuth() {

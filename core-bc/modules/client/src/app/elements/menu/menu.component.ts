@@ -25,4 +25,12 @@ export class MenuComponent implements OnInit {
   logout() {
     this.authService.resetAuth();
   }
+
+  get admin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  get loggedIn(): boolean {
+    return this.authService.isAuthenticated();
+  }
 }

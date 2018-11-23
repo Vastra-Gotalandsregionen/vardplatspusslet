@@ -19,7 +19,7 @@ import se.vgregion.vardplatspusslet.service.InitService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableJpaRepositories(basePackageClasses = ClinicRepository.class, transactionManagerRef = "transactionManager")
 @ComponentScan(basePackageClasses = {InitService.class})
-public class AppConfigIT {
+public class AppITConfig {
 
     @Bean
     public AuthenticationManager authenticationManager() {

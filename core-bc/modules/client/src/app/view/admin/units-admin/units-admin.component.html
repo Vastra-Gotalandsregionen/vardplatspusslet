@@ -41,7 +41,7 @@
           </vgr-list-item-content>
         </vgr-list-item>
 
-        <vgr-list-item #addListItem>
+        <vgr-list-item #addListItem *ngIf="admin">
           <vgr-list-item-header>
             <vgr-list-column width="5">
               <div class="add-row vgr-icon-plus">Lägg till avdelning</div>
@@ -50,10 +50,12 @@
 
           <vgr-list-item-content>
             <app-units-admin-form [unit]="null"
+                                  [clinics]="clinics"
                                   [showId]="true"
                                   [showDelete]="false"
                                   (cancelEvent)="addListItem.setExpandOrCollapsed()"
-                                  (saveEvent)="save()">
+                                  (saveEvent)="save()"
+                                  *ngIf="clinics">
 
             </app-units-admin-form>
           </vgr-list-item-content>
