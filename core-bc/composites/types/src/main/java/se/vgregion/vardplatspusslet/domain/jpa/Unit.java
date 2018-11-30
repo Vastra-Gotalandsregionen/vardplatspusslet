@@ -50,6 +50,12 @@ public class Unit {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ssk> ssks = new TreeSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CareBurdenKategori> burdenKategories = new TreeSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CareBurdenValue> burdenValues = new TreeSet<>();
+
     @Column
     private Boolean hasLeftDateFeature;
 
@@ -104,6 +110,9 @@ public class Unit {
 
     @Column
     private Boolean hasInfoFeature;
+
+    @Column
+    private Boolean hasCareBurdenFeature;
 
     public Unit() {
 
@@ -315,6 +324,30 @@ public class Unit {
 
     public void setHasInfoFeature(Boolean hasInfoFeature) {
         this.hasInfoFeature = hasInfoFeature;
+    }
+
+    public Set<CareBurdenKategori> getBurdenKategories() {
+        return burdenKategories;
+    }
+
+    public void setBurdenKategories(Set<CareBurdenKategori> burdenKategories) {
+        this.burdenKategories = burdenKategories;
+    }
+
+    public Set<CareBurdenValue> getBurdenValues() {
+        return burdenValues;
+    }
+
+    public void setBurdenValues(Set<CareBurdenValue> burdenValues) {
+        this.burdenValues = burdenValues;
+    }
+
+    public Boolean getHasCareBurdenFeature() {
+        return hasCareBurdenFeature;
+    }
+
+    public void setHasCareBurdenFeature(Boolean hasCareBurdenFeature) {
+        this.hasCareBurdenFeature = hasCareBurdenFeature;
     }
 
     @Override

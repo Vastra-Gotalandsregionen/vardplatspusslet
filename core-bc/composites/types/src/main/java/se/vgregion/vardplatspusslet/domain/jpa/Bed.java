@@ -35,6 +35,13 @@ public class Bed {
     @ManyToOne(fetch = FetchType.EAGER)
     private Ssk ssk;
 
+   /* @ManyToOne(fetch = FetchType.EAGER)
+    private CareBurdenKategori kategori;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CareBurdenValue burdenValue;*/
+
     @ManyToOne(fetch = FetchType.EAGER)
     private ServingClinic servingClinic;
 
