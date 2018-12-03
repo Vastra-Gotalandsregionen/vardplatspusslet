@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -55,13 +56,15 @@ public class UnitController {
         }
 
         if (user.getRole().equals(Role.USER)) {
-            List<Unit> usersUnits = new ArrayList<>(user.getUnits());
+            Set<Unit> usersUnits = user.getUnits();
 
             if (clinicId == null) {
-                return usersUnits;
+                return new ArrayList<>(usersUnits);
             } else {
                 return usersUnits.stream()
                         .filter(unit -> unit.getClinic() != null && unit.getClinic().getId().equals(clinicId))
+                        .distinct()
+                        .sorted()
                         .collect(Collectors.toList());
             }
 
@@ -71,7 +74,11 @@ public class UnitController {
             if (clinicId == null) {
                 units = unitRepository.findAll(new Sort("clinic.name", "name"));
             } else {
-                units = unitRepository.findUnitsByClinicIsLike(clinicRepository.getOne(clinicId));
+                // To sort according to id.
+                units = unitRepository.findUnitsByClinicIsLike(clinicRepository.getOne(clinicId))
+                        .stream()
+                        .sorted()
+                        .collect(Collectors.toList());
             }
 
             // TODO Why? Performance.

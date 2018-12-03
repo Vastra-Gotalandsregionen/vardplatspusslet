@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Clinic} from "../../../domain/clinic";
 import {HttpClient} from "../../../../../node_modules/@angular/common/http";
 import {FormBuilder, FormGroup} from "@angular/forms";
@@ -16,6 +16,7 @@ export class ClinicsAdminComponent implements OnInit {
   clinicForDeletion: Clinic;
 
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
+  @ViewChild("addClinicId") addClinicId: ElementRef;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -60,6 +61,7 @@ export class ClinicsAdminComponent implements OnInit {
     this.http.put('/api/clinic', clinic)
       .subscribe(() => {
         this.ngOnInit();
+        this.addClinicId.nativeElement.focus();
       });
   }
 

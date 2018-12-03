@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Patrik Björk
@@ -33,7 +34,7 @@ public class User {
     private byte[] thumbnailPhoto;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Unit> units = new LinkedHashSet<>();
+    private Set<Unit> units = new TreeSet<>();
 
     @Column
     private Boolean inactivated = false;

@@ -25,7 +25,7 @@ public class JwtUtil {
     @Value("${jwt.sign.secret}")
     private String jwtSignSecret;
 
-    private static int MINUTES_AGE = 30;
+    private static final int MINUTES_AGE = 30;
 
     @PostConstruct
     public void init() {
@@ -38,7 +38,7 @@ public class JwtUtil {
             Date now = Date.from(Instant.now());
 
             return JWT.create()
-                    .withSubject(userId != null ? String.valueOf(userId) : null)
+                    .withSubject(userId)
                     .withArrayClaim("roles", roles)
                     .withClaim("displayName", displayName)
                     .withIssuedAt(now)

@@ -23,7 +23,7 @@ import java.util.TreeSet;
 @Entity
 @Table(name = "unit")
 @NamedEntityGraph(name = "Unit.beds", attributeNodes = @NamedAttributeNode("beds"))
-public class Unit {
+public class Unit implements Comparable<Unit> {
 
     @Id
     private String id;
@@ -328,5 +328,10 @@ public class Unit {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(Unit o) {
+        return this.getId().compareTo(o.getId());
     }
 }

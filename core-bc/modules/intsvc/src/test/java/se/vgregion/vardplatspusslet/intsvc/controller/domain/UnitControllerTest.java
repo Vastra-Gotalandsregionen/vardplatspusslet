@@ -14,6 +14,7 @@ import se.vgregion.vardplatspusslet.domain.jpa.User;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
+import se.vgregion.vardplatspusslet.service.JwtUtil;
 import se.vgregion.vardplatspusslet.testrepository.TestClinicRepository;
 import se.vgregion.vardplatspusslet.testrepository.TestUnitRepository;
 
@@ -41,6 +42,8 @@ public class UnitControllerTest {
 
     @Before
     public void setup() {
+
+        ReflectionTestUtils.setField(new JwtUtil(), "secret", "secret");
 
         ReflectionTestUtils.setField(unitController, "unitRepository", unitRepository);
         ReflectionTestUtils.setField(unitController, "clinicRepository", clinicRepository);
@@ -84,7 +87,10 @@ public class UnitControllerTest {
         when(userRepository.findOne((String) any())).thenReturn(user);
 
         // When
-        List<Unit> units = unitController.getUnits(null, mock(HttpServletRequest.class));
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        String token = JwtUtil.createToken("admin1", "Admin", new String[]{Role.ADMIN.name()});
+        when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
+        List<Unit> units = unitController.getUnits(null, request);
 
         // Then
         assertEquals(4, units.size());
@@ -96,10 +102,13 @@ public class UnitControllerTest {
         // Given
         User user = new User();
         user.setRole(Role.ADMIN);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        String token = JwtUtil.createToken("user1", "User", new String[]{Role.USER.name()});
+        when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
         when(userRepository.findOne((String) any())).thenReturn(user);
 
         // When
-        List<Unit> units = unitController.getUnits("c1", mock(HttpServletRequest.class));
+        List<Unit> units = unitController.getUnits("c1", request);
 
         // Then
         assertEquals(2, units.size());
@@ -112,10 +121,13 @@ public class UnitControllerTest {
         User user = new User();
         user.setUnits(new HashSet<>(unitRepository.findAll().subList(0, 2)));
         user.setRole(Role.USER);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        String token = JwtUtil.createToken("user1", "User", new String[]{Role.USER.name()});
+        when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
         when(userRepository.findOne((String) any())).thenReturn(user);
 
         // When
-        List<Unit> units = unitController.getUnits(null, mock(HttpServletRequest.class));
+        List<Unit> units = unitController.getUnits(null, request);
 
         // Then
         assertEquals(2, units.size());
@@ -125,10 +137,11 @@ public class UnitControllerTest {
     public void getUnitsNoUser() {
 
         // Given
-        when(userRepository.findOne((String) any())).thenReturn(null);
+        // No user in request
 
         // When
-        List<Unit> units = unitController.getUnits(null, mock(HttpServletRequest.class));
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        List<Unit> units = unitController.getUnits(null, request);
 
         // Then
         assertEquals(0, units.size());

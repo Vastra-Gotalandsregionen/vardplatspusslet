@@ -8,7 +8,7 @@
         <ul>
           <li><a routerLink="/admin/clinics" *ngIf="admin">Kliniker</a></li>
           <li><a routerLink="/admin/units">Avdelningar</a></li>
-          <li><a routerLink="/admin/users" *ngIf="admin">Användare</a></li>
+          <li><a routerLink="/admin/users">Användare</a></li>
         </ul>
       </li>
       <li><a (click)="logout()" [routerLink]="null" *ngIf="loggedIn">Logga ut</a></li>

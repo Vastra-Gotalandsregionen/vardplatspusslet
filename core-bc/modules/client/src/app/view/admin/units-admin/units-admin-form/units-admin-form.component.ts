@@ -175,6 +175,7 @@ export class UnitsAdminFormComponent implements OnInit {
     this.http.put('/api/unit?keepBeds=true', unit)
       .subscribe(() => {
         this.saveEvent.emit();
+        this.unitForm.reset();
       });
   }
 

@@ -27,11 +27,11 @@
           </vgr-list-item-header>
 
           <vgr-list-item-content>
-            <form [formGroup]="userForm">
+            <form [formGroup]="userForm" *ngIf="userForm">
 
               <div>
                 <div>Roll:</div>
-                <vgr-radio-group formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+                <vgr-radio-group [disabled]="!admin"  formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
 
                 </vgr-radio-group>
               </div>
@@ -58,15 +58,15 @@
           </vgr-list-item-header>
 
           <vgr-list-item-content [indentContent]="true">
-            <form [formGroup]="userForm">
+            <form [formGroup]="userForm" *ngIf="userForm">
 
               <div>
                 <div>VGR-ID:</div>
-                <input formControlName="id">
+                <input formControlName="id" #addUserId>
               </div>
               <div>
                 <div>Roll:</div>
-                <vgr-radio-group formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+                <vgr-radio-group [disabled]="!admin" formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
 
                 </vgr-radio-group>
               </div>
