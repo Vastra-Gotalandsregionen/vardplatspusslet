@@ -31,7 +31,7 @@ public class UnitService {
         }
 
         unit.setBeds(null);
-        unitRepository.save(unit);
+       // unitRepository.save(unit);
         unit.setBeds(beds);
 
         return unitRepository.save(unit);

@@ -5,6 +5,8 @@ import {Ssk} from "./ssk";
 import {ServingClinic} from "./servingclinic";
 import {Message} from "./message";
 import {CleaningAlternative} from "./cleaning-alternative";
+import {CareBurdenValue} from "./careburdenvalue";
+import {CareBurdenKategori} from "./careburdenkategori";
 
 export class Unit {
   id: string;
@@ -34,5 +36,7 @@ export class Unit {
   hasRondFeature: boolean;
   hasAmningFeature: boolean;
   hasInfoFeature: boolean;
-
+  burdenKategories: CareBurdenKategori[];
+  burdenValues: CareBurdenValue[];
+  hasCareBurdenFeature: boolean;
 }

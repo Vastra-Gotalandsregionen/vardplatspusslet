@@ -71,7 +71,7 @@
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.interpreter"
-                       [appCallout]="'Tolk: ' + bed.patient?.interpretDate"><i class="material-icons purpule">translate</i>
+                       [appCallout]="'Tolk' + (bed.patient?.interpretDate ? ': ' + bed.patient.interpretDate : '')"><i class="material-icons purpule">translate</i>
                   </div>
 
                   <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"
@@ -205,7 +205,7 @@
               </vgr-list-item-header>
 
               <vgr-list-item-content [indentContent]="true">
-                <form [formGroup]="addBedForm">
+                <form [formGroup]="addBedForm" (ngSubmit)="saveAddBed()">
                   <div>
                     <div>Benämning</div>
                     <input formControlName="label"/>

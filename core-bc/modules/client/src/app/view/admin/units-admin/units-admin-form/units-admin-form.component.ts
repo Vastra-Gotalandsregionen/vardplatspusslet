@@ -6,6 +6,8 @@ import {Clinic} from "../../../../domain/clinic";
 import {Ssk} from "../../../../domain/ssk";
 import {ServingClinic} from "../../../../domain/servingclinic";
 import {CleaningAlternative} from "../../../../domain/cleaning-alternative";
+import {CareBurdenKategori} from "../../../../domain/careburdenkategori";
+import {CareBurdenValue} from "../../../../domain/careburdenvalue";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -30,6 +32,8 @@ export class UnitsAdminFormComponent implements OnInit {
   editSsks: boolean;
   editKlinik: boolean;
   editCleanGroup: boolean;
+  editKategoriGroup: boolean;
+  editBurdenValueGroup: boolean;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -56,9 +60,11 @@ export class UnitsAdminFormComponent implements OnInit {
       name: [unit.name],
       clinic: [unit.clinic ? unit.clinic.id : null],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
+      servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
+      careBurdenKategories: this.formBuilder.array(this.buildBurdenKategoriGroups(unit.burdenKategories)),
+      careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.burdenValues)),
       hasLeftDateFeature: [unit.hasLeftDateFeature],
       hasCarePlan: unit.hasCarePlan,
-      servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       cleaningAlternatives: this.formBuilder.array(this.buildCleaningGroups(unit.cleaningAlternatives)),
       hasAkutPatientFeature: [unit.hasAkutPatientFeature],
       has23oFeature: [unit.has23oFeature],
@@ -75,7 +81,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnRondFeature: [unit.hasBarnRondFeature],
       hasRondFeature: [unit.hasRondFeature],
       hasAmningFeature: [unit.hasAmningFeature],
-      hasInfoFeature: [unit.hasInfoFeature]
+      hasInfoFeature: [unit.hasInfoFeature],
+      hasCareBurdenFeature: [unit.hasCareBurdenFeature]
     });
 
   }
@@ -91,6 +98,8 @@ export class UnitsAdminFormComponent implements OnInit {
       name: unit.name ? unit.name : null,
       clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
+      careBurdenKategories: this.formBuilder.array(this.buildBurdenKategoriGroups(unit.burdenKategories)),
+      careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.burdenValues)),
       hasLeftDateFeature: unit.hasLeftDateFeature,
       hasCarePlan: unit.hasCarePlan,
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
@@ -110,7 +119,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnRondFeature: unit.hasBarnRondFeature,
       hasRondFeature: unit.hasRondFeature,
       hasAmningFeature: unit.hasAmningFeature,
-      hasInfoFeature: unit.hasInfoFeature
+      hasInfoFeature: unit.hasInfoFeature,
+      hasCareBurdenFeature: unit.hasCareBurdenFeature
 
     });
 
@@ -138,6 +148,7 @@ export class UnitsAdminFormComponent implements OnInit {
   }
 
   saveUnit() {
+    debugger;
     let unit = new Unit();
     let unitModel = this.unitForm.value;
 
@@ -161,15 +172,17 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasRondFeature = unitModel.hasRondFeature;
     unit.hasAmningFeature = unitModel.hasAmningFeature;
     unit.hasInfoFeature = unitModel.hasInfoFeature;
+    unit.hasCareBurdenFeature = unitModel.hasCareBurdenFeature;
 
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();
       unit.clinic.id = unitModel.clinic;
     }
-
     unit.ssks = unitModel.ssks;
     unit.servingClinics = unitModel.servingClinics;
+    unit.burdenKategories = unitModel.careBurdenKategories;
+    unit.burdenValues = unitModel.careBurdenValues;
     unit.cleaningAlternatives = unitModel.cleaningAlternatives;
 
     this.http.put('/api/unit?keepBeds=true', unit)
@@ -238,6 +251,7 @@ export class UnitsAdminFormComponent implements OnInit {
     return <FormArray>this.unitForm.get('cleaningAlternatives');
   }
 
+  debugger;
   addCleaningAlternative(){
     this.cleaningAlternatives.push(this.CreateCleaningAlternative());
   }
@@ -262,6 +276,73 @@ export class UnitsAdminFormComponent implements OnInit {
       return this.formBuilder.group( {
         id: cleaningalternative.id,
         description: cleaningalternative.description
+      })
+    });
+  }
+
+
+
+  get careBurdenKategories(): FormArray{
+    return <FormArray>this.unitForm.get('careBurdenKategories');
+  }
+
+  addCareBurdenKategories(){
+    this.careBurdenKategories.push(this.CreateCareBurdenKategories());
+  }
+
+  deleteCareBurdenKategories(index: number) {
+    this.careBurdenKategories.removeAt(index);
+  }
+
+  CreateCareBurdenKategories(): FormGroup{
+    return this.formBuilder.group({
+      id: [null,Validators.required],
+      kategori: [null, Validators.required]
+    });
+  }
+
+  private buildBurdenKategoriGroups(careburdenkategories: CareBurdenKategori[]): FormGroup[]
+  {
+    if (!careburdenkategories || careburdenkategories.length === 0) {
+      return [];
+    }
+    return careburdenkategories.map(careburdenkategori => {
+      return this.formBuilder.group( {
+        id: careburdenkategori.id,
+        kategori: careburdenkategori.kategori
+      })
+    });
+  }
+
+
+  get careBurdenValues(): FormArray{
+    return <FormArray>this.unitForm.get('careBurdenValues');
+  }
+
+  addCareBurdenValues(){
+    this.careBurdenValues.push(this.CreateCareBurdenValues());
+  }
+
+  deleteCareBurdenValues(index: number) {
+    this.careBurdenValues.removeAt(index);
+  }
+
+  CreateCareBurdenValues(): FormGroup{
+    return this.formBuilder.group({
+      id: [null,Validators.required],
+      burdenValue: [null, Validators.required]
+    });
+  }
+
+  private buildBurdenValueGroups(careburdenvalues: CareBurdenValue[]): FormGroup[]
+  {
+    if (!careburdenvalues || careburdenvalues.length === 0) {
+      return [];
+    }
+    return careburdenvalues.map(careburdenvalue => {
+      return this.formBuilder.group( {
+        id: careburdenvalue.id,
+        burdenValue: careburdenvalue.burdenValue
       })
     });
   }
