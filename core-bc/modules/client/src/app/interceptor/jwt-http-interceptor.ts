@@ -12,8 +12,6 @@ export class JwtHttpInterceptor implements HttpInterceptor{
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    console.log(this.authService.jwt);
-
     const token = this.authService.jwt;
 
     if (this.authService.isTokenExpired()) {

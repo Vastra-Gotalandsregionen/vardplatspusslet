@@ -2,9 +2,9 @@ package se.vgregion.vardplatspusslet.domain.jpa;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Entity
 @Table(name = "patient")
@@ -92,10 +92,10 @@ public class Patient {
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PatientExamination> patientExaminations = new TreeSet<>();
+    private Set<PatientExamination> patientExaminations = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PatientEvent> patientEvents = new TreeSet<>();
+    private Set<PatientEvent> patientEvents = new LinkedHashSet<>();
 
     @Column
     private Boolean morRond;
