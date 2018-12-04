@@ -5,7 +5,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +17,7 @@ import se.vgregion.vardplatspusslet.domain.json.LoginRequest;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.JwtUtil;
 import se.vgregion.vardplatspusslet.service.LdapLoginService;
+import se.vgregion.vardplatspusslet.util.CommonUtil;
 
 import javax.security.auth.login.FailedLoginException;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +56,7 @@ public class LoginController {
 
             String[] roles = getRoles(user);
 
-            String token = JwtUtil.createToken(user.getId(), user.getName(), roles);
+            String token = JwtUtil.createToken(user.getId(), user.getName(), roles, CommonUtil.getUnitIds(user));
 
             return ResponseEntity.ok(token);
         } catch (FailedLoginException e) {
@@ -75,7 +75,7 @@ public class LoginController {
 
             String[] roles = getRoles(user);
 
-            String token = JwtUtil.createToken(user.getId(), user.getName(), roles);
+            String token = JwtUtil.createToken(user.getId(), user.getName(), roles, CommonUtil.getUnitIds(user));
 
             return ResponseEntity.ok(token);
         } catch (JWTVerificationException e) {
@@ -117,8 +117,10 @@ public class LoginController {
 
                 String[] impersonatedRoles = getRoles(impersonated);
 
+                String[] unitIds = CommonUtil.getUnitIds(impersonated);
+
                 String token = JwtUtil.createToken(impersonated.getId(), impersonated.getName(),
-                        impersonatedRoles);
+                        impersonatedRoles, unitIds);
 
                 return ResponseEntity.ok(token);
             }

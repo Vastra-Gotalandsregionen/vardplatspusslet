@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
@@ -11,13 +11,16 @@ import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.com
 import {Ssk} from "../../domain/ssk";
 import {Message} from "../../domain/message";
 import "rxjs-compat/add/operator/do";
+import {Observable, Subscription} from "rxjs";
+import "rxjs-compat/add/observable/timer";
+import {AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-unit',
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.scss']
 })
-export class UnitComponent implements OnInit {
+export class UnitComponent implements OnInit, OnDestroy {
 
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
 
@@ -53,10 +56,12 @@ export class UnitComponent implements OnInit {
   inited: boolean;
 
   messages: Message[] = [];
+  private timerSubscription: Subscription;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private authService: AuthService) {
 
     this.genderDropdownItems = [
       {displayName: 'Kvinna', value: 'KVINNA'},
@@ -76,7 +81,7 @@ export class UnitComponent implements OnInit {
       {displayName: 'Föräldrarum', value: 3}
     ];
 
-    window.setInterval(() => this.checkForChanges(), 10000);
+    this.timerSubscription = Observable.timer(10000).subscribe(() => this.checkForChanges());
   }
 
   ngOnInit() {
@@ -128,6 +133,13 @@ export class UnitComponent implements OnInit {
         label: null
       })
     });
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
   }
 
   private updateVacants(unit) {
@@ -271,4 +283,13 @@ export class UnitComponent implements OnInit {
 
     return input.substr(0, 1).toUpperCase() + input.substr(1, input.length - 1).toLowerCase().replace('_', ' ');
   }
+
+  hasEditUnitPermission() {
+    if (this.unit) {
+      return this.authService.hasEditUnitPermission(this.unit.id);
+    } else {
+      return false;
+    }
+  }
+
 }

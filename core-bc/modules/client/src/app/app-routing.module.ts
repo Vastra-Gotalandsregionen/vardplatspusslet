@@ -8,6 +8,9 @@ import {ClinicsAdminComponent} from "./view/admin/clinics-admin/clinics-admin.co
 import {UnitsAdminComponent} from "./view/admin/units-admin/units-admin.component";
 import {UsersAdminComponent} from "./view/admin/users-admin/users-admin.component";
 import {EditMessagesComponent} from "./view/unit/edit-messages/edit-messages.component";
+import {UserLoggedInGuard} from "./guard/user-logged-in.guard";
+import {AdminGuard} from "./guard/admin.guard";
+import {HasEditUnitPermissionGuard} from "./guard/has-edit-unit-permission.guard";
 
 const routes: Routes = [
   {
@@ -16,11 +19,13 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [UserLoggedInGuard]
   },
   {
     path: 'admin/clinics',
-    component: ClinicsAdminComponent
+    component: ClinicsAdminComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: 'admin/units',
@@ -40,7 +45,8 @@ const routes: Routes = [
   },
   {
     path: ':clinicId/:id/editMessages',
-    component: EditMessagesComponent
+    component: EditMessagesComponent,
+    canActivate: [HasEditUnitPermissionGuard]
   },
   {
     path: '**',

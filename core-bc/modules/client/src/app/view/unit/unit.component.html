@@ -14,230 +14,223 @@
         <app-message [message]="message"></app-message>
       </vgr-panel>
     </vgr-panel-container>
-    <a routerLink="editMessages">
+    <a routerLink="editMessages" *ngIf="hasEditUnitPermission()">
       <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
     </a>
   </app-left-column>
 
   <app-right-column>
-    <div *ngIf="inited">
-      <vgr-page-block>
-        <div *ngIf="showChangeBedOrder">
-          <p>Dra och släpp sängarna och spara sedan.</p>
-          <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
-            <div class="order-row" *ngFor="let bed of unit.beds">
-              {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
+    <div>
+      <vgr-page-block *ngIf="unit">
+        <div>
+          <div *ngIf="showChangeBedOrder">
+            <p>Dra och släpp sängarna och spara sedan.</p>
+            <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
+              <div class="order-row" *ngFor="let bed of unit.beds">
+                {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
+              </div>
+            </div>
+
+            <div class="button-row">
+              <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
+                               (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
             </div>
           </div>
 
-          <div class="button-row">
-            <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
-                             (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
+          <div *ngIf="!showChangeBedOrder">
+            <vgr-list [flexibleHeader]="true">
+              <vgr-list-header>
+                <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
+                <vgr-list-column-header width="2">SSK</vgr-list-column-header>
+                <vgr-list-column-header width="3">Status</vgr-list-column-header>
+                <vgr-list-column-header width="2">Patient</vgr-list-column-header>
+                <vgr-list-column-header width="2">Kön</vgr-list-column-header>
+                <vgr-list-column-header width="8">Status</vgr-list-column-header>
+              </vgr-list-header>
+
+              <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
+
+                <vgr-list-item-header>
+                  <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
+                  <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
+                  <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
+                  <vgr-list-column width="2">{{bed.patient?.label}}</vgr-list-column>
+                  <vgr-list-column width="2">{{format(bed.patient?.gender)}}</vgr-list-column>
+                  <vgr-list-column width="8">
+                    <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
+                         [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
+                         [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
+                      <i class="fa fa-wheelchair purpule"></i>
+                    </div>
+
+
+                    <div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
+                         [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons purpule">list_alt</span>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.interpreter"
+                         [appCallout]="'Tolk' + (bed.patient?.interpretDate ? ': ' + bed.patient.interpretDate : '')"><i class="material-icons purpule">translate</i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"
+                         [appCallout]="'Patient har bokade undersökningar'"><i class="fa fa-stethoscope purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.relatedInformation?.length > 0"
+                         [appCallout]="'Övrig information finns'"><i class="fa fa-info-circle purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.akutPatient && unit.hasAkutPatientFeature"
+                         [appCallout]="'Akut patient'"><i class="fa fa-ambulance purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.electiv23O && unit.has23oFeature"
+                         [appCallout]="'Electiv 23O'"><i class="fa fa-bed purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.electiv24O && unit.has24oFeature"
+                         [appCallout]="'Electiv 24O'"><i class="fa fa-bed purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender !== 'BARN' && unit.hasVuxenPatientFeature"
+                         [appCallout]="'Vuxen Patient'"><i class="fa fa-male purpule" *ngIf="bed.patient.gender === 'MAN'"></i>
+                      <i class="fa fa-female purpule" *ngIf="bed.patient.gender === 'KVINNA'"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender === 'BARN' && unit.hasVuxenPatientFeature"
+                         [appCallout]="'Vuxen barn'"><i class="fa fa-child purpule" *ngIf="bed.patient.gender === 'BARN'"></i>
+
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.sekretess && unit.hasSekretessFeature"
+                         [appCallout]="'Sekretess'"><i class="fa fa-user-secret purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
+                         [appCallout]="'Infekterad'"><i class="fa fa-male rod" *ngIf="bed.patient.gender === 'MAN'"></i>
+                      <i class="fa fa-female rod" *ngIf="bed.patient.gender === 'KVINNA'"></i>
+                      <i class="fa fa-child rod" *ngIf="bed.patient.gender === 'BARN'"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.infectionSensitive && unit.hasInfectionSensitiveFeature"
+                         [appCallout]="'Infektionskänslig'"><i class="material-icons rod">grain</i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
+                         [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.cleaningalternativeExists && unit.cleaningAlternatives"
+                         [appCallout]="'Städning'"><i class="fa fa-leaf purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.pal && unit.hasPalFeature"
+                         [appCallout]="'PAL: ' + bed.patient.pal"><i class="fa fa-user-md purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.patientEvents?.length > 0 && unit.hasHendelseFeature"
+                         [appCallout]="'Händelser finns'"><i class="fa fa-tasks purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.barnRond && unit.hasRondFeature"
+                         [appCallout]="'Rond Barn'"><i class="material-icons purpule">child_care</i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.morRond && unit.hasRondFeature"
+                         [appCallout]="'Rond Mor'"><i class="fa fa-user purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.rond && unit.hasRondFeature"
+                         [appCallout]="'Rond'"><i class="fa fa-user-circle purpule"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.amning === '1' && unit.hasAmningFeature"
+                         [appCallout]="'Normal amning'"><i class="fa fa-circle-o purpule"></i>
+                    </div>
+                    <div class="ikon" *ngIf="bed.patient?.amning === '2' && unit.hasAmningFeature"
+                         [appCallout]="'Amningshjälp'"><i class="fa fa-dot-circle-o purpule"></i>
+                    </div>
+                    <div class="ikon" *ngIf="bed.patient?.amning === '3' && unit.hasAmningFeature"
+                         [appCallout]="'Amnings mottagning'"><i class="fa fa-dot-circle-o purpule"></i> <i class="fa fa-dot-circle-o purpule__np"></i>
+                    </div>
+
+                    <div class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasInfoFeature"
+                         [appCallout]="'THG'"><i class="fa fa-undo purpule"></i>
+                    </div>
+                    <div class="ikon" *ngIf="bed.patient?.information === '2' && unit.hasInfoFeature"
+                         [appCallout]="'THG med barn'"><i class="fa fa-odnoklassniki purpule"></i>
+                    </div>
+                    <div class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasInfoFeature"
+                         [appCallout]="'Föräldrarum'"><i class="fa fa-weixin purpule"></i>
+                    </div>
+
+
+
+
+                  </vgr-list-column>
+                </vgr-list-item-header>
+
+                <vgr-list-item-content [indentContent]="true">
+
+                  <app-bed-form [clinicId]="clinic.id"
+                                [unit]="unit"
+
+                                [bed]="bed"
+                                [amningOptions]="amningOptions"
+                                [informationOptions] = "informationOptions"
+                                [genderDropdownItems]="genderDropdownItems"
+                                [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
+                                [sskDropdownItems]="sskDropdownItems"
+                                [servingKlinikerDropdownItems]="servingKlinikerDropdownItems"
+                                [cleaningAlternativesDropdownItems]="cleaningAlternativesDropdownItems"
+                                (collapse)="collapse(theListItem)"
+                                (openDeleteModal)="openDeleteModal(bed)"
+                                (save)="ngOnInit()"
+                                *ngIf="theListItem.expanded"> <!-- Speeds up page performance -->
+
+                  </app-bed-form>
+
+
+                </vgr-list-item-content>
+
+              </vgr-list-item>
+
+              <vgr-list-item #addListItem>
+                <vgr-list-item-header>
+                  <vgr-list-column width="5">
+                    <div class="add-row vgr-icon-plus">Lägg till säng</div>
+                  </vgr-list-column>
+                </vgr-list-item-header>
+
+                <vgr-list-item-content [indentContent]="true">
+                  <form [formGroup]="addBedForm" (ngSubmit)="saveAddBed()">
+                    <div>
+                      <div>Benämning</div>
+                      <input formControlName="label"/>
+                    </div>
+
+                    <div class="clearfix button-row">
+                      <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(addListItem)"
+                                       (save)="saveAddBed()"></vgr-save-cancel>
+                    </div>
+
+                  </form>
+                </vgr-list-item-content>
+              </vgr-list-item>
+            </vgr-list>
+
+            <div class="button-row">
+              <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
+            </div>
           </div>
         </div>
 
-        <div *ngIf="!showChangeBedOrder">
-          <vgr-list [flexibleHeader]="true">
-            <vgr-list-header>
-              <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
-              <vgr-list-column-header width="2">SSK</vgr-list-column-header>
-              <vgr-list-column-header width="3">Status</vgr-list-column-header>
-              <vgr-list-column-header width="2">Patient</vgr-list-column-header>
-              <vgr-list-column-header width="2">Kön</vgr-list-column-header>
-              <vgr-list-column-header width="8">Status</vgr-list-column-header>
-            </vgr-list-header>
-
-            <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
-
-              <vgr-list-item-header>
-                <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
-                <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
-                <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
-                <vgr-list-column width="2">{{bed.patient?.label}}</vgr-list-column>
-                <vgr-list-column width="2">{{format(bed.patient?.gender)}}</vgr-list-column>
-                <vgr-list-column width="8">
-                  <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
-                       [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
-                       [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
-                    <i class="fa fa-wheelchair purpule"></i>
-                  </div>
-
-
-                  <div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
-                       [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons purpule">list_alt</span>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.interpreter"
-                       [appCallout]="'Tolk' + (bed.patient?.interpretDate ? ': ' + bed.patient.interpretDate : '')"><i class="material-icons purpule">translate</i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"
-                       [appCallout]="'Patient har bokade undersökningar'"><i class="fa fa-stethoscope purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.relatedInformation?.length > 0"
-                       [appCallout]="'Övrig information finns'"><i class="fa fa-info-circle purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.akutPatient && unit.hasAkutPatientFeature"
-                       [appCallout]="'Akut patient'"><i class="fa fa-ambulance purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.electiv23O && unit.has23oFeature"
-                       [appCallout]="'Electiv 23O'"><i class="fa fa-bed purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.electiv24O && unit.has24oFeature"
-                       [appCallout]="'Electiv 24O'"><i class="fa fa-bed purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender !== 'BARN' && unit.hasVuxenPatientFeature"
-                       [appCallout]="'Vuxen Patient'"><i class="fa fa-male purpule" *ngIf="bed.patient.gender === 'MAN'"></i>
-                    <i class="fa fa-female purpule" *ngIf="bed.patient.gender === 'KVINNA'"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender === 'BARN' && unit.hasVuxenPatientFeature"
-                       [appCallout]="'Vuxen barn'"><i class="fa fa-child purpule" *ngIf="bed.patient.gender === 'BARN'"></i>
-
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.sekretess && unit.hasSekretessFeature"
-                       [appCallout]="'Sekretess'"><i class="fa fa-user-secret purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
-                       [appCallout]="'Infekterad'"><i class="fa fa-male rod" *ngIf="bed.patient.gender === 'MAN'"></i>
-                    <i class="fa fa-female rod" *ngIf="bed.patient.gender === 'KVINNA'"></i>
-                    <i class="fa fa-child rod" *ngIf="bed.patient.gender === 'BARN'"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.infectionSensitive && unit.hasInfectionSensitiveFeature"
-                       [appCallout]="'Infektionskänslig'"><i class="material-icons rod">grain</i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
-                       [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.cleaningalternativeExists && unit.cleaningAlternatives"
-                       [appCallout]="'Städning'"><i class="fa fa-leaf purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.pal && unit.hasPalFeature"
-                       [appCallout]="'PAL: ' + bed.patient.pal"><i class="fa fa-user-md purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.patientEvents?.length > 0 && unit.hasHendelseFeature"
-                       [appCallout]="'Händelser finns'"><i class="fa fa-tasks purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.barnRond && unit.hasRondFeature"
-                       [appCallout]="'Rond Barn'"><i class="material-icons purpule">child_care</i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.morRond && unit.hasRondFeature"
-                       [appCallout]="'Rond Mor'"><i class="fa fa-user purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.rond && unit.hasRondFeature"
-                       [appCallout]="'Rond'"><i class="fa fa-user-circle purpule"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.amning === '1' && unit.hasAmningFeature"
-                       [appCallout]="'Normal amning'"><i class="fa fa-circle-o purpule"></i>
-                  </div>
-                  <div class="ikon" *ngIf="bed.patient?.amning === '2' && unit.hasAmningFeature"
-                       [appCallout]="'Amningshjälp'"><i class="fa fa-dot-circle-o purpule"></i>
-                  </div>
-                  <div class="ikon" *ngIf="bed.patient?.amning === '3' && unit.hasAmningFeature"
-                       [appCallout]="'Amnings mottagning'"><i class="fa fa-dot-circle-o purpule"></i> <i class="fa fa-dot-circle-o purpule__np"></i>
-                  </div>
-
-                  <div class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasInfoFeature"
-                       [appCallout]="'THG'"><i class="fa fa-undo purpule"></i>
-                  </div>
-                  <div class="ikon" *ngIf="bed.patient?.information === '2' && unit.hasInfoFeature"
-                       [appCallout]="'THG med barn'"><i class="fa fa-odnoklassniki purpule"></i>
-                  </div>
-                  <div class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasInfoFeature"
-                       [appCallout]="'Föräldrarum'"><i class="fa fa-weixin purpule"></i>
-                  </div>
-
-
-
-
-                </vgr-list-column>
-              </vgr-list-item-header>
-
-              <vgr-list-item-content [indentContent]="true">
-
-                <app-bed-form [clinicId]="clinic.id"
-                              [unit]="unit"
-
-                              [bed]="bed"
-                              [amningOptions]="amningOptions"
-                              [informationOptions] = "informationOptions"
-                              [genderDropdownItems]="genderDropdownItems"
-                              [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
-                              [sskDropdownItems]="sskDropdownItems"
-                              [servingKlinikerDropdownItems]="servingKlinikerDropdownItems"
-                              [cleaningAlternativesDropdownItems]="cleaningAlternativesDropdownItems"
-                              (collapse)="collapse(theListItem)"
-                              (openDeleteModal)="openDeleteModal(bed)"
-                              (save)="ngOnInit()"
-                              *ngIf="theListItem.expanded"> <!-- Speeds up page performance -->
-
-                </app-bed-form>
-
-
-              </vgr-list-item-content>
-
-            </vgr-list-item>
-
-            <vgr-list-item #addListItem>
-              <vgr-list-item-header>
-                <vgr-list-column width="5">
-                  <div class="add-row vgr-icon-plus">Lägg till säng</div>
-                </vgr-list-column>
-              </vgr-list-item-header>
-
-              <vgr-list-item-content [indentContent]="true">
-                <form [formGroup]="addBedForm" (ngSubmit)="saveAddBed()">
-                  <div>
-                    <div>Benämning</div>
-                    <input formControlName="label"/>
-                  </div>
-
-                  <div class="clearfix button-row">
-                    <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(addListItem)"
-                                     (save)="saveAddBed()"></vgr-save-cancel>
-                  </div>
-
-                </form>
-              </vgr-list-item-content>
-            </vgr-list-item>
-          </vgr-list>
-
-          <div class="button-row">
-            <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
-          </div>
-        </div>
       </vgr-page-block>
 
-      <div *ngIf="!unit && !error">
-        <vgr-loader [small]="false"></vgr-loader>
-      </div>
-
-      <div *ngIf="error">
-        <div class="alert">{{error}}</div>
-      </div>
-    </div>
-
-    <div *ngIf="unit?.patients.length > 0">
-      <vgr-page-block>
+      <vgr-page-block *ngIf="unit?.patients.length > 0">
         <vgr-list [flexibleHeader]="true">
 
           <vgr-list-header>
@@ -263,10 +256,8 @@
           </vgr-list-item>
         </vgr-list>
       </vgr-page-block>
-    </div>
 
-    <div *ngIf="unit?.ssks.length > 0">
-      <vgr-page-block>
+      <vgr-page-block *ngIf="unit?.ssks.length > 0">
         <table class="vpp-table">
           <thead>
           <tr>
@@ -280,7 +271,18 @@
           </tr>
         </table>
       </vgr-page-block>
+
+      <vgr-page-block *ngIf="!unit">
+        <div *ngIf="!error">
+          <vgr-loader [small]="false"></vgr-loader>
+        </div>
+
+        <div *ngIf="error">
+          <div class="alert">{{error}}</div>
+        </div>
+      </vgr-page-block>
     </div>
+
   </app-right-column>
 </app-row>
 

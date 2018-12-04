@@ -7,7 +7,7 @@
 
   </app-left-column>
   <app-right-column>
-    <vgr-page-block>
+    <vgr-page-block *ngIf="clinics?.length > 0">
       <ul>
         <li *ngFor="let clinic of clinics">
           <a [routerLink]="clinic.id">{{clinic.name}}</a>

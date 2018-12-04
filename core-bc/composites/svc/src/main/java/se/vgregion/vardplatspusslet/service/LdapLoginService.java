@@ -70,6 +70,10 @@ public class LdapLoginService {
     }
 
     private User login(String username, String password, boolean verifyPassword) throws FailedLoginException {
+        if (username == null || password == null) {
+            throw new FailedLoginException();
+        }
+
         username = username.trim().toLowerCase();
 
         if (username.equals(defaultAdminUsername)

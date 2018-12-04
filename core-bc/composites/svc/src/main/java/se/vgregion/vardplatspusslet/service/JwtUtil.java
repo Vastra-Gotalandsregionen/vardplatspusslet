@@ -33,6 +33,10 @@ public class JwtUtil {
     }
 
     public static String createToken(String userId, String displayName, String[] roles) {
+        return createToken(userId, displayName, roles, new String[]{});
+    }
+
+    public static String createToken(String userId, String displayName, String[] roles, String[] unitIds) {
         try {
             Date timeAhead = Date.from(Instant.now().plus(MINUTES_AGE, ChronoUnit.MINUTES));
             Date now = Date.from(Instant.now());
@@ -40,6 +44,7 @@ public class JwtUtil {
             return JWT.create()
                     .withSubject(userId)
                     .withArrayClaim("roles", roles)
+                    .withArrayClaim("unitIds", unitIds)
                     .withClaim("displayName", displayName)
                     .withIssuedAt(now)
                     .withExpiresAt(timeAhead)

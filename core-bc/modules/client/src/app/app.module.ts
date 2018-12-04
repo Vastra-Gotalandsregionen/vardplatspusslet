@@ -37,6 +37,9 @@ import {MessageComponent} from './elements/message/message.component';
 import {EditMessageComponent} from './elements/edit-message/edit-message.component';
 import {CKEditorModule} from "ng2-ckeditor";
 import {JwtHttpInterceptor} from "./interceptor/jwt-http-interceptor";
+import {AdminGuard} from "./guard/admin.guard";
+import {UserLoggedInGuard} from "./guard/user-logged-in.guard";
+import {HasEditUnitPermissionGuard} from "./guard/has-edit-unit-permission.guard";
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -84,6 +87,9 @@ registerLocaleData(localeSv, "sv-SE");
   ],
   providers: [
     AuthService,
+    AdminGuard,
+    UserLoggedInGuard,
+    HasEditUnitPermissionGuard,
     {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

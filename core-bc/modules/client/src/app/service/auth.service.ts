@@ -112,6 +112,19 @@ export class AuthService {
     return false;
   }
 
+  getUnitIds(): string[] {
+    const token = this.getToken();
+    if (token) {
+      return <string[]>token.unitIds;
+    } else {
+      return [];
+    }
+  }
+
+  hasEditUnitPermission(unitId: string): boolean {
+    return this.isAdmin() || this.getUnitIds().indexOf(unitId) > -1;
+  }
+
   canImpersonate() {
     const token = this.getToken();
     if (token) {

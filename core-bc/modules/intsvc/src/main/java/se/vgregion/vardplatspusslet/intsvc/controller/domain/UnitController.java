@@ -94,10 +94,15 @@ public class UnitController {
 
     @RequestMapping(value = "/{clinicId}/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Unit getUnit(@PathVariable("clinicId") String clinicId, @PathVariable("id") String id) {
+    public ResponseEntity<Unit> getUnit(@PathVariable("clinicId") String clinicId, @PathVariable("id") String id) {
         Clinic clinic = clinicRepository.getOne(clinicId);
 
-        return unitRepository.findUnitByIdIsLikeAndClinicIsLike(id, clinic);
+        Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(id, clinic);
+        if (unit != null) {
+            return ResponseEntity.ok(unit);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
