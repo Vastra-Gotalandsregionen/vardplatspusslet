@@ -7,6 +7,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DropdownItem, SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
+import {CareBurdenChoice} from "../../../domain/careburdenchoice";
 
 @Component({
   selector: 'app-bed-form',
@@ -39,6 +40,7 @@ export class BedFormComponent implements OnInit {
   @Input('cleaningAlternativesDropdownItems') cleaningAlternativesDropdownItems: DropdownItem<number>[];
   @Input('amningOptions') amningOptions: SelectableItem<number>[];
   @Input('informationOptions') informationOptions: SelectableItem<number>[];
+  @Input('careBurdenValuesOptions') careBurdenValuesOptions: DropdownItem<number>[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) {
@@ -52,7 +54,6 @@ export class BedFormComponent implements OnInit {
     if (!bed) {
       bed = new Bed();
     }
-
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
@@ -94,9 +95,8 @@ export class BedFormComponent implements OnInit {
         infoGroup: this.formBuilder.group({
           information: +[bed.patient? bed.patient.information: null],
           kommentar: [bed.patient? bed.patient.kommentar: null]
-        })
-
-
+        }),
+        careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(bed.patient? bed.patient.careBurdenChoices: null))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -238,6 +238,14 @@ export class BedFormComponent implements OnInit {
       bed.patient.amning = bedModel.patient.amning? bedModel.patient.amning: null;
       bed.patient.information = bedModel.patient.infoGroup.information? bedModel.patient.infoGroup.information: null;
       bed.patient.kommentar= bedModel.patient.infoGroup.kommentar? bedModel.patient.infoGroup.kommentar: null;
+      bed.patient.careBurdenChoices = bedModel.patient.careBurdenChoices? bedModel.patient.careBurdenChoices.map(
+        cbc => {
+          return{
+            id: cbc.id,
+            careBurdenKategori: this.unit.burdenKategories.find(kategories => kategories.kategori === cbc.burdenCategori),
+            careBurdenValue: this.unit.burdenValues.find(burdenval => burdenval.id === cbc.burdenValue)
+          }
+        }): null;
 
     } else {
       bed.patient = null;
@@ -366,4 +374,22 @@ export class BedFormComponent implements OnInit {
   {
     this.bedForm.get('patient.leftDate').setValue(null);
   }
+
+  private buildCareBurdenChoiceGroup(burdenChoices: CareBurdenChoice[]): FormGroup[]{
+    if (!burdenChoices || burdenChoices.length === 0) {
+      return [];
+    }
+    return burdenChoices.map(burdenChoice => {
+      return this.formBuilder.group({
+        id: burdenChoice.id,
+        burdenCategori: burdenChoice.careBurdenKategori? burdenChoice.careBurdenKategori.kategori: null,
+        burdenValue:burdenChoice.careBurdenValue? burdenChoice.careBurdenValue.id: null
+      })
+    });
+  }
+
+  get careBurdenChoices(): FormArray{
+    return <FormArray>this.bedForm.get('patient.careBurdenChoices');
+  }
+
 }

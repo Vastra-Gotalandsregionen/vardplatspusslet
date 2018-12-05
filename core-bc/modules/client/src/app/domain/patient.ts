@@ -1,5 +1,6 @@
 import {Patientexamination} from "./patientexamination";
 import {PatientEvent} from "./patient-event";
+import {CareBurdenChoice} from "./careburdenchoice";
 
 export class Patient {
   id: number;
@@ -31,7 +32,7 @@ export class Patient {
   amning: string;
   information: string;
   kommentar: string;
-
+  careBurdenChoices: CareBurdenChoice[];
 }
 
 enum LeaveStatus {

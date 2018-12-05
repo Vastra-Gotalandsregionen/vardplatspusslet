@@ -100,6 +100,18 @@
             </div>
           </div>
         </div>
+
+        <div *ngIf="unit.hasCareBurdenFeature" class="div-button10">
+            <label>Vårdtyngd</label>
+            <div formArrayName="careBurdenChoices" *ngFor="let careburden of careBurdenChoices.controls let i = index;"
+                 class="clearfix">
+              <div [formGroupName]="i" class="containers">
+                <input formControlName="burdenCategori" [readonly]="true"/>
+                <vgr-dropdown formControlName="burdenValue" noItemSelectedLabel="Välj" [items]="careBurdenValuesOptions"
+                              style="margin-left: 20px"></vgr-dropdown>
+              </div>
+            </div>
+        </div>
       </div>
     </vgr-card-column>
     <vgr-card-column>

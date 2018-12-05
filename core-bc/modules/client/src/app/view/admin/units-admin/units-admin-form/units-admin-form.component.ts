@@ -148,7 +148,6 @@ export class UnitsAdminFormComponent implements OnInit {
   }
 
   saveUnit() {
-    debugger;
     let unit = new Unit();
     let unitModel = this.unitForm.value;
 
@@ -250,7 +249,6 @@ export class UnitsAdminFormComponent implements OnInit {
     return <FormArray>this.unitForm.get('cleaningAlternatives');
   }
 
-  debugger;
   addCleaningAlternative(){
     this.cleaningAlternatives.push(this.CreateCleaningAlternative());
   }

@@ -165,10 +165,9 @@
                   <div class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasInfoFeature"
                        [appCallout]="'Föräldrarum'"><i class="fa fa-weixin purpule"></i>
                   </div>
-
-
-
-
+                  <div class="ikon" *ngIf="bed.patient?.careBurdenChoices.length > 0 && unit.hasCareBurdenFeature"
+                       [appCallout]="'Vårdtyngd'"><i class="fa fa-anchor purpule" ></i>
+                  </div>
                 </vgr-list-column>
               </vgr-list-item-header>
 
@@ -178,6 +177,7 @@
                               [unit]="unit"
 
                               [bed]="bed"
+                              [careBurdenValuesOptions]="careBurdenValuesOptions"
                               [amningOptions]="amningOptions"
                               [informationOptions] = "informationOptions"
                               [genderDropdownItems]="genderDropdownItems"

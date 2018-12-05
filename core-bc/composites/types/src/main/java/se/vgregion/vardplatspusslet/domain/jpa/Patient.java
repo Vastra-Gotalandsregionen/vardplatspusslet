@@ -97,6 +97,9 @@ public class Patient {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientEvent> patientEvents = new TreeSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CareBurdenChoice> careBurdenChoices = new TreeSet<>();
+
     @Column
     private Boolean morRond;
 
@@ -355,6 +358,14 @@ public class Patient {
 
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
+    }
+
+    public Set<CareBurdenChoice> getCareBurdenChoices() {
+        return careBurdenChoices;
+    }
+
+    public void setCareBurdenChoices(Set<CareBurdenChoice> careBurdenChoices) {
+        this.careBurdenChoices = careBurdenChoices;
     }
 
     @Override

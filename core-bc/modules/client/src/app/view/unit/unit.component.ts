@@ -24,6 +24,7 @@ export class UnitComponent implements OnInit {
   unit: Unit;
   clinic: Clinic;
 
+  careBurdenValuesOptions: DropdownItem<number>[];
   amningOptions: SelectableItem<number>[];
   informationOptions: SelectableItem<number>[];
   genderDropdownItems: DropdownItem<string>[];
@@ -92,17 +93,19 @@ export class UnitComponent implements OnInit {
         .do(unit => {
           if (unit) {
             this.unit = unit;
-
             this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
               return {displayName: ssk.label, value: ssk.id};
             }));
-
             this.servingKlinikerDropdownItems = unit.servingClinics.map(klinik => {
               return {displayName: klinik.name, value: klinik.id};
             });
             this.cleaningAlternativesDropdownItems = unit.cleaningAlternatives.map(cg => {
               return {displayName: cg.description, value: cg.id};
             });
+
+            this.careBurdenValuesOptions = [{displayName: 'Välj', value: null}].concat(unit.burdenValues.map(cbv => {
+              return {displayName: cbv.burdenValue, value: cbv.id};
+            }));
 
             this.updateVacants(unit);
 
