@@ -68,7 +68,7 @@ export class UnitComponent implements OnInit {
     this.amningOptions = [
       {displayName: 'Normal amning', value: 1},
       {displayName: 'Amningshjälp', value: 2},
-      {displayName: 'AmningsMottagning ', value: 3}
+      {displayName: 'Amningsmottagning ', value: 3}
     ];
 
     this.informationOptions = [
