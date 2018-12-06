@@ -16,4 +16,5 @@ export class Bed {
   cleaningInfo: string;
   cleaningAlternative: CleaningAlternative;
 
+
 }

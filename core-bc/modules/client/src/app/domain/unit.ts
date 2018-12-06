@@ -39,4 +39,6 @@ export class Unit {
   burdenKategories: CareBurdenKategori[];
   burdenValues: CareBurdenValue[];
   hasCareBurdenFeature: boolean;
+  careBurdenKategories: CareBurdenKategori[];
+  careBurdenValues: CareBurdenValue[];
 }
