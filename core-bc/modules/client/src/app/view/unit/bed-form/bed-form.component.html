@@ -102,7 +102,7 @@
           </div>
         </div>
 
-        <div *ngIf="unit.hasCareBurdenFeature" class="div-button10">
+        <div *ngIf="unit.hasCareBurdenFeature && bed.patient" class="div-button10">
             <label>Vårdtyngd</label>
             <div formArrayName="careBurdenChoices" *ngFor="let careburden of careBurdenChoices.controls let i = index;"
                  class="clearfix">

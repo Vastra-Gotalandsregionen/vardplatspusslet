@@ -96,7 +96,7 @@ export class BedFormComponent implements OnInit {
           information: +[bed.patient? bed.patient.information: null],
           kommentar: [bed.patient? bed.patient.kommentar: null]
         }),
-        careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(bed.patient? bed.patient.careBurdenChoices: null))
+        careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(bed.patient? bed.patient: null))
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -375,21 +375,42 @@ export class BedFormComponent implements OnInit {
     this.bedForm.get('patient.leftDate').setValue(null);
   }
 
-  private buildCareBurdenChoiceGroup(burdenChoices: CareBurdenChoice[]): FormGroup[]{
-    if (!burdenChoices || burdenChoices.length === 0) {
-      return [];
-    }
-    return burdenChoices.map(burdenChoice => {
-      return this.formBuilder.group({
-        id: burdenChoice.id,
-        burdenCategori: burdenChoice.careBurdenKategori? burdenChoice.careBurdenKategori.kategori: null,
-        burdenValue:burdenChoice.careBurdenValue? burdenChoice.careBurdenValue.id: null
-      })
-    });
+  private buildCareBurdenChoiceGroup(patient: Patient): FormGroup[]{
+    if (!patient) return [];
+    let burdenChoices = patient.careBurdenChoices;
+    let kategories = this.unit.burdenKategories;
+    let burdenval = this.unit.burdenValues;
+    let result: FormGroup[];
+      return kategories.map(burden => {
+        return this.formBuilder.group({
+          id: null,
+          burdenCategori: burden.kategori,
+          burdenValue: this.getValueFromPatient(patient, burden.kategori)
+        })
+      });
   }
 
   get careBurdenChoices(): FormArray{
     return <FormArray>this.bedForm.get('patient.careBurdenChoices');
+  }
+
+  getValueFromPatient (patient: Patient, kategori: string): number {
+    let searchedCat;
+    let cbv;
+    let searchedCatId = this.unit.burdenKategories.find (burdenkategori => burdenkategori.kategori === kategori).id;
+    let choices = patient.careBurdenChoices;
+    if (!choices) return null;
+    else
+    {
+      searchedCat = choices.map(choice =>
+        choice.careBurdenKategori.id).filter(x => x === searchedCatId)[0];
+      if(searchedCat != null)
+      {
+        cbv = choices.find(choice => choice.careBurdenKategori.id === searchedCat).careBurdenValue;
+        return cbv? cbv.id: null;
+      }
+      return null;
+    }
   }
 
 }
