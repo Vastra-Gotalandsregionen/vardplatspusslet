@@ -91,7 +91,6 @@ public class Patient {
     private String kommentar;
 
 
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new LinkedHashSet<>();
 
@@ -99,7 +98,7 @@ public class Patient {
     private Set<PatientEvent> patientEvents = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CareBurdenChoice> careBurdenChoices = new TreeSet<>();
+    private Set<CareBurdenChoice> careBurdenChoices = new LinkedHashSet<>();
 
     @Column
     private Boolean morRond;

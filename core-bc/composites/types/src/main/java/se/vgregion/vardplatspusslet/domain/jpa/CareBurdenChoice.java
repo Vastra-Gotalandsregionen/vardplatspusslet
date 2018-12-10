@@ -11,7 +11,7 @@ public class CareBurdenChoice {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private CareBurdenKategori careBurdenKategori;
+    private CareBurdenCategory careBurdenCategory;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private CareBurdenValue careBurdenValue;
@@ -24,12 +24,12 @@ public class CareBurdenChoice {
         this.id = id;
     }
 
-    public CareBurdenKategori getCareBurdenKategori() {
-        return careBurdenKategori;
+    public CareBurdenCategory getCareBurdenCategory() {
+        return careBurdenCategory;
     }
 
-    public void setCareBurdenKategori(CareBurdenKategori careBurdenKategori) {
-        this.careBurdenKategori = careBurdenKategori;
+    public void setCareBurdenCategory(CareBurdenCategory careBurdenKategori) {
+        this.careBurdenCategory = careBurdenKategori;
     }
 
     public CareBurdenValue getCareBurdenValue() {

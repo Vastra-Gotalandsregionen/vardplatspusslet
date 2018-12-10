@@ -6,7 +6,7 @@ import {Clinic} from "../../../../domain/clinic";
 import {Ssk} from "../../../../domain/ssk";
 import {ServingClinic} from "../../../../domain/servingclinic";
 import {CleaningAlternative} from "../../../../domain/cleaning-alternative";
-import {CareBurdenKategori} from "../../../../domain/careburdenkategori";
+import {CareBurdenCategory} from "../../../../domain/careBurdenCategory";
 import {CareBurdenValue} from "../../../../domain/careburdenvalue";
 
 @Component({
@@ -32,7 +32,7 @@ export class UnitsAdminFormComponent implements OnInit {
   editSsks: boolean;
   editKlinik: boolean;
   editCleanGroup: boolean;
-  editKategoriGroup: boolean;
+  editCategoryGroup: boolean;
   editBurdenValueGroup: boolean;
 
   constructor(private http: HttpClient,
@@ -61,8 +61,8 @@ export class UnitsAdminFormComponent implements OnInit {
       clinic: [unit.clinic ? unit.clinic.id : null],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
-      careBurdenKategories: this.formBuilder.array(this.buildBurdenKategoriGroups(unit.burdenKategories)),
-      careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.burdenValues)),
+      careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
+      careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
       hasLeftDateFeature: [unit.hasLeftDateFeature],
       hasCarePlan: unit.hasCarePlan,
       cleaningAlternatives: this.formBuilder.array(this.buildCleaningGroups(unit.cleaningAlternatives)),
@@ -98,8 +98,8 @@ export class UnitsAdminFormComponent implements OnInit {
       name: unit.name ? unit.name : null,
       clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
-      careBurdenKategories: this.formBuilder.array(this.buildBurdenKategoriGroups(unit.burdenKategories)),
-      careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.burdenValues)),
+      careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
+      careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
       hasLeftDateFeature: unit.hasLeftDateFeature,
       hasCarePlan: unit.hasCarePlan,
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
@@ -180,8 +180,8 @@ export class UnitsAdminFormComponent implements OnInit {
     }
     unit.ssks = unitModel.ssks;
     unit.servingClinics = unitModel.servingClinics;
-    unit.burdenKategories = unitModel.careBurdenKategories;
-    unit.burdenValues = unitModel.careBurdenValues;
+    unit.careBurdenCategories = unitModel.careBurdenCategories;
+    unit.careBurdenValues = unitModel.careBurdenValues;
     unit.cleaningAlternatives = unitModel.cleaningAlternatives;
 
     this.http.put('/api/unit?keepBeds=true', unit)
@@ -280,34 +280,34 @@ export class UnitsAdminFormComponent implements OnInit {
 
 
 
-  get careBurdenKategories(): FormArray{
-    return <FormArray>this.unitForm.get('careBurdenKategories');
+  get careBurdenCategories(): FormArray{
+    return <FormArray>this.unitForm.get('careBurdenCategories');
   }
 
-  addCareBurdenKategories(){
-    this.careBurdenKategories.push(this.CreateCareBurdenKategories());
+  addCareBurdenCategories(){
+    this.careBurdenCategories.push(this.CreateCareBurdenCategories());
   }
 
-  deleteCareBurdenKategories(index: number) {
-    this.careBurdenKategories.removeAt(index);
+  deleteCareBurdenCategories(index: number) {
+    this.careBurdenCategories.removeAt(index);
   }
 
-  CreateCareBurdenKategories(): FormGroup{
+  CreateCareBurdenCategories(): FormGroup{
     return this.formBuilder.group({
       id: [null,Validators.required],
-      kategori: [null, Validators.required]
+      name: [null, Validators.required]
     });
   }
 
-  private buildBurdenKategoriGroups(careburdenkategories: CareBurdenKategori[]): FormGroup[]
+  private buildBurdenCategoryGroups(careBurdenCategories: CareBurdenCategory[]): FormGroup[]
   {
-    if (!careburdenkategories || careburdenkategories.length === 0) {
+    if (!careBurdenCategories || careBurdenCategories.length === 0) {
       return [];
     }
-    return careburdenkategories.map(careburdenkategori => {
+    return careBurdenCategories.map(category => {
       return this.formBuilder.group( {
-        id: careburdenkategori.id,
-        kategori: careburdenkategori.kategori
+        id: category.id,
+        name: category.name
       })
     });
   }
@@ -328,7 +328,7 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateCareBurdenValues(): FormGroup{
     return this.formBuilder.group({
       id: [null,Validators.required],
-      burdenValue: [null, Validators.required]
+      name: [null, Validators.required]
     });
   }
 
@@ -340,7 +340,7 @@ export class UnitsAdminFormComponent implements OnInit {
     return careburdenvalues.map(careburdenvalue => {
       return this.formBuilder.group( {
         id: careburdenvalue.id,
-        burdenValue: careburdenvalue.burdenValue
+        name: careburdenvalue.name
       })
     });
   }

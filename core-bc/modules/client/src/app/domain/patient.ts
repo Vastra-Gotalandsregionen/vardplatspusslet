@@ -3,6 +3,13 @@ import {PatientEvent} from "./patient-event";
 import {CareBurdenChoice} from "./careburdenchoice";
 
 export class Patient {
+
+  constructor() {
+    this.patientEvents = [];
+    this.patientExaminations = [];
+    this.careBurdenChoices = [];
+  }
+
   id: number;
   label: string;
   leaveStatus: LeaveStatus;

@@ -102,13 +102,13 @@
           </div>
         </div>
 
-        <div *ngIf="unit.hasCareBurdenFeature && bed.patient" class="div-button10">
+        <div *ngIf="unit.hasCareBurdenFeature" class="div-button10">
             <label>Vårdtyngd</label>
-            <div formArrayName="careBurdenChoices" *ngFor="let careburden of careBurdenChoices.controls let i = index;"
+            <div formArrayName="careBurdenChoices" *ngFor="let careBurdenCategory of unit.careBurdenCategories let i = index;"
                  class="clearfix">
               <div [formGroupName]="i" class="containers">
-                <input formControlName="burdenCategori" [readonly]="true"/>
-                <vgr-dropdown formControlName="burdenValue" noItemSelectedLabel="Välj" [items]="careBurdenValuesOptions"
+                <label>{{careBurdenCategory.name}}</label>
+                <vgr-dropdown formControlName="careBurdenValueId" noItemSelectedLabel="Välj" [items]="careBurdenValuesOptions"
                               style="margin-left: 20px"></vgr-dropdown>
               </div>
             </div>

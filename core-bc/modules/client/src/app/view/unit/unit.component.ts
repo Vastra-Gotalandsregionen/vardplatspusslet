@@ -108,8 +108,8 @@ export class UnitComponent implements OnInit, OnDestroy {
               return {displayName: cg.description, value: cg.id};
             });
 
-            this.careBurdenValuesOptions = [{displayName: 'Välj', value: null}].concat(unit.burdenValues.map(cbv => {
-              return {displayName: cbv.burdenValue, value: cbv.id};
+            this.careBurdenValuesOptions = [{displayName: 'Välj', value: null}].concat(unit.careBurdenValues.map(cbv => {
+              return {displayName: cbv.name, value: cbv.id};
             }));
 
             this.updateVacants(unit);

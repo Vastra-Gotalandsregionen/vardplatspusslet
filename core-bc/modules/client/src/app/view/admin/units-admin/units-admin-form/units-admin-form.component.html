@@ -128,42 +128,42 @@
             </div>
           </div>
           <div>
-            <a (click)="addCleaningAlternative()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till städning alternative</span></a>
+            <a (click)="addCleaningAlternative()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till städningsalternativ</span></a>
           </div>
         </div>
       </vgr-card-section>
 
-      <vgr-card-section [expanded]="true" [title]="'Vårdtyngd'" [subtitle]="" class="clearfix">
-        <table class="vpp-table" *ngIf="!editKategoriGroup">
+      <vgr-card-section [expanded]="true" [title]="'Vårdtyngdskategorier'" [subtitle]="" class="clearfix">
+        <table class="vpp-table" *ngIf="!editCategoryGroup">
 
-          <tr *ngFor="let burdenKategori of unit?.burdenKategories|| []">
-            <td>{{burdenKategori.kategori}}</td>
+          <tr *ngFor="let category of unit?.careBurdenCategories|| []">
+            <td>{{category.name}}</td>
           </tr>
 
           <tfoot>
           <tr>
-            <td><a (click)="editKategoriGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editCategoryGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
           </tfoot>
         </table>
 
-        <div *ngIf="editKategoriGroup">
-          <div formArrayName="careBurdenKategories" *ngFor="let burden of careBurdenKategories.controls let i = index;" class="edit-ssk-row">
+        <div *ngIf="editCategoryGroup">
+          <div formArrayName="careBurdenCategories" *ngFor="let burden of careBurdenCategories.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i">
-              <input formControlName="kategori" placeholder="kategori ..."/>
-              <a (click)= "deleteCareBurdenKategories(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <input formControlName="name" placeholder="Kategori..."/>
+              <a (click)= "deleteCareBurdenCategories(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
           <div>
-            <a (click)="addCareBurdenKategories()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngd kategori</span></a>
+            <a (click)="addCareBurdenCategories()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdskategori</span></a>
           </div>
         </div>
       </vgr-card-section>
 
-      <vgr-card-section [expanded]="true" [title]="'Vårdtyngds värde'" [subtitle]="" class="clearfix">
+      <vgr-card-section [expanded]="true" [title]="'Vårdtyngdsvärden'" [subtitle]="" class="clearfix">
         <table class="vpp-table" *ngIf="!editBurdenValueGroup">
 
-          <tr *ngFor="let burden of unit?.burdenValues|| []">
-            <td>{{burden.burdenValue}}</td>
+          <tr *ngFor="let burden of unit?.careBurdenValues|| []">
+            <td>{{burden.name}}</td>
           </tr>
 
           <tfoot>
@@ -175,7 +175,7 @@
         <div *ngIf="editBurdenValueGroup">
           <div formArrayName="careBurdenValues" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i">
-              <input formControlName="burdenValue" placeholder="kategori ..."/>
+              <input formControlName="name" placeholder="kategori ..."/>
               <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>

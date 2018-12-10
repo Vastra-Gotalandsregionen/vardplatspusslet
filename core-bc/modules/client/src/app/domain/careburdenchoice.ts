@@ -1,9 +1,9 @@
-import {CareBurdenKategori} from "./careburdenkategori";
+import {CareBurdenCategory} from "./careBurdenCategory";
 import {CareBurdenValue} from "./careburdenvalue";
 
 export class CareBurdenChoice {
 
   id: number;
-  careBurdenKategori: CareBurdenKategori;
+  careBurdenCategory: CareBurdenCategory;
   careBurdenValue: CareBurdenValue;
 }

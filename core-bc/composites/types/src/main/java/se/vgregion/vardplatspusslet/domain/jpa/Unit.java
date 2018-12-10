@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -45,16 +46,16 @@ public class Unit implements Comparable<Unit> {
     private List<Bed> beds = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Patient> patients = new TreeSet<>();
+    private Set<Patient> patients = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ssk> ssks = new TreeSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CareBurdenKategori> burdenKategories = new TreeSet<>();
+    private Set<CareBurdenCategory> careBurdenCategories = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CareBurdenValue> burdenValues = new TreeSet<>();
+    private Set<CareBurdenValue> careBurdenValues = new LinkedHashSet<>();
 
     @Column
     private Boolean hasLeftDateFeature;
@@ -326,20 +327,20 @@ public class Unit implements Comparable<Unit> {
         this.hasInfoFeature = hasInfoFeature;
     }
 
-    public Set<CareBurdenKategori> getBurdenKategories() {
-        return burdenKategories;
+    public Set<CareBurdenCategory> getCareBurdenCategories() {
+        return careBurdenCategories;
     }
 
-    public void setBurdenKategories(Set<CareBurdenKategori> burdenKategories) {
-        this.burdenKategories = burdenKategories;
+    public void setCareBurdenCategories(Set<CareBurdenCategory> burdenKategories) {
+        this.careBurdenCategories = burdenKategories;
     }
 
-    public Set<CareBurdenValue> getBurdenValues() {
-        return burdenValues;
+    public Set<CareBurdenValue> getCareBurdenValues() {
+        return careBurdenValues;
     }
 
-    public void setBurdenValues(Set<CareBurdenValue> burdenValues) {
-        this.burdenValues = burdenValues;
+    public void setCareBurdenValues(Set<CareBurdenValue> burdenValues) {
+        this.careBurdenValues = burdenValues;
     }
 
     public Boolean getHasCareBurdenFeature() {

@@ -1,11 +1,16 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "careBurdenValue")
-
-public class CareBurdenValue {
+@Table(name= "careBurdenCategory")
+public class CareBurdenCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,7 +31,7 @@ public class CareBurdenValue {
         return name;
     }
 
-    public void setName(String burdenValue) {
-        this.name = burdenValue;
+    public void setName(String kategori) {
+        this.name = kategori;
     }
 }
