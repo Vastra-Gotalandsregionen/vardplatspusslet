@@ -166,9 +166,7 @@
                     <div class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasInfoFeature"
                          [appCallout]="'Föräldrarum'"><i class="fa fa-weixin purpule"></i>
                     </div>
-                    <div class="ikon" *ngIf="bed.patient?.careBurdenChoices.length > 0 && unit.hasCareBurdenFeature"
-                         [appCallout]="'Vårdtyngd'"><i class="fa fa-anchor purpule" ></i>
-                    </div>
+
                 </vgr-list-column>
               </vgr-list-item-header>
 
@@ -257,6 +255,8 @@
       </vgr-page-block>
 
       <vgr-page-block *ngIf="unit?.ssks.length > 0">
+        <vgr-panel-container>
+        <vgr-panel width="4" >
         <table class="vpp-table">
           <thead>
           <tr>
@@ -269,6 +269,23 @@
             <td>{{countBeds(ssk)}}</td>
           </tr>
         </table>
+        </vgr-panel>
+        <vgr-panel width="4" >
+          <table class="vpp-table">
+            <thead>
+            <tr>
+              <th>Vårdtyngd</th>
+              <th *ngFor="let cbk of unit?.careBurdenCategories"  class="pad-left-20">{{cbk.name}}</th>
+            </tr>
+            </thead>
+            <tr *ngFor="let bed of unit?.beds">
+           <td >säng{{" "+ bed.label}}</td> <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}</td>
+            </tr>
+            <tr><td>Medelvärde:</td><td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td></tr>
+          </table>
+        </vgr-panel>
+
+        </vgr-panel-container>
       </vgr-page-block>
 
       <vgr-page-block *ngIf="!unit">

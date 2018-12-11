@@ -26,6 +26,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   unit: Unit;
   clinic: Clinic;
+  showRow: boolean = true;
 
   careBurdenValuesOptions: DropdownItem<number>[];
   amningOptions: SelectableItem<number>[];
@@ -295,4 +296,35 @@ export class UnitComponent implements OnInit, OnDestroy {
     }
   }
 
+  patientCareBurden(patientChoices, burdenCategoriId)
+  {
+    if (patientChoices!= null && patientChoices.length > 0){
+      let x =  patientChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
+      return x && x.careBurdenValue ? x.careBurdenValue.name: null;
+
+    }
+    else{
+      this.showRow = false;
+      return null;
+    }
+  }
+
+  CalculateAverage(burdenCategoriId)
+  {
+    let burdenval = 0;
+    let antal = 0;
+    for (let bed of this.unit.beds)
+    {
+      if (bed.patient)
+      {
+        let x = bed.patient.careBurdenChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
+        if (x && x.careBurdenValue){
+          antal++;
+          burdenval +=  +x.careBurdenValue.name;
+        }
+      }
+    }
+    if (antal === 0) return 0;
+    return (burdenval/antal).toFixed(2);
+  }
 }
