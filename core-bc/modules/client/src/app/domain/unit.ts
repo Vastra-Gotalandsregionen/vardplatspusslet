@@ -38,5 +38,6 @@ export class Unit {
   hasInfoFeature: boolean;
   careBurdenCategories: CareBurdenCategory[];
   careBurdenValues: CareBurdenValue[];
-  hasCareBurdenFeature: boolean;
+  hasCareBurdenWithAverage: boolean;
+  hasCareBurdenWithText: boolean;
 }

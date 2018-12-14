@@ -14,6 +14,7 @@ import "rxjs-compat/add/operator/do";
 import {Observable, Subscription} from "rxjs";
 import "rxjs-compat/add/observable/timer";
 import {AuthService} from "../../service/auth.service";
+import {CareBurdenChoice} from "../../domain/careburdenchoice";
 
 @Component({
   selector: 'app-unit',
@@ -27,6 +28,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   unit: Unit;
   clinic: Clinic;
   showRow: boolean = true;
+  burdenvals: string;
 
   careBurdenValuesOptions: DropdownItem<number>[];
   amningOptions: SelectableItem<number>[];
@@ -59,6 +61,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   messages: Message[] = [];
   private timerSubscription: Subscription;
+  sskCategoryValueMatrix = {};
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
@@ -99,6 +102,8 @@ export class UnitComponent implements OnInit, OnDestroy {
         .do(unit => {
           if (unit) {
             this.unit = unit;
+            this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
+            this.updateSskCategoryValueMatrix(unit);
             this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
               return {displayName: ssk.label, value: ssk.id};
             }));
@@ -114,7 +119,6 @@ export class UnitComponent implements OnInit, OnDestroy {
             }));
 
             this.updateVacants(unit);
-
             this.inited = true;
           } else {
             this.error = this.notFoundText;
@@ -131,7 +135,6 @@ export class UnitComponent implements OnInit, OnDestroy {
           this.error = error1.message;
         }
       });
-
       this.addBedForm = this.formBuilder.group({
         id: null,
         label: null
@@ -204,8 +207,56 @@ export class UnitComponent implements OnInit, OnDestroy {
         }
       }
 
+      this.updateSskCategoryValueMatrix(unit);
       this.updateVacants(unit);
     });
+  }
+
+  private updateSskCategoryValueMatrix(unit) {
+    this.sskCategoryValueMatrix = {};
+   // loopa över unit.ssks
+   // this.sskCategoryValueMatrix()
+    let unitSsks = unit.ssks;
+    let sskPatientsChoices;
+    let sskPatients;
+    unitSsks.forEach(ssk => {
+      sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
+        .filter(z => z.occupied === true).map(x => x.patient);
+
+      if (sskPatients.length === 0) return;
+      sskPatientsChoices = <CareBurdenChoice[]>sskPatients.map(x => x.careBurdenChoices).reduce(((previousValue, currentValue) => {
+        if (!previousValue) {
+          previousValue = [];
+        }
+        previousValue = previousValue.concat(currentValue);
+        return previousValue;
+      }));
+
+      sskPatientsChoices
+        .filter(choice => {
+          return choice.careBurdenValue && choice.careBurdenCategory;
+        })
+        .forEach(choice => {
+          if (this.sskCategoryValueMatrix[ssk.label]){
+            if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name]) {
+              if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name]) {
+                this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name]++;
+              } else {
+                this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+              }
+            } else {
+              this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
+              this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+            }
+          }
+          else
+          {
+            this.sskCategoryValueMatrix[ssk.label] = {};
+            this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
+            this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+          }
+        });
+    })
   }
 
   changeBedOrder() {
@@ -326,5 +377,27 @@ export class UnitComponent implements OnInit, OnDestroy {
     }
     if (antal === 0) return 0;
     return (burdenval/antal).toFixed(2);
+  }
+
+  sskMatrixHasvalue(ssk, cbk, value)
+  {
+    debugger;
+    let sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
+      .filter(z => z.occupied === true).map(x => x.patient);
+    if (sskPatients != null && sskPatients.length > 0){
+      let sskPatientsChoices = <CareBurdenChoice[]>sskPatients.map(x => x.careBurdenChoices).reduce(((previousValue, currentValue) => {
+        if (!previousValue) {
+          previousValue = [];
+        }
+        previousValue = previousValue.concat(currentValue);
+        return previousValue;
+      }));
+
+      let results = sskPatientsChoices.find(x =>x.careBurdenCategory.id === cbk.id);
+      if ( results && results.careBurdenCategory && results.careBurdenValue)
+        return true;
+      else return false;
+    } else
+      return false;
   }
 }

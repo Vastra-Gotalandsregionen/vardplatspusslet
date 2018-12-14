@@ -113,7 +113,10 @@ public class Unit implements Comparable<Unit> {
     private Boolean hasInfoFeature;
 
     @Column
-    private Boolean hasCareBurdenFeature;
+    private Boolean hasCareBurdenWithAverage;
+
+    @Column
+    private Boolean hasCareBurdenWithText;
 
     public Unit() {
 
@@ -343,12 +346,21 @@ public class Unit implements Comparable<Unit> {
         this.careBurdenValues = burdenValues;
     }
 
-    public Boolean getHasCareBurdenFeature() {
-        return hasCareBurdenFeature;
+
+    public Boolean getHasCareBurdenWithAverage() {
+        return hasCareBurdenWithAverage;
     }
 
-    public void setHasCareBurdenFeature(Boolean hasCareBurdenFeature) {
-        this.hasCareBurdenFeature = hasCareBurdenFeature;
+    public void setHasCareBurdenWithAverage(Boolean hasCareBurdenWithAverage) {
+        this.hasCareBurdenWithAverage = hasCareBurdenWithAverage;
+    }
+
+    public Boolean getHasCareBurdenWithText() {
+        return hasCareBurdenWithText;
+    }
+
+    public void setHasCareBurdenWithText(Boolean hasCareBurdenWithText) {
+        this.hasCareBurdenWithText = hasCareBurdenWithText;
     }
 
     @Override

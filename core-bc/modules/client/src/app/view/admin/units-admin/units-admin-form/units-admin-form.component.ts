@@ -82,7 +82,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasRondFeature: [unit.hasRondFeature],
       hasAmningFeature: [unit.hasAmningFeature],
       hasInfoFeature: [unit.hasInfoFeature],
-      hasCareBurdenFeature: [unit.hasCareBurdenFeature]
+      hasCareBurdenWithAverage: [unit.hasCareBurdenWithAverage],
+      hasCareBurdenWithText: [unit.hasCareBurdenWithText]
     });
 
   }
@@ -120,8 +121,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasRondFeature: unit.hasRondFeature,
       hasAmningFeature: unit.hasAmningFeature,
       hasInfoFeature: unit.hasInfoFeature,
-      hasCareBurdenFeature: unit.hasCareBurdenFeature
-
+      hasCareBurdenWithAverage: unit.hasCareBurdenWithAverage,
+      hasCareBurdenWithText: unit.hasCareBurdenWithText
     });
 
   }
@@ -171,7 +172,9 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasRondFeature = unitModel.hasRondFeature;
     unit.hasAmningFeature = unitModel.hasAmningFeature;
     unit.hasInfoFeature = unitModel.hasInfoFeature;
-    unit.hasCareBurdenFeature = unitModel.hasCareBurdenFeature;
+    unit.hasCareBurdenWithAverage = unitModel.hasCareBurdenWithAverage;
+    unit.hasCareBurdenWithText = unitModel.hasCareBurdenWithText;
+
 
 
     if (unitModel.clinic) {

@@ -254,36 +254,68 @@
         </vgr-list>
       </vgr-page-block>
 
-      <vgr-page-block *ngIf="unit?.ssks.length > 0">
+      <vgr-page-block *ngIf="unit?.ssks.length > 0 || unit?.hasCareBurdenWithText || unit?.hasCareBurdenWithAverage">
         <vgr-panel-container>
-        <vgr-panel width="4" >
-        <table class="vpp-table">
-          <thead>
-          <tr>
-            <th>Vårdlag</th>
-            <th>Antal sängar</th>
-          </tr>
-          </thead>
-          <tr *ngFor="let ssk of unit?.ssks">
-            <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
-            <td>{{countBeds(ssk)}}</td>
-          </tr>
-        </table>
-        </vgr-panel>
-        <vgr-panel width="4" >
-          <table class="vpp-table">
-            <thead>
-            <tr>
-              <th>Vårdtyngd</th>
-              <th *ngFor="let cbk of unit?.careBurdenCategories"  class="pad-left-20">{{cbk.name}}</th>
-            </tr>
-            </thead>
-            <tr *ngFor="let bed of unit?.beds">
-           <td >säng{{" "+ bed.label}}</td> <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}</td>
-            </tr>
-            <tr><td>Medelvärde:</td><td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td></tr>
-          </table>
-        </vgr-panel>
+          <vgr-panel width="4" *ngIf="unit?.ssks.length > 0">
+            <table class="vpp-table">
+              <thead>
+              <tr>
+                <th>Vårdlag</th>
+                <th>Antal sängar</th>
+              </tr>
+              </thead>
+              <tr *ngFor="let ssk of unit?.ssks">
+                <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
+                <td>{{countBeds(ssk)}}</td>
+              </tr>
+            </table>
+          </vgr-panel>
+          <vgr-panel width="6" *ngIf="unit?.hasCareBurdenWithAverage">
+            <table class="vpp-table">
+              <thead>
+              <tr>
+                <th>Vårdtyngd</th>
+                <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
+              </tr>
+              </thead>
+              <tr *ngFor="let bed of unit?.beds">
+                <td>säng{{" "+ bed.label}}</td>
+                <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
+                  {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
+                </td>
+              </tr>
+              <tr>
+                <td>Medelvärde:</td>
+                <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td>
+              </tr>
+            </table>
+          </vgr-panel>
+
+          <vgr-panel width="6" *ngIf="unit?.hasCareBurdenWithText">
+            <table class="vpp-table">
+              <thead>
+              <tr>
+                <th colspan="7" style="text-align: left">Vårdtyngd</th>
+              </tr>
+              <tr>
+                <th></th>
+                <th *ngFor="let cbk of unit?.careBurdenCategories" class="right" colspan="3">{{cbk.name}}</th>
+              </tr>
+              <tr>
+                <th>Vårdlag</th>
+                <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3" class="right">{{burdenvals}}</th>
+              </tr>
+              </thead>
+              <tr *ngFor="let ssk of unit?.ssks">
+                <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
+                <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
+                <span *ngFor="let value of unit?.careBurdenValues; let i = index">
+                  <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span *ngIf="sskMatrixHasvalue(ssk, cbk, value)">{{sskCategoryValueMatrix[ssk.label][cbk.name][value.name]}}</span>
+                 </span>
+                </td>
+              </tr>
+            </table>
+          </vgr-panel>
 
         </vgr-panel-container>
       </vgr-page-block>
