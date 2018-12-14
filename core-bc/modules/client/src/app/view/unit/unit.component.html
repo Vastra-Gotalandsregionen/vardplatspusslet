@@ -278,7 +278,7 @@
                 <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
               </tr>
               </thead>
-              <tr *ngFor="let bed of unit?.beds">
+              <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurfen(bed.patient)">
                 <td>säng{{" "+ bed.label}}</td>
                 <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
                   {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}

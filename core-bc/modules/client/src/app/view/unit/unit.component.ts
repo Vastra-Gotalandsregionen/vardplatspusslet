@@ -400,4 +400,12 @@ export class UnitComponent implements OnInit, OnDestroy {
     } else
       return false;
   }
+
+  BedHasNoPatientWithCareBurfen(patient: Patient)
+  {
+     if ( patient != null && patient.careBurdenChoices && patient.careBurdenChoices.map(x => x.careBurdenValue)
+       .filter(z => z!= null && z.id).length > 0)
+       return false;
+     else return true;
+  }
 }
