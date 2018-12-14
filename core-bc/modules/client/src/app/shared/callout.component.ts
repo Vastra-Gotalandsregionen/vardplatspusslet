@@ -10,10 +10,10 @@ import {
   styles: [`
     :host {
       visibility: visible;
-      background-color: royalblue;
+      background-color: #555;
       color: #fff;
       text-align: center;
-      padding: 5px;
+      padding: 5px 10px;
       border-radius: 6px;
       position:absolute;
       z-index: 1;
