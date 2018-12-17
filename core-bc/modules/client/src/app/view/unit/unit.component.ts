@@ -15,6 +15,8 @@ import {Observable, Subscription} from "rxjs";
 import "rxjs-compat/add/observable/timer";
 import {AuthService} from "../../service/auth.service";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
+import {CareBurdenCategory} from "../../domain/careBurdenCategory";
+import {CareBurdenValue} from "../../domain/careburdenvalue";
 
 @Component({
   selector: 'app-unit',
@@ -219,6 +221,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     let unitSsks = unit.ssks;
     let sskPatientsChoices;
     let sskPatients;
+
     unitSsks.forEach(ssk => {
       sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
         .filter(z => z.occupied === true).map(x => x.patient);
@@ -379,26 +382,13 @@ export class UnitComponent implements OnInit, OnDestroy {
     return (burdenval/antal).toFixed(2);
   }
 
-  sskMatrixHasvalue(ssk, cbk, value)
+  getMatrixValue(ssk: Ssk, cbk: CareBurdenCategory, cbv: CareBurdenValue): string
   {
-    debugger;
-    let sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
-      .filter(z => z.occupied === true).map(x => x.patient);
-    if (sskPatients != null && sskPatients.length > 0){
-      let sskPatientsChoices = <CareBurdenChoice[]>sskPatients.map(x => x.careBurdenChoices).reduce(((previousValue, currentValue) => {
-        if (!previousValue) {
-          previousValue = [];
-        }
-        previousValue = previousValue.concat(currentValue);
-        return previousValue;
-      }));
-
-      let results = sskPatientsChoices.find(x =>x.careBurdenCategory.id === cbk.id);
-      if ( results && results.careBurdenCategory && results.careBurdenValue)
-        return true;
-      else return false;
-    } else
-      return false;
+    if (this.sskCategoryValueMatrix[ssk.label] && this.sskCategoryValueMatrix[ssk.label][cbk.name] && this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name]) {
+      return this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name];
+    } else {
+      return '0';
+    }
   }
 
   BedHasNoPatientWithCareBurfen(patient: Patient)

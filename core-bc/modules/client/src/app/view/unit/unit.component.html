@@ -310,7 +310,7 @@
                 <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
                 <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
                 <span *ngFor="let value of unit?.careBurdenValues; let i = index">
-                  <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span *ngIf="sskMatrixHasvalue(ssk, cbk, value)">{{sskCategoryValueMatrix[ssk.label][cbk.name][value.name]}}</span>
+                  <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span>{{getMatrixValue(ssk, cbk, value)}}</span>
                  </span>
                 </td>
               </tr>
