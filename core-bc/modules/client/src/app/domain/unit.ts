@@ -7,6 +7,9 @@ import {Message} from "./message";
 import {CleaningAlternative} from "./cleaning-alternative";
 import {CareBurdenValue} from "./careburdenvalue";
 import {CareBurdenCategory} from "./careBurdenCategory";
+import {DietForMother} from "./dietformother";
+import {DietForChild} from "./dietforchild";
+import {DietForPatient} from "./dietforpatient";
 
 export class Unit {
   id: string;
@@ -17,6 +20,9 @@ export class Unit {
   ssks: Ssk[];
   messages: Message[];
   servingClinics: ServingClinic[];
+  dietForMothers: DietForMother[];
+  dietForChildren: DietForChild[];
+  dietForPatients: DietForPatient[];
   hasLeftDateFeature: boolean;
   hasCarePlan: boolean;
   hasAkutPatientFeature: boolean;
@@ -40,4 +46,7 @@ export class Unit {
   careBurdenValues: CareBurdenValue[];
   hasCareBurdenWithAverage: boolean;
   hasCareBurdenWithText: boolean;
+  hasMorKostFeature: boolean;
+  hasBarnKostFeature: boolean;
+  hasKostFeature: boolean;
 }

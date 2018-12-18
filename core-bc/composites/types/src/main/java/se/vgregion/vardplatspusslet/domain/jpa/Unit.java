@@ -57,6 +57,17 @@ public class Unit implements Comparable<Unit> {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CareBurdenValue> careBurdenValues = new LinkedHashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DietForMother> dietForMothers = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DietForChild> dietForChildren = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DietForPatient> dietForPatients = new LinkedHashSet<>();
+
+
+
     @Column
     private Boolean hasLeftDateFeature;
 
@@ -117,6 +128,15 @@ public class Unit implements Comparable<Unit> {
 
     @Column
     private Boolean hasCareBurdenWithText;
+
+    @Column
+    private Boolean hasMorKostFeature;
+
+    @Column
+    private Boolean hasBarnKostFeature;
+
+    @Column
+    private Boolean hasKostFeature;
 
     public Unit() {
 
@@ -361,6 +381,54 @@ public class Unit implements Comparable<Unit> {
 
     public void setHasCareBurdenWithText(Boolean hasCareBurdenWithText) {
         this.hasCareBurdenWithText = hasCareBurdenWithText;
+    }
+
+    public Boolean getHasMorKostFeature() {
+        return hasMorKostFeature;
+    }
+
+    public void setHasMorKostFeature(Boolean hasMorKostFeature) {
+        this.hasMorKostFeature = hasMorKostFeature;
+    }
+
+    public Boolean getHasBarnKostFeature() {
+        return hasBarnKostFeature;
+    }
+
+    public void setHasBarnKostFeature(Boolean hasBarnKostFeature) {
+        this.hasBarnKostFeature = hasBarnKostFeature;
+    }
+
+    public Boolean getHasKostFeature() {
+        return hasKostFeature;
+    }
+
+    public void setHasKostFeature(Boolean hasKostFeature) {
+        this.hasKostFeature = hasKostFeature;
+    }
+
+    public Set<DietForMother> getDietForMothers() {
+        return dietForMothers;
+    }
+
+    public void setDietForMothers(Set<DietForMother> dietForMothers) {
+        this.dietForMothers = dietForMothers;
+    }
+
+    public Set<DietForChild> getDietForChildren() {
+        return dietForChildren;
+    }
+
+    public void setDietForChildren(Set<DietForChild> dietForChildren) {
+        this.dietForChildren = dietForChildren;
+    }
+
+    public Set<DietForPatient> getDietForPatients() {
+        return dietForPatients;
+    }
+
+    public void setDietForPatients(Set<DietForPatient> dietForPatients) {
+        this.dietForPatients = dietForPatients;
     }
 
     @Override

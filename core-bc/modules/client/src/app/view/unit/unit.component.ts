@@ -381,7 +381,6 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   sskMatrixHasvalue(ssk, cbk, value)
   {
-    debugger;
     let sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
       .filter(z => z.occupied === true).map(x => x.patient);
     if (sskPatients != null && sskPatients.length > 0){
