@@ -113,6 +113,43 @@
               </div>
             </div>
         </div>
+
+        <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
+          <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.has23oFeature" class="div-button7">
+          <vgr-checkbox formControlName="electiv23O" label="Electiv 23O"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.has24oFeature" class="div-button7">
+          <vgr-checkbox formControlName="electiv24O" label="Electiv 24O"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.hasVuxenPatientFeature" class="div-button7">
+          <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.hasInfekteradFeature" class="div-button7">
+          <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.hasInfectionSensitiveFeature" class="div-button7">
+          <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.hasMorRondFeature" class="div-button7">
+          <vgr-checkbox formControlName="morRond" label="Rond Mor"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.hasBarnRondFeature" class="div-button7">
+          <vgr-checkbox formControlName="barnRond" label="Rond Barn"></vgr-checkbox>
+        </div>
+
+        <div *ngIf="unit.hasRondFeature" class="div-button7">
+          <vgr-checkbox formControlName="rond" label="Rond"></vgr-checkbox>
+        </div>
+
       </div>
     </vgr-card-column>
     <vgr-card-column>
@@ -164,43 +201,35 @@
         </div>
       </div>
 
+      <div  *ngIf="unit.hasMorKostFeature" class="div-button10">
+        <p>Kost Mor</p>
+        <div class="containers" formGroupName="kostMorGroup">
+          <vgr-dropdown  formControlName="dietMother"
+                        noItemSelectedLabel="Välj"
+                        [items]="dietMotherDropdownItems"></vgr-dropdown>
+          <textarea formControlName="infoDietMother" class="div-left5" cols="40"></textarea>
 
-      <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
-        <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
+        </div>
       </div>
+      <div  *ngIf="unit.hasBarnKostFeature" class="div-button10">
+        <p>Kost Barn</p>
+        <div class="containers" formGroupName="kostBarnGroup">
+          <vgr-dropdown  formControlName="dietChild"
+                        noItemSelectedLabel="Välj"
+                        [items]="dietChildDropdownItems"></vgr-dropdown>
+          <textarea formControlName="infoDietChild" class="div-left5" cols="40"></textarea>
 
-      <div *ngIf="unit.has23oFeature" class="div-button7">
-        <vgr-checkbox formControlName="electiv23O" label="Electiv 23O"></vgr-checkbox>
+        </div>
       </div>
-
-      <div *ngIf="unit.has24oFeature" class="div-button7">
-        <vgr-checkbox formControlName="electiv24O" label="Electiv 24O"></vgr-checkbox>
+      <div  *ngIf="unit.hasKostFeature" class="div-button10">
+        <p>Kost</p>
+        <div class="containers" formGroupName="kostGroup">
+          <vgr-dropdown  formControlName="diet"
+                        noItemSelectedLabel="Välj"
+                        [items]="dietDropdownItems"></vgr-dropdown>
+          <textarea formControlName="infoDiet" class="div-left5" cols="40"></textarea>
+        </div>
       </div>
-
-      <div *ngIf="unit.hasVuxenPatientFeature" class="div-button7">
-        <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
-      </div>
-
-      <div *ngIf="unit.hasInfekteradFeature" class="div-button7">
-        <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
-      </div>
-
-      <div *ngIf="unit.hasInfectionSensitiveFeature" class="div-button7">
-        <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
-      </div>
-
-      <div *ngIf="unit.hasMorRondFeature" class="div-button7">
-        <vgr-checkbox formControlName="morRond" label="Rond Mor"></vgr-checkbox>
-      </div>
-
-      <div *ngIf="unit.hasBarnRondFeature" class="div-button7">
-        <vgr-checkbox formControlName="barnRond" label="Rond Barn"></vgr-checkbox>
-      </div>
-
-      <div *ngIf="unit.hasRondFeature" class="div-button7">
-        <vgr-checkbox formControlName="rond" label="Rond"></vgr-checkbox>
-      </div>
-
     </vgr-card-column>
   </vgr-card>
 

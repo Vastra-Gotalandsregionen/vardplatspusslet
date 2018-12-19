@@ -1,6 +1,9 @@
 import {Patientexamination} from "./patientexamination";
 import {PatientEvent} from "./patient-event";
 import {CareBurdenChoice} from "./careburdenchoice";
+import {DietForMother} from "./dietformother";
+import {DietForChild} from "./dietforchild";
+import {DietForPatient} from "./dietforpatient";
 
 export class Patient {
 
@@ -40,6 +43,12 @@ export class Patient {
   information: string;
   kommentar: string;
   careBurdenChoices: CareBurdenChoice[];
+  dietMother: DietForMother;
+  infoDietMother: string;
+  dietChild: DietForChild;
+  infoDietChild: string;
+  diet: DietForPatient;
+  infoDiet: string;
 }
 
 enum LeaveStatus {

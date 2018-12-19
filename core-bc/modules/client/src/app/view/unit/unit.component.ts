@@ -37,6 +37,10 @@ export class UnitComponent implements OnInit, OnDestroy {
   servingKlinikerDropdownItems: DropdownItem<number>[];
   sskDropdownItems: DropdownItem<number>[];
   cleaningAlternativesDropdownItems: DropdownItem<number>[];
+  dietMotherDropdownItems: DropdownItem<number>[];
+  dietChildDropdownItems: DropdownItem<number>[];
+  dietDropdownItems: DropdownItem<number>[];
+
   leaveStatusesDropdownItems = [
     {
       displayName: 'Permission', value: 'PERMISSION'
@@ -117,6 +121,18 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.careBurdenValuesOptions = [{displayName: 'Välj', value: null}].concat(unit.careBurdenValues.map(cbv => {
               return {displayName: cbv.name, value: cbv.id};
             }));
+
+            this.dietMotherDropdownItems = unit.dietForMothers.map(diet => {
+              return {displayName: diet.name, value: diet.id};
+            });
+
+            this.dietChildDropdownItems = unit.dietForChildren.map(diet => {
+              return {displayName: diet.name, value: diet.id};
+            });
+
+            this.dietDropdownItems = unit.dietForPatients.map(diet => {
+              return {displayName: diet.name, value: diet.id};
+            });
 
             this.updateVacants(unit);
             this.inited = true;
