@@ -90,6 +90,24 @@ public class Patient {
     @Column
     private String kommentar;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private DietForMother dietMother;
+
+    @Column
+    private String infoDietMother;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private DietForChild dietChild;
+
+    @Column
+    private String infoDietChild;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private DietForPatient diet;
+
+    @Column
+    private String infoDiet;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new LinkedHashSet<>();
@@ -366,6 +384,54 @@ public class Patient {
 
     public void setCareBurdenChoices(Set<CareBurdenChoice> careBurdenChoices) {
         this.careBurdenChoices = careBurdenChoices;
+    }
+
+    public DietForMother getDietMother() {
+        return dietMother;
+    }
+
+    public void setDietMother(DietForMother dietMother) {
+        this.dietMother = dietMother;
+    }
+
+    public DietForChild getDietChild() {
+        return dietChild;
+    }
+
+    public void setDietChild(DietForChild dietChild) {
+        this.dietChild = dietChild;
+    }
+
+    public DietForPatient getDiet() {
+        return diet;
+    }
+
+    public void setDiet(DietForPatient diet) {
+        this.diet = diet;
+    }
+
+    public String getInfoDietMother() {
+        return infoDietMother;
+    }
+
+    public void setInfoDietMother(String infoDietMother) {
+        this.infoDietMother = infoDietMother;
+    }
+
+    public String getInfoDietChild() {
+        return infoDietChild;
+    }
+
+    public void setInfoDietChild(String infoDietChild) {
+        this.infoDietChild = infoDietChild;
+    }
+
+    public String getInfoDiet() {
+        return infoDiet;
+    }
+
+    public void setInfoDiet(String infoDiet) {
+        this.infoDiet = infoDiet;
     }
 
     @Override

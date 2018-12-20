@@ -46,6 +46,10 @@
           <vgr-checkbox label="Information" formControlName="hasInfoFeature"></vgr-checkbox>
           <vgr-checkbox label="Vårdtyngd med sifrror och medelvärde" formControlName="hasCareBurdenWithAverage"></vgr-checkbox>
           <vgr-checkbox label="Vårdtyngd med enbart text" formControlName="hasCareBurdenWithText"></vgr-checkbox>
+          <vgr-checkbox label="Kost Mor" formControlName="hasMorKostFeature"></vgr-checkbox>
+          <vgr-checkbox label="Kost Barn" formControlName="hasBarnKostFeature"></vgr-checkbox>
+          <vgr-checkbox label="Kost" formControlName="hasKostFeature"></vgr-checkbox>
+
 
 
         </vgr-title-value-layout>
@@ -182,6 +186,81 @@
           </div>
           <div>
             <a (click)="addCareBurdenValues()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngd värd</span></a>
+          </div>
+        </div>
+      </vgr-card-section>
+      <vgr-card-section [expanded]="true" [title]="'Kost Mor'" [subtitle]="" class="clearfix">
+        <table class="vpp-table" *ngIf="!editDietForMotherGroup">
+
+          <tr *ngFor="let diet of unit?.dietForMothers|| []">
+            <td>{{diet.name}}</td>
+          </tr>
+
+          <tfoot>
+          <tr>
+            <td><a (click)="editDietForMotherGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+          </tfoot>
+        </table>
+
+        <div *ngIf="editDietForMotherGroup">
+          <div formArrayName="dietForMothers" *ngFor="let diet of dietForMothers.controls let i = index;" class="edit-ssk-row">
+            <div [formGroupName]="i">
+              <input formControlName="name" placeholder=""/>
+              <a (click)= "deleteDietForMother(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            </div>
+          </div>
+          <div>
+            <a (click)="addDietForMother()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för mor</span></a>
+          </div>
+        </div>
+      </vgr-card-section>
+      <vgr-card-section [expanded]="true" [title]="'Kost Barn'" [subtitle]="" class="clearfix">
+        <table class="vpp-table" *ngIf="!editDietForChildGroup">
+
+          <tr *ngFor="let diet of unit?.dietForChildren|| []">
+            <td>{{diet.name}}</td>
+          </tr>
+
+          <tfoot>
+          <tr>
+            <td><a (click)="editDietForChildGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+          </tfoot>
+        </table>
+
+        <div *ngIf="editDietForChildGroup">
+          <div formArrayName="dietForChildren" *ngFor="let diet of dietForChildren.controls let i = index;" class="edit-ssk-row">
+            <div [formGroupName]="i">
+              <input formControlName="name" placeholder=""/>
+              <a (click)= "deleteDietForChild(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            </div>
+          </div>
+          <div>
+            <a (click)="addDietForChild()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för barn</span></a>
+          </div>
+        </div>
+      </vgr-card-section>
+      <vgr-card-section [expanded]="true" [title]="'Kost'" [subtitle]="" class="clearfix">
+        <table class="vpp-table" *ngIf="!editDietForPatientGroup">
+
+          <tr *ngFor="let diet of unit?.dietForPatients|| []">
+            <td>{{diet.name}}</td>
+          </tr>
+
+          <tfoot>
+          <tr>
+            <td><a (click)="editDietForPatientGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+          </tfoot>
+        </table>
+
+        <div *ngIf="editDietForPatientGroup">
+          <div formArrayName="dietForPatients" *ngFor="let diet of dietForPatients.controls let i = index;" class="edit-ssk-row">
+            <div [formGroupName]="i">
+              <input formControlName="name" placeholder=""/>
+              <a (click)= "deleteDietForPatient(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            </div>
+          </div>
+          <div>
+            <a (click)="addDietForPatient()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost</span></a>
           </div>
         </div>
       </vgr-card-section>

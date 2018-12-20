@@ -8,6 +8,9 @@ import {ServingClinic} from "../../../../domain/servingclinic";
 import {CleaningAlternative} from "../../../../domain/cleaning-alternative";
 import {CareBurdenCategory} from "../../../../domain/careBurdenCategory";
 import {CareBurdenValue} from "../../../../domain/careburdenvalue";
+import {DietForMother} from "../../../../domain/dietformother";
+import {DietForChild} from "../../../../domain/dietforchild";
+import {DietForPatient} from "../../../../domain/dietforpatient";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -34,6 +37,10 @@ export class UnitsAdminFormComponent implements OnInit {
   editCleanGroup: boolean;
   editCategoryGroup: boolean;
   editBurdenValueGroup: boolean;
+  editDietForMotherGroup: boolean;
+  editDietForChildGroup: boolean;
+  editDietForPatientGroup: boolean;
+
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -60,6 +67,9 @@ export class UnitsAdminFormComponent implements OnInit {
       name: [unit.name],
       clinic: [unit.clinic ? unit.clinic.id : null],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
+      dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
+      dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
+      dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
       careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
@@ -83,7 +93,10 @@ export class UnitsAdminFormComponent implements OnInit {
       hasAmningFeature: [unit.hasAmningFeature],
       hasInfoFeature: [unit.hasInfoFeature],
       hasCareBurdenWithAverage: [unit.hasCareBurdenWithAverage],
-      hasCareBurdenWithText: [unit.hasCareBurdenWithText]
+      hasCareBurdenWithText: [unit.hasCareBurdenWithText],
+      hasMorKostFeature : [unit.hasMorKostFeature],
+      hasBarnKostFeature : [unit.hasBarnKostFeature],
+      hasKostFeature : [unit.hasKostFeature]
     });
 
   }
@@ -99,6 +112,10 @@ export class UnitsAdminFormComponent implements OnInit {
       name: unit.name ? unit.name : null,
       clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
+      dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
+      dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
+      dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),
+
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
       careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
       hasLeftDateFeature: unit.hasLeftDateFeature,
@@ -122,7 +139,10 @@ export class UnitsAdminFormComponent implements OnInit {
       hasAmningFeature: unit.hasAmningFeature,
       hasInfoFeature: unit.hasInfoFeature,
       hasCareBurdenWithAverage: unit.hasCareBurdenWithAverage,
-      hasCareBurdenWithText: unit.hasCareBurdenWithText
+      hasCareBurdenWithText: unit.hasCareBurdenWithText,
+      hasMorKostFeature : unit.hasMorKostFeature,
+      hasBarnKostFeature : unit.hasBarnKostFeature,
+      hasKostFeature : unit.hasKostFeature
     });
 
   }
@@ -131,21 +151,6 @@ export class UnitsAdminFormComponent implements OnInit {
     if (event) {
       this.reinitUnitForm(unit);
     }
-  }
-
-  addSsk() {
-    (this.unitForm.get('ssks') as FormArray).push(this.createSsk());
-  }
-  createSsk(): FormGroup {
-    return this.formBuilder.group({
-      id: null,
-      label: null,
-      color: null
-    });
-  }
-
-  deleteSsk(index: number) {
-    (this.unitForm.get('ssks') as FormArray).removeAt(index);
   }
 
   saveUnit() {
@@ -174,8 +179,9 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasInfoFeature = unitModel.hasInfoFeature;
     unit.hasCareBurdenWithAverage = unitModel.hasCareBurdenWithAverage;
     unit.hasCareBurdenWithText = unitModel.hasCareBurdenWithText;
-
-
+    unit.hasMorKostFeature = unitModel.hasMorKostFeature;
+    unit.hasBarnKostFeature = unitModel.hasBarnKostFeature;
+    unit.hasKostFeature = unitModel.hasKostFeature;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();
@@ -183,6 +189,10 @@ export class UnitsAdminFormComponent implements OnInit {
     }
     unit.ssks = unitModel.ssks;
     unit.servingClinics = unitModel.servingClinics;
+    unit.dietForPatients = unitModel.dietForPatients;
+    unit.dietForChildren = unitModel.dietForChildren;
+    debugger;
+    unit.dietForMothers = unitModel.dietForMothers;
     unit.careBurdenCategories = unitModel.careBurdenCategories;
     unit.careBurdenValues = unitModel.careBurdenValues;
     unit.cleaningAlternatives = unitModel.cleaningAlternatives;
@@ -214,6 +224,21 @@ export class UnitsAdminFormComponent implements OnInit {
         color: ssk.color
       })
     });
+  }
+
+  addSsk() {
+    (this.unitForm.get('ssks') as FormArray).push(this.createSsk());
+  }
+  createSsk(): FormGroup {
+    return this.formBuilder.group({
+      id: null,
+      label: null,
+      color: null
+    });
+  }
+
+  deleteSsk(index: number) {
+    (this.unitForm.get('ssks') as FormArray).removeAt(index);
   }
 
   get servingClinics(): FormArray{
@@ -348,4 +373,98 @@ export class UnitsAdminFormComponent implements OnInit {
     });
   }
 
+
+  get dietForMothers(): FormArray{
+    return <FormArray>this.unitForm.get('dietForMothers');
+  }
+  private buildDietGroupForMother(diets: DietForMother[]): FormGroup[] {
+    if (!diets || diets.length === 0) {
+      return [];
+    }
+
+    return diets.map(diet => {
+      return this.formBuilder.group( {
+        id: diet.id,
+        name: diet.name
+      })
+    });
+  }
+
+  addDietForMother(){
+    this.dietForMothers.push(this.CreateDietForMother());
+  }
+
+  deleteDietForMother(index: number) {
+    this.dietForMothers.removeAt(index);
+  }
+
+  CreateDietForMother(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      name: null
+    });
+  }
+
+
+  get dietForChildren(): FormArray{
+    return <FormArray>this.unitForm.get('dietForChildren');
+  }
+  private buildDietGroupForChildren(diets: DietForChild[]): FormGroup[] {
+    if (!diets || diets.length === 0) {
+      return [];
+    }
+
+    return diets.map(diet => {
+      return this.formBuilder.group( {
+        id: diet.id,
+        name: diet.name
+      })
+    });
+  }
+
+  addDietForChild(){
+    this.dietForChildren.push(this.CreateDietForChild());
+  }
+
+  deleteDietForChild(index: number) {
+    this.dietForChildren.removeAt(index);
+  }
+
+  CreateDietForChild(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      name: null
+    });
+  }
+
+  get dietForPatients(): FormArray{
+    return <FormArray>this.unitForm.get('dietForPatients');
+  }
+  private buildDietGroupForPatient(diets: DietForPatient[]): FormGroup[] {
+    if (!diets || diets.length === 0) {
+      return [];
+    }
+
+    return diets.map(diet => {
+      return this.formBuilder.group( {
+        id: diet.id,
+        name: diet.name
+      })
+    });
+  }
+
+  addDietForPatient(){
+    this.dietForPatients.push(this.CreateDietForPatient());
+  }
+
+  deleteDietForPatient(index: number) {
+    this.dietForPatients.removeAt(index);
+  }
+
+  CreateDietForPatient(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      name: null
+    });
+  }
 }

@@ -41,6 +41,9 @@ export class BedFormComponent implements OnInit {
   @Input('amningOptions') amningOptions: SelectableItem<number>[];
   @Input('informationOptions') informationOptions: SelectableItem<number>[];
   @Input('careBurdenValuesOptions') careBurdenValuesOptions: DropdownItem<number>[];
+  @Input('dietMotherDropdownItems') dietMotherDropdownItems: DropdownItem<number>[];
+  @Input('dietChildDropdownItems') dietChildDropdownItems: DropdownItem<number>[];
+  @Input('dietDropdownItems') dietDropdownItems: DropdownItem<number>[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) {
@@ -87,6 +90,19 @@ export class BedFormComponent implements OnInit {
           sekretess: [patient.sekretess],
           sekretessInfo: [patient.sekretessInfo]
         }),
+        kostMorGroup: this.formBuilder.group({
+          dietMother: [patient.dietMother ? patient.dietMother.id : null],
+          infoDietMother: [patient.infoDietMother]
+        }),
+        kostBarnGroup: this.formBuilder.group({
+          dietChild: [patient.dietChild ? patient.dietChild.id: null],
+          infoDietChild: [patient.infoDietChild]
+        }),
+        kostGroup: this.formBuilder.group({
+          diet: [patient.diet ? patient.diet.id: null],
+          infoDiet: [patient.infoDiet]
+        }),
+
         infekterad: [patient.infekterad],
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(patient.patientExaminations)),
         patientEvents: this.formBuilder.array(this.buildEventGroup(patient.patientEvents)),
@@ -232,6 +248,22 @@ export class BedFormComponent implements OnInit {
       bed.patient.amning = bedModel.patient.amning ? bedModel.patient.amning : null;
       bed.patient.information = bedModel.patient.infoGroup.information ? bedModel.patient.infoGroup.information : null;
       bed.patient.kommentar = bedModel.patient.infoGroup.kommentar ? bedModel.patient.infoGroup.kommentar : null;
+      debugger;
+      bed.patient.dietMother = bedModel.patient.kostMorGroup.dietMother ? bedModel.patient.kostMorGroup.dietMother: null;
+      if (bedModel.patient.kostMorGroup.dietMother){
+        bed.patient.dietMother = this.unit.dietForMothers.find(diet => diet.id == bedModel.patient.kostMorGroup.dietMother)
+      }
+      bed.patient.infoDietMother = bedModel.patient.kostMorGroup.infoDietMother ? bedModel.patient.kostMorGroup.infoDietMother: null;
+
+      if (bedModel.patient.kostBarnGroup.dietChild){
+        bed.patient.dietChild = this.unit.dietForChildren.find(diet => diet.id == bedModel.patient.kostBarnGroup.dietChild)
+      }
+      bed.patient.infoDietChild = bedModel.patient.kostBarnGroup.infoDietChild ? bedModel.patient.kostBarnGroup.infoDietChild: null;
+
+      if (bedModel.patient.kostGroup.diet){
+        bed.patient.diet = this.unit.dietForPatients.find(diet => diet.id == bedModel.patient.kostGroup.diet)
+      }
+      bed.patient.infoDiet = bedModel.patient.kostGroup.infoDiet ? bedModel.patient.kostGroup.infoDiet: null;
       bed.patient.careBurdenChoices = bedModel.patient.careBurdenChoices ? bedModel.patient.careBurdenChoices.map(
         cbc => {
           return {
