@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Clinic} from "../../domain/clinic";
 import {Unit} from "../../domain/unit";
 import {AuthService} from "../../service/auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-clinic',
   templateUrl: './clinic.component.html',
   styleUrls: ['./clinic.component.scss']
 })
-export class ClinicComponent implements OnInit {
+export class ClinicComponent implements OnInit, OnDestroy {
 
   clinic: Clinic;
   units: Unit[];
@@ -18,10 +19,12 @@ export class ClinicComponent implements OnInit {
 
   notFoundText = 'Oops. Inget fanns här...';
 
+  subscription: Subscription;
+
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
               private authService: AuthService) {
-    this.authService.isUserLoggedIn.subscribe(value => {
+    this.subscription = this.authService.isUserLoggedIn.subscribe(value => {
       this.ngOnInit();
     });
   }
@@ -49,6 +52,12 @@ export class ClinicComponent implements OnInit {
       });
 
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

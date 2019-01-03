@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Clinic} from "../../domain/clinic";
 import {AuthService} from "../../service/auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   clinics: Clinic[];
 
   userId: string;
   password: string;
 
+  subscription: Subscription;
+
   constructor(private http: HttpClient,
               private authService: AuthService) {
-    this.authService.isUserLoggedIn.subscribe(value => {
+    this.subscription = this.authService.isUserLoggedIn.subscribe(value => {
       this.ngOnInit();
     });
   }
@@ -26,6 +29,12 @@ export class HomeComponent implements OnInit {
     this.http.get<Clinic[]>('/api/clinic').subscribe(clinics => {
       this.clinics = clinics;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   get loggedIn(): boolean {
