@@ -30,6 +30,7 @@ Generation time : 2015-01-14 09:02:50 CET
   </modules>
 
   <dependencies>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

@@ -49,4 +49,5 @@ export class Unit {
   hasMorKostFeature: boolean;
   hasBarnKostFeature: boolean;
   hasKostFeature: boolean;
+  hasMotherChildDietFeature: boolean;
 }

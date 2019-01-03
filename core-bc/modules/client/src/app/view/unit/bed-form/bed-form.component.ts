@@ -248,7 +248,6 @@ export class BedFormComponent implements OnInit {
       bed.patient.amning = bedModel.patient.amning ? bedModel.patient.amning : null;
       bed.patient.information = bedModel.patient.infoGroup.information ? bedModel.patient.infoGroup.information : null;
       bed.patient.kommentar = bedModel.patient.infoGroup.kommentar ? bedModel.patient.infoGroup.kommentar : null;
-      debugger;
       bed.patient.dietMother = bedModel.patient.kostMorGroup.dietMother ? bedModel.patient.kostMorGroup.dietMother: null;
       if (bedModel.patient.kostMorGroup.dietMother){
         bed.patient.dietMother = this.unit.dietForMothers.find(diet => diet.id == bedModel.patient.kostMorGroup.dietMother)

@@ -138,6 +138,9 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean hasKostFeature;
 
+    @Column
+    private  Boolean hasMotherChildDietFeature;
+
     public Unit() {
 
     }
@@ -429,6 +432,14 @@ public class Unit implements Comparable<Unit> {
 
     public void setDietForPatients(Set<DietForPatient> dietForPatients) {
         this.dietForPatients = dietForPatients;
+    }
+
+    public Boolean getHasMotherChildDietFeature() {
+        return hasMotherChildDietFeature;
+    }
+
+    public void setHasMotherChildDietFeature(Boolean hasMotherChildDietFeature) {
+        this.hasMotherChildDietFeature = hasMotherChildDietFeature;
     }
 
     @Override

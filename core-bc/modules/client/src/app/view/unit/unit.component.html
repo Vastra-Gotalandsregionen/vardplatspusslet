@@ -17,6 +17,9 @@
     <a routerLink="editMessages" *ngIf="hasEditUnitPermission()">
       <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
     </a>
+    <div style="margin-top: 20px" *ngIf="unit.hasMotherChildDietFeature || unit.hasKostFeature">
+      <a [href]="'/api/unit/' + clinic.id + '/' + unit.id + '/kostLista'" target="_blank" style="text-decoration: none "><h3>Kostlista</h3></a>
+    </div>
   </app-left-column>
 
   <app-right-column>
@@ -221,7 +224,6 @@
                 </vgr-list-item-content>
               </vgr-list-item>
             </vgr-list>
-
             <div class="button-row">
               <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
             </div>

@@ -96,7 +96,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasCareBurdenWithText: [unit.hasCareBurdenWithText],
       hasMorKostFeature : [unit.hasMorKostFeature],
       hasBarnKostFeature : [unit.hasBarnKostFeature],
-      hasKostFeature : [unit.hasKostFeature]
+      hasKostFeature : [unit.hasKostFeature],
+      hasMotherChildDietFeature: [unit.hasMotherChildDietFeature]
     });
 
   }
@@ -142,7 +143,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasCareBurdenWithText: unit.hasCareBurdenWithText,
       hasMorKostFeature : unit.hasMorKostFeature,
       hasBarnKostFeature : unit.hasBarnKostFeature,
-      hasKostFeature : unit.hasKostFeature
+      hasKostFeature : unit.hasKostFeature,
+      hasMotherChildDietFeature: unit.hasMotherChildDietFeature
     });
 
   }
@@ -182,6 +184,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasMorKostFeature = unitModel.hasMorKostFeature;
     unit.hasBarnKostFeature = unitModel.hasBarnKostFeature;
     unit.hasKostFeature = unitModel.hasKostFeature;
+    unit.hasMotherChildDietFeature = unitModel.hasMotherChildDietFeature;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();
@@ -191,7 +194,6 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.servingClinics = unitModel.servingClinics;
     unit.dietForPatients = unitModel.dietForPatients;
     unit.dietForChildren = unitModel.dietForChildren;
-    debugger;
     unit.dietForMothers = unitModel.dietForMothers;
     unit.careBurdenCategories = unitModel.careBurdenCategories;
     unit.careBurdenValues = unitModel.careBurdenValues;

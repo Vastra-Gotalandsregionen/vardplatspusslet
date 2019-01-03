@@ -1,7 +1,12 @@
 package se.vgregion.vardplatspusslet.intsvc.controller.domain;
 
+import com.itextpdf.text.DocumentException;
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +20,17 @@ import se.vgregion.vardplatspusslet.domain.jpa.Role;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.domain.jpa.User;
 import se.vgregion.vardplatspusslet.intsvc.controller.util.HttpUtil;
+import se.vgregion.vardplatspusslet.intsvc.pdf.PdfGenerating;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.UnitService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -102,6 +112,23 @@ public class UnitController {
             return ResponseEntity.ok(unit);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping(value = "/{clinicId}/{id}/kostLista", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @ResponseBody
+    public ResponseEntity<byte[]> getUnitForPdf(@PathVariable("clinicId") String clinicId, @PathVariable("id") String id) throws  DocumentException {
+        Clinic clinic = clinicRepository.getOne(clinicId);
+        Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(id, clinic);
+        if (unit != null) {
+            PdfGenerating pfg = new PdfGenerating();
+            byte[] content = pfg.createPdf(unit);
+            HttpHeaders headers = new HttpHeaders();
+            headers.put("Content-Disposition", Collections.singletonList("inline"));
+            return new ResponseEntity<>(content, headers, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
