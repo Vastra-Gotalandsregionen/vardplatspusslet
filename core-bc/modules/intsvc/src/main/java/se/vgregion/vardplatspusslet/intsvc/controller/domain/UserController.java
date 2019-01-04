@@ -9,16 +9,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import se.vgregion.vardplatspusslet.domain.jpa.Role;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.domain.jpa.User;
 import se.vgregion.vardplatspusslet.domain.json.UserSaveRequest;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.LdapLoginService;
+import se.vgregion.vardplatspusslet.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +27,9 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -50,26 +52,13 @@ public class UserController extends BaseController {
     @ResponseBody
     public List<User> getUsers(HttpServletRequest request) {
 
-        User requestingUser = getRequestUser(request);
+        String userId = getRequestUserId(request);
 
-        if (requestingUser == null) {
+        if (userId == null) {
             return Collections.emptyList();
         }
 
-        if (requestingUser.getRole().equals(Role.USER)) {
-            List<Unit> requestingUsersUnits = new ArrayList<>(requestingUser.getUnits());
-
-            return userRepository.findAllByOrderById().stream().filter(u -> {
-                Set<Unit> userUnits = new HashSet<>(u.getUnits());
-                userUnits.retainAll(requestingUsersUnits);
-                return userUnits.size() > 0; // Then overlapping units were found.
-            }).collect(Collectors.toList());
-
-        } else if (requestingUser.getRole().equals(Role.ADMIN)) {
-            return userRepository.findAllByOrderById();
-        } else {
-            throw new RuntimeException("Unexpected role: " + requestingUser.getRole().name());
-        }
+        return userService.getUsers(userId);
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
@@ -116,19 +105,9 @@ public class UserController extends BaseController {
     }
 
     private Set<Unit> getAuthorizedUnits(HttpServletRequest request) {
-        List<Unit> allUnits = unitRepository.findAll();
+        String userId = getRequestUserId(request);
 
-        // Find out about the saving user to determine which units he/she is authorized to.
-        User savingUser = getRequestUser(request);
-        Set<Unit> authorizedUnits;
-
-        if (savingUser.getRole().equals(Role.ADMIN)) {
-            // All.
-            authorizedUnits = new HashSet<>(allUnits);
-        } else {
-            authorizedUnits = savingUser.getUnits();
-        }
-        return authorizedUnits;
+        return userService.getAuthorizedUnits(userId);
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
@@ -152,10 +131,5 @@ public class UserController extends BaseController {
         User user = userRepository.findOne(userId);
 
         return ResponseEntity.ok(user.getThumbnailPhoto());
-    }
-
-    @Override
-    UserRepository getUserRepository() {
-        return userRepository;
     }
 }

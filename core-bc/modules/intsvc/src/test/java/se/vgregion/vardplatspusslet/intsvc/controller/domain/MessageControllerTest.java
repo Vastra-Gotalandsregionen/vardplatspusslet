@@ -90,11 +90,6 @@ public class MessageControllerTest {
 
         // Then
         assertEquals(3, messages.size());
-
-        // Verify that the new message gets a "complete" unit even though just a transient unit with only id was set.
-        for (Message m : messages) {
-            assertEquals("The unit name", unitRepository.findOne(m.getUnit().getId()).getName());
-        }
     }
 
     @Test

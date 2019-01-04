@@ -13,6 +13,7 @@ import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.JwtUtil;
 import se.vgregion.vardplatspusslet.service.LdapLoginService;
+import se.vgregion.vardplatspusslet.service.UserService;
 import se.vgregion.vardplatspusslet.testrepository.TestUnitRepository;
 import se.vgregion.vardplatspusslet.testrepository.TestUserRepository;
 
@@ -37,6 +38,10 @@ public class UserControllerTest {
 
     @Before
     public void setup() {
+
+        UserService userService = new UserService(userRepository, unitRepository);
+
+        ReflectionTestUtils.setField(userController, "userService", userService);
 
         Unit unit1 = new Unit();
         Unit unit2 = new Unit();

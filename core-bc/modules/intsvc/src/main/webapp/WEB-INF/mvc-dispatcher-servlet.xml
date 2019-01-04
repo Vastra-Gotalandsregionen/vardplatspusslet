@@ -13,7 +13,6 @@
 
 
     <context:component-scan base-package="se.vgregion.vardplatspusslet.intsvc.controller" />
-
-    <mvc:annotation-driven />
+    <context:component-scan base-package="se.vgregion.vardplatspusslet.springservletconfig" />
 
 </beans>

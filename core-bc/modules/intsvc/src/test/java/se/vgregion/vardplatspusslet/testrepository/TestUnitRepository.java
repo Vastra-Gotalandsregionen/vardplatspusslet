@@ -9,6 +9,7 @@ import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,13 +20,18 @@ public class TestUnitRepository implements UnitRepository {
     private Set<Unit> units = new HashSet<>();
 
     @Override
-    public List<Unit> findUnitsByClinicIsLike(Clinic clinic) {
+    public List<Unit> findDistinctByClinicIsLike(Clinic clinic) {
         return units.stream().filter(unit -> unit.getClinic().equals(clinic)).collect(Collectors.toList());
     }
 
     @Override
     public Unit findUnitByIdIsLikeAndClinicIsLike(String id, Clinic clinic) {
         return null;
+    }
+
+    @Override
+    public List<Unit> findDistinctByIdIn(Collection<String> ids, Sort sort) {
+        return units.stream().filter(unit -> ids.contains(unit.getId())).collect(Collectors.toList());
     }
 
     @Override

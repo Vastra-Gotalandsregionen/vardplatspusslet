@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Clinic} from "../../domain/clinic";
@@ -11,7 +11,7 @@ import {Subscription} from "rxjs";
   templateUrl: './clinic.component.html',
   styleUrls: ['./clinic.component.scss']
 })
-export class ClinicComponent implements OnInit, OnDestroy {
+export class ClinicComponent implements OnDestroy {
 
   clinic: Clinic;
   units: Unit[];
@@ -25,11 +25,11 @@ export class ClinicComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private authService: AuthService) {
     this.subscription = this.authService.isUserLoggedIn.subscribe(value => {
-      this.ngOnInit();
+      this.fetch();
     });
   }
 
-  ngOnInit() {
+  fetch() {
     this.route.params.subscribe(params => {
 
       this.http.get<Clinic>('/api/clinic/' + params.id).subscribe(clinic => {

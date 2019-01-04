@@ -9,54 +9,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
-import se.vgregion.vardplatspusslet.domain.jpa.Role;
-import se.vgregion.vardplatspusslet.domain.jpa.Unit;
-import se.vgregion.vardplatspusslet.domain.jpa.User;
-import se.vgregion.vardplatspusslet.intsvc.controller.util.HttpUtil;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
-import se.vgregion.vardplatspusslet.repository.UserRepository;
+import se.vgregion.vardplatspusslet.service.ClinicService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/clinic")
-public class ClinicController {
+public class ClinicController extends BaseController {
+
+    @Autowired
+    private ClinicService clinicService;
 
     @Autowired
     private ClinicRepository clinicRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public List<Clinic> getClinics(HttpServletRequest request) {
 
-        User user = getUser(request);
+        String userId = getRequestUserId(request);
 
-        if (user == null) {
+        if (userId == null) {
             return Collections.emptyList();
         }
 
-        if (user.getRole().equals(Role.USER)) {
-            List<Unit> usersUnits = new ArrayList<>(user.getUnits());
-
-            return usersUnits.stream()
-                    .filter(unit -> unit.getClinic() != null)
-                    .map(Unit::getClinic)
-                    .distinct()
-                    .collect(Collectors.toList());
-
-        } else if (user.getRole().equals(Role.ADMIN)) {
-            return clinicRepository.findAllByOrderById();
-        } else {
-            throw new RuntimeException("Unexpected role: " + user.getRole().name());
-        }
+        return clinicService.getClinics(userId);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -77,11 +57,4 @@ public class ClinicController {
 
         return ResponseEntity.noContent().build();
     }
-
-    private User getUser(HttpServletRequest request) {
-        Optional<String> userIdFromRequest = HttpUtil.getUserIdFromRequest(request);
-
-        return userIdFromRequest.map(s -> userRepository.findOne(s)).orElse(null);
-    }
-
 }

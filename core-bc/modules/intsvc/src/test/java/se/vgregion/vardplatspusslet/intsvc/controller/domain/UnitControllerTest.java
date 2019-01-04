@@ -15,6 +15,7 @@ import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.JwtUtil;
+import se.vgregion.vardplatspusslet.service.UnitService;
 import se.vgregion.vardplatspusslet.testrepository.TestClinicRepository;
 import se.vgregion.vardplatspusslet.testrepository.TestUnitRepository;
 
@@ -43,10 +44,13 @@ public class UnitControllerTest {
     @Before
     public void setup() {
 
+        UnitService unitService = new UnitService(userRepository, unitRepository, clinicRepository);
+
         ReflectionTestUtils.setField(new JwtUtil(), "secret", "secret");
 
         ReflectionTestUtils.setField(unitController, "unitRepository", unitRepository);
         ReflectionTestUtils.setField(unitController, "clinicRepository", clinicRepository);
+        ReflectionTestUtils.setField(unitController, "unitService", unitService);
 
         Clinic clinic1 = new Clinic();
         Clinic clinic2 = new Clinic();

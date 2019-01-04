@@ -71,9 +71,9 @@ public class PdfGenerating {
             addTableHeader(table, header);
             for (Bed bed : unit.getBeds()) {
                 String bedName = bed.getLabel();
-                String dietMother = bed.getOccupied() ? (bed.getPatient().getDietMother() != null ?  bed.getPatient().getDietMother().getName(): "") : "";
-                String dietChild = bed.getOccupied() ? (bed.getPatient().getDietChild() != null ?  bed.getPatient().getDietChild().getName(): "") : "";
-                String dietPatient = bed.getOccupied() ? (bed.getPatient().getDiet() != null ?  bed.getPatient().getDiet().getName(): "") : "";
+                String dietMother = Boolean.TRUE.equals(bed.getOccupied()) ? (bed.getPatient().getDietMother() != null ?  bed.getPatient().getDietMother().getName(): "") : "";
+                String dietChild = Boolean.TRUE.equals(bed.getOccupied()) ? (bed.getPatient().getDietChild() != null ?  bed.getPatient().getDietChild().getName(): "") : "";
+                String dietPatient = Boolean.TRUE.equals(bed.getOccupied()) ? (bed.getPatient().getDiet() != null ?  bed.getPatient().getDiet().getName(): "") : "";
                 if (dietMother.length() > 0 || dietChild.length() > 0 || dietPatient.length() > 0) {
                     table.addCell(bedName);
                     table.addCell(dietMother);
