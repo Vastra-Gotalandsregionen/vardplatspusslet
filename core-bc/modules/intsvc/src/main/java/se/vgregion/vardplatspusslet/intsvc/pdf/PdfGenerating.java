@@ -33,8 +33,8 @@ public class PdfGenerating {
         paragraph = new Paragraph("   ");
         document.add(paragraph);
         PdfPTable table = null;
-        Boolean motherChildDiet = unit.getHasMotherChildDietFeature();
-        Boolean diet = unit.getHasKostFeature();
+        Boolean motherChildDiet = isTrue(unit.getHasMotherChildDietFeature());
+        Boolean diet = isTrue(unit.getHasKostFeature());
         Integer antalColumn = motherChildDiet && diet ? 2: diet || motherChildDiet? 1 : 0;
         if (antalColumn == 1 && unit.getHasKostFeature()) {
             String header[] = {"Säng", "Kost"};
@@ -42,7 +42,7 @@ public class PdfGenerating {
             addTableHeader(table, header);
             for (Bed bed : unit.getBeds()) {
                 String bedName = bed.getLabel();
-                String dietName = bed.getOccupied() ? (bed.getPatient().getDiet() != null? bed.getPatient().getDiet().getName(): "" ): "";
+                String dietName = isTrue(bed.getOccupied()) ? (bed.getPatient().getDiet() != null? bed.getPatient().getDiet().getName(): "" ): "";
                 if (dietName.length() > 0)
                 {
                     table.addCell(bedName);
@@ -85,6 +85,10 @@ public class PdfGenerating {
         document.add(table);
         document.close();
         return stream.toByteArray();
+    }
+
+    private boolean isTrue(Boolean b) {
+        return Boolean.TRUE.equals(b);
     }
 
     private void addTableHeader(PdfPTable table, String[] headers) {

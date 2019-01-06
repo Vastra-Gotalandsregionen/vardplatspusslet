@@ -52,7 +52,7 @@ public class UnitController extends BaseController {
     public ResponseEntity<Unit> getUnit(@PathVariable("clinicId") String clinicId, @PathVariable("id") String id) {
         Clinic clinic = clinicRepository.getOne(clinicId);
 
-        Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(id, clinic);
+        Unit unit = unitService.findUnitByIdAndClinic(id, clinic);
 
         if (unit != null) {
             return ResponseEntity.ok(unit);

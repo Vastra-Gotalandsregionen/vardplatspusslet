@@ -12,23 +12,21 @@ import java.util.List;
 public interface UnitRepository extends JpaRepository<Unit, String> {
 
     @EntityGraph(
-            attributePaths = {"clinic", "dietForMothers", "dietForChildren", "dietForPatients", "ssks",
+            attributePaths = {"clinic", "ssks",
                     "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
             type = EntityGraph.EntityGraphType.LOAD
     )
     List<Unit> findDistinctByClinicIsLike(Clinic clinic);
 
     @EntityGraph(
-            value = "Unit.beasdfds",
-            attributePaths = {"beds", "dietForMothers", "dietForChildren", "dietForPatients", "patients", "ssks",
+            attributePaths = {"beds", "patients", "ssks",
                     "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
             type = EntityGraph.EntityGraphType.LOAD
     )
     Unit findUnitByIdIsLikeAndClinicIsLike(String id, Clinic clinic);
 
     @EntityGraph(
-            value = "Unit.beasdfds",
-            attributePaths = {"clinic", "dietForMothers", "dietForChildren", "dietForPatients", "ssks",
+            attributePaths = {"clinic", "ssks",
                     "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
             type = EntityGraph.EntityGraphType.LOAD
     )

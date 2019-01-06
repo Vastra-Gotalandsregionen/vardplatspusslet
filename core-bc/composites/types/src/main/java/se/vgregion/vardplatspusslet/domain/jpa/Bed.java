@@ -60,6 +60,8 @@ public class Bed {
     @Column
     private String cleaningInfo;
 
+    @ManyToOne
+    private Unit unit;
 
     public Bed(){
     }
@@ -150,6 +152,14 @@ public class Bed {
 
     public void setCleaningInfo(String cleaningInfo) {
         this.cleaningInfo = cleaningInfo;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 
     @Override

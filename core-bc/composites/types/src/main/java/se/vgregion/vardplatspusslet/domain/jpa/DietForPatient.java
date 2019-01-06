@@ -1,7 +1,9 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.Objects;
 
 @Entity
 @Table(name = "dietforpatient")
@@ -10,20 +12,24 @@ public class DietForPatient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
+    private Long id;
 
     @Column
     private String name;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Unit unit;
 
     public DietForPatient() {
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,5 +39,26 @@ public class DietForPatient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DietForPatient that = (DietForPatient) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

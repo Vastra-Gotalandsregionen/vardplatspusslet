@@ -34,7 +34,10 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         ObjectMapper mapper = new ObjectMapper();
 
         //Registering Hibernate5Module to support lazy objects
-        mapper.registerModule(new Hibernate5Module());
+        Hibernate5Module module = new Hibernate5Module();
+        // Otherwise Jackson JSON wouldn't serialize @Transient fields.
+        module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+        mapper.registerModule(module);
 
         messageConverter.setObjectMapper(mapper);
         return messageConverter;

@@ -1,8 +1,5 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +11,7 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -60,14 +58,14 @@ public class Unit implements Comparable<Unit> {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CareBurdenValue> careBurdenValues = new LinkedHashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DietForMother> dietForMothers = new LinkedHashSet<>();
+    @Transient
+    private List<DietForMother> dietForMothers = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DietForChild> dietForChildren = new LinkedHashSet<>();
+    @Transient
+    private List<DietForChild> dietForChildren = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DietForPatient> dietForPatients = new LinkedHashSet<>();
+    @Transient
+    private List<DietForPatient> dietForPatients = new ArrayList<>();
 
     @Column
     private Boolean hasLeftDateFeature;
@@ -411,28 +409,37 @@ public class Unit implements Comparable<Unit> {
         this.hasKostFeature = hasKostFeature;
     }
 
-    public Set<DietForMother> getDietForMothers() {
+    public List<DietForMother> getDietForMothers() {
         return dietForMothers;
     }
 
-    public void setDietForMothers(Set<DietForMother> dietForMothers) {
+    public void setDietForMothers(List<DietForMother> dietForMothers) {
         this.dietForMothers = dietForMothers;
+        for (DietForMother dietForMother : dietForMothers) {
+            dietForMother.setUnit(this);
+        }
     }
 
-    public Set<DietForChild> getDietForChildren() {
+    public List<DietForChild> getDietForChildren() {
         return dietForChildren;
     }
 
-    public void setDietForChildren(Set<DietForChild> dietForChildren) {
+    public void setDietForChildren(List<DietForChild> dietForChildren) {
         this.dietForChildren = dietForChildren;
+        for (DietForChild dietForChild : dietForChildren) {
+            dietForChild.setUnit(this);
+        }
     }
 
-    public Set<DietForPatient> getDietForPatients() {
+    public List<DietForPatient> getDietForPatients() {
         return dietForPatients;
     }
 
-    public void setDietForPatients(Set<DietForPatient> dietForPatients) {
+    public void setDietForPatients(List<DietForPatient> dietForPatients) {
         this.dietForPatients = dietForPatients;
+        for (DietForPatient dietForPatient : dietForPatients) {
+            dietForPatient.setUnit(this);
+        }
     }
 
     public Boolean getHasMotherChildDietFeature() {
