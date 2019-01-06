@@ -14,7 +14,6 @@ import se.vgregion.vardplatspusslet.domain.jpa.DietForPatient;
 import se.vgregion.vardplatspusslet.domain.jpa.Role;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.domain.jpa.User;
-import se.vgregion.vardplatspusslet.repository.BedRepository;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.DietForChildRepository;
 import se.vgregion.vardplatspusslet.repository.DietForMotherRepository;
@@ -22,8 +21,6 @@ import se.vgregion.vardplatspusslet.repository.DietForPatientRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -67,7 +64,6 @@ public class UnitService {
     }
 
     public Unit save(Unit unit, Boolean keepBeds) {
-        // We need to remove all beds from the unit first, or we will get a constraint exception.
         List<Bed> beds = new ArrayList<>();
         if (keepBeds != null && keepBeds) {
             // Take currently persisted, i.e. keep persisted.
@@ -80,6 +76,9 @@ public class UnitService {
             beds = unit.getBeds();
         }
 
+        // We need to remove all beds from the unit first, or we may get a constraint exception (at least when we change order of beds).
+        unit.setBeds(null);
+        unitRepository.save(unit);
         unit.setBeds(beds);
 
         // Save the transient collections, but first remove all items not in the incoming collection
@@ -183,21 +182,5 @@ public class UnitService {
         unit.setDietForMothers(dietForMothers);
         unit.setDietForChildren(dietForChildren);
         unit.setDietForPatients(dietForPatients);
-
-        /*TypedQuery<DietForChild> query2 = entityManager.createQuery(
-                "select dfc from DietForChild dfc where dfc.unit = :unit",
-                DietForChild.class
-        );
-        query2.setParameter("unit", unit);
-        List<DietForChild> dietForChildren = query2.getResultList();
-        unit.setDietForChildren(dietForChildren);
-
-        TypedQuery<DietForPatient> query3 = entityManager.createQuery(
-                "select dfm from DietForPatient dfm where dfm.unit = :unit",
-                DietForPatient.class
-        );
-        query3.setParameter("unit", unit);
-        List<DietForPatient> dietForPatients = query3.getResultList();
-        unit.setDietForPatients(dietForPatients);*/
     }
 }
