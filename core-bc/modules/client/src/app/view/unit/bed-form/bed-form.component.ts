@@ -32,6 +32,7 @@ export class BedFormComponent implements OnInit {
   prevSmitta: string;
   prevCleanGroup: string;
   prevCleanInfo: string;
+  busyInfo: string;
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -203,6 +204,14 @@ export class BedFormComponent implements OnInit {
           }
         }
       });
+
+    this.bedForm.get('patient').valueChanges.subscribe(_ => {
+      if (!this.bedForm.get('occupied').value) {
+        this.busyInfo = '(Automatiskt vald)';
+        this.bedForm.patchValue({'occupied': true});
+      }
+    });
+
   }
 
   /*private reinitForm(bed: Bed) {

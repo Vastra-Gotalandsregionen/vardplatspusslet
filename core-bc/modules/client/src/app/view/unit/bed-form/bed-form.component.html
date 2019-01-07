@@ -4,7 +4,7 @@
       <label for="bedName">Namn:</label>
       <vgr-input id="bedName" formControlName="label"></vgr-input>
       <div class="div-button7">
-        <vgr-checkbox formControlName="occupied" label="Upptagen"></vgr-checkbox>
+        <vgr-checkbox formControlName="occupied" label="Upptagen {{busyInfo}}" (checkedChanged)="busyInfo = ''"></vgr-checkbox>
       </div>
 
     </vgr-card-column>
