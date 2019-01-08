@@ -58,4 +58,17 @@ public class BedController {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value = "/patientHasLeft", method = RequestMethod.POST)
+    @ResponseBody
+//    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
+    public ResponseEntity<?> patientHasLeft(@RequestBody Bed bed) {
+
+        if (bed.getPatient() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        bedService.patientHasLeft(bed);
+
+        return ResponseEntity.noContent().build();
+    }
 }

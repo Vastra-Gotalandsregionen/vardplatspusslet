@@ -47,10 +47,10 @@
                         [items]="leaveStatusesDropdownItems"></vgr-dropdown>
         </div>
         <div *ngIf="unit.hasLeftDateFeature" class="div-button10">
-          <div class="row-with-icon"><span>Gick hem</span> <span class="material-icons" appCallout="Gör sängen ledig">info</span></div>
+          <div class="row-with-icon"><span>Gick hem</span> <span class="material-icons" appCallout="Gör sängen ledig och lägg till i statistiken">info</span></div>
           <div class="containers">
-            <vgr-datepicker formControlName="leftDate"></vgr-datepicker>
-            <a (click)="deleteGickHemDate()" class="div-left2"><i class="fa fa-times-rectangle-o child"></i></a>
+            <!--<vgr-datepicker formControlName="leftDate"></vgr-datepicker>-->
+            <vgr-button (click)="executeHasLeft()" class="div-left2">Gick hem</vgr-button>
           </div>
 
         </div>

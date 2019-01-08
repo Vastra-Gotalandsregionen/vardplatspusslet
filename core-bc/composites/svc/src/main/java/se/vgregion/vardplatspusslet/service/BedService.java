@@ -6,13 +6,16 @@ import org.springframework.transaction.annotation.Transactional;
 import se.vgregion.vardplatspusslet.domain.jpa.Bed;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Patient;
+import se.vgregion.vardplatspusslet.domain.jpa.PatientLeave;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.repository.BedRepository;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
+import se.vgregion.vardplatspusslet.repository.PatientLeaveRepository;
 import se.vgregion.vardplatspusslet.repository.PatientRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +33,9 @@ public class BedService {
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private PatientLeaveRepository patientLeaveRepository;
 
     public void deleteBed(String clinicId, String unitId, Long bedId) {
         Clinic clinicRef = clinicRepository.getOne(clinicId);
@@ -88,5 +94,18 @@ public class BedService {
             }
             bedRepository.save(bed);
         }
+    }
+
+    public void patientHasLeft(Bed bed) {
+        Patient patient = bed.getPatient();
+
+        bed.setPatient(null);
+        bed.setOccupied(false);
+        bedRepository.save(bed);
+
+        patientRepository.delete(patient);
+
+        PatientLeave patientLeave = new PatientLeave(patient.getPlannedLeaveDate(), new Date(), bed.getUnit());
+        patientLeaveRepository.save(patientLeave);
     }
 }

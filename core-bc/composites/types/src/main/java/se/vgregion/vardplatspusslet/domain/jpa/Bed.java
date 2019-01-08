@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Objects;
 
 /**
@@ -60,7 +61,7 @@ public class Bed {
     @Column
     private String cleaningInfo;
 
-    @ManyToOne
+    @Transient // Owned by the parent side.
     private Unit unit;
 
     public Bed(){
