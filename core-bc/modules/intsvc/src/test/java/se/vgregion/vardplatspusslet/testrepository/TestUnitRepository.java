@@ -30,6 +30,11 @@ public class TestUnitRepository implements UnitRepository {
     }
 
     @Override
+    public Unit findUnitWithBeds(String id) {
+        return units.stream().filter(unit -> unit.getId().equals(id)).findFirst().get();
+    }
+
+    @Override
     public List<Unit> findDistinctByIdIn(Collection<String> ids, Sort sort) {
         return units.stream().filter(unit -> ids.contains(unit.getId())).collect(Collectors.toList());
     }

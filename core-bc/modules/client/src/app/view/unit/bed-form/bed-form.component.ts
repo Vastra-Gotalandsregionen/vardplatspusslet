@@ -307,6 +307,16 @@ export class BedFormComponent implements OnInit {
       });
   }
 
+  executeHasLeft() {
+    let bed = JSON.parse(JSON.stringify(this.bed)); // Clone
+    bed.unit = this.unit;
+
+    this.http.post('/api/bed/patientHasLeft', bed)
+      .subscribe(_ => {
+        this.saveEvent.emit();
+      });
+  }
+
   cancel() {
     this.collapseEvent.emit();
   }

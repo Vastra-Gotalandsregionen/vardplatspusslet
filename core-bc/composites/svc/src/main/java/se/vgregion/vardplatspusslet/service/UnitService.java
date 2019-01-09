@@ -1,5 +1,7 @@
 package se.vgregion.vardplatspusslet.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
@@ -30,6 +32,8 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class UnitService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UnitService.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -67,7 +71,7 @@ public class UnitService {
         List<Bed> beds = new ArrayList<>();
         if (keepBeds != null && keepBeds) {
             // Take currently persisted, i.e. keep persisted.
-            Unit found = unitRepository.findOne(unit.getId());
+            Unit found = unitRepository.findUnitWithBeds(unit.getId());
             if (found != null) {
                 beds = found.getBeds();
             }

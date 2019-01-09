@@ -1,0 +1,38 @@
+<app-menu-title-row>
+  <h1>Administration</h1>
+</app-menu-title-row>
+
+<app-row>
+  <app-left-column>
+
+  </app-left-column>
+  <app-right-column>
+    <vgr-page-block>
+      <h2>Statistik över planerad hemgång kontra faktisk hemgång</h2>
+
+      <div class="clearfix row">
+        <span class="datepicker-section">
+          <label>Från:</label>
+          <vgr-datepicker [formControl]="fromDate" [maxDate]="maxDate" [minDate]="minDate"></vgr-datepicker>
+        </span>
+
+        <span class="datepicker-section">
+          <label>Till och med: </label>
+          <vgr-datepicker [formControl]="toDate" [maxDate]="maxDate" [minDate]="minDate"></vgr-datepicker>
+        </span>
+      </div>
+
+      {{fromDate.value}}
+
+      <div>
+        <table>
+          <tr *ngFor="let unit of units">
+            <td>{{unit.clinic.name}}</td>
+            <td>{{unit.name}}</td>
+            <td><a [href]="'/api/statistics/patientLeave?unitId=' + unit.id + '&fromDate=' + toString(fromDate.value) + '&toDate=' + toString(toDate.value)">Hämta</a> </td>
+          </tr>
+        </table>
+      </div>
+    </vgr-page-block>
+  </app-right-column>
+</app-row>
