@@ -2,7 +2,7 @@
   <vgr-card>
     <vgr-card-column>
       <label for="bedName">Namn:</label>
-      <vgr-input id="bedName" formControlName="label"></vgr-input>
+      <vgr-input id="bedName" formControlName="label" [showValidation]="bedForm.get('label').touched"></vgr-input>
       <div class="div-button7">
         <vgr-checkbox formControlName="occupied" label="Upptagen {{busyInfo}}" (checkedChanged)="busyInfo = ''"></vgr-checkbox>
       </div>
@@ -32,7 +32,8 @@
       <div>
         <div class="div-button10">
           <div>Patient</div>
-          <vgr-input formControlName="label"></vgr-input>
+          <vgr-input formControlName="label" [showValidation]="bedForm.get('patient.label').touched"></vgr-input>
+          <!--<span *ngIf="bedForm.get('patient.label').hasError('pattern')" class="help-text"> Inga siffror i namnet</span>-->
         </div>
 
         <div class="div-button10">
@@ -257,9 +258,14 @@
     </vgr-card-column>
   </vgr-card>
 
-  <div class="clearfix button-row save-cancel-delete" >
-    <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="cancel()"
-                     (save)="save()"></vgr-save-cancel>
-    <vgr-button class="error" (click)="openDeleteModal()" style="margin-right: 30px;">Radera</vgr-button>
+  <div class="containers clearfix">
+    <div style="flex-grow: 8; flex-shrink: 0">
+      <vgr-button class="error" (click)="openDeleteModal()">Radera</vgr-button>
+    </div>
+
+    <div  style="flex-grow: 1; flex-shrink: 0">
+      <vgr-button [secondary]="false" default="true" (click)="save()" [disabled]="!bedForm.valid">Spara</vgr-button>
+      <vgr-button [secondary]="false" default="true" (click)="cancel()" >Avbryt</vgr-button>
+    </div>
   </div>
 </form>

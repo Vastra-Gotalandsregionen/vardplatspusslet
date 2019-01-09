@@ -4,7 +4,7 @@ import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DropdownItem, SelectableItem} from "vgr-komponentkartan";
+import {DropdownItem,SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
@@ -69,10 +69,10 @@ export class BedFormComponent implements OnInit {
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
-      label: [bed.label],
+      label: [bed.label, [Validators.required]],
       patient: this.formBuilder.group({
         id: [patient.id],
-        label: [patient.label],
+        label: [patient.label,[Validators.required, , Validators.pattern(/\b[^\d\W]+\b/)]],
         leaveStatus: [patient.leaveStatus],
         gender: [patient.gender],
         leftDate: [patient.leftDate],

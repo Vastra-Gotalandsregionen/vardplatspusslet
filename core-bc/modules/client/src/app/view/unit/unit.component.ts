@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
 import {DropdownItem, ListItemComponent, SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
@@ -155,7 +155,7 @@ export class UnitComponent implements OnInit, OnDestroy {
       });
       this.addBedForm = this.formBuilder.group({
         id: null,
-        label: null
+        label: [null, Validators.required]
       })
     });
   }
@@ -309,6 +309,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   collapse(element: ListItemComponent) {
+    this.addBedForm.reset();
     element.setExpandOrCollapsed();
   }
 
