@@ -11,6 +11,7 @@ import {EditMessagesComponent} from "./view/unit/edit-messages/edit-messages.com
 import {UserLoggedInGuard} from "./guard/user-logged-in.guard";
 import {AdminGuard} from "./guard/admin.guard";
 import {HasEditUnitPermissionGuard} from "./guard/has-edit-unit-permission.guard";
+import {StatisticsComponent} from "./view/admin/statistics/statistics.component";
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'admin/users',
     component: UsersAdminComponent
+  },
+  {
+    path: 'admin/statistics',
+    component: StatisticsComponent
   },
   {
     path: ':id',

@@ -20,6 +20,7 @@ import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import javax.transaction.Transactional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-test.xml")
@@ -76,6 +77,9 @@ public class BedServiceTest {
         assertEquals(1, patientRepository.findAll().size());
 
         bedService.patientHasLeft(bedRepository.findAll().get(0));
+
+        assertNull(bedRepository.findAll().get(0).getPatient());
+        assertEquals(0, patientRepository.findAll().size());
     }
 
 }

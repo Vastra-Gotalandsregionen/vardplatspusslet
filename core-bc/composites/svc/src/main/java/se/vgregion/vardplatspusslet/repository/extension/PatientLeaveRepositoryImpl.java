@@ -18,7 +18,8 @@ public class PatientLeaveRepositoryImpl implements PatientLeaveExtendedRepositor
     public List<PatientLeave> findPatientLeaves(Unit unit, Date actualFromDate, Date actualToDate) {
 
         TypedQuery<PatientLeave> query = entityManager.createQuery(
-                "select pl from PatientLeave pl where pl.unit = :unit and pl.actualDate >= :fromDate and pl.actualDate < :toDate",
+                "select pl from PatientLeave pl" +
+                        " where pl.unit = :unit and pl.actualDate >= :fromDate and pl.actualDate <= :toDate",
                 PatientLeave.class);
 
         query.setParameter("unit", unit);

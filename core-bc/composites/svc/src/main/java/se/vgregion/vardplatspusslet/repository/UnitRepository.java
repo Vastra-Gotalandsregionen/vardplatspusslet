@@ -3,6 +3,8 @@ package se.vgregion.vardplatspusslet.repository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 
@@ -24,6 +26,9 @@ public interface UnitRepository extends JpaRepository<Unit, String> {
             type = EntityGraph.EntityGraphType.LOAD
     )
     Unit findUnitByIdIsLikeAndClinicIsLike(String id, Clinic clinic);
+
+    @Query("select u from Unit u join fetch u.beds where u.id = :id")
+    Unit findUnitWithBeds(@Param("id") String id);
 
     @EntityGraph(
             attributePaths = {"clinic", "ssks",
