@@ -210,14 +210,16 @@
 
                 <vgr-list-item-content [indentContent]="true">
                   <form [formGroup]="addBedForm" (ngSubmit)="saveAddBed()">
-                    <div>
-                      <div>Benämning</div>
-                      <input formControlName="label"/>
-                    </div>
+                    <div class="containers">
+                      <div style="flex-grow: 8; flex-shrink: 0">
+                        <div>Benämning</div>
+                        <vgr-input formControlName="label" [showValidation]="addBedForm.get('label').touched"> </vgr-input>
+                      </div>
 
-                    <div class="clearfix button-row">
-                      <vgr-save-cancel [hideLock]="true" [locked]="false" (cancel)="collapse(addListItem)"
-                                       (save)="saveAddBed()"></vgr-save-cancel>
+                      <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
+                        <vgr-button [secondary]="false" default="true" (click)="saveAddBed()" [disabled]="!addBedForm.valid">Spara</vgr-button>
+                        <vgr-button [secondary]="false" default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                      </div>
                     </div>
 
                   </form>

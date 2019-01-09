@@ -1,12 +1,12 @@
 .containers{
   display: flex;
+  flex-wrap: wrap;
 }
 
 .child1{
   width: 200px;
   flex: 0 1 auto;
   margin-right: 5px;
-  flex: 0 1 auto;
 }
 
 .child2{
@@ -30,6 +30,7 @@
 .child{
   margin-left: 5px;
   font-size: 20px;
+  flex: 0 1 auto;
   color: #0055aa;
 }
 
@@ -82,4 +83,9 @@ input[disabled]
   width: 70%;
   padding-left: 1px;
   padding-bottom: 0;
+}
+
+.help-text
+{
+  color: red;
 }
