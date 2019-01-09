@@ -39,8 +39,7 @@ export class ClinicsAdminComponent implements OnInit {
 
     this.clinicForm = this.formBuilder.group({
       id: [clinic.id],
-      name: [clinic.name],
-      units: [clinic.units]
+      name: [clinic.name]
     });
   }
 
@@ -56,7 +55,6 @@ export class ClinicsAdminComponent implements OnInit {
 
     clinic.id = clinicModel.id;
     clinic.name = clinicModel.name;
-    clinic.units = clinicModel.units;
 
     this.http.put('/api/clinic', clinic)
       .subscribe(() => {
