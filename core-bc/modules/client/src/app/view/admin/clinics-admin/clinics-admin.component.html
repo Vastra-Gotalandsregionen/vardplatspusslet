@@ -27,13 +27,25 @@
 
               <div>
                 <div>Namn:</div>
-                <input formControlName="name"/>
+                <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
+                <!--<input formControlName="name"/>-->
               </div>
 
-              <div class="clearfix button-row save-cancel-delete">
+              <!--<div class="clearfix button-row save-cancel-delete">
                 <vgr-save-cancel (save)="saveClinic()" (cancel)="theListItem.setExpandOrCollapsed()"
                                  [hideLock]="true"></vgr-save-cancel>
                 <vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>
+              </div>-->
+
+              <div class="containers clearfix">
+                <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
+                  <vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>
+                </div>
+
+                <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
+                  <vgr-button [secondary]="false" default="true" (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
+                  <vgr-button [secondary]="false" default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                </div>
               </div>
             </form>
           </vgr-list-item-content>
@@ -50,6 +62,31 @@
             <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
               <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
               <button type="submit" style="display:none">send</button>
+              <div class=" clearfix containers">
+                <div style="flex-grow: 6; flex-shrink: 0">
+                  <div>
+                    <div>ID:</div>
+                    <vgr-input formControlName="id" [showValidation]="!clinicForm.get('id').valid && clinicForm.get('id').touched " #addClinicId></vgr-input>
+                  </div>
+                  <div>
+                    <div>Namn:</div>
+                    <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
+                  </div>
+                </div>
+                <div style="align-self: flex-end; margin-top: 10px;">
+                  <!--<vgr-save-cancel (save)="saveClinic()" (cancel)="addListItem.setExpandOrCollapsed()"
+                                   [hideLock]="true"></vgr-save-cancel>-->
+                  <vgr-button [secondary]="false" default="true" (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
+                  <vgr-button [secondary]="false" default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                </div>
+              </div>
+            </form>
+          </vgr-list-item-content>
+
+          <!--<vgr-list-item-content [indentContent]="true">
+            <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
+              &lt;!&ndash; For some reason this is needed here, but not in the above form, in order for enter button to work. &ndash;&gt;
+              <button type="submit" style="display:none">send</button>
 
               <div>
                 <div>ID:</div>
@@ -63,7 +100,7 @@
               <vgr-save-cancel (save)="saveClinic()" (cancel)="addListItem.setExpandOrCollapsed()"
                                [hideLock]="true"></vgr-save-cancel>
             </form>
-          </vgr-list-item-content>
+          </vgr-list-item-content>-->
         </vgr-list-item>
       </vgr-list>
     </vgr-page-block>

@@ -213,7 +213,7 @@
                     <div class="containers">
                       <div style="flex-grow: 8; flex-shrink: 0">
                         <div>Benämning</div>
-                        <vgr-input formControlName="label" [showValidation]="addBedForm.get('label').touched"> </vgr-input>
+                        <vgr-input formControlName="label" [showValidation]="!addBedForm.get('label').valid && addBedForm.get('label').touched"> </vgr-input>
                       </div>
 
                       <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
