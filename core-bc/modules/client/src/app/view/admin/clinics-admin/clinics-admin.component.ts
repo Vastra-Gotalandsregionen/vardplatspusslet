@@ -1,8 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Clinic} from "../../../domain/clinic";
 import {HttpClient} from "../../../../../node_modules/@angular/common/http";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
+import {ListItemComponent} from "vgr-komponentkartan";
 
 @Component({
   selector: 'app-clinics-admin',
@@ -38,8 +39,8 @@ export class ClinicsAdminComponent implements OnInit {
     }
 
     this.clinicForm = this.formBuilder.group({
-      id: [clinic.id],
-      name: [clinic.name]
+      id: [clinic.id, Validators.required],
+      name: [clinic.name, Validators.required]
     });
   }
 
@@ -73,6 +74,11 @@ export class ClinicsAdminComponent implements OnInit {
       .subscribe(() => {
         this.ngOnInit();
       });
+  }
+
+  collapse(element: ListItemComponent) {
+    this.clinicForm.reset();
+    element.setExpandOrCollapsed();
   }
 
 }

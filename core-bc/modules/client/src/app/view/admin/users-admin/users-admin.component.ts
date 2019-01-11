@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../domain/user";
-import {DropdownItem} from "vgr-komponentkartan";
+import {DropdownItem, ListItemComponent} from "vgr-komponentkartan";
 import {Unit} from "../../../domain/unit";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
 import {AuthService} from "../../../service/auth.service";
@@ -31,7 +31,6 @@ export class UsersAdminComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-
     this.http.get<User[]>('/api/user')
       .subscribe((users: User[]) => {
         this.users = users;
@@ -69,10 +68,10 @@ export class UsersAdminComponent implements OnInit {
       });
     } else {
       this.userForm = this.formBuilder.group({
-        id: [user.id],
+        id: [user.id, Validators.required],
         name: [user.name],
-        role: [user.role],
-        units: [user.units ? user.units.map(unit => unit.id) : defaulSelection]
+        role: [user.role, Validators.required],
+        units: [user.units ? user.units.map(unit => unit.id) : defaulSelection, Validators.required]
       });
     }
   }
@@ -83,7 +82,7 @@ export class UsersAdminComponent implements OnInit {
     }
   }
 
-  saveUser() {
+  saveUser(element: ListItemComponent) {
     let userSaveRequest = new UserSaveRequest();
     let userModel = this.userForm.value;
 
@@ -96,6 +95,7 @@ export class UsersAdminComponent implements OnInit {
         this.ngOnInit();
         this.addUserId.nativeElement.focus();
       });
+    this.collapse(element);
   }
 
   openDeleteModal(user: User) {
@@ -116,5 +116,10 @@ export class UsersAdminComponent implements OnInit {
 
   get admin(): boolean {
     return this.authService.isAdmin();
+  }
+
+  collapse(element: ListItemComponent) {
+    this.userForm.reset();
+    element.setExpandOrCollapsed();
   }
 }

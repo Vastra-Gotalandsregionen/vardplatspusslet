@@ -38,14 +38,22 @@
 
               <div>
                 <div>Enheter:</div>
-                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems"></vgr-dropdown-multiselect>
+                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems"
+                                          [showValidation]="!userForm.get('units').valid && userForm.get('units').touched"></vgr-dropdown-multiselect>
               </div>
 
-              <div class="clearfix button-row save-cancel-delete">
+              <div class="container_edit">
+                <div style="flex-grow: 10; flex-shrink: 0"><vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button></div>
+                <div style="flex-grow: 1; flex-shrink: 0">
+                  <vgr-button [secondary]="false" default="true" (click)="saveUser(theListItem)" [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara</vgr-button>
+                  <vgr-button [secondary]="false" default="true" (click)="collapse(theListItem)" >Avbryt</vgr-button></div>
+              </div>
+
+              <!--<div class="clearfix button-row save-cancel-delete">
                 <vgr-save-cancel (save)="saveUser()" (cancel)="theListItem.setExpandOrCollapsed()"
                                  [hideLock]="true"></vgr-save-cancel>
                 <vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>
-              </div>
+              </div>-->
             </form>
           </vgr-list-item-content>
         </vgr-list-item>
@@ -62,22 +70,27 @@
 
               <div>
                 <div>VGR-ID:</div>
-                <input formControlName="id" #addUserId>
+                <vgr-input formControlName="id" #addUserId [showValidation]="!userForm.get('id').valid && userForm.get('id').touched"></vgr-input>
               </div>
               <div>
                 <div>Roll:</div>
                 <vgr-radio-group [disabled]="!admin" formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
 
                 </vgr-radio-group>
+                <span *ngIf="!userForm.get('role').valid" style="color: red; background-color: mistyrose"> ! Fältet är Obligatoriskt</span>
               </div>
 
               <div>
                 <div>Enheter:</div>
-                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems"></vgr-dropdown-multiselect>
+                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched"></vgr-dropdown-multiselect>
               </div>
 
-              <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.setExpandOrCollapsed()"
-                               [hideLock]="true"></vgr-save-cancel>
+             <!-- <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.setExpandOrCollapsed()"
+                               [hideLock]="true"></vgr-save-cancel>-->
+              <div class="containers">
+                <vgr-button [secondary]="false" default="true" (click)="saveUser(addListItem)" [disabled]="!(userForm.valid)">Spara</vgr-button>
+                <vgr-button [secondary]="false" default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+              </div>
             </form>
           </vgr-list-item-content>
         </vgr-list-item>

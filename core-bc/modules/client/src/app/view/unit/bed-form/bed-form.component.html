@@ -2,7 +2,7 @@
   <vgr-card>
     <vgr-card-column>
       <label for="bedName">Namn:</label>
-      <vgr-input id="bedName" formControlName="label" [showValidation]="bedForm.get('label').touched"></vgr-input>
+      <vgr-input id="bedName" formControlName="label" [showValidation]="!bedForm.get('label').valid"></vgr-input>
       <div class="div-button7">
         <vgr-checkbox formControlName="occupied" label="Upptagen {{busyInfo}}" (checkedChanged)="busyInfo = ''"></vgr-checkbox>
       </div>
@@ -32,7 +32,7 @@
       <div>
         <div class="div-button10">
           <div>Patient</div>
-          <vgr-input formControlName="label" [showValidation]="bedForm.get('patient.label').touched"></vgr-input>
+          <vgr-input formControlName="label" [showValidation]="!bedForm.get('patient.label').valid"></vgr-input>
           <!--<span *ngIf="bedForm.get('patient.label').hasError('pattern')" class="help-text"> Inga siffror i namnet</span>-->
         </div>
 
