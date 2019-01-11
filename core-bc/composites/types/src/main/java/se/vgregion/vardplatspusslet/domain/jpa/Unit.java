@@ -37,7 +37,7 @@ public class Unit implements Comparable<Unit> {
     private Set<ServingClinic> servingClinics = new TreeSet<>();
 
     @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CleaningAlternative> cleaningAlternatives= new TreeSet<>();;
+    private Set<CleaningAlternative> cleaningAlternatives= new LinkedHashSet<>();
 
     @Column
     private String name;

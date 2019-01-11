@@ -82,7 +82,7 @@ public class UnitService {
 
         // We need to remove all beds from the unit first, or we may get a constraint exception (at least when we change order of beds).
         unit.setBeds(null);
-        unitRepository.save(unit);
+        unit = unitRepository.save(unit);
         unit.setBeds(beds);
 
         // Save the transient collections, but first remove all items not in the incoming collection
