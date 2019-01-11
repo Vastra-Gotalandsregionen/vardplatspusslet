@@ -95,6 +95,8 @@ public class UserController extends BaseController {
             Set<Unit> toRemove = authorizedUnits; // authorized units which is also missing
             user.getUnits().removeAll(toRemove);
 
+            user.setRole(userSaveRequest.getRole());
+
             // And add all in the save request (which the user is authorized too).
             user.getUnits().addAll(authorizedUnitsInSaveRequest);
         }

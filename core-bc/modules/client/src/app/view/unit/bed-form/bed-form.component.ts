@@ -4,7 +4,7 @@ import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DropdownItem,SelectableItem} from "vgr-komponentkartan";
+import {DropdownItem, SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
@@ -60,7 +60,6 @@ export class BedFormComponent implements OnInit {
     }
     let patient;
     if (!bed.patient) {
-      // bed.patient = new Patient();
       patient = new Patient();
     } else {
       patient = bed.patient;
@@ -72,7 +71,7 @@ export class BedFormComponent implements OnInit {
       label: [bed.label, [Validators.required]],
       patient: this.formBuilder.group({
         id: [patient.id],
-        label: [patient.label,[Validators.required, , Validators.pattern(/\b[^\d\W]+\b/)]],
+        label: [patient.label],
         leaveStatus: [patient.leaveStatus],
         gender: [patient.gender],
         leftDate: [patient.leftDate],
@@ -96,11 +95,11 @@ export class BedFormComponent implements OnInit {
           infoDietMother: [patient.infoDietMother]
         }),
         kostBarnGroup: this.formBuilder.group({
-          dietChild: [patient.dietChild ? patient.dietChild.id: null],
+          dietChild: [patient.dietChild ? patient.dietChild.id : null],
           infoDietChild: [patient.infoDietChild]
         }),
         kostGroup: this.formBuilder.group({
-          diet: [patient.diet ? patient.diet.id: null],
+          diet: [patient.diet ? patient.diet.id : null],
           infoDiet: [patient.infoDiet]
         }),
 
@@ -205,21 +204,22 @@ export class BedFormComponent implements OnInit {
         }
       });
 
-    this.bedForm.get('patient').valueChanges.subscribe(_ => {
-      if (!this.bedForm.get('occupied').value) {
-        this.busyInfo = '(Automatiskt vald)';
-        this.bedForm.patchValue({'occupied': true});
-      }
+    this.bedForm.get('occupied').valueChanges.subscribe(occupied => {
+      this.managePatientLabelValidators(occupied);
     });
 
   }
 
-  /*private reinitForm(bed: Bed) {
-    if (!bed) {
-      bed = new Bed();
+  private managePatientLabelValidators(occupied) {
+    let control = this.bedForm.get('patient.label');
+    if (occupied) {
+      control.setValidators(Validators.required);
+    } else {
+      control.clearValidators();
     }
+    control.updateValueAndValidity();
+  }
 
-  }*/
   save() {
     let bed = new Bed();
     let bedModel = this.bedForm.value;
@@ -257,21 +257,21 @@ export class BedFormComponent implements OnInit {
       bed.patient.amning = bedModel.patient.amning ? bedModel.patient.amning : null;
       bed.patient.information = bedModel.patient.infoGroup.information ? bedModel.patient.infoGroup.information : null;
       bed.patient.kommentar = bedModel.patient.infoGroup.kommentar ? bedModel.patient.infoGroup.kommentar : null;
-      bed.patient.dietMother = bedModel.patient.kostMorGroup.dietMother ? bedModel.patient.kostMorGroup.dietMother: null;
-      if (bedModel.patient.kostMorGroup.dietMother){
+      bed.patient.dietMother = bedModel.patient.kostMorGroup.dietMother ? bedModel.patient.kostMorGroup.dietMother : null;
+      if (bedModel.patient.kostMorGroup.dietMother) {
         bed.patient.dietMother = this.unit.dietForMothers.find(diet => diet.id == bedModel.patient.kostMorGroup.dietMother)
       }
-      bed.patient.infoDietMother = bedModel.patient.kostMorGroup.infoDietMother ? bedModel.patient.kostMorGroup.infoDietMother: null;
+      bed.patient.infoDietMother = bedModel.patient.kostMorGroup.infoDietMother ? bedModel.patient.kostMorGroup.infoDietMother : null;
 
-      if (bedModel.patient.kostBarnGroup.dietChild){
+      if (bedModel.patient.kostBarnGroup.dietChild) {
         bed.patient.dietChild = this.unit.dietForChildren.find(diet => diet.id == bedModel.patient.kostBarnGroup.dietChild)
       }
-      bed.patient.infoDietChild = bedModel.patient.kostBarnGroup.infoDietChild ? bedModel.patient.kostBarnGroup.infoDietChild: null;
+      bed.patient.infoDietChild = bedModel.patient.kostBarnGroup.infoDietChild ? bedModel.patient.kostBarnGroup.infoDietChild : null;
 
-      if (bedModel.patient.kostGroup.diet){
+      if (bedModel.patient.kostGroup.diet) {
         bed.patient.diet = this.unit.dietForPatients.find(diet => diet.id == bedModel.patient.kostGroup.diet)
       }
-      bed.patient.infoDiet = bedModel.patient.kostGroup.infoDiet ? bedModel.patient.kostGroup.infoDiet: null;
+      bed.patient.infoDiet = bedModel.patient.kostGroup.infoDiet ? bedModel.patient.kostGroup.infoDiet : null;
       bed.patient.careBurdenChoices = bedModel.patient.careBurdenChoices ? bedModel.patient.careBurdenChoices.map(
         cbc => {
           return {

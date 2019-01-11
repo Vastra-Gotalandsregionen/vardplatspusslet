@@ -240,7 +240,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
     unitSsks.forEach(ssk => {
       sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
-        .filter(z => z.occupied === true).map(x => x.patient);
+        .filter(z => z.occupied === true && z.patient).map(x => x.patient);
 
       if (sskPatients.length === 0) return;
       sskPatientsChoices = <CareBurdenChoice[]>sskPatients.map(x => x.careBurdenChoices).reduce(((previousValue, currentValue) => {

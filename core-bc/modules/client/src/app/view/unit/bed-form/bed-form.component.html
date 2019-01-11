@@ -25,9 +25,9 @@
     </vgr-card-column>
   </vgr-card>
 
-  <hr style="width: 95%; margin-left: 0"/>
+  <hr style="width: 95%; margin-left: 0" [ngStyle]="{display: bedForm.get('occupied').value ? 'block' : 'none'}"/>
 
-  <vgr-card formGroupName="patient">
+  <vgr-card formGroupName="patient" [ngStyle]="{display: bedForm.get('occupied').value ? 'block' : 'none'}">
     <vgr-card-column>
       <div>
         <div class="div-button10">
