@@ -4,11 +4,11 @@
     <vgr-panel [width]="6" [noborder]="true">
       <div *ngIf="showId">
         <div>ID:</div>
-        <vgr-input formControlName="id"></vgr-input>
+        <vgr-input formControlName="id" [showValidation]="!unitForm.get('id').valid && unitForm.get('id').touched"></vgr-input>
       </div>
       <div>
         <div>Namn:</div>
-        <vgr-input formControlName="name"></vgr-input>
+        <vgr-input formControlName="name" [showValidation]="!unitForm.get('name').valid && unitForm.get('name').touched"></vgr-input>
       </div>
     </vgr-panel>
 
@@ -16,7 +16,7 @@
 
       <div>Klinik:</div>
 
-      <vgr-dropdown [items]="clinicDropdownItems" formControlName="clinic"></vgr-dropdown>
+      <vgr-dropdown [items]="clinicDropdownItems" formControlName="clinic" [showValidation]="!unitForm.get('clinic').valid && unitForm.get('clinic').touched"></vgr-dropdown>
 
     </vgr-panel>
 
@@ -76,13 +76,14 @@
 
         <div *ngIf="editSsks">
           <div formArrayName="ssks" *ngFor="let ssk of unitForm?.get('ssks').controls; let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="label" placeholder="Namn..."/>
-              <vgr-dropdown [items]="[{displayName: 'Blå', value: 'BLUE'}, {displayName: 'Grön', value: 'GREEN'}, {displayName: 'Röd', value: 'RED'}]" formControlName="color"></vgr-dropdown>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input [small]="true" formControlName="label" [showValidation]="getCareTeamValidation(i)"></vgr-input>
+
+              <vgr-dropdown [items]="sskDropdownItems" [showValidation]="getSskValidation(i)" formControlName="color"></vgr-dropdown>
               <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
-          <div>
+          <div  class="edit">
             <a (click)="addSsk()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdlag</span></a>
           </div>
         </div>
@@ -103,12 +104,12 @@
 
         <div *ngIf="editKlinik">
           <div formArrayName="servingClinics" *ngFor="let klinik of servingClinics.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="name" placeholder="Klinik..."/>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input [small]="true" [showValidation]="getServingClinicValidation(i)" formControlName="name" placeholder="Klinik..."></vgr-input>
               <a (click)="deleteServingClinic(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
-          <div>
+          <div class="edit">
             <a (click)="addServingClinic()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till upsprungs klinik</span></a>
           </div>
         </div>
@@ -129,12 +130,12 @@
 
         <div *ngIf="editCleanGroup">
           <div formArrayName="cleaningAlternatives" *ngFor="let cleanAlt of cleaningAlternatives.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="description" placeholder="städ alternative..."/>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input formControlName="description" [small]="true" placeholder="städ alternative..." [showValidation]="getCleaniningValidation(i)"></vgr-input>
               <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
-          <div>
+          <div class="edit">
             <a (click)="addCleaningAlternative()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till städningsalternativ</span></a>
           </div>
         </div>
@@ -155,12 +156,12 @@
 
         <div *ngIf="editCategoryGroup">
           <div formArrayName="careBurdenCategories" *ngFor="let burden of careBurdenCategories.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="name" placeholder="Kategori..."/>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input formControlName="name" placeholder="Kategori..." [small]="true" [showValidation]="getCareBurdenCategoriValidation(i)"></vgr-input>
               <a (click)= "deleteCareBurdenCategories(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
-          <div>
+          <div class="edit">
             <a (click)="addCareBurdenCategories()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdskategori</span></a>
           </div>
         </div>
@@ -181,12 +182,12 @@
 
         <div *ngIf="editBurdenValueGroup">
           <div formArrayName="careBurdenValues" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="name" placeholder="kategori ..."/>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input formControlName="name" placeholder="kategori ..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input>
               <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
-          <div>
+          <div class="edit">
             <a (click)="addCareBurdenValues()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngd värd</span></a>
           </div>
         </div>
@@ -206,12 +207,12 @@
 
         <div *ngIf="editDietForMotherGroup">
           <div formArrayName="dietForMothers" *ngFor="let diet of dietForMothers.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="name" placeholder=""/>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getMotherDietValidation(i)"></vgr-input>
               <a (click)= "deleteDietForMother(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
-          <div>
+          <div class="edit">
             <a (click)="addDietForMother()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för mor</span></a>
           </div>
         </div>
@@ -231,12 +232,12 @@
 
         <div *ngIf="editDietForChildGroup">
           <div formArrayName="dietForChildren" *ngFor="let diet of dietForChildren.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="name" placeholder=""/>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getChildDietValidation(i)"></vgr-input>
               <a (click)= "deleteDietForChild(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
-          <div>
+          <div class="edit">
             <a (click)="addDietForChild()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för barn</span></a>
           </div>
         </div>
@@ -256,8 +257,8 @@
 
         <div *ngIf="editDietForPatientGroup">
           <div formArrayName="dietForPatients" *ngFor="let diet of dietForPatients.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i">
-              <input formControlName="name" placeholder=""/>
+            <div [formGroupName]="i" class="contain">
+              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getPatientDietValidation(i)"></vgr-input>
               <a (click)= "deleteDietForPatient(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
@@ -269,8 +270,10 @@
     </vgr-card-column>
   </vgr-card>
 
-  <vgr-save-cancel (save)="saveUnit()" (cancel)="cancel()"
-                   [hideLock]="true"></vgr-save-cancel>
+  <div class="containers">
+    <vgr-button [secondary]="false" default="true" (click)="saveUnit()" [disabled]="!(unitForm.valid)">Spara</vgr-button>
+    <vgr-button [secondary]="false" default="true" (click)="cancel()" >Avbryt</vgr-button>
+  </div>
 </form>
 
 <!--<vgr-page-block>

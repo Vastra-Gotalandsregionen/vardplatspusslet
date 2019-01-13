@@ -11,6 +11,7 @@ import {CareBurdenValue} from "../../../../domain/careburdenvalue";
 import {DietForMother} from "../../../../domain/dietformother";
 import {DietForChild} from "../../../../domain/dietforchild";
 import {DietForPatient} from "../../../../domain/dietforpatient";
+import {DropdownItem} from "vgr-komponentkartan";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -31,6 +32,8 @@ export class UnitsAdminFormComponent implements OnInit {
   unitForm: FormGroup;
 
   clinicDropdownItems: { displayName: string; value: string }[] = [];
+  sskDropdownItems: DropdownItem<string>[];
+
 
   editSsks: boolean;
   editKlinik: boolean;
@@ -43,7 +46,13 @@ export class UnitsAdminFormComponent implements OnInit {
 
 
   constructor(private http: HttpClient,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder) {
+    this.sskDropdownItems = [
+      {displayName: 'Blå', value: 'BLUE'},
+      {displayName: 'Grön', value: 'GREEN'},
+      {displayName: 'Röd', value: 'RED'}
+    ];
+  }
 
   ngOnInit() {
 
@@ -63,9 +72,9 @@ export class UnitsAdminFormComponent implements OnInit {
       unit.clinic = new Clinic();
     }
     this.unitForm = this.formBuilder.group({
-      id: [unit.id],
-      name: [unit.name],
-      clinic: [unit.clinic ? unit.clinic.id : null],
+      id: [unit.id, Validators.required],
+      name: [unit.name, Validators.required],
+      clinic: [unit.clinic ? unit.clinic.id : null, Validators.required],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
       dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
@@ -156,6 +165,7 @@ export class UnitsAdminFormComponent implements OnInit {
   }
 
   saveUnit() {
+    debugger;
     let unit = new Unit();
     let unitModel = this.unitForm.value;
 
@@ -234,8 +244,8 @@ export class UnitsAdminFormComponent implements OnInit {
   createSsk(): FormGroup {
     return this.formBuilder.group({
       id: null,
-      label: null,
-      color: null
+      label: [null, Validators.required],
+      color: [null,Validators.required]
     });
   }
 
@@ -258,7 +268,7 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateServingClinics(): FormGroup{
     return this.formBuilder.group({
       id: null,
-      name: null
+      name: [null, Validators.required]
     });
   }
 
@@ -290,7 +300,7 @@ export class UnitsAdminFormComponent implements OnInit {
 
   CreateCleaningAlternative(): FormGroup{
     return this.formBuilder.group({
-      id: [null,Validators.required],
+      id: null,
       description: [null, Validators.required]
     });
   }
@@ -324,7 +334,7 @@ export class UnitsAdminFormComponent implements OnInit {
 
   CreateCareBurdenCategories(): FormGroup{
     return this.formBuilder.group({
-      id: [null,Validators.required],
+      id: null,
       name: [null, Validators.required]
     });
   }
@@ -357,7 +367,7 @@ export class UnitsAdminFormComponent implements OnInit {
 
   CreateCareBurdenValues(): FormGroup{
     return this.formBuilder.group({
-      id: [null,Validators.required],
+      id: [null],
       name: [null, Validators.required]
     });
   }
@@ -403,7 +413,7 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateDietForMother(): FormGroup{
     return this.formBuilder.group({
       id: null,
-      name: null
+      name: [null, Validators.required]
     });
   }
 
@@ -435,7 +445,7 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateDietForChild(): FormGroup{
     return this.formBuilder.group({
       id: null,
-      name: null
+      name: [null, Validators.required]
     });
   }
 
@@ -466,7 +476,50 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateDietForPatient(): FormGroup{
     return this.formBuilder.group({
       id: null,
-      name: null
+      name: [null, Validators.required]
     });
   }
+
+  getCareTeamValidation(index: number): boolean
+  {
+    return (this.unitForm.get('ssks') as FormArray).at(index).get('label').touched;
+  }
+
+  getSskValidation(index: number): boolean
+  {
+    return (this.unitForm.get('ssks') as FormArray).at(index).get('color').touched;
+  }
+
+  getServingClinicValidation(index: number): boolean
+  {
+    return (this.unitForm.get('servingClinics') as FormArray).at(index).get('name').touched;
+  }
+
+  getCleaniningValidation(index: number)
+  {
+    return (this.unitForm.get('cleaningAlternatives') as FormArray).at(index).get('description').touched;
+  }
+
+  getCareBurdenCategoriValidation(index: number)
+  {
+    return (this.unitForm.get('careBurdenCategories') as FormArray).at(index).get('name').touched;
+  }
+
+  getCareBurdenValuesValidation(index: number)
+  {
+    return (this.unitForm.get('careBurdenValues') as FormArray).at(index).get('name').touched;
+  }
+
+  getMotherDietValidation(index: number)
+  {return (this.unitForm.get('dietForMothers') as FormArray).at(index).get('name').touched;
+  }
+
+  getChildDietValidation(index: number)
+  {return (this.unitForm.get('dietForChildren') as FormArray).at(index).get('name').touched;
+  }
+
+  getPatientDietValidation(index: number)
+  {return (this.unitForm.get('dietForPatients') as FormArray).at(index).get('name').touched;
+  }
+
 }

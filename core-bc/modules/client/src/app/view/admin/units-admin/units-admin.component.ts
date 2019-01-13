@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
 import {Clinic} from "../../../domain/clinic";
 import {AuthService} from "../../../service/auth.service";
+import {ListItemComponent} from "vgr-komponentkartan";
 
 @Component({
   selector: 'app-units-admin',
@@ -40,7 +41,8 @@ export class UnitsAdminComponent implements OnInit {
     this.appDeleteModal.open();
   }
 
-  save() {
+  save(element: ListItemComponent) {
+    element.setExpandOrCollapsed();
     this.ngOnInit();
   }
 

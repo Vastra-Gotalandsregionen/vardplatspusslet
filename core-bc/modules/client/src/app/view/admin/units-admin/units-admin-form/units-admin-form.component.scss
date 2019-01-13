@@ -1,11 +1,32 @@
 .edit-ssk-row {
 
-  height: 48px;
+  //height: 48px;
 
   > div {
     > input, > vgr-dropdown, > a {
-      float: left;
-      margin-right: 12px;
+     // float: left;
+     // margin-right: 12px;
     }
   }
+}
+
+.containers{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.edit{
+  margin-bottom: 14px;
+  border: 1px solid transparent;
+}
+
+.contain
+{
+  display: flex;
+}
+
+.contain > vgr-dropdown
+{
+  margin-left: 5px;
 }

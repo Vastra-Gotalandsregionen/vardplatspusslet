@@ -33,7 +33,7 @@
                                   [showDelete]="true"
                                   (cancelEvent)="theListItem.setExpandOrCollapsed()"
                                   (openDeleteEvent)="openDeleteModal(unit)"
-                                  (saveEvent)="save()"
+                                  (saveEvent)="save(theListItem)"
                                   *ngIf="clinics"
             >
 
@@ -54,7 +54,7 @@
                                   [showId]="true"
                                   [showDelete]="false"
                                   (cancelEvent)="addListItem.setExpandOrCollapsed()"
-                                  (saveEvent)="save()"
+                                  (saveEvent)="save(addListItem)"
                                   *ngIf="clinics">
 
             </app-units-admin-form>
