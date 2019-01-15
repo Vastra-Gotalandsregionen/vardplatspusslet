@@ -15,6 +15,10 @@
 @import "assets/scss/organisms/header";
 @import "assets/scss/utilities/overrides";
 
+
+body{
+  font-size: 15px;
+}
 vgr-button.error .text-button {
   background-color: $primary-color--error;
 }

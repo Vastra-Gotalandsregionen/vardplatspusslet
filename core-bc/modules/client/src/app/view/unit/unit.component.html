@@ -45,10 +45,10 @@
               <vgr-list-header>
                 <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
                 <vgr-list-column-header width="2">SSK</vgr-list-column-header>
-                <vgr-list-column-header width="3">Status</vgr-list-column-header>
+                <vgr-list-column-header width="2">Status</vgr-list-column-header>
                 <vgr-list-column-header width="2">Patient</vgr-list-column-header>
                 <vgr-list-column-header width="2">Kön</vgr-list-column-header>
-                <vgr-list-column-header width="8">Status</vgr-list-column-header>
+                <vgr-list-column-header width="8">Översikt</vgr-list-column-header>
               </vgr-list-header>
 
               <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem>
@@ -56,9 +56,11 @@
                 <vgr-list-item-header>
                   <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
                   <vgr-list-column width="2"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
-                  <vgr-list-column width="3"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"></span> {{bed.occupied ? 'Upptagen' : 'Ledig'}}</vgr-list-column>
+                  <vgr-list-column width="2"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}" [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></vgr-list-column>
                   <vgr-list-column width="2">{{bed.patient?.label}}</vgr-list-column>
-                  <vgr-list-column width="2">{{format(bed.patient?.gender)}}</vgr-list-column>
+                  <vgr-list-column width="2" *ngIf="bed.patient?.gender === 'MAN'"><i class="fa fa-male purpule"[appCallout]="'Man'" ></i></vgr-list-column>
+                  <vgr-list-column width="2" *ngIf="bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purpule" [appCallout]="'Kvinna'"></i></vgr-list-column>
+                  <vgr-list-column width="2" *ngIf="bed.patient?.gender === 'BARN'"><i class="fa fa-child purpule" [appCallout]="'Barn'"></i></vgr-list-column>
                   <vgr-list-column width="8">
                     <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
                          [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purpule"></i>
