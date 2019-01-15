@@ -44,6 +44,11 @@ export class UnitComponent implements OnInit, OnDestroy {
   dietDropdownItems: DropdownItem<number>[];
 
   leaveStatusesDropdownItems = [
+
+    {
+      displayName: 'Välj', value: null,
+    },
+
     {
       displayName: 'Permission', value: 'PERMISSION'
     },
@@ -75,6 +80,7 @@ export class UnitComponent implements OnInit, OnDestroy {
               private authService: AuthService) {
 
     this.genderDropdownItems = [
+      {displayName: 'Välj', value: null},
       {displayName: 'Kvinna', value: 'KVINNA'},
       {displayName: 'Man', value: 'MAN'},
       {displayName: 'Barn', value: 'BARN'}
@@ -113,28 +119,28 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
               return {displayName: ssk.label, value: ssk.id};
             }));
-            this.servingKlinikerDropdownItems = unit.servingClinics.map(klinik => {
+            this.servingKlinikerDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.servingClinics.map(klinik => {
               return {displayName: klinik.name, value: klinik.id};
-            });
-            this.cleaningAlternativesDropdownItems = unit.cleaningAlternatives.map(cg => {
+            }));
+            this.cleaningAlternativesDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.cleaningAlternatives.map(cg => {
               return {displayName: cg.description, value: cg.id};
-            });
+            }));
 
             this.careBurdenValuesOptions = [{displayName: 'Välj', value: null}].concat(unit.careBurdenValues.map(cbv => {
               return {displayName: cbv.name, value: cbv.id};
             }));
 
-            this.dietMotherDropdownItems = unit.dietForMothers.map(diet => {
+            this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.dietForMothers.map(diet => {
               return {displayName: diet.name, value: diet.id};
-            });
+            }));
 
-            this.dietChildDropdownItems = unit.dietForChildren.map(diet => {
+            this.dietChildDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.dietForChildren.map(diet => {
               return {displayName: diet.name, value: diet.id};
-            });
+            }));
 
-            this.dietDropdownItems = unit.dietForPatients.map(diet => {
+            this.dietDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.dietForPatients.map(diet => {
               return {displayName: diet.name, value: diet.id};
-            });
+            }));
 
             this.updateVacants(unit);
             this.inited = true;

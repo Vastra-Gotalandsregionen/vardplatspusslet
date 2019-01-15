@@ -292,10 +292,13 @@ export class BedFormComponent implements OnInit {
     if (bedModel.waitingforbedGroup.servingKlinik) {
       bed.servingClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.waitingforbedGroup.servingKlinik);
     }
-    if (bedModel.cleaningGroup.cleaningalternativeExists && bedModel.cleaningGroup.cleaningAlternative) {
+    if (bedModel.cleaningGroup.cleaningalternativeExists) {
       bed.cleaningalternativeExists = bedModel.cleaningGroup.cleaningalternativeExists;
       bed.cleaningAlternative = this.unit.cleaningAlternatives.find(cg => cg.id === bedModel.cleaningGroup.cleaningAlternative);
       bed.cleaningInfo = bedModel.cleaningGroup.cleaningInfo;
+    }
+    else {
+      bed.cleaningalternativeExists = false;
     }
     bed.patientWaits = bedModel.waitingforbedGroup.waitingpatient;
     bed.relatedInformation = bedModel.relatedInformation;

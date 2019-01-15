@@ -126,8 +126,8 @@
                          [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
                     </div>
 
-                    <div class="ikon" *ngIf="bed.cleaningalternativeExists && unit.cleaningAlternatives"
-                         [appCallout]="'Städning'"><i class="fa fa-leaf purpule"></i>
+                    <div class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
+                         [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description : '')"><i class="fa fa-leaf purpule"></i>
                     </div>
 
                     <div class="ikon" *ngIf="bed.patient?.pal && unit.hasPalFeature"

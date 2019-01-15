@@ -18,7 +18,6 @@
         <div class="div-button7">
           <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
           <vgr-dropdown *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="servingKlinik"
-                        noItemSelectedLabel="Välj klinik"
                         [items]="servingKlinikerDropdownItems" [disabled]="!bedForm.get('waitingforbedGroup.waitingpatient').value"></vgr-dropdown>
         </div>
       </div>
@@ -38,7 +37,7 @@
 
         <div class="div-button10">
           <div>Kön</div>
-          <vgr-dropdown formControlName="gender" noItemSelectedLabel="Välj kön"
+          <vgr-dropdown formControlName="gender"
                         [items]="genderDropdownItems"></vgr-dropdown>
         </div>
 
