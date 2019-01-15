@@ -50,7 +50,10 @@ export class UnitsAdminFormComponent implements OnInit {
     this.sskDropdownItems = [
       {displayName: 'Blå', value: 'BLUE'},
       {displayName: 'Grön', value: 'GREEN'},
-      {displayName: 'Röd', value: 'RED'}
+      {displayName: 'Röd', value: 'RED'},
+      {displayName: 'Gul', value: 'YELLOW'},
+      {displayName: 'Lila', value: 'PURPULE'}
+
     ];
   }
 

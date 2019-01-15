@@ -1,5 +1,5 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
 public enum Color {
-    BLUE, GREEN, RED
+    BLUE, GREEN, RED,YELLOW,PURPULE
 }

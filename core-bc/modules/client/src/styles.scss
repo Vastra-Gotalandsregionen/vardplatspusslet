@@ -113,6 +113,18 @@ div.save-cancel {
   background-color: $primary-color--red;
 }
 
+$primary-color--yellow : #f2a900;
+$primary-color--purpule : #582c83;
+
+.ssk-YELLOW{
+  background-color:$primary-color--yellow;
+}
+
+.ssk-PURPULE{
+  background-color:$primary-color--purpule;
+}
+
+
 a.icon-link {
   border-bottom: none;
   text-decoration: none;
