@@ -80,11 +80,17 @@ public class UnitService {
             beds = unit.getBeds();
         }
 
+        updateDiets(unit);
+
         // We need to remove all beds from the unit first, or we may get a constraint exception (at least when we change order of beds).
         unit.setBeds(null);
         unit = unitRepository.save(unit);
         unit.setBeds(beds);
 
+        return unitRepository.save(unit);
+    }
+
+    private void updateDiets(Unit unit) {
         // Save the transient collections, but first remove all items not in the incoming collection
         DietForChild example1 = new DietForChild();
         DietForMother example2 = new DietForMother();
@@ -101,8 +107,6 @@ public class UnitService {
         dietForChildRepository.save(unit.getDietForChildren());
         dietForMotherRepository.save(unit.getDietForMothers());
         dietForPatientRepository.save(unit.getDietForPatients());
-
-        return unitRepository.save(unit);
     }
 
     @SuppressWarnings("unchecked")
