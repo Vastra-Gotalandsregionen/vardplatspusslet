@@ -1,5 +1,10 @@
 @import "../../../../node_modules/vgr-komponentkartan/assets/partials/_settings.colors.scss";
 
+body{
+  font-size: 15px;
+}
+
+
 .order-row {
   padding: 8px 20px;
   border-bottom: 2px solid #f0f0f0;
@@ -13,7 +18,7 @@
 
 .ikon {
   display: inline-block;
-  margin-bottom: 2px;
+  margin-bottom: 0;
   float: left;
 
   .material-icons {
@@ -43,7 +48,7 @@
 
 .purpule {
   color: #0055aa;
-  font-size:24px;
+  font-size:20px;
   margin-left: 5px;
 }
 
@@ -75,4 +80,10 @@ rod {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+h2{
+  background-color: $primary-color--blue;
+  color: white;
+  padding: 8px 15px;
 }

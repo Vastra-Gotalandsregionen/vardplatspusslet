@@ -16,9 +16,7 @@
 @import "assets/scss/utilities/overrides";
 
 
-body{
-  font-size: 15px;
-}
+
 vgr-button.error .text-button {
   background-color: $primary-color--error;
 }
@@ -84,8 +82,8 @@ div.save-cancel {
 
 .ssk-color, .status-color {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   /*background: #007180;*/
   /* float: left; */
