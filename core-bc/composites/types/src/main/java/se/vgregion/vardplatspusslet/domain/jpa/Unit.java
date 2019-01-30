@@ -59,6 +59,12 @@ public class Unit implements Comparable<Unit> {
     private Set<CareBurdenValue> careBurdenValues = new LinkedHashSet<>();
 
     @Transient
+    private List<UnitPlannedIn> unitsPlannedIn = new ArrayList<>();
+
+    @Transient
+    private List<SevenDaysPlaningUnit> sevenDaysPlaningUnits = new ArrayList<>();
+
+    @Transient
     private List<DietForMother> dietForMothers = new ArrayList<>();
 
     @Transient
@@ -139,6 +145,9 @@ public class Unit implements Comparable<Unit> {
 
     @Column
     private  Boolean hasMotherChildDietFeature;
+
+    @Column
+    private Boolean hasUnitPlannedInFeature;
 
     public Unit() {
 
@@ -442,12 +451,43 @@ public class Unit implements Comparable<Unit> {
         }
     }
 
+    public List<UnitPlannedIn> getUnitsPlannedIn() {
+        return unitsPlannedIn;
+    }
+
+    public void setUnitsPlannedIn(List<UnitPlannedIn> unitsPlannedIn) {
+        this.unitsPlannedIn = unitsPlannedIn;
+        for(UnitPlannedIn  unitPlannedIn : unitsPlannedIn){
+            unitPlannedIn.setUnit(this);
+        }
+    }
+
     public Boolean getHasMotherChildDietFeature() {
         return hasMotherChildDietFeature;
     }
 
     public void setHasMotherChildDietFeature(Boolean hasMotherChildDietFeature) {
         this.hasMotherChildDietFeature = hasMotherChildDietFeature;
+    }
+
+    public Boolean getHasUnitPlannedInFeature() {
+        return hasUnitPlannedInFeature;
+    }
+
+    public void setHasUnitPlannedInFeature(Boolean hasUnitPlannedInFeature) {
+        this.hasUnitPlannedInFeature = hasUnitPlannedInFeature;
+    }
+
+    public List<SevenDaysPlaningUnit> getSevenDaysPlaningUnits() {
+        return sevenDaysPlaningUnits;
+    }
+
+    public void setSevenDaysPlaningUnits(List<SevenDaysPlaningUnit> sevenDaysPlaningUnits) {
+        this.sevenDaysPlaningUnits = sevenDaysPlaningUnits;
+        for(SevenDaysPlaningUnit sevenDaysPlaningUnit : sevenDaysPlaningUnits)
+        {
+            sevenDaysPlaningUnit.setUnit(this);
+        }
     }
 
     @Override

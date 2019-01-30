@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
 import {DropdownItem, ListItemComponent, SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Form, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
@@ -17,6 +17,8 @@ import {AuthService} from "../../service/auth.service";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {CareBurdenValue} from "../../domain/careburdenvalue";
+import {PatientEvent} from "../../domain/patient-event";
+import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 
 @Component({
   selector: 'app-unit',
@@ -28,6 +30,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
 
   unit: Unit;
+  units: Unit[];
   clinic: Clinic;
   showRow: boolean = true;
   burdenvals: string;
@@ -42,6 +45,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   dietMotherDropdownItems: DropdownItem<number>[];
   dietChildDropdownItems: DropdownItem<number>[];
   dietDropdownItems: DropdownItem<number>[];
+  plannedInDropdownUnits: DropdownItem<number>[];
 
   leaveStatusesDropdownItems = [
 
@@ -60,6 +64,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   notFoundText = 'Oops. Inget fanns här...';
 
   addBedForm: FormGroup;
+  addSevenDaysPlaningUnitForm: FormGroup;
   bedForDeletion: Bed;
 
   vacantBeds: DropdownItem<number>[];
@@ -108,12 +113,19 @@ export class UnitComponent implements OnInit, OnDestroy {
 
       this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
         this.clinic = clinic;
-      });
 
+        this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
+          this.units = unitArray;
+        });
+      });
       this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id)
         .do(unit => {
           if (unit) {
             this.unit = unit;
+            debugger;
+            this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
+              sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(unit.sevenDaysPlaningUnits))
+            });
             this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
             this.updateSskCategoryValueMatrix(unit);
             this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
@@ -142,6 +154,10 @@ export class UnitComponent implements OnInit, OnDestroy {
               return {displayName: diet.name, value: diet.id};
             }));
 
+            this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(unit.unitsPlannedIn.map(unitplannedIn => {
+              return {displayName: unitplannedIn.name, value: unitplannedIn.id};
+            }));
+
             this.updateVacants(unit);
             this.inited = true;
           } else {
@@ -162,7 +178,8 @@ export class UnitComponent implements OnInit, OnDestroy {
       this.addBedForm = this.formBuilder.group({
         id: null,
         label: [null, Validators.required]
-      })
+      });
+
     });
   }
 
@@ -316,6 +333,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   collapse(element: ListItemComponent) {
     this.addBedForm.reset();
+    this.addSevenDaysPlaningUnitForm.reset();
     element.setExpandOrCollapsed();
   }
 
@@ -420,5 +438,76 @@ export class UnitComponent implements OnInit, OnDestroy {
        .filter(z => z!= null && z.id).length > 0)
        return false;
      else return true;
+  }
+
+  private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {
+    if (!sevenDaysPlaningUnits|| sevenDaysPlaningUnits.length === 0) {
+      return [];
+    }
+    return sevenDaysPlaningUnits.map(sevenDaysPlaningUnit => {
+      return this.formBuilder.group({
+        id: sevenDaysPlaningUnit.id,
+        date: sevenDaysPlaningUnit.date,
+        fromUnit: sevenDaysPlaningUnit.fromUnit.id,
+        quantity: sevenDaysPlaningUnit.quantity,
+        comment:  sevenDaysPlaningUnit.comment
+      })
+    });
+  }
+
+  CreateSevenDaysPlaningUnit(): FormGroup {
+    return this.formBuilder.group({
+      id: null,
+      date: [null, Validators.required],
+      fromUnit: [null, Validators.required],
+      quantity: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
+      comment: null
+    });
+  }
+
+  deleteSevenDaysPlaningUnit(index: number) {
+    this.sevenDaysPlaningUnits.removeAt(index);
+  }
+
+  addPlannedInUnit() {
+    this.sevenDaysPlaningUnits.push(this.CreateSevenDaysPlaningUnit());
+  }
+  get sevenDaysPlaningUnits(): FormArray {
+    return <FormArray> (this.addSevenDaysPlaningUnitForm ? this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') : []);
+  }
+
+  saveFromEnhet() {
+    let sevenDaysPlaningUnits = <SevenDaysPlaningUnit[]>[];
+    let sevenDaysPlaningUnitsModel = this.addSevenDaysPlaningUnitForm.value;
+    sevenDaysPlaningUnits = sevenDaysPlaningUnitsModel.sevenDaysPlaningUnits.map(term => {
+      return {
+        id: term.id ? term.id : null,
+        date: term.date,
+        fromUnit: this.unit.unitsPlannedIn.find(plannedIn => plannedIn.id === term.fromUnit),
+        quantity: term.quantity,
+        comment: term.comment
+      }
+    });
+    this.http.put('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + 'sevenDaysPlaningUnit', sevenDaysPlaningUnits)
+      .subscribe(unit => {
+        this.ngOnInit();
+      });
+  }
+
+  getDatepickerValidation(index: number)
+  {
+    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('date').touched;
+  }
+
+  getDropdownValidation(index : number)
+  {
+    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').touched
+      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').valid ;
+  }
+
+  getQuantityValidation(index: number)
+  {
+    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').touched
+      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').valid ;
   }
 }

@@ -10,6 +10,8 @@ import {CareBurdenCategory} from "./careBurdenCategory";
 import {DietForMother} from "./dietformother";
 import {DietForChild} from "./dietforchild";
 import {DietForPatient} from "./dietforpatient";
+import {UnitPlannedIn} from "./unit-planned-in";
+import {SevenDaysPlaningUnit} from "./seven-days-planing-unit";
 
 export class Unit {
   id: string;
@@ -50,4 +52,7 @@ export class Unit {
   hasBarnKostFeature: boolean;
   hasKostFeature: boolean;
   hasMotherChildDietFeature: boolean;
+  hasUnitPlannedInFeature: boolean;
+  unitsPlannedIn: UnitPlannedIn[];
+  sevenDaysPlaningUnits: SevenDaysPlaningUnit[];
 }

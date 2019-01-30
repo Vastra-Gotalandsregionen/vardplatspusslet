@@ -1,6 +1,6 @@
 .containers{
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .child1{
@@ -32,6 +32,12 @@
   font-size: 20px;
   flex: 0 1 auto;
   color: #0055aa;
+}
+
+.child-exam
+{
+  margin-bottom: 5px;
+  margin-left: 5px;
 }
 
 .containers a{
@@ -74,7 +80,7 @@ input[disabled]
 
 .info{
   border: lightgrey solid 1px;
-  width: 50.5%;
+  width: 79%;
   padding-left: 1px;
 }
 

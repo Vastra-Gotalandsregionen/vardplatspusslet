@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
+import se.vgregion.vardplatspusslet.domain.jpa.SevenDaysPlaningUnit;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.intsvc.pdf.PdfGenerating;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
+import se.vgregion.vardplatspusslet.service.SevenDaysPlanningUnitService;
 import se.vgregion.vardplatspusslet.service.UnitService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +38,9 @@ public class UnitController extends BaseController {
 
     @Autowired
     private ClinicRepository clinicRepository;
+
+    @Autowired
+    private SevenDaysPlanningUnitService sevenDaysPlanningUnitService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
@@ -95,4 +100,15 @@ public class UnitController extends BaseController {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value = "/{clinicId}/{id}/sevenDaysPlaningUnit", method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity<Unit> saveSevenDaysPlaning(@PathVariable("clinicId") String clinicId,
+                                                          @PathVariable("id") String id,
+                                                          @RequestBody List<SevenDaysPlaningUnit> sevenDaysPlaningUnits) {
+        /*Clinic clinic = clinicRepository.getOne(clinicId);
+        Unit unit = unitService.findUnitByIdAndClinic(id, clinic);*/
+
+        sevenDaysPlanningUnitService.save(clinicId, id, sevenDaysPlaningUnits);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -88,7 +88,6 @@
             </tr>
           </table>
         </vgr-panel>
-
       </vgr-panel-container>
     </vgr-page-block>
   </app-left-column>
@@ -274,6 +273,38 @@
                 </vgr-list-item-content>
 
               </vgr-list-item>
+              <vgr-list-item #plannedunit *ngIf="unit.hasUnitPlannedInFeature">
+                <vgr-list-item-header>
+                  <vgr-list-column width="6">
+                    <div>Planerade patienter från andra enhet</div>
+                  </vgr-list-column>
+                </vgr-list-item-header>
+
+                <vgr-list-item-content [indentContent]="true">
+                  <form [formGroup]="addSevenDaysPlaningUnitForm" (ngSubmit)="saveAddBed()">
+                    <div>
+                      <div>
+                        <a (click)="addPlannedInUnit()">Lägg till <i class="fa fa-plus-square child"></i></a>
+                      </div>
+                      <div  formArrayName="sevenDaysPlaningUnits" *ngFor="let planingUnits of sevenDaysPlaningUnits?.controls let i = index;">
+                        <div [formGroupName]="i" class="containers">
+                          <vgr-datepicker formControlName="date" class="child" [showValidation]="getDatepickerValidation(i)"></vgr-datepicker>
+                          <vgr-dropdown  formControlName="fromUnit" [items]="plannedInDropdownUnits" class="child" [showValidation]="getDropdownValidation(i)"></vgr-dropdown>
+                          <vgr-input formControlName="quantity" placeholder="antal ... " class="child" [small]="true" [showValidation]="getQuantityValidation(i)"></vgr-input>
+                          <vgr-input formControlName="comment" placeholder="kommentar ..." class="child"></vgr-input>
+                          <a (click)="deleteSevenDaysPlaningUnit(i)" class="icon-link"><span class="material-icons" >delete</span></a>
+                        </div>
+                      </div>
+
+                      <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
+                        <vgr-button [secondary]="false" default="true" (click)="saveFromEnhet()"  [disabled]="!addSevenDaysPlaningUnitForm.valid">Spara</vgr-button>
+                        <vgr-button [secondary]="false" default="true" (click)="collapse(plannedunit)" >Avbryt</vgr-button>
+                      </div>
+                    </div>
+
+                  </form>
+                </vgr-list-item-content>
+              </vgr-list-item>
 
               <vgr-list-item #addListItem>
                 <vgr-list-item-header>
@@ -295,12 +326,11 @@
                         <vgr-button [secondary]="false" default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
                       </div>
                     </div>
-
                   </form>
                 </vgr-list-item-content>
               </vgr-list-item>
             </vgr-list>
-            <div class="button-row">
+            <div class="button-row" style="padding-top: 15px">
               <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
             </div>
           </div>

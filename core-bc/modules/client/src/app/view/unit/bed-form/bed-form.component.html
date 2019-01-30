@@ -69,39 +69,6 @@
           <vgr-input id="carePlan" formControlName="carePlan"></vgr-input>
         </div>
 
-
-        <div class="div-button10">
-          <div class="containers">
-            <label>Undersökningar</label>
-            <a (click)="addExamination()"><i class="fa fa-plus-square child"></i></a>
-          </div>
-          <div  formArrayName="patientExaminations" *ngFor="let examination of patientExaminations.controls let i = index;" class="clearfix">
-            <div [formGroupName]="i" class="containers">
-              <input formControlName="examination" class="child1"/>
-              <vgr-datepicker formControlName="examinationDate"></vgr-datepicker>
-              <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
-
-              <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons">delete</span></a>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="unit.hasHendelseFeature" class="div-button10">
-          <div class="containers">
-            <label>Händelser</label>
-            <a (click)="addPatientEvent()"><i class="fa fa-plus-square child"></i></a>
-          </div>
-          <div  formArrayName="patientEvents" *ngFor="let event of patientEvents.controls let i = index;" class="clearfix">
-            <div [formGroupName]="i" class="containers">
-              <input formControlName="event" class="child1"/>
-              <vgr-datepicker formControlName="eventDate"></vgr-datepicker>
-              <input formControlName="eventTime" placeholder="tid..." class="child3"/>
-              <input formControlName="eventInfo" class="child4"/>
-              <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons">delete</span></a>
-            </div>
-          </div>
-        </div>
-
         <div *ngIf="unit.hasCareBurdenWithAverage || unit.hasCareBurdenWithText" class="div-button10">
             <label>Vårdtyngd</label>
             <div formArrayName="careBurdenChoices" *ngFor="let careBurdenCategory of unit.careBurdenCategories let i = index;"
@@ -192,15 +159,37 @@
         </vgr-radio-group>
       </div>
 
-      <div *ngIf="unit.hasInfoFeature" class="div-button10">
-        <div>Information</div>
-        <div class="info" formGroupName="infoGroup">
-          <vgr-radio-group formControlName="information" [options]="informationOptions" [vertical]="true">
-          </vgr-radio-group>
-          <vgr-input formControlName="kommentar"></vgr-input>
+      <div class="div-button10">
+        <div class="containers">
+          <label>Undersökningar</label>
+          <a (click)="addExamination()"><i class="fa fa-plus-square child"></i></a>
+        </div>
+        <div  formArrayName="patientExaminations" *ngFor="let examination of patientExaminations.controls let i = index;" class="clearfix">
+          <div [formGroupName]="i" class="containers">
+            <input formControlName="examination" class="child1"/>
+            <vgr-datepicker formControlName="examinationDate"></vgr-datepicker>
+            <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
+
+            <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons">delete</span></a>
+          </div>
         </div>
       </div>
 
+      <div *ngIf="unit.hasHendelseFeature" class="div-button10">
+        <div class="containers">
+          <label>Händelser</label>
+          <a (click)="addPatientEvent()"><i class="fa fa-plus-square child"></i></a>
+        </div>
+        <div  formArrayName="patientEvents" *ngFor="let event of patientEvents.controls let i = index;" class="clearfix">
+          <div [formGroupName]="i" class="containers">
+            <input formControlName="event" class="child1"/>
+            <vgr-datepicker formControlName="eventDate"></vgr-datepicker>
+            <input formControlName="eventTime" placeholder="tid..." class="child3"/>
+            <input formControlName="eventInfo" class="child4"/>
+            <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons">delete</span></a>
+          </div>
+        </div>
+      </div>
       <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button10">
         <p>Kost Mor</p>
         <div class="containers" formGroupName="kostMorGroup">
@@ -228,6 +217,15 @@
                         noItemSelectedLabel="Välj"
                         [items]="dietDropdownItems"></vgr-dropdown>
           <textarea formControlName="infoDiet" class="div-left5" cols="40"></textarea>
+        </div>
+      </div>
+
+      <div *ngIf="unit.hasInfoFeature" class="div-button10">
+        <div>Information</div>
+        <div class="info" formGroupName="infoGroup">
+          <vgr-radio-group formControlName="information" [options]="informationOptions" [vertical]="true">
+          </vgr-radio-group>
+          <input formControlName="kommentar" style="width: 100%"/>
         </div>
       </div>
     </vgr-card-column>

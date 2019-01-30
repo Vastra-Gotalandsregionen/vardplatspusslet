@@ -12,6 +12,8 @@ import {DietForMother} from "../../../../domain/dietformother";
 import {DietForChild} from "../../../../domain/dietforchild";
 import {DietForPatient} from "../../../../domain/dietforpatient";
 import {DropdownItem} from "vgr-komponentkartan";
+import {until} from "selenium-webdriver";
+import {UnitPlannedIn} from "../../../../domain/unit-planned-in";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -43,6 +45,7 @@ export class UnitsAdminFormComponent implements OnInit {
   editDietForMotherGroup: boolean;
   editDietForChildGroup: boolean;
   editDietForPatientGroup: boolean;
+  editUnitPlannedIn: boolean;
 
 
   constructor(private http: HttpClient,
@@ -82,6 +85,7 @@ export class UnitsAdminFormComponent implements OnInit {
       dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
       dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
       dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),
+      unitsPlannedIn: this.formBuilder.array(this.buildPlannedInUnits(unit.unitsPlannedIn)),
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
       careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
@@ -109,7 +113,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMorKostFeature : [unit.hasMorKostFeature],
       hasBarnKostFeature : [unit.hasBarnKostFeature],
       hasKostFeature : [unit.hasKostFeature],
-      hasMotherChildDietFeature: [unit.hasMotherChildDietFeature]
+      hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
+      hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature]
     });
 
   }
@@ -128,7 +133,7 @@ export class UnitsAdminFormComponent implements OnInit {
       dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
       dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
       dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),
-
+      unitsPlannedIn: this.formBuilder.array(this.buildPlannedInUnits(unit.unitsPlannedIn)),
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
       careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
       hasLeftDateFeature: unit.hasLeftDateFeature,
@@ -156,7 +161,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMorKostFeature : unit.hasMorKostFeature,
       hasBarnKostFeature : unit.hasBarnKostFeature,
       hasKostFeature : unit.hasKostFeature,
-      hasMotherChildDietFeature: unit.hasMotherChildDietFeature
+      hasMotherChildDietFeature: unit.hasMotherChildDietFeature,
+      hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature
     });
 
   }
@@ -168,7 +174,6 @@ export class UnitsAdminFormComponent implements OnInit {
   }
 
   saveUnit() {
-    debugger;
     let unit = new Unit();
     let unitModel = this.unitForm.value;
 
@@ -198,6 +203,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasBarnKostFeature = unitModel.hasBarnKostFeature;
     unit.hasKostFeature = unitModel.hasKostFeature;
     unit.hasMotherChildDietFeature = unitModel.hasMotherChildDietFeature;
+    unit.hasUnitPlannedInFeature = unitModel.hasUnitPlannedInFeature;
 
     if (unitModel.clinic) {
       unit.clinic = new Clinic();
@@ -211,6 +217,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.careBurdenCategories = unitModel.careBurdenCategories;
     unit.careBurdenValues = unitModel.careBurdenValues;
     unit.cleaningAlternatives = unitModel.cleaningAlternatives;
+    unit.unitsPlannedIn = unitModel.unitsPlannedIn;
 
     this.http.put('/api/unit?keepBeds=true', unit)
       .subscribe(() => {
@@ -483,6 +490,39 @@ export class UnitsAdminFormComponent implements OnInit {
     });
   }
 
+  private buildPlannedInUnits (plannedUnits: UnitPlannedIn[]): FormGroup[] {
+    if (!plannedUnits || plannedUnits.length === 0) {
+      return [];
+    }
+    return plannedUnits.map(plannedUnit => {
+      return this.formBuilder.group( {
+        id: plannedUnit.id,
+        name: plannedUnit.name
+      })
+    });
+  }
+
+  CreatePlannedUnit(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      name: [null, Validators.required]
+    });
+  }
+
+  get unitsPlannedIn(): FormArray{
+    return <FormArray>this.unitForm.get('unitsPlannedIn');
+  }
+
+  addPlannedUnit()
+  {
+    this.unitsPlannedIn.push(this.CreatePlannedUnit());
+  }
+
+  deletePlannedUnit(index: number)
+  {
+    this.unitsPlannedIn.removeAt(index);
+  }
+
   getCareTeamValidation(index: number): boolean
   {
     return (this.unitForm.get('ssks') as FormArray).at(index).get('label').touched;
@@ -523,6 +563,11 @@ export class UnitsAdminFormComponent implements OnInit {
 
   getPatientDietValidation(index: number)
   {return (this.unitForm.get('dietForPatients') as FormArray).at(index).get('name').touched;
+  }
+
+  getPlannedUnitValidation(index: number)
+  {
+    return (this.unitForm.get('unitsPlannedIn') as FormArray).at(index).get('name').touched;
   }
 
 }

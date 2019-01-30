@@ -78,12 +78,29 @@ rod {
 .containers
 {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  width: 85%;
+  margin-top: 3px;
 }
 
 h2{
   background-color: $primary-color--blue;
   color: white;
   padding: 8px 15px;
+}
+
+.child
+{
+  margin-top: 5px;
+  margin-bottom: 7px;
+  margin-left:0;
+  margin-right: 5px;
+}
+
+.child2
+{
+  margin-top: 5px;
+  margin-bottom: 7px;
+  margin-left:0;
+  margin-right: 0;
 }

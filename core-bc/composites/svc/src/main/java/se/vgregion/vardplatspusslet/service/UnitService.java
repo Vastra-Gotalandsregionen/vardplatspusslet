@@ -8,20 +8,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.vgregion.vardplatspusslet.domain.jpa.Bed;
-import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
-import se.vgregion.vardplatspusslet.domain.jpa.DietForChild;
-import se.vgregion.vardplatspusslet.domain.jpa.DietForMother;
-import se.vgregion.vardplatspusslet.domain.jpa.DietForPatient;
-import se.vgregion.vardplatspusslet.domain.jpa.Role;
-import se.vgregion.vardplatspusslet.domain.jpa.Unit;
-import se.vgregion.vardplatspusslet.domain.jpa.User;
-import se.vgregion.vardplatspusslet.repository.ClinicRepository;
-import se.vgregion.vardplatspusslet.repository.DietForChildRepository;
-import se.vgregion.vardplatspusslet.repository.DietForMotherRepository;
-import se.vgregion.vardplatspusslet.repository.DietForPatientRepository;
-import se.vgregion.vardplatspusslet.repository.UnitRepository;
-import se.vgregion.vardplatspusslet.repository.UserRepository;
+import se.vgregion.vardplatspusslet.domain.jpa.*;
+import se.vgregion.vardplatspusslet.repository.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,20 +39,29 @@ public class UnitService {
     private DietForMotherRepository dietForMotherRepository;
 
     @Autowired
+    private UnitPlannedInRepository unitPlannedInRepository;
+
+    @Autowired
     private DietForPatientRepository dietForPatientRepository;
+
+    @Autowired
+    private  SevenDaysPlaningRepository sevenDaysPlaningRepository;
 
     public UnitService(UserRepository userRepository,
                        UnitRepository unitRepository,
                        ClinicRepository clinicRepository,
                        DietForChildRepository dietForChildRepository,
                        DietForMotherRepository dietForMotherRepository,
-                       DietForPatientRepository dietForPatientRepository) {
+                       DietForPatientRepository dietForPatientRepository, UnitPlannedInRepository unitPlannedInRepository,
+                       SevenDaysPlaningRepository sevenDaysPlaningRepository) {
         this.userRepository = userRepository;
         this.unitRepository = unitRepository;
         this.clinicRepository = clinicRepository;
         this.dietForChildRepository = dietForChildRepository;
         this.dietForMotherRepository = dietForMotherRepository;
         this.dietForPatientRepository = dietForPatientRepository;
+        this.unitPlannedInRepository = unitPlannedInRepository;
+        this.sevenDaysPlaningRepository = sevenDaysPlaningRepository;
     }
 
     public Unit save(Unit unit, Boolean keepBeds) {
@@ -81,6 +78,7 @@ public class UnitService {
         }
 
         updateDiets(unit);
+        updatePlannedIns(unit);
 
         // We need to remove all beds from the unit first, or we may get a constraint exception (at least when we change order of beds).
         unit.setBeds(null);
@@ -117,6 +115,15 @@ public class UnitService {
         repository.delete(currentlySaved);
     }
 
+    private void updatePlannedIns(Unit unit)
+    {
+        UnitPlannedIn example = new UnitPlannedIn();
+        example.setUnit(unit);
+        removeItemsNotInIncomingCollection(unitPlannedInRepository, example, unit.getUnitsPlannedIn());
+        unitPlannedInRepository.save(unit.getUnitsPlannedIn());
+    }
+
+
     public List<Unit> getUnits(String clinicId, String userId) {
         User user = userRepository.findOne(userId);
 
@@ -130,6 +137,9 @@ public class UnitService {
 
             for (Unit unit : units) {
                 populateWithDiets(unit);
+                populateWithUnitPlannedIns(unit);
+                populateWithSevendaysPlannedIn(unit);
+
             }
 
             if (clinicId == null) {
@@ -158,6 +168,8 @@ public class UnitService {
 
             for (Unit unit : units) {
                 populateWithDiets(unit);
+                populateWithUnitPlannedIns(unit);
+                populateWithSevendaysPlannedIn(unit);
             }
 
             return units;
@@ -170,7 +182,8 @@ public class UnitService {
         Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(id, clinic);
 
         populateWithDiets(unit);
-
+        populateWithUnitPlannedIns(unit);
+        populateWithSevendaysPlannedIn(unit);
         return unit;
     }
 
@@ -190,5 +203,21 @@ public class UnitService {
         unit.setDietForMothers(dietForMothers);
         unit.setDietForChildren(dietForChildren);
         unit.setDietForPatients(dietForPatients);
+    }
+
+    private  void populateWithUnitPlannedIns(Unit unit)
+    {
+        UnitPlannedIn example = new UnitPlannedIn();
+        example.setUnit(unit);
+        List<UnitPlannedIn> unitPlannedIns = unitPlannedInRepository.findAll(Example.of(example));
+        unit.setUnitsPlannedIn(unitPlannedIns);
+    }
+
+    private void populateWithSevendaysPlannedIn(Unit unit)
+    {
+        SevenDaysPlaningUnit example = new SevenDaysPlaningUnit();
+        example.setUnit(unit);
+        List<SevenDaysPlaningUnit> sevenDaysPlaningUnits = sevenDaysPlaningRepository.findAll(Example.of(example));
+        unit.setSevenDaysPlaningUnits(sevenDaysPlaningUnits);
     }
 }

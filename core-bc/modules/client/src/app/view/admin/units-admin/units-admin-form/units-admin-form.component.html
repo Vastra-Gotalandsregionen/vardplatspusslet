@@ -46,10 +46,12 @@
           <vgr-checkbox label="Information" formControlName="hasInfoFeature"></vgr-checkbox>
           <vgr-checkbox label="Vårdtyngd med sifrror och medelvärde" formControlName="hasCareBurdenWithAverage"></vgr-checkbox>
           <vgr-checkbox label="Vårdtyngd med enbart text" formControlName="hasCareBurdenWithText"></vgr-checkbox>
-         <!-- <vgr-checkbox label="Kost Mor" formControlName="hasMorKostFeature"></vgr-checkbox>
-          <vgr-checkbox label="Kost Barn" formControlName="hasBarnKostFeature"></vgr-checkbox>-->
           <vgr-checkbox label="Kost" formControlName="hasKostFeature"></vgr-checkbox>
           <vgr-checkbox label="Kost Mor/Barn" formControlName="hasMotherChildDietFeature"></vgr-checkbox>
+          <vgr-checkbox label="Planerad Enhet in" formControlName="hasUnitPlannedInFeature"></vgr-checkbox>
+
+
+
 
 
 
@@ -267,6 +269,32 @@
           </div>
         </div>
       </vgr-card-section>
+      <vgr-card-section [expanded]="true" [title]="'Planerad Enhet In'" [subtitle]="" class="clearfix">
+        <table class="vpp-table" *ngIf="!editUnitPlannedIn">
+
+          <tr *ngFor="let enhet of unit?.unitsPlannedIn|| []">
+            <td>{{enhet.name}}</td>
+          </tr>
+
+          <tfoot>
+          <tr>
+            <td><a (click)="editUnitPlannedIn = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+          </tfoot>
+        </table>
+
+        <div *ngIf="editUnitPlannedIn">
+          <div formArrayName="unitsPlannedIn" *ngFor="let enhet of unitsPlannedIn.controls let i = index;" class="edit-ssk-row">
+            <div [formGroupName]="i" class="contain">
+              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getPlannedUnitValidation(i)"></vgr-input>
+              <a (click)= "deletePlannedUnit(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            </div>
+          </div>
+          <div>
+            <a (click)="addPlannedUnit()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till enhet</span></a>
+          </div>
+        </div>
+      </vgr-card-section>
+
     </vgr-card-column>
   </vgr-card>
 

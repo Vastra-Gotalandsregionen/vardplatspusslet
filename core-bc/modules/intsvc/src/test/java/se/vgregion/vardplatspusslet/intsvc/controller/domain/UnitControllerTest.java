@@ -11,12 +11,7 @@ import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Role;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.domain.jpa.User;
-import se.vgregion.vardplatspusslet.repository.ClinicRepository;
-import se.vgregion.vardplatspusslet.repository.DietForChildRepository;
-import se.vgregion.vardplatspusslet.repository.DietForMotherRepository;
-import se.vgregion.vardplatspusslet.repository.DietForPatientRepository;
-import se.vgregion.vardplatspusslet.repository.UnitRepository;
-import se.vgregion.vardplatspusslet.repository.UserRepository;
+import se.vgregion.vardplatspusslet.repository.*;
 import se.vgregion.vardplatspusslet.service.JwtUtil;
 import se.vgregion.vardplatspusslet.service.UnitService;
 import se.vgregion.vardplatspusslet.testrepository.TestClinicRepository;
@@ -51,13 +46,21 @@ public class UnitControllerTest {
     @Mock
     private DietForPatientRepository dietForPatientRepository;
 
+    @Mock
+    private UnitPlannedInRepository unitPlannedInRepository;
+
     private ClinicRepository clinicRepository = new TestClinicRepository();
+
+    @Mock
+    private  SevenDaysPlaningRepository sevenDaysPlaningRepository;
+
 
     @Before
     public void setup() {
 
         UnitService unitService = new UnitService(userRepository, unitRepository, clinicRepository,
-                dietForChildRepository, dietForMotherRepository, dietForPatientRepository);
+                dietForChildRepository, dietForMotherRepository, dietForPatientRepository, unitPlannedInRepository,
+                sevenDaysPlaningRepository);
 
         ReflectionTestUtils.setField(new JwtUtil(), "secret", "secret");
 
