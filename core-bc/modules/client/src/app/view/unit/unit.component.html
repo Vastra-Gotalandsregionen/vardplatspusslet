@@ -281,7 +281,7 @@
                 </vgr-list-item-header>
 
                 <vgr-list-item-content [indentContent]="true">
-                  <form [formGroup]="addSevenDaysPlaningUnitForm" (ngSubmit)="saveAddBed()">
+                  <form [formGroup]="addSevenDaysPlaningUnitForm" (ngSubmit)="saveFromEnhet()">
                     <div>
                       <div>
                         <a (click)="addPlannedInUnit()">Lägg till <i class="fa fa-plus-square child"></i></a>
@@ -297,8 +297,8 @@
                       </div>
 
                       <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
-                        <vgr-button [secondary]="false" default="true" (click)="saveFromEnhet()"  [disabled]="!addSevenDaysPlaningUnitForm.valid">Spara</vgr-button>
-                        <vgr-button [secondary]="false" default="true" (click)="collapse(plannedunit)" >Avbryt</vgr-button>
+                        <vgr-button [secondary]="false" default="true" (click)="saveFromEnhet(); collapse(plannedunit)" [disabled]="!addSevenDaysPlaningUnitForm.valid">Spara</vgr-button>
+                        <vgr-button [secondary]="false" default="true" (click)="ngOnInit();collapse(plannedunit)" >Avbryt</vgr-button>
                       </div>
                     </div>
 
