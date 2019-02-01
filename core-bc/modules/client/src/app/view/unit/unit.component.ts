@@ -107,6 +107,8 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.addSevenDaysPlaningUnitForm = null;
+
     this.route.params.subscribe(params => {
 
       let clinicId = params.clinicId;

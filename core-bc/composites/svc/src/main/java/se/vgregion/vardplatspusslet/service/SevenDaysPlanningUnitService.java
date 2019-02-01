@@ -37,17 +37,21 @@ public class SevenDaysPlanningUnitService {
 
         for (SevenDaysPlaningUnit sevenDaysPlaningUnit1 : sevenDaysPlaningUnits) {
             sevenDaysPlaningUnit1.setUnit(unit);
-           // removeItemsNotInIncomingCollection(sevenDaysPlaningRepository, sevenDaysPlaningUnit1, unit.getSevenDaysPlaningUnits());
             sevenDaysPlaningRepository.save(sevenDaysPlaningUnit1);
         }
+
+        removeItemsNotInIncomingCollection(sevenDaysPlaningUnits, unit);
     }
 
 
-    void removeItemsNotInIncomingCollection(JpaRepository repository, Object example, Collection incomingCollection) {
-        List currentlySaved = repository.findAll(Example.of(example));
+    void removeItemsNotInIncomingCollection(Collection<SevenDaysPlaningUnit> incomingCollection, Unit unit) {
+        SevenDaysPlaningUnit sevenDaysPlaningUnit = new SevenDaysPlaningUnit();
+        sevenDaysPlaningUnit.setUnit(unit);
+
+        List currentlySaved = sevenDaysPlaningRepository.findAll(Example.of(sevenDaysPlaningUnit));
         // Any items not in the incoming collection is to be removed
         currentlySaved.removeAll(incomingCollection);
-        repository.delete(currentlySaved);
+        sevenDaysPlaningRepository.delete(currentlySaved);
     }
 }
 
