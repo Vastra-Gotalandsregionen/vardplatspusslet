@@ -332,8 +332,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   collapse(element: ListItemComponent) {
-    this.addBedForm.reset();
-    this.addSevenDaysPlaningUnitForm.reset();
     element.setExpandOrCollapsed();
   }
 
