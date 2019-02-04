@@ -55,9 +55,11 @@ public class Unit implements Comparable<Unit> {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CareBurdenCategory> careBurdenCategories = new LinkedHashSet<>();
 
+    // TODO Remove the @OneToMany relationships and fetch these separately, and fetch (over http) containers (DTO) including all these, and make requests in a similar way.
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CareBurdenValue> careBurdenValues = new LinkedHashSet<>();
 
+    // TODO Remove the transients here and instead fetch containers (DTO) containing e.g. both the unit and the diets separately, and make requests in a similar way.
     @Transient
     private List<UnitPlannedIn> unitsPlannedIn = new ArrayList<>();
 
