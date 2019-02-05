@@ -4,10 +4,11 @@ import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {DropdownItem, SelectableItem} from "vgr-komponentkartan";
+import {SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
+import {DropdownItem} from "../../../domain/DropdownItem";
 
 @Component({
   selector: 'app-bed-form',
@@ -36,7 +37,7 @@ export class BedFormComponent implements OnInit {
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
-  @Input('leaveStatusesDropdownItems') leaveStatusesDropdownItems: DropdownItem<string>;
+  @Input('leaveStatusesDropdownItems') leaveStatusesDropdownItems: DropdownItem<string>[];
   @Input('servingKlinikerDropdownItems') servingKlinikerDropdownItems: DropdownItem<number>[];
   @Input('cleaningAlternativesDropdownItems') cleaningAlternativesDropdownItems: DropdownItem<number>[];
   @Input('amningOptions') amningOptions: SelectableItem<number>[];

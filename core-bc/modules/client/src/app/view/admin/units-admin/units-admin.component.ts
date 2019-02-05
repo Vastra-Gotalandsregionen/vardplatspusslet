@@ -42,7 +42,7 @@ export class UnitsAdminComponent implements OnInit {
   }
 
   save(element: ListItemComponent) {
-    element.setExpandOrCollapsed();
+    element.toggleExpand();
     this.ngOnInit();
   }
 

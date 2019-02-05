@@ -289,7 +289,9 @@
                       <div  formArrayName="sevenDaysPlaningUnits" *ngFor="let planingUnits of sevenDaysPlaningUnits?.controls let i = index;">
                         <div [formGroupName]="i" class="containers">
                           <vgr-datepicker formControlName="date" class="child" [showValidation]="getDatepickerValidation(i)"></vgr-datepicker>
-                          <vgr-dropdown  formControlName="fromUnit" [items]="plannedInDropdownUnits" class="child" [showValidation]="getDropdownValidation(i)"></vgr-dropdown>
+                          <vgr-dropdown-select formControlName="fromUnit" class="child" [showValidation]="getDropdownValidation(i)">
+                            <vgr-dropdown-item *ngFor="let item of plannedInDropdownUnits" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                          </vgr-dropdown-select>
                           <vgr-input formControlName="quantity" placeholder="antal ... " class="child" [small]="true" [showValidation]="getQuantityValidation(i)"></vgr-input>
                           <vgr-input formControlName="comment" placeholder="kommentar ..." class="child"></vgr-input>
                           <a (click)="deleteSevenDaysPlaningUnit(i)" class="icon-link"><span class="material-icons" >delete</span></a>
@@ -297,8 +299,8 @@
                       </div>
 
                       <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
-                        <vgr-button [secondary]="false" default="true" (click)="saveFromEnhet(); collapse(plannedunit)" [disabled]="!addSevenDaysPlaningUnitForm.valid">Spara</vgr-button>
-                        <vgr-button [secondary]="false" default="true" (click)="ngOnInit();collapse(plannedunit)" >Avbryt</vgr-button>
+                        <vgr-button default="true" (click)="saveFromEnhet(); collapse(plannedunit)" [disabled]="!addSevenDaysPlaningUnitForm.valid">Spara</vgr-button>
+                        <vgr-button default="true" (click)="ngOnInit();collapse(plannedunit)" >Avbryt</vgr-button>
                       </div>
                     </div>
 
@@ -322,8 +324,8 @@
                       </div>
 
                       <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
-                        <vgr-button [secondary]="false" default="true" (click)="saveAddBed()" [disabled]="!addBedForm.valid">Spara</vgr-button>
-                        <vgr-button [secondary]="false" default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                        <vgr-button default="true" (click)="saveAddBed()" [disabled]="!addBedForm.valid">Spara</vgr-button>
+                        <vgr-button default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
                       </div>
                     </div>
                   </form>
@@ -353,8 +355,9 @@
 
             <vgr-list-item-content>
               Välj ledig säng
-              <vgr-dropdown noItemSelectedLabel="Välj..." [items]="vacantBeds"
-                            [(ngModel)]="chosenVacantBedId"></vgr-dropdown>
+              <vgr-dropdown-select noItemSelectedLabel="Välj..." [(ngModel)]="chosenVacantBedId">
+                <vgr-dropdown-item *ngFor="let item of vacantBeds" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+              </vgr-dropdown-select>
 
               <div class="button-row">
                 <vgr-button (click)="chooseBedForLeavePatient(patient); collapse(leavePatientItem)">Spara</vgr-button>

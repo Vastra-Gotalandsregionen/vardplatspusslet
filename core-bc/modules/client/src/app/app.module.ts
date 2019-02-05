@@ -8,7 +8,7 @@ import {HomeComponent} from './view/home/home.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UnitComponent} from './view/unit/unit.component';
 import {KomponentkartanModule} from "vgr-komponentkartan";
-import {NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ChevronRightComponent} from './elements/chevron-right/chevron-right.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./service/auth.service";
@@ -73,7 +73,7 @@ registerLocaleData(localeSv, "sv-SE");
   ],
   imports: [
     BrowserModule,
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     JwtModule,
     KomponentkartanModule,

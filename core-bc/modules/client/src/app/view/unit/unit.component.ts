@@ -2,9 +2,9 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
-import {DropdownItem, ListItemComponent, SelectableItem} from "vgr-komponentkartan";
+import {ListItemComponent, SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
-import {Form, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
@@ -17,8 +17,8 @@ import {AuthService} from "../../service/auth.service";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {CareBurdenValue} from "../../domain/careburdenvalue";
-import {PatientEvent} from "../../domain/patient-event";
 import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
+import {DropdownItem} from "../../domain/DropdownItem";
 
 @Component({
   selector: 'app-unit',
@@ -334,7 +334,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   collapse(element: ListItemComponent) {
-    element.setExpandOrCollapsed();
+    element.toggleExpand();
   }
 
   openDeleteModal(bed: Bed) {

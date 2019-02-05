@@ -11,9 +11,8 @@ import {CareBurdenValue} from "../../../../domain/careburdenvalue";
 import {DietForMother} from "../../../../domain/dietformother";
 import {DietForChild} from "../../../../domain/dietforchild";
 import {DietForPatient} from "../../../../domain/dietforpatient";
-import {DropdownItem} from "vgr-komponentkartan";
-import {until} from "selenium-webdriver";
 import {UnitPlannedIn} from "../../../../domain/unit-planned-in";
+import {DropdownItem} from "../../../../domain/DropdownItem";
 
 @Component({
   selector: 'app-units-admin-form',

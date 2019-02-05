@@ -16,7 +16,9 @@
 
       <div>Klinik:</div>
 
-      <vgr-dropdown [items]="clinicDropdownItems" formControlName="clinic" [showValidation]="!unitForm.get('clinic').valid && unitForm.get('clinic').touched"></vgr-dropdown>
+      <vgr-dropdown-select formControlName="clinic" [showValidation]="!unitForm.get('clinic').valid && unitForm.get('clinic').touched">
+        <vgr-dropdown-item *ngFor="let item of clinicDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+      </vgr-dropdown-select>
 
     </vgr-panel>
 
@@ -81,7 +83,9 @@
             <div [formGroupName]="i" class="contain">
               <vgr-input [small]="true" formControlName="label" [showValidation]="getCareTeamValidation(i)"></vgr-input>
 
-              <vgr-dropdown [items]="sskDropdownItems" [showValidation]="getSskValidation(i)" formControlName="color"></vgr-dropdown>
+              <vgr-dropdown-select [showValidation]="getSskValidation(i)" formControlName="color">
+                <vgr-dropdown-item *ngFor="let item of sskDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+              </vgr-dropdown-select>
               <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
@@ -299,8 +303,8 @@
   </vgr-card>
 
   <div class="containers">
-    <vgr-button [secondary]="false" default="true" (click)="saveUnit()" [disabled]="!(unitForm.valid)">Spara</vgr-button>
-    <vgr-button [secondary]="false" default="true" (click)="cancel()" >Avbryt</vgr-button>
+    <vgr-button default="true" (click)="saveUnit()" [disabled]="!(unitForm.valid)">Spara</vgr-button>
+    <vgr-button default="true" (click)="cancel()" >Avbryt</vgr-button>
   </div>
 </form>
 

@@ -78,7 +78,7 @@ export class ClinicsAdminComponent implements OnInit {
 
   collapse(element: ListItemComponent) {
     this.clinicForm.reset();
-    element.setExpandOrCollapsed();
+    element.toggleExpand();
   }
 
 }

@@ -38,19 +38,20 @@
 
               <div>
                 <div>Enheter:</div>
-                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems"
-                                          [showValidation]="!userForm.get('units').valid && userForm.get('units').touched"></vgr-dropdown-multiselect>
+                <vgr-dropdown-select [multi]="true" formControlName="units" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched">
+                  <vgr-dropdown-item *ngFor="let item of unitDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                </vgr-dropdown-select>
               </div>
 
               <div class="container_edit">
                 <div style="flex-grow: 10; flex-shrink: 0"><vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button></div>
                 <div style="flex-grow: 1; flex-shrink: 0">
-                  <vgr-button [secondary]="false" default="true" (click)="saveUser(theListItem)" [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara</vgr-button>
-                  <vgr-button [secondary]="false" default="true" (click)="collapse(theListItem)" >Avbryt</vgr-button></div>
+                  <vgr-button default="true" (click)="saveUser(theListItem)" [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara</vgr-button>
+                  <vgr-button default="true" (click)="collapse(theListItem)" >Avbryt</vgr-button></div>
               </div>
 
               <!--<div class="clearfix button-row save-cancel-delete">
-                <vgr-save-cancel (save)="saveUser()" (cancel)="theListItem.setExpandOrCollapsed()"
+                <vgr-save-cancel (save)="saveUser()" (cancel)="theListItem.toggleExpand()"
                                  [hideLock]="true"></vgr-save-cancel>
                 <vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>
               </div>-->
@@ -82,14 +83,16 @@
 
               <div>
                 <div>Enheter:</div>
-                <vgr-dropdown-multiselect formControlName="units" [items]="unitDropdownItems" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched"></vgr-dropdown-multiselect>
+                <vgr-dropdown-select [multi]="true" formControlName="units" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched">
+                  <vgr-dropdown-item *ngFor="let item of unitDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                </vgr-dropdown-select>
               </div>
 
-             <!-- <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.setExpandOrCollapsed()"
+             <!-- <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.toggleExpand()"
                                [hideLock]="true"></vgr-save-cancel>-->
               <div class="containers">
-                <vgr-button [secondary]="false" default="true" (click)="saveUser(addListItem)" [disabled]="!(userForm.valid)">Spara</vgr-button>
-                <vgr-button [secondary]="false" default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                <vgr-button default="true" (click)="saveUser(addListItem)" [disabled]="!(userForm.valid)">Spara</vgr-button>
+                <vgr-button default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
               </div>
             </form>
           </vgr-list-item-content>

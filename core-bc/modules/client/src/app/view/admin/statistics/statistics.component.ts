@@ -36,7 +36,7 @@ export class StatisticsComponent implements OnInit {
 
     this.fromDate.setValue(firstInMonth);
 
-    const lastInMonth = new Date(firstInMonth.getFullYear(), firstInMonth.getMonth() + 1, 0);
+    const lastInMonth = new Date(new Date(firstInMonth.getFullYear(), firstInMonth.getMonth() + 1, 1).getTime() - 1);
 
     this.toDate.setValue(lastInMonth);
   }

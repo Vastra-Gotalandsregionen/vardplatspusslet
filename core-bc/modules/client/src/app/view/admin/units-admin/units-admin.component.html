@@ -31,7 +31,7 @@
                                   [clinics]="clinics"
                                   [showId]="false"
                                   [showDelete]="true"
-                                  (cancelEvent)="theListItem.setExpandOrCollapsed()"
+                                  (cancelEvent)="theListItem.toggleExpand()"
                                   (openDeleteEvent)="openDeleteModal(unit)"
                                   (saveEvent)="save(theListItem)"
                                   *ngIf="clinics"
@@ -53,7 +53,7 @@
                                   [clinics]="clinics"
                                   [showId]="true"
                                   [showDelete]="false"
-                                  (cancelEvent)="addListItem.setExpandOrCollapsed()"
+                                  (cancelEvent)="addListItem.toggleExpand()"
                                   (saveEvent)="save(addListItem)"
                                   *ngIf="clinics">
 

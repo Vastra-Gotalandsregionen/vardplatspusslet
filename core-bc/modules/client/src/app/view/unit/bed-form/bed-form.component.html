@@ -12,13 +12,16 @@
       <!-- The null option makes it at least 1, so therefore we check for >1. -->
       <div *ngIf="sskDropdownItems.length > 1" class="div-button7">
         <label for="sskDropdown">SSK / Vårdlag:</label>
-        <vgr-dropdown id="sskDropdown" formControlName="ssk" [items]="sskDropdownItems"></vgr-dropdown>
+        <vgr-dropdown-select id="sskDropdown" formControlName="ssk" >
+          <vgr-dropdown-item *ngFor="let item of sskDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+        </vgr-dropdown-select>
       </div>
       <div formGroupName="waitingforbedGroup">
         <div class="div-button7">
           <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
-          <vgr-dropdown *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="servingKlinik"
-                        [items]="servingKlinikerDropdownItems" [disabled]="!bedForm.get('waitingforbedGroup.waitingpatient').value"></vgr-dropdown>
+          <vgr-dropdown-select *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="servingKlinik" [disabled]="!bedForm.get('waitingforbedGroup.waitingpatient').value">
+            <vgr-dropdown-item *ngFor="let item of servingKlinikerDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+          </vgr-dropdown-select>
         </div>
       </div>
     </vgr-card-column>
@@ -37,14 +40,16 @@
 
         <div class="div-button10">
           <div>Kön</div>
-          <vgr-dropdown formControlName="gender"
-                        [items]="genderDropdownItems"></vgr-dropdown>
+          <vgr-dropdown-select formControlName="gender">
+            <vgr-dropdown-item *ngFor="let item of genderDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+          </vgr-dropdown-select>
         </div>
 
         <div class="div-button7">
           <div>Permission/Teknisk plats</div>
-          <vgr-dropdown formControlName="leaveStatus" noItemSelectedLabel="Välj..."
-                        [items]="leaveStatusesDropdownItems"></vgr-dropdown>
+          <vgr-dropdown-select formControlName="leaveStatus" noItemSelectedLabel="Välj...">
+            <vgr-dropdown-item *ngFor="let item of leaveStatusesDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+          </vgr-dropdown-select>
         </div>
         <div *ngIf="unit.hasLeftDateFeature" class="div-button10">
           <div class="row-with-icon"><span>Gick hem</span> <span class="material-icons" appCallout="Gör sängen ledig och lägg till i statistiken">info</span></div>
@@ -75,8 +80,9 @@
                  class="clearfix">
               <div [formGroupName]="i" class="containers">
                 <label>{{careBurdenCategory.name}}</label>
-                <vgr-dropdown formControlName="careBurdenValueId" noItemSelectedLabel="Välj" [items]="careBurdenValuesOptions"
-                              style="margin-left: 20px"></vgr-dropdown>
+                <vgr-dropdown-select formControlName="careBurdenValueId" noItemSelectedLabel="Välj" style="margin-left: 20px">
+                  <vgr-dropdown-item *ngFor="let item of careBurdenValuesOptions" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                </vgr-dropdown-select>
               </div>
             </div>
         </div>
@@ -193,9 +199,9 @@
       <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button10">
         <p>Kost Mor</p>
         <div class="containers" formGroupName="kostMorGroup">
-          <vgr-dropdown  formControlName="dietMother"
-                        noItemSelectedLabel="Välj"
-                        [items]="dietMotherDropdownItems"></vgr-dropdown>
+          <vgr-dropdown-select  formControlName="dietMother" noItemSelectedLabel="Välj">
+            <vgr-dropdown-item *ngFor="let item of dietMotherDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+          </vgr-dropdown-select>
           <textarea formControlName="infoDietMother" class="div-left5" cols="40"></textarea>
 
         </div>
@@ -203,9 +209,9 @@
       <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button10">
         <p>Kost Barn</p>
         <div class="containers" formGroupName="kostBarnGroup">
-          <vgr-dropdown  formControlName="dietChild"
-                        noItemSelectedLabel="Välj"
-                        [items]="dietChildDropdownItems"></vgr-dropdown>
+          <vgr-dropdown-select  formControlName="dietChild" noItemSelectedLabel="Välj">
+            <vgr-dropdown-item *ngFor="let item of dietChildDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+          </vgr-dropdown-select>
           <textarea formControlName="infoDietChild" class="div-left5" cols="40"></textarea>
 
         </div>
@@ -213,9 +219,9 @@
       <div  *ngIf="unit.hasKostFeature" class="div-button10">
         <p>Kost</p>
         <div class="containers" formGroupName="kostGroup">
-          <vgr-dropdown  formControlName="diet"
-                        noItemSelectedLabel="Välj"
-                        [items]="dietDropdownItems"></vgr-dropdown>
+          <vgr-dropdown-select  formControlName="diet" noItemSelectedLabel="Välj">
+            <vgr-dropdown-item *ngFor="let item of dietDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+          </vgr-dropdown-select>
           <textarea formControlName="infoDiet" class="div-left5" cols="40"></textarea>
         </div>
       </div>
@@ -245,9 +251,14 @@
         <p>Städning</p>
       <div class="containers" formGroupName="cleaningGroup">
         <vgr-checkbox formControlName="cleaningalternativeExists"></vgr-checkbox>
-        <vgr-dropdown *ngIf="cleaningAlternativesDropdownItems?.length != 0" formControlName="cleaningAlternative"
-                      noItemSelectedLabel="Välj"
-                      [items]="cleaningAlternativesDropdownItems" [disabled]="!bedForm.get('cleaningGroup.cleaningalternativeExists').value"></vgr-dropdown>
+
+        <vgr-dropdown-select *ngIf="cleaningAlternativesDropdownItems?.length != 0"
+                             formControlName="cleaningAlternative"
+                             noItemSelectedLabel="Välj"
+                             [disabled]="!bedForm.get('cleaningGroup.cleaningalternativeExists').value">
+          <vgr-dropdown-item *ngFor="let item of cleaningAlternativesDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+        </vgr-dropdown-select>
+
         <input formControlName="cleaningInfo" *ngIf="bedForm.get('cleaningGroup.cleaningalternativeExists').value" style="width: 40%; margin-left: 5px"/>
         <input formControlName="cleaningInfo" disabled *ngIf="!bedForm.get('cleaningGroup.cleaningalternativeExists').value" style="width: 40%; margin-left: 5px"/>
       </div>
@@ -261,8 +272,8 @@
     </div>
 
     <div  style="flex-grow: 1; flex-shrink: 0">
-      <vgr-button [secondary]="false" default="true" (click)="save()" [disabled]="!bedForm.valid">Spara</vgr-button>
-      <vgr-button [secondary]="false" default="true" (click)="cancel()" >Avbryt</vgr-button>
+      <vgr-button default="true" (click)="save()" [disabled]="!bedForm.valid">Spara</vgr-button>
+      <vgr-button default="true" (click)="cancel()" >Avbryt</vgr-button>
     </div>
   </div>
 </form>

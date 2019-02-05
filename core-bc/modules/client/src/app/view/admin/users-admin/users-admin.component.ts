@@ -2,11 +2,12 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../domain/user";
-import {DropdownItem, ListItemComponent} from "vgr-komponentkartan";
+import {ListItemComponent} from "vgr-komponentkartan";
 import {Unit} from "../../../domain/unit";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
 import {AuthService} from "../../../service/auth.service";
 import {UserSaveRequest} from "../../../domain/user-save-request";
+import {DropdownItem} from "../../../domain/DropdownItem";
 
 @Component({
   selector: 'app-users-admin',
@@ -120,6 +121,6 @@ export class UsersAdminComponent implements OnInit {
 
   collapse(element: ListItemComponent) {
     this.userForm.reset();
-    element.setExpandOrCollapsed();
+    element.toggleExpand();
   }
 }

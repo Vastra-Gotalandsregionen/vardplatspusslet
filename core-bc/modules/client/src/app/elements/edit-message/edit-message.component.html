@@ -18,7 +18,9 @@
 
 <div class="button-row">
   <label>Veckodag:</label>
-  <vgr-dropdown [(ngModel)]="message.dayOfWeek" [items]="allWeekdays"></vgr-dropdown>
+  <vgr-dropdown-select [(ngModel)]="message.dayOfWeek">
+    <vgr-dropdown-item *ngFor="let item of allWeekdays" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+  </vgr-dropdown-select>
   <a (click)="message.dayOfWeek = null">Rensa veckodag</a>
 </div>
 
