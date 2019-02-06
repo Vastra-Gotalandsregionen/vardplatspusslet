@@ -148,7 +148,7 @@
                     </div>
 
                     <div class="ikon" *ngIf="bed.patient?.interpreter"
-                         [appCallout]="'Tolk' + (bed.patient?.interpretDate ? ': ' + bed.patient.interpretDate : '')"><i class="material-icons purple">translate</i>
+                         [appCallout]="toInterpreterString(bed.patient)"><i class="material-icons purple">translate</i>
                     </div>
 
                     <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"

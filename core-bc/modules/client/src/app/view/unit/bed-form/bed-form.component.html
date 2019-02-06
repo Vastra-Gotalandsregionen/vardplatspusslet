@@ -131,8 +131,8 @@
         <div class="containers" formGroupName="tolkGroup">
           <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
           <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
-          <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'TT:MM'"/>
-          <input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'TT:MM'"/>
+          <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
+          <input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
         </div>
       </div>
 
