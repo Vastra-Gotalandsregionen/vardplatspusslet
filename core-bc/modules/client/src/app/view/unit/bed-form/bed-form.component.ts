@@ -204,21 +204,6 @@ export class BedFormComponent implements OnInit {
           }
         }
       });
-
-    this.bedForm.get('occupied').valueChanges.subscribe(occupied => {
-      this.managePatientLabelValidators(occupied);
-    });
-
-  }
-
-  private managePatientLabelValidators(occupied) {
-    let control = this.bedForm.get('patient.label');
-    if (occupied) {
-      control.setValidators(Validators.required);
-    } else {
-      control.clearValidators();
-    }
-    control.updateValueAndValidity();
   }
 
   save() {
@@ -227,7 +212,7 @@ export class BedFormComponent implements OnInit {
     bed.id = bedModel.id;
     bed.label = bedModel.label;
     bed.occupied = !!bedModel.occupied;
-    if (bedModel.patient.label) {
+    if (bed.occupied) {
       bed.patient = new Patient();
       bed.patient.id = bedModel.patient.id;
       bed.patient.label = bedModel.patient.label;

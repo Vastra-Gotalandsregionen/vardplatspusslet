@@ -116,14 +116,19 @@ div.save-cancel {
 }
 
 $primary-color--yellow : #f2a900;
-$primary-color--purpule : #582c83;
+$primary-color--purple : #582c83;
+$primary-color--pink : rgba(255, 192, 203, 1);
 
 .ssk-YELLOW{
   background-color:$primary-color--yellow;
 }
 
-.ssk-PURPULE{
-  background-color:$primary-color--purpule;
+.ssk-PURPLE{
+  background-color:$primary-color--purple;
+}
+
+.ssk-PINK {
+  background-color: $primary-color--pink;
 }
 
 

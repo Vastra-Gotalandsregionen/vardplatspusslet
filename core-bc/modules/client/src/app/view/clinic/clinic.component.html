@@ -15,6 +15,17 @@
             <a [routerLink]="unit.id">{{unit.name}}</a>
           </li>
         </ul>
+
+        <div *ngIf="units.length === 0 && loggedIn && !isFetchingUnits">
+          Du har inte behörighet att lista någon avdelning. För att komma till en avdelning behöver du adressen direkt till avdelningen.
+        </div>
+
+        <div *ngIf="units.length === 0 && !loggedIn">
+          Prova att logga in för att lista avdelningar.
+
+          <app-login-form></app-login-form>
+        </div>
+
       </div>
     </vgr-page-block>
   </app-right-column>

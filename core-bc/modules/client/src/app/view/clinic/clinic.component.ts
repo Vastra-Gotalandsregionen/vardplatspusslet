@@ -17,6 +17,8 @@ export class ClinicComponent implements OnDestroy {
   units: Unit[];
   error: string;
 
+  isFetchingUnits: boolean = false;
+
   notFoundText = 'Oops. Inget fanns här...';
 
   subscription: Subscription;
@@ -45,11 +47,16 @@ export class ClinicComponent implements OnDestroy {
         } else {
           this.error = error1.message;
         }
+        this.isFetchingUnits = false;
       });
 
+      this.isFetchingUnits = true; // To avoid flickering of text stating that the user doesn't have permission to any units.
       this.http.get<Unit[]>('/api/unit?clinic=' + params.id).subscribe(units => {
         this.units = units;
-      });
+        this.isFetchingUnits = false;
+      }, (error1 => {
+        this.isFetchingUnits = false;
+      }));
 
     });
   }
@@ -58,6 +65,10 @@ export class ClinicComponent implements OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  get loggedIn(): boolean {
+    return this.authService.isAuthenticated();
   }
 
 }

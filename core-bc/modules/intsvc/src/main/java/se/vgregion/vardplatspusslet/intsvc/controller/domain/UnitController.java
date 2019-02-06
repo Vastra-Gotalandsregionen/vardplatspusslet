@@ -23,6 +23,7 @@ import se.vgregion.vardplatspusslet.service.SevenDaysPlanningUnitService;
 import se.vgregion.vardplatspusslet.service.UnitService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,6 +49,10 @@ public class UnitController extends BaseController {
                                HttpServletRequest request) {
 
         String userId = getRequestUserId(request);
+
+        if (userId == null) {
+            return new ArrayList<>();
+        }
 
         return unitService.getUnits(clinicId, userId);
     }

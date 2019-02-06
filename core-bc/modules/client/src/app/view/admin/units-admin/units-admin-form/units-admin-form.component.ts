@@ -54,7 +54,8 @@ export class UnitsAdminFormComponent implements OnInit {
       {displayName: 'Grön', value: 'GREEN'},
       {displayName: 'Röd', value: 'RED'},
       {displayName: 'Gul', value: 'YELLOW'},
-      {displayName: 'Lila', value: 'PURPULE'}
+      {displayName: 'Lila', value: 'PURPLE'},
+      {displayName: 'Rosa', value: 'PINK'}
 
     ];
   }

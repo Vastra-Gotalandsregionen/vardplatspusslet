@@ -61,6 +61,7 @@
   &:hover {
     .menu {
       display: block;
+      z-index: 10;
     }
   }
 }

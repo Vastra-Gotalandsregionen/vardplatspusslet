@@ -1,3 +1,8 @@
 .container .row .col .page-block {
   width: auto;
 }
+
+app-left-column .page-block {
+  background: transparent;
+  padding: 0;
+}

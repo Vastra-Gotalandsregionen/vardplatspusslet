@@ -41,6 +41,7 @@ import {AdminGuard} from "./guard/admin.guard";
 import {UserLoggedInGuard} from "./guard/user-logged-in.guard";
 import {HasEditUnitPermissionGuard} from "./guard/has-edit-unit-permission.guard";
 import { StatisticsComponent } from './view/admin/statistics/statistics.component';
+import { LoginFormComponent } from './shared/login-form/login-form.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -69,7 +70,8 @@ registerLocaleData(localeSv, "sv-SE");
     EditMessagesComponent,
     MessageComponent,
     EditMessageComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
