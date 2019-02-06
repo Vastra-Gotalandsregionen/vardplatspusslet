@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Inject, ViewContainerRef} from '@angular/core';
 import {AuthService} from "./service/auth.service";
+import {ErrorDialogService} from "./service/error-dialog.service";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,11 @@ export class AppComponent {
 
   title = 'vardplatspusslet';
 
-  constructor(protected authService: AuthService) {}
+  constructor(@Inject(ErrorDialogService) errorDialogService,
+              @Inject(ViewContainerRef) viewContainerRef,
+              protected authService: AuthService) {
+    errorDialogService.setRootViewContainerRef(viewContainerRef);
+  }
 
   getLoggedInDisplayName() {
     return this.authService.getLoggedInDisplayName();

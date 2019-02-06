@@ -124,7 +124,7 @@ export class UnitComponent implements OnInit, OnDestroy {
         .do(unit => {
           if (unit) {
             this.unit = unit;
-            debugger;
+
             this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
               sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(unit.sevenDaysPlaningUnits))
             });

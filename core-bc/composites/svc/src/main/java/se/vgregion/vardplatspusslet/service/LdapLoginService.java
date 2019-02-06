@@ -94,7 +94,7 @@ public class LdapLoginService {
         }
 
         if (userRepository.findOne(username) == null) {
-            throw new FailedLoginException("The user is not registered in the application.");
+            throw new FailedLoginException("Du är inte behörig till tjänsten.");
         }
 
         // first create the service context
@@ -109,7 +109,7 @@ public class LdapLoginService {
             if (results.hasMore()) {
                 result = results.next();
             } else {
-                throw new AccountNotFoundException("Nu user found with given username.");
+                throw new AccountNotFoundException("Felaktiga inloggningsuppgifter.");
             }
         } catch (CommunicationException e) {
             throw new RuntimeException(e);
@@ -134,7 +134,8 @@ public class LdapLoginService {
             try {
                 verifyPassword(password, distinguishedName);
             } catch (NamingException e) {
-                throw new FailedLoginException(e.getMessage());
+                LOGGER.error(e.getMessage(), e);
+                throw new FailedLoginException("Felaktiga inloggningsuppgifter.");
             }
         }
 
@@ -145,7 +146,7 @@ public class LdapLoginService {
 
             return user;
         } catch (NamingException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Tekniskt fel.", e);
         }
     }
 

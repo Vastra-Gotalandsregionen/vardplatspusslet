@@ -61,7 +61,7 @@ public class LoginController {
             return ResponseEntity.ok(token);
         } catch (FailedLoginException e) {
             LOGGER.warn(e.getClass().getCanonicalName() + " - " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 

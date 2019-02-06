@@ -42,6 +42,9 @@ import {UserLoggedInGuard} from "./guard/user-logged-in.guard";
 import {HasEditUnitPermissionGuard} from "./guard/has-edit-unit-permission.guard";
 import { StatisticsComponent } from './view/admin/statistics/statistics.component';
 import { LoginFormComponent } from './shared/login-form/login-form.component';
+import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
+import {HttpErrorHandlerInterceptor} from "./interceptor/http-error-handler-interceptor";
+import {ErrorDialogService} from "./service/error-dialog.service";
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -71,7 +74,8 @@ registerLocaleData(localeSv, "sv-SE");
     MessageComponent,
     EditMessageComponent,
     StatisticsComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -87,14 +91,17 @@ registerLocaleData(localeSv, "sv-SE");
     CKEditorModule
   ],
   entryComponents: [
-    CalloutComponent
+    CalloutComponent,
+    ErrorDialogComponent
   ],
   providers: [
     AuthService,
     AdminGuard,
     UserLoggedInGuard,
     HasEditUnitPermissionGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true}
+    ErrorDialogService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

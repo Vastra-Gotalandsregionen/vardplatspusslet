@@ -69,6 +69,21 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>ErrorHandlerFilter</filter-name>
+    <filter-class>se.vgregion.vardplatspusslet.intsvc.filter.ErrorHandlerFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>SecurityContextFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>ErrorHandlerFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <!--<filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

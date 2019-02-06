@@ -181,6 +181,10 @@ public class UnitService {
     public Unit findUnitByIdAndClinic(String id, Clinic clinic) {
         Unit unit = unitRepository.findUnitByIdIsLikeAndClinicIsLike(id, clinic);
 
+        if (unit == null) {
+            return null;
+        }
+
         populateWithDiets(unit);
         populateWithUnitPlannedIns(unit);
         populateWithSevendaysPlannedIn(unit);
