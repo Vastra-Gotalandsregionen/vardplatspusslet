@@ -511,25 +511,4 @@ export class UnitComponent implements OnInit, OnDestroy {
       && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').valid ;
   }
 
-  toInterpreterString(patient: Patient): string {
-    let text = 'Tolk: ';
-
-    if (patient.interpretDate) {
-      text += this.formatDate(patient.interpretDate);
-    }
-
-    if (patient.interpretDate && patient.interpretInfo) {
-      text += ', ';
-    }
-
-    if (patient.interpretInfo) {
-      text += patient.interpretInfo;
-    }
-
-    return text;
-  }
-
-  formatDate(date: any) {
-    return new Date(date).toLocaleDateString();
-  }
 }

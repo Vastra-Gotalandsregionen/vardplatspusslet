@@ -45,6 +45,7 @@ import { LoginFormComponent } from './shared/login-form/login-form.component';
 import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 import {HttpErrorHandlerInterceptor} from "./interceptor/http-error-handler-interceptor";
 import {ErrorDialogService} from "./service/error-dialog.service";
+import { TheOtherBedIconsComponent } from './shared/the-other-bed-icons/the-other-bed-icons.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -75,7 +76,8 @@ registerLocaleData(localeSv, "sv-SE");
     EditMessageComponent,
     StatisticsComponent,
     LoginFormComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    TheOtherBedIconsComponent
   ],
   imports: [
     BrowserModule,
