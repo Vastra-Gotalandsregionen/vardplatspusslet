@@ -291,7 +291,6 @@ export class BedFormComponent implements OnInit {
 
     this.http.put('/api/bed/' + this.clinicId + '/' + this.unit.id, bed)
       .subscribe(bed => {
-        // this.ngOnInit();
         this.saveEvent.emit();
       });
   }
