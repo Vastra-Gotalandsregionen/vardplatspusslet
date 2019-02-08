@@ -14,8 +14,10 @@ import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {CareBurdenValue} from "../../domain/careburdenvalue";
 import {DropdownItem} from "../../domain/DropdownItem";
+import {DayAndDate} from "../../domain/dayAndDate";
 import "rxjs-compat/add/operator/do";
 import {ListItemComponent} from "vgr-komponentkartan";
+import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 
 @Component({
   selector: 'app-unit',
@@ -30,6 +32,9 @@ export class UnitComponent implements OnInit, OnDestroy {
   clinic: Clinic;
   showRow: boolean = true;
   burdenvals: string;
+  sevendaysplan: SevenDaysPlaningUnit[] = [];
+  days: DayAndDate[] = [];
+  daysAndMonths: DayAndDate[] = [];
 
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
@@ -78,6 +83,8 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.updateVacants(unit);
 
             this.inited = true;
+            this.CalculateDaysAndDate();
+            this.sortData(unit.sevenDaysPlaningUnits);
           } else {
             this.error = this.notFoundText;
           }
@@ -327,4 +334,53 @@ export class UnitComponent implements OnInit, OnDestroy {
 
 
 
+  private sortData(sevendaysPlaningUnits: SevenDaysPlaningUnit[])
+  {
+    this.days = [];
+    let WeekDay: string[]= ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+    let veckodag: string[]= [];
+    let today = new Date();
+
+    this.sevendaysplan = sevendaysPlaningUnits.sort( (a:SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
+      (a.date > b.date ? 1 : -1));
+
+    this.sevendaysplan = this.sevendaysplan.filter(x => x.date >= today);
+     if (this.sevendaysplan.length > 8)
+     {
+       this.sevendaysplan = this.sevendaysplan.slice(0,7);
+     }
+      for (var i=0; i<this.sevendaysplan.length; i++)
+      {
+        let myDate = new Date(this.sevendaysplan[i].date);
+        let day = myDate.getDay();
+        let dayDate = new DayAndDate();
+        dayDate.dayName = WeekDay[day];
+        dayDate.dayNumber= myDate.getDate();
+        dayDate.monthNumber = myDate.getMonth();
+        this.days.push(dayDate);
+      }
+  }
+
+  private CalculateDaysAndDate()
+  {
+    let WeekDay: string[]= ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+    let veckodag: string[]= [];
+    let today = new Date();
+    let day = today.getDay();
+    let dayDate = new DayAndDate();
+    dayDate.dayName = WeekDay[day];
+    dayDate.dayNumber= today.getDate();
+    dayDate.monthNumber = today.getMonth() + 1;
+    this.daysAndMonths.push(dayDate);
+    for (var i=0; i<= 7; i++)
+    {
+      let nextDay = new Date(today.setDate(today.getDate() + 1));
+      day = nextDay.getDay();
+      dayDate = new DayAndDate();
+      dayDate.dayName = WeekDay[day];
+      dayDate.dayNumber= nextDay.getDate();
+      dayDate.monthNumber = nextDay.getMonth() + 1;
+      this.daysAndMonths.push(dayDate);
+    }
+  }
 }
