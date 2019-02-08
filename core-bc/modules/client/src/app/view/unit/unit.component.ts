@@ -17,6 +17,7 @@ import {DropdownItem} from "../../domain/DropdownItem";
 import {DayAndDate} from "../../domain/dayAndDate";
 import "rxjs-compat/add/operator/do";
 import {ListItemComponent} from "vgr-komponentkartan";
+import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 
 @Component({
   selector: 'app-unit',
