@@ -190,11 +190,11 @@
                       <div  formArrayName="sevenDaysPlaningUnits" *ngFor="let planingUnits of sevenDaysPlaningUnits?.controls let i = index;">
                         <div [formGroupName]="i" class="containers">
                           <vgr-datepicker formControlName="date" class="child" [showValidation]="getDatepickerValidation(i)"></vgr-datepicker>
-                          <vgr-dropdown-select formControlName="fromUnit" class="child" [showValidation]="getDropdownValidation(i)">
+                          <vgr-dropdown-select formControlName="fromUnit" class="child" [showValidation]="getDropdownValidation(i)" [small]="true">
                             <vgr-dropdown-item *ngFor="let item of plannedInDropdownUnits" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
                           </vgr-dropdown-select>
-                          <vgr-input formControlName="quantity" placeholder="antal ... " class="child" [small]="true" [showValidation]="getQuantityValidation(i)"></vgr-input>
-                          <vgr-input formControlName="comment" placeholder="kommentar ..." class="child"></vgr-input>
+                          <vgr-input formControlName="quantity" placeholder="antal ... " class="child2" [small]="true" [showValidation]="getQuantityValidation(i)"></vgr-input>
+                          <vgr-input formControlName="comment" placeholder="kommentar ..." class="child2"></vgr-input>
                           <a (click)="deleteSevenDaysPlaningUnit(i)" class="icon-link"><span class="material-icons" >delete</span></a>
                         </div>
                       </div>
