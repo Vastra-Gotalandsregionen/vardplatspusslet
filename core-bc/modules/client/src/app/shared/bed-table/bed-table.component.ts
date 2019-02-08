@@ -44,6 +44,7 @@ export class BedTableComponent implements OnInit {
   plannedInDropdownUnits: DropdownItem<number>[];
 
   expandedRows: Array<boolean>;
+  delayedExpandedRows: Array<boolean>;
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -62,7 +63,11 @@ export class BedTableComponent implements OnInit {
   toggleRow(index) {
     let newState = !this.expandedRows[index];
     this.expandedRows = new Array<boolean>();
+    this.delayedExpandedRows = new Array<boolean>();
     this.expandedRows[index] = newState;
+    setTimeout(() => {
+      this.delayedExpandedRows[index] = newState;
+    });
   }
 
   collapse(index) {
@@ -168,6 +173,7 @@ export class BedTableComponent implements OnInit {
 
   initThings() {
     this.expandedRows = new Array(this.unit.beds.length);
+    this.delayedExpandedRows = new Array(this.unit.beds.length);
 
     this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
       sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits))
@@ -245,7 +251,13 @@ export class BedTableComponent implements OnInit {
       return null;
     }
 
-    let careBurdenValue = careBurdenChoices.find(choice => choice.careBurdenCategory.id === cbc.id).careBurdenValue;
+    let careBurdenChoice = careBurdenChoices.find(choice => choice.careBurdenCategory.id === cbc.id);
+
+    if (!careBurdenChoice) {
+      return null;
+    }
+
+    let careBurdenValue = careBurdenChoice.careBurdenValue;
     return careBurdenValue ? careBurdenValue.name : null;
   }
 }

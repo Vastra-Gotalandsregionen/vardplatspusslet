@@ -29,7 +29,7 @@
       <td *ngIf="bed.patient?.gender === null"></td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
     </tr>
-    <tr *ngIf="expandedRows[i]" class="bed-form-row">
+    <tr *ngIf="expandedRows[i]" class="bed-form-row {{delayedExpandedRows[i] ? 'visible' : 'hidden'}}">
       <td [colSpan]="6 + unit.careBurdenCategories.length">
         <div class="bed-form-wrapper">
           <app-bed-form [clinicId]="clinic.id"

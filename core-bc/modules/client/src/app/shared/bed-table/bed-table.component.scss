@@ -10,6 +10,11 @@ table {
 
   tr.bed-form-row {
     background: #f0f0f0;
+    transition: all .4s;
+
+    &.hidden {
+      opacity: 0;
+    }
 
     td {
       border: 1px solid #f0f0f0;
