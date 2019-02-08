@@ -1,17 +1,29 @@
 <table>
   <thead>
   <tr>
-    <th [colSpan]="2"></th>
-    <th [colSpan]="unit.careBurdenCategories.length">Vårdtyngd</th>
     <th [colSpan]="4"></th>
+    <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last">Vårdtyngd</th>
+    <th *ngIf="unit.hasMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
+    <th [colSpan]="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0)"></th>
+    <th [colSpan]="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0)" class="column-group first last">Ronder</th>
+    <th [colSpan]="50"></th>
   </tr>
   <tr>
     <th>Rum/säng</th>
     <th>Status</th>
-    <th *ngFor="let cbc of unit.careBurdenCategories">{{cbc.name}}</th>
-    <th>SSK</th>
     <th>Patient</th>
+    <th>SSK</th>
+    <th class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index">{{cbc.name}}</th>
+    <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature">Mor</th>
+    <th class="column-group last" *ngIf="unit.hasMotherChildDietFeature">Barn</th>
+    <th *ngIf="unit.hasKostFeature">Kost</th>
+    <th *ngIf="unit.hasAmningFeature">Aming</th>
+    <th class="column-group first" *ngIf="unit.hasMorRondFeature">Mor</th>
+    <th class="column-group last" *ngIf="unit.hasBarnRondFeature">Barn</th>
+    <th *ngIf="unit.hasRondFeature">Rond</th>
     <th>Kön</th>
+    <th>Tolk</th>
+    <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
   </thead>
@@ -19,18 +31,63 @@
   <ng-container *ngFor="let bed of unit?.beds; let i = index">
     <tr (click)="toggleRow(i)" class="clickable">
       <td>{{bed.label}}</td>
+
       <td><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}" [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></td>
-      <td *ngFor="let cbc of unit.careBurdenCategories">{{getCareBurdenValueName(cbc, bed.patient?.careBurdenChoices)}}</td>
-      <td><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></td>
+
       <td><span>{{bed.patient?.label}}</span></td>
+
+      <td><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></td>
+
+      <td class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index">{{getCareBurdenValueName(cbc, bed.patient?.careBurdenChoices)}}</td>
+
+      <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietMother?.name}}</td>
+
+      <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietChild?.name}}</td>
+
+      <td *ngIf="unit.hasKostFeature" [colSpan]="1">{{bed.patient?.diet?.name}}</td>
+
+      <td *ngIf="unit.hasAmningFeature">
+        <span class="ikon" *ngIf="bed.patient?.amning === '1'"
+             [appCallout]="'Normal amning'"><i class="fa fa-circle-o purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.amning === '2'"
+             [appCallout]="'Amningshjälp'"><i class="fa fa-dot-circle-o purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.amning === '3'"
+             [appCallout]="'Amningsmottagning'"><i class="fa fa-dot-circle-o purple"></i> <i class="fa fa-dot-circle-o purple"></i>
+        </span>
+      </td>
+
+      <td class="column-group first" *ngIf="unit.hasMorRondFeature">
+        <span *ngIf="bed.patient?.morRond" class="ikon"><i class="fa fa-user-md purple"></i></span>
+      </td>
+
+      <td class="column-group last" *ngIf="unit.hasBarnRondFeature">
+        <span *ngIf="bed.patient?.barnRond" class="ikon"><i class="fa fa-user-md purple"></i></span>
+      </td>
+
+      <td *ngIf="unit.hasRondFeature">
+        <span *ngIf="bed.patient?.rond" class="ikon"><i class="fa fa-user-md purple"></i></span>
+      </td>
+
       <td *ngIf="bed.patient?.gender === 'MAN'"><i class="fa fa-male purple" [appCallout]="'Man'"></i></td>
       <td *ngIf="bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple" [appCallout]="'Kvinna'"></i></td>
       <td *ngIf="bed.patient?.gender === 'BARN'"><i class="fa fa-child purple" [appCallout]="'Barn'"></i></td>
       <td *ngIf="bed.patient?.gender === null"></td>
+      <td>
+        <span class="ikon" *ngIf="bed.patient?.interpreter"
+               [appCallout]="toInterpreterString(bed.patient)"><i class="material-icons purple">translate</i>
+        </span>
+      </td>
+      <td *ngIf="unit.hasCleaningFeature">
+        <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
+             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + ', ' + bed.cleaningInfo: '')"><i class="fa fa-leaf purple"></i>
+        </span>
+      </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
     </tr>
     <tr *ngIf="expandedRows[i]" class="bed-form-row {{delayedExpandedRows[i] ? 'visible' : 'hidden'}}">
-      <td [colSpan]="6 + unit.careBurdenCategories.length">
+      <td [colSpan]="6 + unit.careBurdenCategories.length + 50">
         <div class="bed-form-wrapper">
           <app-bed-form [clinicId]="clinic.id"
                         [unit]="unit"
@@ -48,7 +105,7 @@
                         [cleaningAlternativesDropdownItems]="cleaningAlternativesDropdownItems"
                         (collapse)="collapse(i)"
                         (openDeleteModal)="openDeleteModal(bed)"
-                        (save)="save()">
+                        (save)="onSave(i)">
 
           </app-bed-form>
         </div>
@@ -57,144 +114,5 @@
   </ng-container>
   </tbody>
 </table>
-
-<vgr-list [flexibleHeader]="true">
-  <vgr-list-header>
-    <vgr-list-column-header width="3">&nbsp;</vgr-list-column-header>
-    <vgr-list-column-header width="{{unit.careBurdenCategories.length}}" style="text-align: center;">Vårdtyngd
-    </vgr-list-column-header>
-  </vgr-list-header>
-  <vgr-list-header>
-    <vgr-list-column-header width="2">Rum/säng</vgr-list-column-header>
-    <vgr-list-column-header width="1">Status</vgr-list-column-header>
-    <!-- Careburdens -->
-    <vgr-list-column-header width="1"
-                            *ngFor="let cbc of unit.careBurdenCategories">{{cbc.name}}</vgr-list-column-header>
-    <vgr-list-column-header width="1">SSK</vgr-list-column-header>
-    <vgr-list-column-header width="2">Patient</vgr-list-column-header>
-    <vgr-list-column-header width="2">Kön</vgr-list-column-header>
-    <vgr-list-column-header width="8">Övrigt</vgr-list-column-header>
-  </vgr-list-header>
-
-  <vgr-list-item *ngFor="let bed of unit?.beds" #theListItem [animationSpeed]="400">
-
-    <vgr-list-item-header style="height: 22px;">
-      <vgr-list-column width="2">{{bed.label}}</vgr-list-column>
-      <vgr-list-column width="1"><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}"
-                                       [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></vgr-list-column>
-
-      <!-- Careburdens -->
-      <vgr-list-column width="1"
-                       *ngFor="let cbc of unit.careBurdenCategories">{{getCareBurdenValueName(cbc, bed.patient?.careBurdenChoices)}}</vgr-list-column>
-
-      <vgr-list-column width="1"><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></vgr-list-column>
-      <vgr-list-column width="2">{{bed.patient?.label}}</vgr-list-column>
-      <vgr-list-column width="2" *ngIf="bed.patient?.gender === 'MAN'"><i class="fa fa-male purple"
-                                                                          [appCallout]="'Man'"></i></vgr-list-column>
-      <vgr-list-column width="2" *ngIf="bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple"
-                                                                             [appCallout]="'Kvinna'"></i>
-      </vgr-list-column>
-      <vgr-list-column width="2" *ngIf="bed.patient?.gender === 'BARN'"><i class="fa fa-child purple"
-                                                                           [appCallout]="'Barn'"></i></vgr-list-column>
-      <vgr-list-column width="2" *ngIf="bed.patient?.gender === null"></vgr-list-column>
-      <vgr-list-column width="8">
-        <app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons>
-      </vgr-list-column>
-    </vgr-list-item-header>
-
-    <vgr-list-item-content [indentContent]="true">
-
-      <app-bed-form [clinicId]="clinic.id"
-                    [unit]="unit"
-                    [bed]="bed"
-                    [careBurdenValuesOptions]="careBurdenValuesOptions"
-                    [amningOptions]="amningOptions"
-                    [dietMotherDropdownItems]="dietMotherDropdownItems"
-                    [dietChildDropdownItems]="dietChildDropdownItems"
-                    [dietDropdownItems]="dietDropdownItems"
-                    [informationOptions]="informationOptions"
-                    [genderDropdownItems]="genderDropdownItems"
-                    [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
-                    [sskDropdownItems]="sskDropdownItems"
-                    [servingKlinikerDropdownItems]="servingKlinikerDropdownItems"
-                    [cleaningAlternativesDropdownItems]="cleaningAlternativesDropdownItems"
-                    (collapse)="collapse(theListItem)"
-                    (openDeleteModal)="openDeleteModal(bed)"
-                    (save)="save()"
-                    *ngIf="theListItem.expanded"> &lt;!&ndash; Speeds up page performance &ndash;&gt;
-
-      </app-bed-form>
-
-
-    </vgr-list-item-content>
-
-  </vgr-list-item>
-  <vgr-list-item #plannedunit *ngIf="unit.hasUnitPlannedInFeature">
-    <vgr-list-item-header>
-      <vgr-list-column width="6">
-        <div>Planerade patienter från andra enhet</div>
-      </vgr-list-column>
-    </vgr-list-item-header>
-
-    <vgr-list-item-content [indentContent]="true">
-      <form *ngIf="addSevenDaysPlaningUnitForm" [formGroup]="addSevenDaysPlaningUnitForm" (ngSubmit)="saveFromEnhet()">
-        <div>
-          <div>
-            <a (click)="addPlannedInUnit()">Lägg till <i class="fa fa-plus-square child"></i></a>
-          </div>
-          <div formArrayName="sevenDaysPlaningUnits"
-               *ngFor="let planingUnits of sevenDaysPlaningUnits?.controls let i = index;">
-            <div [formGroupName]="i" class="containers">
-              <vgr-datepicker formControlName="date" class="child"
-                              [showValidation]="getDatepickerValidation(i)"></vgr-datepicker>
-              <vgr-dropdown-select formControlName="fromUnit" class="child" [showValidation]="getDropdownValidation(i)">
-                <vgr-dropdown-item *ngFor="let item of plannedInDropdownUnits"
-                                   [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-              </vgr-dropdown-select>
-              <vgr-input formControlName="quantity" placeholder="antal ... " class="child" [small]="true"
-                         [showValidation]="getQuantityValidation(i)"></vgr-input>
-              <vgr-input formControlName="comment" placeholder="kommentar ..." class="child"></vgr-input>
-              <a (click)="deleteSevenDaysPlaningUnit(i)" class="icon-link"><span
-                class="material-icons">delete</span></a>
-            </div>
-          </div>
-
-          <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
-            <vgr-button default="true" (click)="saveFromEnhet(); collapse(plannedunit)"
-                        [disabled]="!addSevenDaysPlaningUnitForm.valid">Spara
-            </vgr-button>
-            <vgr-button default="true" (click)="ngOnInit();collapse(plannedunit)">Avbryt</vgr-button>
-          </div>
-        </div>
-
-      </form>
-    </vgr-list-item-content>
-  </vgr-list-item>
-
-  <vgr-list-item #addListItem>
-    <vgr-list-item-header>
-      <vgr-list-column width="5">
-        <div class="add-row vgr-icon-plus">Lägg till säng</div>
-      </vgr-list-column>
-    </vgr-list-item-header>
-
-    <vgr-list-item-content [indentContent]="true">
-      <form [formGroup]="addBedForm" (ngSubmit)="saveAddBed()">
-        <div class="containers">
-          <div style="flex-grow: 8; flex-shrink: 0">
-            <div>Benämning</div>
-            <vgr-input formControlName="label"
-                       [showValidation]="!addBedForm.get('label').valid && addBedForm.get('label').touched"></vgr-input>
-          </div>
-
-          <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
-            <vgr-button default="true" (click)="saveAddBed()" [disabled]="!addBedForm.valid">Spara</vgr-button>
-            <vgr-button default="true" (click)="collapse(addListItem)">Avbryt</vgr-button>
-          </div>
-        </div>
-      </form>
-    </vgr-list-item-content>
-  </vgr-list-item>
-</vgr-list>
 
 <app-delete-modal [itemLabel]="bedForDeletion?.label" (confirmDelete)="confirmDelete()"></app-delete-modal>

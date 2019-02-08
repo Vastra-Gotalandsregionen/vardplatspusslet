@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Unit} from "../../domain/unit";
 import {Clinic} from "../../domain/clinic";
 import {DropdownItem} from "../../domain/DropdownItem";
-import {ListItemComponent, SelectableItem} from "vgr-komponentkartan";
+import {SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,6 +10,7 @@ import {HttpClient} from "@angular/common/http";
 import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
+import {Patient} from "../../domain/patient";
 
 @Component({
   selector: 'app-bed-table',
@@ -74,8 +75,9 @@ export class BedTableComponent implements OnInit {
     this.expandedRows[index] = false;
   }
 
-  save() {
+  onSave(i) {
     this.saveEvent.emit();
+    this.collapse(i);
   }
 
   saveAddBed() {
@@ -87,7 +89,7 @@ export class BedTableComponent implements OnInit {
     this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {
         this.initAddBedForm();
-        this.save();
+        this.saveEvent.emit();
       });
   }
 
@@ -95,7 +97,7 @@ export class BedTableComponent implements OnInit {
     this.http.delete('/api/bed/' + this.clinic.id + '/' + this.unit.id + '/' + this.bedForDeletion.id)
       .subscribe(() => {
         this.expandedRows = new Array<boolean>();
-        this.save();
+        this.saveEvent.emit();
       });
   }
 
@@ -140,7 +142,7 @@ export class BedTableComponent implements OnInit {
     });
     this.http.put('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + 'sevenDaysPlaningUnit', sevenDaysPlaningUnits)
       .subscribe(unit => {
-        this.save();
+        this.saveEvent.emit();
       });
   }
 
@@ -259,5 +261,27 @@ export class BedTableComponent implements OnInit {
 
     let careBurdenValue = careBurdenChoice.careBurdenValue;
     return careBurdenValue ? careBurdenValue.name : null;
+  }
+
+  toInterpreterString(patient: Patient): string {
+    let text = 'Tolk: ';
+
+    if (patient.interpretDate) {
+      text += this.formatDate(patient.interpretDate);
+    }
+
+    if (patient.interpretDate && patient.interpretInfo) {
+      text += ', ';
+    }
+
+    if (patient.interpretInfo) {
+      text += patient.interpretInfo;
+    }
+
+    return text;
+  }
+
+  formatDate(date: any) {
+    return new Date(date).toLocaleDateString();
   }
 }

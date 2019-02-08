@@ -14,7 +14,10 @@ import {CalloutComponent} from './callout.component';
 
 
 @Directive({
-  selector: '[appCallout]'
+  selector: '[appCallout]',
+  host: {
+    '[style.position]': '"relative"'
+  }
 })
 export class CalloutDirective implements OnDestroy{
   @Input() appCallout: String = '';

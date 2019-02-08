@@ -94,7 +94,7 @@
 
   <app-right-column>
     <div>
-      <vgr-page-block *ngIf="unit" class="transparent">
+      <vgr-page-block *ngIf="unit" class="{{showChangeBedOrder ? '' : 'transparent'}}">
         <div>
           <div *ngIf="showChangeBedOrder">
             <p>Dra och släpp sängarna och spara sedan.</p>

@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Bed} from "../../domain/bed";
 import {Unit} from "../../domain/unit";
-import {Patient} from "../../domain/patient";
 
 @Component({
   selector: 'app-the-other-bed-icons',
@@ -16,24 +15,6 @@ export class TheOtherBedIconsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  toInterpreterString(patient: Patient): string {
-    let text = 'Tolk: ';
-
-    if (patient.interpretDate) {
-      text += this.formatDate(patient.interpretDate);
-    }
-
-    if (patient.interpretDate && patient.interpretInfo) {
-      text += ', ';
-    }
-
-    if (patient.interpretInfo) {
-      text += patient.interpretInfo;
-    }
-
-    return text;
   }
 
   formatDate(date: any) {
