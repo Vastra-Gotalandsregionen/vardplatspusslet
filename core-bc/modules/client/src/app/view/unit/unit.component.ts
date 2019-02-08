@@ -1,25 +1,22 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
-import {ListItemComponent, SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
-import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
 import {Ssk} from "../../domain/ssk";
 import {Message} from "../../domain/message";
-import "rxjs-compat/add/operator/do";
-import {Observable, Subscription} from "rxjs";
-import "rxjs-compat/add/observable/timer";
+import {interval, Subscription} from "rxjs";
 import {AuthService} from "../../service/auth.service";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {CareBurdenValue} from "../../domain/careburdenvalue";
-import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 import {DropdownItem} from "../../domain/DropdownItem";
 import {DayAndDate} from "../../domain/dayAndDate";
+import "rxjs-compat/add/operator/do";
+import {ListItemComponent} from "vgr-komponentkartan";
 
 @Component({
   selector: 'app-unit',
@@ -28,7 +25,6 @@ import {DayAndDate} from "../../domain/dayAndDate";
 })
 export class UnitComponent implements OnInit, OnDestroy {
 
-  @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
 
   unit: Unit;
   units: Unit[];
@@ -39,37 +35,8 @@ export class UnitComponent implements OnInit, OnDestroy {
   days: DayAndDate[] = [];
   daysAndMonths: DayAndDate[] = [];
 
-  careBurdenValuesOptions: DropdownItem<number>[];
-  amningOptions: SelectableItem<number>[];
-  informationOptions: SelectableItem<number>[];
-  genderDropdownItems: DropdownItem<string>[];
-  servingKlinikerDropdownItems: DropdownItem<number>[];
-  sskDropdownItems: DropdownItem<number>[];
-  cleaningAlternativesDropdownItems: DropdownItem<number>[];
-  dietMotherDropdownItems: DropdownItem<number>[];
-  dietChildDropdownItems: DropdownItem<number>[];
-  dietDropdownItems: DropdownItem<number>[];
-  plannedInDropdownUnits: DropdownItem<number>[];
-
-  leaveStatusesDropdownItems = [
-
-    {
-      displayName: 'Välj', value: null,
-    },
-
-    {
-      displayName: 'Permission', value: 'PERMISSION'
-    },
-    {
-      displayName: 'Teknisk plats', value: 'TEKNISK_PLATS'
-    }];
-
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
-
-  addBedForm: FormGroup;
-  addSevenDaysPlaningUnitForm: FormGroup;
-  bedForDeletion: Bed;
 
   vacantBeds: DropdownItem<number>[];
 
@@ -88,31 +55,10 @@ export class UnitComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private authService: AuthService) {
 
-    this.genderDropdownItems = [
-      {displayName: 'Välj', value: null},
-      {displayName: 'Kvinna', value: 'KVINNA'},
-      {displayName: 'Man', value: 'MAN'},
-      {displayName: 'Barn', value: 'BARN'}
-    ];
-
-    this.amningOptions = [
-      {displayName: 'Normal amning', value: 1},
-      {displayName: 'Amningshjälp', value: 2},
-      {displayName: 'Amningsmottagning ', value: 3}
-    ];
-
-    this.informationOptions = [
-      {displayName: 'THG', value: 1},
-      {displayName: 'THG/Barn', value: 2},
-      {displayName: 'Föräldrarum', value: 3}
-    ];
-
-    this.timerSubscription = Observable.timer(10000).subscribe(() => this.checkForChanges());
+    this.timerSubscription = interval(10000).subscribe(() => this.checkForChanges());
   }
 
   ngOnInit() {
-    this.addSevenDaysPlaningUnitForm = null;
-
     this.route.params.subscribe(params => {
 
       let clinicId = params.clinicId;
@@ -129,42 +75,12 @@ export class UnitComponent implements OnInit, OnDestroy {
           if (unit) {
             this.unit = unit;
 
-            this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
-              sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(unit.sevenDaysPlaningUnits))
-            });
             this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
+
             this.updateSskCategoryValueMatrix(unit);
-            this.sskDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.ssks.map(ssk => {
-              return {displayName: ssk.label, value: ssk.id};
-            }));
-            this.servingKlinikerDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.servingClinics.map(klinik => {
-              return {displayName: klinik.name, value: klinik.id};
-            }));
-            this.cleaningAlternativesDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.cleaningAlternatives.map(cg => {
-              return {displayName: cg.description, value: cg.id};
-            }));
 
-            this.careBurdenValuesOptions = [{displayName: 'Välj', value: null}].concat(unit.careBurdenValues.map(cbv => {
-              return {displayName: cbv.name, value: cbv.id};
-            }));
-
-            this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.dietForMothers.map(diet => {
-              return {displayName: diet.name, value: diet.id};
-            }));
-
-            this.dietChildDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.dietForChildren.map(diet => {
-              return {displayName: diet.name, value: diet.id};
-            }));
-
-            this.dietDropdownItems = [{displayName: 'Välj', value: null}].concat(unit.dietForPatients.map(diet => {
-              return {displayName: diet.name, value: diet.id};
-            }));
-
-            this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(unit.unitsPlannedIn.map(unitplannedIn => {
-              return {displayName: unitplannedIn.name, value: unitplannedIn.id};
-            }));
-            debugger;
             this.updateVacants(unit);
+
             this.inited = true;
             this.CalculateDaysAndDate();
             this.sortData(unit.sevenDaysPlaningUnits);
@@ -183,11 +99,6 @@ export class UnitComponent implements OnInit, OnDestroy {
           this.error = error1.message;
         }
       });
-      this.addBedForm = this.formBuilder.group({
-        id: null,
-        label: [null, Validators.required]
-      });
-
     });
   }
 
@@ -229,6 +140,7 @@ export class UnitComponent implements OnInit, OnDestroy {
           thisBed.occupied = incomingBed.occupied;
           thisBed.label = incomingBed.label;
           thisBed.patient = incomingBed.patient;
+          thisBed.relatedInformation = incomingBed.relatedInformation;
         }
       }
 
@@ -327,34 +239,6 @@ export class UnitComponent implements OnInit, OnDestroy {
       });
   }
 
-  saveAddBed() {
-    let bed = new Bed();
-    let bedModel = this.addBedForm.value;
-
-    bed.label = bedModel.label;
-
-    this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
-      .subscribe(bed => {
-        this.ngOnInit();
-      });
-  }
-
-  collapse(element: ListItemComponent) {
-    element.toggleExpand();
-  }
-
-  openDeleteModal(bed: Bed) {
-    this.bedForDeletion = bed;
-    this.appDeleteModal.open();
-  }
-
-  confirmDelete() {
-    this.http.delete('/api/bed/' + this.clinic.id + '/' + this.unit.id + '/' + this.bedForDeletion.id)
-      .subscribe(() => {
-        this.ngOnInit();
-      }); // todo error handling
-  }
-
   chooseBedForLeavePatient(patient) {
     if (!this.chosenVacantBedId) {
       return;
@@ -397,8 +281,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     }
   }
 
-  patientCareBurden(patientChoices, burdenCategoriId)
-  {
+  patientCareBurden(patientChoices, burdenCategoriId) {
     if (patientChoices!= null && patientChoices.length > 0){
       let x =  patientChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
       return x && x.careBurdenValue ? x.careBurdenValue.name: null;
@@ -410,8 +293,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     }
   }
 
-  CalculateAverage(burdenCategoriId)
-  {
+  CalculateAverage(burdenCategoriId) {
     let burdenval = 0;
     let antal = 0;
     for (let bed of this.unit.beds)
@@ -429,8 +311,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     return (burdenval/antal).toFixed(2);
   }
 
-  getMatrixValue(ssk: Ssk, cbk: CareBurdenCategory, cbv: CareBurdenValue): string
-  {
+  getMatrixValue(ssk: Ssk, cbk: CareBurdenCategory, cbv: CareBurdenValue): string {
     if (this.sskCategoryValueMatrix[ssk.label] && this.sskCategoryValueMatrix[ssk.label][cbk.name] && this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name]) {
       return this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name];
     } else {
@@ -446,76 +327,11 @@ export class UnitComponent implements OnInit, OnDestroy {
      else return true;
   }
 
-  private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {
-    if (!sevenDaysPlaningUnits|| sevenDaysPlaningUnits.length === 0) {
-      return [];
-    }
-    return sevenDaysPlaningUnits.map(sevenDaysPlaningUnit => {
-      return this.formBuilder.group({
-        id: sevenDaysPlaningUnit.id,
-        date: sevenDaysPlaningUnit.date,
-        fromUnit: sevenDaysPlaningUnit.fromUnit.id,
-        quantity: sevenDaysPlaningUnit.quantity,
-        comment:  sevenDaysPlaningUnit.comment
-      })
-    });
+  collapse(element: ListItemComponent) {
+    element.toggleExpand();
   }
 
-  CreateSevenDaysPlaningUnit(): FormGroup {
-    return this.formBuilder.group({
-      id: null,
-      date: [null, Validators.required],
-      fromUnit: [null, Validators.required],
-      quantity: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
-      comment: null
-    });
-  }
 
-  deleteSevenDaysPlaningUnit(index: number) {
-    this.sevenDaysPlaningUnits.removeAt(index);
-  }
-
-  addPlannedInUnit() {
-    this.sevenDaysPlaningUnits.push(this.CreateSevenDaysPlaningUnit());
-  }
-  get sevenDaysPlaningUnits(): FormArray {
-    return <FormArray> (this.addSevenDaysPlaningUnitForm ? this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') : []);
-  }
-
-  saveFromEnhet() {
-    let sevenDaysPlaningUnits = <SevenDaysPlaningUnit[]>[];
-    let sevenDaysPlaningUnitsModel = this.addSevenDaysPlaningUnitForm.value;
-    sevenDaysPlaningUnits = sevenDaysPlaningUnitsModel.sevenDaysPlaningUnits.map(term => {
-      return {
-        id: term.id ? term.id : null,
-        date: term.date,
-        fromUnit: this.unit.unitsPlannedIn.find(plannedIn => plannedIn.id === term.fromUnit),
-        quantity: term.quantity,
-        comment: term.comment
-      }
-    });
-    this.http.put('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + 'sevenDaysPlaningUnit', sevenDaysPlaningUnits)
-      .subscribe(unit => {
-        this.ngOnInit();
-      });
-  }
-
-  getDatepickerValidation(index: number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('date').touched;
-  }
-
-  getDropdownValidation(index : number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').touched
-      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').valid ;
-  }
-
-  getQuantityValidation(index: number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').touched
-      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').valid ;
-  }
 
   private sortData(sevendaysPlaningUnits: SevenDaysPlaningUnit[])
   {

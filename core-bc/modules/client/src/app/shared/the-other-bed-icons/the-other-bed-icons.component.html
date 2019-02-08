@@ -1,5 +1,5 @@
 <div class="ikon" *ngIf="bed.patient?.plannedLeaveDate != null"
-     [appCallout]="'Planerad hemgång: ' +bed.patient?.plannedLeaveDate"><i class="fa fa-home purple"></i>
+     [appCallout]="'Planerad hemgång: ' + formatDate(bed.patient?.plannedLeaveDate)"><i class="fa fa-home purple"></i>
 </div>
 
 <div class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
