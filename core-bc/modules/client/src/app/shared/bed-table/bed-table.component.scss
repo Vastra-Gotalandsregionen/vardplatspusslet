@@ -1,0 +1,31 @@
+table {
+  background: #ffffff;
+  line-height: 1.3;
+  width: 100%;
+
+  th, td {
+    border: 1px solid #888;
+    padding: 1px 4px;
+  }
+
+  tr.bed-form-row {
+    background: #f0f0f0;
+
+    td {
+      border: 1px solid #f0f0f0;
+      border-bottom: none;
+      padding: 18px 0;
+
+      .bed-form-wrapper {
+        background: #ffffff;
+        border: 1px solid #888;
+        padding: 18px;
+      }
+    }
+  }
+
+  tr.clickable:hover {
+    box-shadow: 3px 3px 9px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+}

@@ -43,13 +43,14 @@ export class BedTableComponent implements OnInit {
   cleaningAlternativesDropdownItems: DropdownItem<number>[];
   plannedInDropdownUnits: DropdownItem<number>[];
 
+  expandedRows: Array<boolean>;
+
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
 
     this.initThings();
-
 
   }
 
@@ -58,8 +59,14 @@ export class BedTableComponent implements OnInit {
     this.appDeleteModal.open();
   }
 
-  collapse(element: ListItemComponent) {
-    element.toggleExpand();
+  toggleRow(index) {
+    let newState = !this.expandedRows[index];
+    this.expandedRows = new Array<boolean>();
+    this.expandedRows[index] = newState;
+  }
+
+  collapse(index) {
+    this.expandedRows[index] = false;
   }
 
   save() {
@@ -82,6 +89,7 @@ export class BedTableComponent implements OnInit {
   confirmDelete() {
     this.http.delete('/api/bed/' + this.clinic.id + '/' + this.unit.id + '/' + this.bedForDeletion.id)
       .subscribe(() => {
+        this.expandedRows = new Array<boolean>();
         this.save();
       });
   }
@@ -159,6 +167,8 @@ export class BedTableComponent implements OnInit {
   }
 
   initThings() {
+    this.expandedRows = new Array(this.unit.beds.length);
+
     this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
       sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits))
     });

@@ -1,3 +1,63 @@
+<table>
+  <thead>
+  <tr>
+    <th [colSpan]="2"></th>
+    <th [colSpan]="unit.careBurdenCategories.length">Vårdtyngd</th>
+    <th [colSpan]="4"></th>
+  </tr>
+  <tr>
+    <th>Rum/säng</th>
+    <th>Status</th>
+    <th *ngFor="let cbc of unit.careBurdenCategories">{{cbc.name}}</th>
+    <th>SSK</th>
+    <th>Patient</th>
+    <th>Kön</th>
+    <th>Övrigt</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let bed of unit?.beds; let i = index">
+    <tr (click)="toggleRow(i)" class="clickable">
+      <td>{{bed.label}}</td>
+      <td><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}" [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></td>
+      <td *ngFor="let cbc of unit.careBurdenCategories">{{getCareBurdenValueName(cbc, bed.patient?.careBurdenChoices)}}</td>
+      <td><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></td>
+      <td><span>{{bed.patient?.label}}</span></td>
+      <td *ngIf="bed.patient?.gender === 'MAN'"><i class="fa fa-male purple" [appCallout]="'Man'"></i></td>
+      <td *ngIf="bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple" [appCallout]="'Kvinna'"></i></td>
+      <td *ngIf="bed.patient?.gender === 'BARN'"><i class="fa fa-child purple" [appCallout]="'Barn'"></i></td>
+      <td *ngIf="bed.patient?.gender === null"></td>
+      <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
+    </tr>
+    <tr *ngIf="expandedRows[i]" class="bed-form-row">
+      <td [colSpan]="6 + unit.careBurdenCategories.length">
+        <div class="bed-form-wrapper">
+          <app-bed-form [clinicId]="clinic.id"
+                        [unit]="unit"
+                        [bed]="bed"
+                        [careBurdenValuesOptions]="careBurdenValuesOptions"
+                        [amningOptions]="amningOptions"
+                        [dietMotherDropdownItems]="dietMotherDropdownItems"
+                        [dietChildDropdownItems]="dietChildDropdownItems"
+                        [dietDropdownItems]="dietDropdownItems"
+                        [informationOptions]="informationOptions"
+                        [genderDropdownItems]="genderDropdownItems"
+                        [leaveStatusesDropdownItems]="leaveStatusesDropdownItems"
+                        [sskDropdownItems]="sskDropdownItems"
+                        [servingKlinikerDropdownItems]="servingKlinikerDropdownItems"
+                        [cleaningAlternativesDropdownItems]="cleaningAlternativesDropdownItems"
+                        (collapse)="collapse(i)"
+                        (openDeleteModal)="openDeleteModal(bed)"
+                        (save)="save()">
+
+          </app-bed-form>
+        </div>
+      </td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
+
 <vgr-list [flexibleHeader]="true">
   <vgr-list-header>
     <vgr-list-column-header width="3">&nbsp;</vgr-list-column-header>

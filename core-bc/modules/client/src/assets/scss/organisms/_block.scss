@@ -2,7 +2,9 @@
   width: auto;
 }
 
-app-left-column .page-block {
-  background: transparent;
-  padding: 0;
+app-left-column, .transparent {
+  .page-block {
+    background: transparent;
+    padding: 0;
+  }
 }
