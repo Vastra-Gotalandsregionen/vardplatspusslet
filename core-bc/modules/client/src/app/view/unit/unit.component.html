@@ -88,6 +88,7 @@
             </tr>
           </table>
         </vgr-panel>
+
       </vgr-panel-container>
     </vgr-page-block>
   </app-left-column>
@@ -147,6 +148,31 @@
             </vgr-list-item-content>
           </vgr-list-item>
         </vgr-list>
+      </vgr-page-block>
+      <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
+        <vgr-panel-container>
+          <vgr-panel *ngIf="unit?.hasUnitPlannedInFeature" [width]="6">
+            <h6>Planerade in närmaste 8 dagarna på avdelning: {{unit.name}}</h6>
+          <table class="vpp-table">
+            <thead>
+            <tr>
+              <th style="width: 70px"></th>
+              <th *ngFor="let day of daysAndMonths" class="pad-left-20" style="text-align: center">{{day.dayName}} {{day.dayNumber}}/{{day.monthNumber}}</th>
+            </tr>
+            </thead>
+            <tr *ngFor="let plan of unit?.unitsPlannedIn">
+              <td>{{plan.name}}</td>
+              <td *ngFor="let day of daysAndMonths" style="text-align: center" >15</td>
+            </tr>
+            <tr>
+              <td>Summa:</td>
+              <td *ngFor="let day of daysAndMonths" style="text-align: center" >0</td>
+            </tr>
+
+          </table>
+        </vgr-panel>
+        </vgr-panel-container>
+
       </vgr-page-block>
         <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
           <vgr-list [flexibleHeader]="true">
