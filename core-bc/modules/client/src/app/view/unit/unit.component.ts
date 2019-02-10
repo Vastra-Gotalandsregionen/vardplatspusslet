@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
 import {Bed} from "../../domain/bed";
-import {FormBuilder} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {Ssk} from "../../domain/ssk";
@@ -35,6 +35,8 @@ export class UnitComponent implements OnInit, OnDestroy {
   sevendaysplan: SevenDaysPlaningUnit[] = [];
   days: DayAndDate[] = [];
   daysAndMonths: DayAndDate[] = [];
+  plannedInDropdownUnits: DropdownItem<number>[];
+  addSevenDaysPlaningUnitForm: FormGroup;
 
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
@@ -75,6 +77,14 @@ export class UnitComponent implements OnInit, OnDestroy {
         .do(unit => {
           if (unit) {
             this.unit = unit;
+            this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
+              return {displayName: unitplannedIn.name, value: unitplannedIn.id};
+            }));
+
+            this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
+              sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits))
+            });
+
 
             this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
 
@@ -85,6 +95,7 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.inited = true;
             this.CalculateDaysAndDate();
             this.sortData(unit.sevenDaysPlaningUnits);
+
           } else {
             this.error = this.notFoundText;
           }
@@ -382,5 +393,75 @@ export class UnitComponent implements OnInit, OnDestroy {
       dayDate.monthNumber = nextDay.getMonth() + 1;
       this.daysAndMonths.push(dayDate);
     }
+  }
+
+  getDropdownValidation(index : number)
+  {
+    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').touched
+      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').valid ;
+  }
+
+  getQuantityValidation(index: number)
+  {
+    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').touched
+      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').valid ;
+  }
+
+  getDatepickerValidation(index: number)
+  {
+    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('date').touched;
+  }
+  saveFromEnhet() {
+    let sevenDaysPlaningUnits = <SevenDaysPlaningUnit[]>[];
+    let sevenDaysPlaningUnitsModel = this.addSevenDaysPlaningUnitForm.value;
+    sevenDaysPlaningUnits = sevenDaysPlaningUnitsModel.sevenDaysPlaningUnits.map(term => {
+      return {
+        id: term.id ? term.id : null,
+        date: term.date,
+        fromUnit: this.unit.unitsPlannedIn.find(plannedIn => plannedIn.id === term.fromUnit),
+        quantity: term.quantity,
+        comment: term.comment
+      }
+    });
+    this.http.put('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + 'sevenDaysPlaningUnit', sevenDaysPlaningUnits)
+      .subscribe(unit => {
+      });
+  }
+
+  get sevenDaysPlaningUnits(): FormArray {
+    return <FormArray> (this.addSevenDaysPlaningUnitForm ? this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') : []);
+  }
+
+  deleteSevenDaysPlaningUnit(index: number) {
+    this.sevenDaysPlaningUnits.removeAt(index);
+  }
+
+  addPlannedInUnit() {
+    this.sevenDaysPlaningUnits.push(this.CreateSevenDaysPlaningUnit());
+  }
+
+  CreateSevenDaysPlaningUnit(): FormGroup {
+    return this.formBuilder.group({
+      id: null,
+      date: [null, Validators.required],
+      fromUnit: [null, Validators.required],
+      quantity: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
+      comment: null
+    });
+  }
+
+  private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {
+    if (!sevenDaysPlaningUnits|| sevenDaysPlaningUnits.length === 0) {
+      return [];
+    }
+    return sevenDaysPlaningUnits.map(sevenDaysPlaningUnit => {
+      return this.formBuilder.group({
+        id: sevenDaysPlaningUnit.id,
+        date: sevenDaysPlaningUnit.date,
+        fromUnit: sevenDaysPlaningUnit.fromUnit.id,
+        quantity: sevenDaysPlaningUnit.quantity,
+        comment:  sevenDaysPlaningUnit.comment
+      })
+    });
   }
 }

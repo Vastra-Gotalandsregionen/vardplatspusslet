@@ -26,7 +26,6 @@ export class BedTableComponent implements OnInit {
   @Output('save') saveEvent = new EventEmitter();
 
   addBedForm: FormGroup;
-  addSevenDaysPlaningUnitForm: FormGroup;
 
   bedForDeletion: Bed;
 
@@ -41,8 +40,6 @@ export class BedTableComponent implements OnInit {
   sskDropdownItems: DropdownItem<number>[];
   servingKlinikerDropdownItems: DropdownItem<number>[];
   cleaningAlternativesDropdownItems: DropdownItem<number>[];
-  plannedInDropdownUnits: DropdownItem<number>[];
-
   expandedRows: Array<boolean>;
   delayedExpandedRows: Array<boolean>;
 
@@ -99,85 +96,9 @@ export class BedTableComponent implements OnInit {
       });
   }
 
-  private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {
-    if (!sevenDaysPlaningUnits|| sevenDaysPlaningUnits.length === 0) {
-      return [];
-    }
-    return sevenDaysPlaningUnits.map(sevenDaysPlaningUnit => {
-      return this.formBuilder.group({
-        id: sevenDaysPlaningUnit.id,
-        date: sevenDaysPlaningUnit.date,
-        fromUnit: sevenDaysPlaningUnit.fromUnit.id,
-        quantity: sevenDaysPlaningUnit.quantity,
-        comment:  sevenDaysPlaningUnit.comment
-      })
-    });
-  }
-
-  get sevenDaysPlaningUnits(): FormArray {
-    return <FormArray> (this.addSevenDaysPlaningUnitForm ? this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') : []);
-  }
-
-  deleteSevenDaysPlaningUnit(index: number) {
-    this.sevenDaysPlaningUnits.removeAt(index);
-  }
-
-  addPlannedInUnit() {
-    this.sevenDaysPlaningUnits.push(this.CreateSevenDaysPlaningUnit());
-  }
-
-  saveFromEnhet() {
-    let sevenDaysPlaningUnits = <SevenDaysPlaningUnit[]>[];
-    let sevenDaysPlaningUnitsModel = this.addSevenDaysPlaningUnitForm.value;
-    sevenDaysPlaningUnits = sevenDaysPlaningUnitsModel.sevenDaysPlaningUnits.map(term => {
-      return {
-        id: term.id ? term.id : null,
-        date: term.date,
-        fromUnit: this.unit.unitsPlannedIn.find(plannedIn => plannedIn.id === term.fromUnit),
-        quantity: term.quantity,
-        comment: term.comment
-      }
-    });
-    this.http.put('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + 'sevenDaysPlaningUnit', sevenDaysPlaningUnits)
-      .subscribe(unit => {
-        this.save();
-      });
-  }
-
-  getDatepickerValidation(index: number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('date').touched;
-  }
-
-  getDropdownValidation(index : number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').touched
-      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').valid ;
-  }
-
-  getQuantityValidation(index: number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').touched
-      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').valid ;
-  }
-
-  CreateSevenDaysPlaningUnit(): FormGroup {
-    return this.formBuilder.group({
-      id: null,
-      date: [null, Validators.required],
-      fromUnit: [null, Validators.required],
-      quantity: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
-      comment: null
-    });
-  }
-
   initThings() {
     this.expandedRows = new Array(this.unit.beds.length);
     this.delayedExpandedRows = new Array(this.unit.beds.length);
-
-    this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
-      sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits))
-    });
 
     this.initAddBedForm();
 
@@ -234,9 +155,6 @@ export class BedTableComponent implements OnInit {
       return {displayName: cg.description, value: cg.id};
     }));
 
-    this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
-      return {displayName: unitplannedIn.name, value: unitplannedIn.id};
-    }));
   }
 
   private initAddBedForm() {
