@@ -111,10 +111,10 @@
             </div>
           </div>
 
-          <div *ngIf="!showChangeBedOrder">
+          <div *ngIf="!showChangeBedOrder" class="bed-table-wrapper">
             <app-bed-table *ngIf="clinic && unit" [clinic]="clinic" [unit]="unit" (save)="ngOnInit()"></app-bed-table>
 
-            <div class="button-row" style="padding-top: 15px">
+            <div class="button-row" style="padding: 0 0 16px 16px">
               <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
             </div>
           </div>
