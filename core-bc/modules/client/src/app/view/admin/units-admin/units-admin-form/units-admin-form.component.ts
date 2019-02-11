@@ -33,7 +33,7 @@ export class UnitsAdminFormComponent implements OnInit {
   unitForm: FormGroup;
 
   clinicDropdownItems: { displayName: string; value: string }[] = [];
-  sskDropdownItems: DropdownItem<string>[];
+  colorDropdownItems: DropdownItem<string>[];
 
 
   editSsks: boolean;
@@ -49,14 +49,14 @@ export class UnitsAdminFormComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) {
-    this.sskDropdownItems = [
+    this.colorDropdownItems = [
       {displayName: 'Blå', value: 'BLUE'},
       {displayName: 'Grön', value: 'GREEN'},
-      {displayName: 'Röd', value: 'RED'},
       {displayName: 'Gul', value: 'YELLOW'},
       {displayName: 'Lila', value: 'PURPLE'},
-      {displayName: 'Rosa', value: 'PINK'}
-
+      {displayName: 'Rosa', value: 'PINK'},
+      {displayName: 'Röd', value: 'RED'},
+      {displayName: 'Vit', value: 'WHITE'}
     ];
   }
 
@@ -390,7 +390,8 @@ export class UnitsAdminFormComponent implements OnInit {
     return careburdenvalues.map(careburdenvalue => {
       return this.formBuilder.group( {
         id: careburdenvalue.id,
-        name: careburdenvalue.name
+        name: careburdenvalue.name,
+        color: careburdenvalue.color
       })
     });
   }

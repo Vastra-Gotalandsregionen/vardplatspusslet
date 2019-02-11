@@ -11,6 +11,7 @@ import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {Patient} from "../../domain/patient";
+import {CareBurdenValue} from "../../domain/careburdenvalue";
 
 @Component({
   selector: 'app-bed-table',
@@ -248,7 +249,7 @@ export class BedTableComponent implements OnInit {
     });
   }
 
-  getCareBurdenValueName(cbc: CareBurdenCategory, careBurdenChoices: CareBurdenChoice[]) {
+  getCareBurdenValue(cbc: CareBurdenCategory, careBurdenChoices: CareBurdenChoice[]): CareBurdenValue {
     if (!careBurdenChoices) {
       return null;
     }
@@ -260,7 +261,7 @@ export class BedTableComponent implements OnInit {
     }
 
     let careBurdenValue = careBurdenChoice.careBurdenValue;
-    return careBurdenValue ? careBurdenValue.name : null;
+    return careBurdenValue ? careBurdenValue : null;
   }
 
   toInterpreterString(patient: Patient): string {

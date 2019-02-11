@@ -81,7 +81,7 @@ div.save-cancel {
   padding-left: 32px;
 }
 
-.ssk-color, .status-color {
+.ssk-color, .care-burden-value-color, .status-color, .only-color {
   display: inline-block;
   width: 18px;
   height: 18px;
@@ -94,6 +94,7 @@ div.save-cancel {
   margin-left: 12px;
   position: relative;
   bottom: 1px;
+  text-indent: -9999px;
 }
 
 .status-VACANT {
@@ -104,15 +105,15 @@ div.save-cancel {
   background-color: $secondary-color--red;
 }
 
-.ssk-BLUE {
+.ssk-BLUE, .BLUE {
   background-color: $primary-color--blue;
 }
 
-.ssk-GREEN {
+.ssk-GREEN, .GREEN {
   background-color: $primary-color--green;
 }
 
-.ssk-RED {
+.ssk-RED, .RED {
   background-color: $primary-color--red;
 }
 
@@ -120,18 +121,23 @@ $primary-color--yellow : #f2a900;
 $primary-color--purple : #582c83;
 $primary-color--pink : rgba(255, 192, 203, 1);
 
-.ssk-YELLOW{
+.ssk-YELLOW, .YELLOW {
   background-color:$primary-color--yellow;
 }
 
-.ssk-PURPLE{
+.ssk-PURPLE, .PURPLE {
   background-color:$primary-color--purple;
 }
 
-.ssk-PINK {
+.ssk-PINK, .PINK {
   background-color: $primary-color--pink;
 }
 
+.ssk-WHITE, .WHITE {
+  background-color: #ffffff;
+  border: 1px solid #555555;
+  box-sizing: border-box;
+}
 
 a.icon-link {
   border-bottom: none;

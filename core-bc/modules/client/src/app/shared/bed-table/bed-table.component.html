@@ -38,7 +38,9 @@
 
       <td><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></td>
 
-      <td class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index">{{getCareBurdenValueName(cbc, bed.patient?.careBurdenChoices)}}</td>
+      <td class="care-burden-value column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index">
+        <span *ngIf="getCareBurdenValue(cbc, bed.patient?.careBurdenChoices) as careBurdenValue" [ngClass]="careBurdenValue.color ? 'only-color ' + careBurdenValue.color: ''">{{careBurdenValue.name}}</span>
+      </td>
 
       <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietMother?.name}}</td>
 
@@ -70,9 +72,9 @@
         <span *ngIf="bed.patient?.rond" class="ikon"><i class="fa fa-user-md purple"></i></span>
       </td>
 
-      <td *ngIf="bed.patient?.gender === 'MAN'"><i class="fa fa-male purple" [appCallout]="'Man'"></i></td>
-      <td *ngIf="bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple" [appCallout]="'Kvinna'"></i></td>
-      <td *ngIf="bed.patient?.gender === 'BARN'"><i class="fa fa-child purple" [appCallout]="'Barn'"></i></td>
+      <td *ngIf="bed.patient?.gender === 'MAN'"><i class="fa fa-male purple"></i></td>
+      <td *ngIf="bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple"></i></td>
+      <td *ngIf="bed.patient?.gender === 'BARN'"><i class="fa fa-child purple"></i></td>
       <td *ngIf="bed.patient?.gender === null"></td>
       <td>
         <span class="ikon" *ngIf="bed.patient?.interpreter"

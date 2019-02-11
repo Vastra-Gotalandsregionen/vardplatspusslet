@@ -14,6 +14,9 @@ public class CareBurdenValue {
     @Column
     private String name;
 
+    @Enumerated
+    private Color color;
+
     public Integer getId() {
         return id;
     }
@@ -28,5 +31,13 @@ public class CareBurdenValue {
 
     public void setName(String burdenValue) {
         this.name = burdenValue;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

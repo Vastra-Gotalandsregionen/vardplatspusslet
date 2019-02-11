@@ -84,7 +84,7 @@
               <vgr-input [small]="true" formControlName="label" [showValidation]="getCareTeamValidation(i)"></vgr-input>
 
               <vgr-dropdown-select [showValidation]="getSskValidation(i)" formControlName="color">
-                <vgr-dropdown-item *ngFor="let item of sskDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
               </vgr-dropdown-select>
               <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
@@ -178,6 +178,7 @@
 
           <tr *ngFor="let burden of unit?.careBurdenValues|| []">
             <td>{{burden.name}}</td>
+            <td><span class="care-burden-value-color {{burden.color}}"></span></td>
           </tr>
 
           <tfoot>
@@ -190,6 +191,11 @@
           <div formArrayName="careBurdenValues" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="name" placeholder="kategori ..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input>
+
+              <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg (valfritt)'">
+                <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+              </vgr-dropdown-select>
+
               <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons">delete</span></a>
             </div>
           </div>
