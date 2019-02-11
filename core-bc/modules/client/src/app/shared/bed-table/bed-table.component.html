@@ -4,8 +4,8 @@
     <th [colSpan]="4"></th>
     <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last">Vårdtyngd</th>
     <th *ngIf="unit.hasMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
-    <th [colSpan]="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0)"></th>
-    <th [colSpan]="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0)" class="column-group first last">Ronder</th>
+    <th *ngIf="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0) > 0" [colSpan]="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0)"></th>
+    <th *ngIf="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0) > 0" [colSpan]="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0)" class="column-group first last">Ronder</th>
     <th [colSpan]="50"></th>
   </tr>
   <tr>
