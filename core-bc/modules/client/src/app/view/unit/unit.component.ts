@@ -55,7 +55,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   private timerSubscription: Subscription;
   sskCategoryValueMatrix = {};
   sevendaysMatrix = {};
-  sevenDaysSumArray: number[]= [];
+  sevenDaysSumArray: number[]= [0,0,0,0,0,0,0,0];
 
 
   constructor(private http: HttpClient,
@@ -462,10 +462,9 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   private  FillSevenDaysMatrix()
   {
-    debugger;
     this.sevendaysMatrix = [];
+    this.sevenDaysSumArray = [0,0,0,0,0,0,0,0];
      let plannedIns: UnitPlannedIn[] =  this.unit.unitsPlannedIn;
-     let temp: number = 0;
      plannedIns.forEach( pi =>{
         this.sevendaysMatrix[pi.name] = [];
         for (var i=0; i<8; i++)
