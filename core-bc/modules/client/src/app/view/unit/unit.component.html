@@ -50,7 +50,7 @@
               <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
             </tr>
             </thead>
-            <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurfen(bed.patient)">
+            <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
               <td>säng{{" "+ bed.label}}</td>
               <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
                 {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
@@ -150,9 +150,7 @@
         </vgr-list>
       </vgr-page-block>
       <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
-        <vgr-panel-container>
-          <vgr-panel *ngIf="unit?.hasUnitPlannedInFeature" [width]="6">
-            <h6>Planerade in närmaste 8 dagarna på avdelning: {{unit.name}}</h6>
+        <h6>Planerade in närmaste 8 dagarna på avdelning: {{unit.name}}</h6>
           <table class="vpp-table">
             <thead>
             <tr>
@@ -162,7 +160,7 @@
             </thead>
             <tr *ngFor="let plan of unit?.unitsPlannedIn">
               <td>{{plan.name}}</td>
-              <td *ngFor="let day of daysAndMonths" style="text-align: center" >15</td>
+              <td *ngFor="let day of daysAndMonths; let i = index" style="text-align: center" >{{sevendaysMatrix[plan.name][i]}}</td>
             </tr>
             <tr>
               <td>Summa:</td>
@@ -170,8 +168,6 @@
             </tr>
 
           </table>
-        </vgr-panel>
-        </vgr-panel-container>
 
       </vgr-page-block>
         <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
