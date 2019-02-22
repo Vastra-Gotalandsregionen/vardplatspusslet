@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
 import {Bed} from "../../domain/bed";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {Ssk} from "../../domain/ssk";
@@ -87,7 +87,7 @@ export class UnitComponent implements OnInit, OnDestroy {
             }));
 
             this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
-              sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits))
+              sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits), [this.SevenDaysArrayCompare.bind(this)])
             });
 
 
@@ -96,13 +96,11 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.updateSskCategoryValueMatrix(unit);
 
             this.updateVacants(unit);
-
             this.inited = true;
             this.daysAndMonths = [];
             this.CalculateDaysAndDate();
             this.filterSevenDays(unit.sevenDaysPlaningUnits);
             this.FillSevenDaysMatrix()
-
           } else {
             this.error = this.notFoundText;
           }
@@ -111,7 +109,7 @@ export class UnitComponent implements OnInit, OnDestroy {
         .subscribe((messages: Message[]) => {
           this.messages = messages;
       }, (error1: HttpErrorResponse) => {
-        console.log(error1);
+        console.error(error1);
         if (error1.status === 404) {
           this.error = this.notFoundText;
         } else {
@@ -492,4 +490,34 @@ export class UnitComponent implements OnInit, OnDestroy {
     })
     return found != null ? found.quantity : 0;
   }
+
+
+  SevenDaysArrayCompare(c: AbstractControl):{[key: string]: any} | null{
+    debugger;
+    for (let element of c.value )
+    {
+      if(element.date !== null)
+      {
+        element.date = new Date(element.date).getTime();
+      }
+    }
+    let array1 = c.value;
+    //array1 = array1.filter(x => x.id !== null);
+    let duplicatesArray = [];
+    array1.forEach((e1, index) => array1.forEach(e2 => {if (e1.date === e2.date && e1.fromUnit === e2.fromUnit && e1.id !== e2.id) {duplicatesArray[index] = true}}));
+    if (duplicatesArray.length > 0) {
+      return {'duplicatesExist': duplicatesArray }
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  isDuplicate(duplicates: string[], id: string) {
+    return !!(duplicates && duplicates.indexOf(id) > -1);
+  }
 }
+
+
+

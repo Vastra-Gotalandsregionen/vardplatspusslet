@@ -71,7 +71,6 @@ rod {
 {
   display: flex;
   flex-wrap: wrap;
-  width: 85%;
   margin-top: 3px;
 }
 
@@ -95,4 +94,28 @@ h2{
   margin-bottom: 7px;
   margin-left:0;
   margin-right: 0;
+}
+
+.left-head
+{
+  padding-right: 3px;
+  text-align: center;
+}
+
+.planing-table
+{
+  width: 30vw;
+  margin-right: 4px;
+  margin-bottom: 5px;
+}
+
+
+.right-head
+{
+  text-align: center; padding: 2px; padding-right: 0
+}
+
+.is-invalid
+{
+  border: solid red 2px;
 }
