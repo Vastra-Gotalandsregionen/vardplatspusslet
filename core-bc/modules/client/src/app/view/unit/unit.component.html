@@ -150,25 +150,14 @@
         </vgr-list>
       </vgr-page-block>
       <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
-        <h6>Planerade in närmaste 8 dagarna på avdelning: {{unit.name}}</h6>
-          <table class="vpp-table">
-            <thead>
-            <tr>
-              <th style="width: 70px"></th>
-              <th *ngFor="let day of daysAndMonths" class="pad-left-20" style="text-align: center">{{day.dayName}} {{day.dayNumber}}/{{day.monthNumber}}</th>
-            </tr>
-            </thead>
-            <tr *ngFor="let plan of unit?.unitsPlannedIn">
-              <td>{{plan.name}}</td>
-              <td *ngFor="let day of daysAndMonths; let i = index" style="text-align: center" >{{sevendaysMatrix[plan.name][i]}}</td>
-            </tr>
-            <tr>
-              <td>Summa:</td>
-              <td *ngFor="let sum of sevenDaysSumArray" style="text-align: center" >{{sum}}</td>
-            </tr>
-
-          </table>
-
+        <h6>Planerade in närmaste 8 dagarna:{{unit.name}}</h6>
+        <div class="containers">
+         <div> <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table></div>
+          <h6 *ngIf="units.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
+        <div *ngFor="let unit of units">
+          <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table>
+        </div>
+        </div>
       </vgr-page-block>
         <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
           <vgr-list [flexibleHeader]="true">

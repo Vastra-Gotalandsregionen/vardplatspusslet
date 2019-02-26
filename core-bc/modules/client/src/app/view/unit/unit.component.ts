@@ -35,18 +35,12 @@ export class UnitComponent implements OnInit, OnDestroy {
   showRow: boolean = true;
   burdenvals: string;
   sevendaysplan: SevenDaysPlaningUnit[] = [];
-  days: DayAndDate[] = [];
-  daysAndMonths: DayAndDate[] = [];
   plannedInDropdownUnits: DropdownItem<number>[];
   addSevenDaysPlaningUnitForm: FormGroup;
-
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
-
   vacantBeds: DropdownItem<number>[];
-
   chosenVacantBedId: number;
-
   showChangeBedOrder = false;
   bedsOrder: Bed[] = [];
   inited: boolean;
@@ -54,8 +48,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   private timerSubscription: Subscription;
   sskCategoryValueMatrix = {};
-  sevendaysMatrix = {};
-  sevenDaysSumArray: number[]= [0,0,0,0,0,0,0,0];
 
 
   constructor(private http: HttpClient,
@@ -75,7 +67,7 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.clinic = clinic;
 
         this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
-          this.units = unitArray;
+          this.units = unitArray.filter(x => x.name !== this.unit.name);
         });
       });
       this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id)
@@ -97,10 +89,6 @@ export class UnitComponent implements OnInit, OnDestroy {
 
             this.updateVacants(unit);
             this.inited = true;
-            this.daysAndMonths = [];
-            this.CalculateDaysAndDate();
-            this.filterSevenDays(unit.sevenDaysPlaningUnits);
-            this.FillSevenDaysMatrix()
           } else {
             this.error = this.notFoundText;
           }
@@ -420,80 +408,8 @@ export class UnitComponent implements OnInit, OnDestroy {
     });
   }
 
-  private filterSevenDays(sevendaysPlaningUnits: SevenDaysPlaningUnit[])  //actually 8 days
-  {
-    this.sevendaysplan = [];
-    let today = new Date();
-    let newdayTime = new Date();
-    newdayTime.setHours(0);
-    newdayTime.setMinutes(0,0, 0);
-    let eightday = new Date(today.setDate(today.getDate() + 8));
-    this.sevendaysplan = sevendaysPlaningUnits.sort( (a:SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
-      (a.date > b.date ? 1 : -1));
-
-    this.sevendaysplan = this.sevendaysplan.filter(x => (x.date <= eightday) && (x.date >= newdayTime) );
-  }
-
-  private CalculateDaysAndDate()
-  {
-    this.daysAndMonths  =[];
-    let WeekDay: string[]= ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
-    let veckodag: string[]= [];
-    let today = new Date();
-    let day = today.getDay();
-    let dayDate = new DayAndDate();
-    dayDate.dayName = WeekDay[day];
-    dayDate.dayNumber= today.getDate();
-    dayDate.monthNumber = today.getMonth() + 1;
-    this.daysAndMonths.push(dayDate);
-    for (var i=0; i< 7; i++)
-    {
-      let nextDay = new Date(today.setDate(today.getDate() + 1));
-      day = nextDay.getDay();
-      dayDate = new DayAndDate();
-      dayDate.dayName = WeekDay[day];
-      dayDate.dayNumber= nextDay.getDate();
-      dayDate.monthNumber = nextDay.getMonth() + 1;
-      this.daysAndMonths.push(dayDate);
-    }
-  }
-
-  private  FillSevenDaysMatrix()
-  {
-    this.sevendaysMatrix = [];
-    this.sevenDaysSumArray = [0,0,0,0,0,0,0,0];
-     let plannedIns: UnitPlannedIn[] =  this.unit.unitsPlannedIn;
-     plannedIns.forEach( pi =>{
-        this.sevendaysMatrix[pi.name] = [];
-        for (var i=0; i<8; i++)
-        {
-          this.sevendaysMatrix[pi.name][i] = this.FindSevendaysMatrixValue(pi.name, i);
-          this.sevenDaysSumArray[i] += this.sevendaysMatrix[pi.name][i];
-        }
-       }
-     )
-  }
-
-  private FindSevendaysMatrixValue(name: string, i: number): number
-  {
-    let today = new Date();
-    let currentDate= new Date( today.setDate(today.getDate() + i));
-    currentDate.setHours(0, 0, 0, 0);
-    let found = this.sevendaysplan.find(function (element) {
-      let sourceDate = new Date(element.date);
-      let sourceDay = sourceDate.getDate();
-      let currentDay = currentDate.getDate();
-      if (sourceDate.getDate() == currentDate.getDate())
-      {
-        return  element.fromUnit.name === name;
-      }
-    })
-    return found != null ? found.quantity : 0;
-  }
-
 
   SevenDaysArrayCompare(c: AbstractControl):{[key: string]: any} | null{
-    debugger;
     for (let element of c.value )
     {
       if(element.date !== null)

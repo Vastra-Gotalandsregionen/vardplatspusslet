@@ -47,6 +47,7 @@ import {HttpErrorHandlerInterceptor} from "./interceptor/http-error-handler-inte
 import {ErrorDialogService} from "./service/error-dialog.service";
 import { TheOtherBedIconsComponent } from './shared/the-other-bed-icons/the-other-bed-icons.component';
 import { BedTableComponent } from './shared/bed-table/bed-table.component';
+import { UnitPlannedInTableComponent } from './elements/unit-planned-in-table/unit-planned-in-table.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -79,7 +80,8 @@ registerLocaleData(localeSv, "sv-SE");
     LoginFormComponent,
     ErrorDialogComponent,
     TheOtherBedIconsComponent,
-    BedTableComponent
+    BedTableComponent,
+    UnitPlannedInTableComponent
   ],
   imports: [
     BrowserModule,
