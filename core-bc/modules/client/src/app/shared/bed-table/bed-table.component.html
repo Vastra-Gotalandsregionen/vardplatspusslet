@@ -78,7 +78,7 @@
       <td *ngIf="bed.patient?.gender === null"></td>
       <td>
         <span class="ikon" *ngIf="bed.patient?.interpreter"
-               [appCallout]="toInterpreterString(bed.patient)"><i class="material-icons purple">translate</i>
+               [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>
         </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">
