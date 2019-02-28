@@ -39,7 +39,9 @@
 
               <div class="containers clearfix">
                 <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
-                  <vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>
+                  <!--<vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>-->
+                  <a (click)="openDeleteModal(clinic)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+
                 </div>
 
                 <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">

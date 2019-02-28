@@ -86,7 +86,7 @@
               <vgr-dropdown-select [showValidation]="getSskValidation(i)" formControlName="color">
                 <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
               </vgr-dropdown-select>
-              <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div  class="edit">
@@ -112,7 +112,7 @@
           <div formArrayName="servingClinics" *ngFor="let klinik of servingClinics.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input [small]="true" [showValidation]="getServingClinicValidation(i)" formControlName="name" placeholder="Klinik..."></vgr-input>
-              <a (click)="deleteServingClinic(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)="deleteServingClinic(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit">
@@ -138,7 +138,7 @@
           <div formArrayName="cleaningAlternatives" *ngFor="let cleanAlt of cleaningAlternatives.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="description" [small]="true" placeholder="städ alternative..." [showValidation]="getCleaniningValidation(i)"></vgr-input>
-              <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit">
@@ -164,7 +164,7 @@
           <div formArrayName="careBurdenCategories" *ngFor="let burden of careBurdenCategories.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="name" placeholder="Kategori..." [small]="true" [showValidation]="getCareBurdenCategoriValidation(i)"></vgr-input>
-              <a (click)= "deleteCareBurdenCategories(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)= "deleteCareBurdenCategories(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit">
@@ -196,7 +196,7 @@
                 <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
               </vgr-dropdown-select>
 
-              <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit">
@@ -221,7 +221,7 @@
           <div formArrayName="dietForMothers" *ngFor="let diet of dietForMothers.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getMotherDietValidation(i)"></vgr-input>
-              <a (click)= "deleteDietForMother(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)= "deleteDietForMother(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit">
@@ -246,7 +246,7 @@
           <div formArrayName="dietForChildren" *ngFor="let diet of dietForChildren.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getChildDietValidation(i)"></vgr-input>
-              <a (click)= "deleteDietForChild(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)= "deleteDietForChild(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit">
@@ -271,7 +271,7 @@
           <div formArrayName="dietForPatients" *ngFor="let diet of dietForPatients.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getPatientDietValidation(i)"></vgr-input>
-              <a (click)= "deleteDietForPatient(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)= "deleteDietForPatient(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div>
@@ -296,7 +296,7 @@
           <div formArrayName="unitsPlannedIn" *ngFor="let enhet of unitsPlannedIn.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getPlannedUnitValidation(i)"></vgr-input>
-              <a (click)= "deletePlannedUnit(i)" class="icon-link"><span class="material-icons">delete</span></a>
+              <a (click)= "deletePlannedUnit(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div>

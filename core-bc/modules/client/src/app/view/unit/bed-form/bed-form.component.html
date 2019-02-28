@@ -176,7 +176,7 @@
             <vgr-datepicker formControlName="examinationDate"></vgr-datepicker>
             <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
 
-            <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
           </div>
         </div>
       </div>
@@ -192,7 +192,7 @@
             <vgr-datepicker formControlName="eventDate"></vgr-datepicker>
             <input formControlName="eventTime" placeholder="tid..." class="child3"/>
             <input formControlName="eventInfo" class="child4"/>
-            <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons">delete</span></a>
+            <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
           </div>
         </div>
       </div>
@@ -268,7 +268,8 @@
 
   <div class="containers clearfix">
     <div style="flex-grow: 8; flex-shrink: 0">
-      <vgr-button class="error" (click)="openDeleteModal()">Radera</vgr-button>
+      <!--<vgr-button class="error" (click)="openDeleteModal()">Radera</vgr-button>-->
+      <a (click)= "openDeleteModal()" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
     </div>
 
     <div  style="flex-grow: 1; flex-shrink: 0">

@@ -188,7 +188,7 @@
                                    [showValidation]="getQuantityValidation(i)"></vgr-input>
                         <vgr-input formControlName="comment" placeholder="kommentar ..." class="child2"></vgr-input>
                         <div *ngIf="planingUnits.value.id !== null && sevenDaysPlaningUnits.errors?.duplicatesExist[i]"><span style="color:red">*Registrerat redan för detta datum.</span></div>
-                        <a (click)="deleteSevenDaysPlaningUnit(i)" class="icon-link"><span class="material-icons">delete</span></a>
+                        <a (click)="deleteSevenDaysPlaningUnit(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
                       </div>
                     </div>
 

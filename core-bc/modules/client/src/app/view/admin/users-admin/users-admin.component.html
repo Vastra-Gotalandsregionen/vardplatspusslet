@@ -44,10 +44,16 @@
               </div>
 
               <div class="container_edit">
-                <div style="flex-grow: 10; flex-shrink: 0"><vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button></div>
+                <div style="flex-grow: 10; flex-shrink: 0">
+                  <!--<vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>-->
+                  <a (click)="openDeleteModal(user)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+                </div>
                 <div style="flex-grow: 1; flex-shrink: 0">
-                  <vgr-button default="true" (click)="saveUser(theListItem)" [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara</vgr-button>
-                  <vgr-button default="true" (click)="collapse(theListItem)" >Avbryt</vgr-button></div>
+                  <vgr-button default="true" (click)="saveUser(theListItem)"
+                              [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara
+                  </vgr-button>
+                  <vgr-button default="true" (click)="collapse(theListItem)">Avbryt</vgr-button>
+                </div>
               </div>
 
               <!--<div class="clearfix button-row save-cancel-delete">
