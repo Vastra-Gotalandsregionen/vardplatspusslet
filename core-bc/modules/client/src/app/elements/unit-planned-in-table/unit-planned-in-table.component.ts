@@ -24,7 +24,6 @@ export class UnitPlannedInTableComponent implements OnInit {
 
   ngOnInit() {
 
-    debugger;
     this.daysAndMonths = [];
     this.CalculateDaysAndDate();
     this.filterSevenDays(this.unit.sevenDaysPlaningUnits);
@@ -35,7 +34,7 @@ export class UnitPlannedInTableComponent implements OnInit {
   private CalculateDaysAndDate()
   {
     this.daysAndMonths  =[];
-    let WeekDay: string[]= ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+    let WeekDay: string[]= ['Sön', 'Mån', 'Tis', 'Ons', 'Tors', 'Fred', 'Lör'];
     let veckodag: string[]= [];
     let today = new Date();
     let day = today.getDay();
@@ -74,7 +73,7 @@ export class UnitPlannedInTableComponent implements OnInit {
 
   private FindSevendaysMatrixValue(name: string, i: number): number
   {
-    debugger;
+
     let today = new Date();
     let currentDate= new Date( today.setDate(today.getDate() + i));
     currentDate.setHours(0, 0, 0, 0);

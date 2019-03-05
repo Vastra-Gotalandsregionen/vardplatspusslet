@@ -116,4 +116,14 @@ public class UnitController extends BaseController {
         sevenDaysPlanningUnitService.save(clinicId, id, sevenDaysPlaningUnits);
         return ResponseEntity.ok().build();
     }
+
+    @RequestMapping(value = "/{clinicId}/{id}/{planingUnitId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity deleteSevenDaysPlaning(@PathVariable("clinicId") String clinicId,
+                                                          @PathVariable("id") String id,
+                                                         @PathVariable("planingUnitId") Long planingUnitId) {
+
+        sevenDaysPlanningUnitService.delete(clinicId, id, planingUnitId);
+        return ResponseEntity.ok().build();
+    }
 }

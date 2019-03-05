@@ -40,7 +40,7 @@ public class SevenDaysPlanningUnitService {
             sevenDaysPlaningRepository.save(sevenDaysPlaningUnit1);
         }
 
-        removeItemsNotInIncomingCollection(sevenDaysPlaningUnits, unit);
+//        removeItemsNotInIncomingCollection(sevenDaysPlaningUnits, unit);
     }
 
 
@@ -53,6 +53,16 @@ public class SevenDaysPlanningUnitService {
         currentlySaved.removeAll(incomingCollection);
         sevenDaysPlaningRepository.delete(currentlySaved);
     }
+
+    public void delete(String clinicId, String unitId, Long planingUnitId) {
+
+        Clinic clinicRef = clinicRepository.getOne(clinicId);
+        if (!sevenDaysPlaningRepository.getOne(planingUnitId).getUnit().getId().equals(unitId)) {
+            throw new IllegalArgumentException("Planning unit doesn't belong to correct unit");
+        }
+        sevenDaysPlaningRepository.delete(planingUnitId);
+    }
+
 }
 
 

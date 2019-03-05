@@ -152,8 +152,8 @@
       <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
         <h6>Planerade in närmaste 8 dagarna:{{unit.name}}</h6>
         <div class="containers">
-         <div> <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table></div>
-          <h6 *ngIf="units.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
+         <div > <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table></div>
+          <h6 *ngIf="units?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
         <div *ngFor="let unit of units">
           <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table>
         </div>
@@ -188,7 +188,7 @@
                                    [showValidation]="getQuantityValidation(i)"></vgr-input>
                         <vgr-input formControlName="comment" placeholder="kommentar ..." class="child2"></vgr-input>
                         <div *ngIf="planingUnits.value.id !== null && sevenDaysPlaningUnits.errors?.duplicatesExist[i]"><span style="color:red">*Registrerat redan för detta datum.</span></div>
-                        <a (click)="deleteSevenDaysPlaningUnit(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+                        <a (click)="deleteSevenDaysPlaningUnit(planingUnits.get('id').value, i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
                       </div>
                     </div>
 

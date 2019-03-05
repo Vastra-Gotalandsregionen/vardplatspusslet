@@ -7,8 +7,12 @@ table {
   margin-top: 10px;
   background: #ffffff;
   line-height: 1.3;
-  width:100%;
 
+
+  td:nth-child(1)
+  {
+    min-width:90px;
+  }
   th {
     font-weight: bold;
   }

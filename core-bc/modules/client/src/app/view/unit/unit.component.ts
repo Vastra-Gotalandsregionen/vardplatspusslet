@@ -77,6 +77,12 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
               return {displayName: unitplannedIn.name, value: unitplannedIn.id};
             }));
+            let today = new Date();
+            today.setHours(0, 0, 0, 0);
+            let idag = today.getTime();
+            this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.sort( (a:SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
+              (a.date > b.date ? -1 : 1));
+            this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() >= idag);
 
             this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
               sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits), [this.SevenDaysArrayCompare.bind(this)])
@@ -375,8 +381,14 @@ export class UnitComponent implements OnInit, OnDestroy {
     return <FormArray> (this.addSevenDaysPlaningUnitForm ? this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') : []);
   }
 
-  deleteSevenDaysPlaningUnit(index: number) {
+  deleteSevenDaysPlaningUnit(id: number, index: number) {
     this.sevenDaysPlaningUnits.removeAt(index);
+    if (id !== null){
+      this.http.delete('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + id)
+        .subscribe(() => {
+          this.ngOnInit();
+        });
+    }
   }
 
   addPlannedInUnit() {
