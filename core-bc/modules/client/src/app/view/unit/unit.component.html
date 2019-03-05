@@ -151,12 +151,14 @@
       </vgr-page-block>
       <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
         <h6>Planerade in närmaste 8 dagarna:{{unit.name}}</h6>
+          <div>
+            <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table>
+          </div>
+        <h6 *ngIf="units?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
         <div class="containers">
-         <div > <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table></div>
-          <h6 *ngIf="units?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
-        <div *ngFor="let unit of units">
-          <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table>
-        </div>
+          <div *ngFor="let unit of units">
+            <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table>
+          </div>
         </div>
       </vgr-page-block>
         <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
@@ -168,39 +170,8 @@
                 </vgr-list-column>
               </vgr-list-item-header>
               <vgr-list-item-content [indentContent]="true">
-                <form *ngIf="addSevenDaysPlaningUnitForm" [formGroup]="addSevenDaysPlaningUnitForm" (ngSubmit)="saveFromEnhet()">
-                  <div>
-                    <div>
-                      <a (click)="addPlannedInUnit()">Lägg till <i class="fa fa-plus-square child"></i></a>
-                    </div>
-                    <div formArrayName="sevenDaysPlaningUnits"
-                         *ngFor="let planingUnits of sevenDaysPlaningUnits?.controls let i = index;">
-                      <div [formGroupName]="i" class="containers">
-                        <vgr-datepicker formControlName="date" class="child"
-                                        [showValidation]="getDatepickerValidation(i)"
-                                        [ngClass] ="{'is-invalid' : (planingUnits.value.id !== null && sevenDaysPlaningUnits.errors?.duplicatesExist[i]) ? true : false}"></vgr-datepicker>
-                        <vgr-dropdown-select formControlName="fromUnit" class="child" [showValidation]="getDropdownValidation(i)" [small]="true"
-                                             [ngClass] ="{'is-invalid' : (planingUnits.value.id !== null && sevenDaysPlaningUnits.errors?.duplicatesExist[i]) ? true : false}">
-                          <vgr-dropdown-item *ngFor="let item of plannedInDropdownUnits"
-                                             [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-                        </vgr-dropdown-select>
-                        <vgr-input formControlName="quantity" placeholder="antal ... " class="child2" [small]="true"
-                                   [showValidation]="getQuantityValidation(i)"></vgr-input>
-                        <vgr-input formControlName="comment" placeholder="kommentar ..." class="child2"></vgr-input>
-                        <div *ngIf="planingUnits.value.id !== null && sevenDaysPlaningUnits.errors?.duplicatesExist[i]"><span style="color:red">*Registrerat redan för detta datum.</span></div>
-                        <a (click)="deleteSevenDaysPlaningUnit(planingUnits.get('id').value, i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-                      </div>
-                    </div>
+                <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit)"></app-unit-planned-in-items>
 
-                    <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
-                      <vgr-button default="true" (click)="saveFromEnhet(); collapse(plannedunit)"
-                                  [disabled]="!addSevenDaysPlaningUnitForm.valid">Spara
-                      </vgr-button>
-                      <vgr-button default="true" (click)="ngOnInit();collapse(plannedunit)">Avbryt</vgr-button>
-                    </div>
-                  </div>
-
-                </form>
               </vgr-list-item-content>
 
             </vgr-list-item>

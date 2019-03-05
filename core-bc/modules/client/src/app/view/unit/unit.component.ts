@@ -28,7 +28,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 })
 export class UnitComponent implements OnInit, OnDestroy {
 
-
+  addSevenDaysPlaningUnitForm: FormGroup;
   unit: Unit;
   units: Unit[];
   clinic: Clinic;
@@ -36,7 +36,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   burdenvals: string;
   sevendaysplan: SevenDaysPlaningUnit[] = [];
   plannedInDropdownUnits: DropdownItem<number>[];
-  addSevenDaysPlaningUnitForm: FormGroup;
   error: string;
   notFoundText = 'Oops. Inget fanns här...';
   vacantBeds: DropdownItem<number>[];
@@ -83,11 +82,6 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.sort( (a:SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
               (a.date > b.date ? -1 : 1));
             this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() >= idag);
-
-            this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
-              sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits), [this.SevenDaysArrayCompare.bind(this)])
-            });
-
 
             this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
 
@@ -330,8 +324,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     }
   }
 
-  BedHasNoPatientWithCareBurden(patient: Patient)
-  {
+  BedHasNoPatientWithCareBurden(patient: Patient) {
      if ( patient != null && patient.careBurdenChoices && patient.careBurdenChoices.map(x => x.careBurdenValue)
        .filter(z => z!= null && z.id).length > 0)
        return false;
@@ -340,111 +333,11 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   collapse(element: ListItemComponent) {
     element.toggleExpand();
+    this.ngOnInit();
   }
 
 
-  getDropdownValidation(index : number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').touched
-      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').valid ;
-  }
 
-  getQuantityValidation(index: number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').touched
-      && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').valid ;
-  }
-
-  getDatepickerValidation(index: number)
-  {
-    return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('date').touched;
-  }
-  saveFromEnhet() {
-    let sevenDaysPlaningUnits = <SevenDaysPlaningUnit[]>[];
-    let sevenDaysPlaningUnitsModel = this.addSevenDaysPlaningUnitForm.value;
-    sevenDaysPlaningUnits = sevenDaysPlaningUnitsModel.sevenDaysPlaningUnits.map(term => {
-      return {
-        id: term.id ? term.id : null,
-        date: term.date,
-        fromUnit: this.unit.unitsPlannedIn.find(plannedIn => plannedIn.id === term.fromUnit),
-        quantity: term.quantity,
-        comment: term.comment
-      }
-    });
-    this.http.put('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + 'sevenDaysPlaningUnit', sevenDaysPlaningUnits)
-      .subscribe(unit => {
-        this.ngOnInit();
-      });
-  }
-
-  get sevenDaysPlaningUnits(): FormArray {
-    return <FormArray> (this.addSevenDaysPlaningUnitForm ? this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') : []);
-  }
-
-  deleteSevenDaysPlaningUnit(id: number, index: number) {
-    this.sevenDaysPlaningUnits.removeAt(index);
-    if (id !== null){
-      this.http.delete('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + id)
-        .subscribe(() => {
-          this.ngOnInit();
-        });
-    }
-  }
-
-  addPlannedInUnit() {
-    this.sevenDaysPlaningUnits.push(this.CreateSevenDaysPlaningUnit());
-  }
-
-  CreateSevenDaysPlaningUnit(): FormGroup {
-    return this.formBuilder.group({
-      id: null,
-      date: [null, Validators.required],
-      fromUnit: [null, Validators.required],
-      quantity: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
-      comment: null
-    });
-  }
-
-  private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {
-    if (!sevenDaysPlaningUnits|| sevenDaysPlaningUnits.length === 0) {
-      return [];
-    }
-    return sevenDaysPlaningUnits.map(sevenDaysPlaningUnit => {
-      return this.formBuilder.group({
-        id: sevenDaysPlaningUnit.id,
-        date: sevenDaysPlaningUnit.date,
-        fromUnit: sevenDaysPlaningUnit.fromUnit.id,
-        quantity: sevenDaysPlaningUnit.quantity,
-        comment:  sevenDaysPlaningUnit.comment
-      })
-    });
-  }
-
-
-  SevenDaysArrayCompare(c: AbstractControl):{[key: string]: any} | null{
-    for (let element of c.value )
-    {
-      if(element.date !== null)
-      {
-        element.date = new Date(element.date).getTime();
-      }
-    }
-    let array1 = c.value;
-    //array1 = array1.filter(x => x.id !== null);
-    let duplicatesArray = [];
-    array1.forEach((e1, index) => array1.forEach(e2 => {if (e1.date === e2.date && e1.fromUnit === e2.fromUnit && e1.id !== e2.id) {duplicatesArray[index] = true}}));
-    if (duplicatesArray.length > 0) {
-      return {'duplicatesExist': duplicatesArray }
-    }
-    else
-    {
-      return null;
-    }
-  }
-
-  isDuplicate(duplicates: string[], id: string) {
-    return !!(duplicates && duplicates.indexOf(id) > -1);
-  }
 }
 
 

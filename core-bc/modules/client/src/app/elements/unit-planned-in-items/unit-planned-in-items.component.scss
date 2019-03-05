@@ -1,0 +1,22 @@
+.containers
+{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 3px;
+}
+
+.child
+{
+  margin-top: 5px;
+  margin-bottom: 7px;
+  margin-left:0;
+  margin-right: 5px;
+}
+
+.child2
+{
+  margin-top: 5px;
+  margin-bottom: 7px;
+  margin-left:0;
+  margin-right: 0;
+}

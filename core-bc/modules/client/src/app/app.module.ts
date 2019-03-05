@@ -48,6 +48,7 @@ import {ErrorDialogService} from "./service/error-dialog.service";
 import { TheOtherBedIconsComponent } from './shared/the-other-bed-icons/the-other-bed-icons.component';
 import { BedTableComponent } from './shared/bed-table/bed-table.component';
 import { UnitPlannedInTableComponent } from './elements/unit-planned-in-table/unit-planned-in-table.component';
+import { UnitPlannedInItemsComponent } from './elements/unit-planned-in-items/unit-planned-in-items.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -81,7 +82,8 @@ registerLocaleData(localeSv, "sv-SE");
     ErrorDialogComponent,
     TheOtherBedIconsComponent,
     BedTableComponent,
-    UnitPlannedInTableComponent
+    UnitPlannedInTableComponent,
+    UnitPlannedInItemsComponent
   ],
   imports: [
     BrowserModule,
