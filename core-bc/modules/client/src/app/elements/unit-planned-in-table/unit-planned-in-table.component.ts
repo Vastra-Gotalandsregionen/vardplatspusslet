@@ -12,7 +12,7 @@ import {UnitPlannedIn} from "../../domain/unit-planned-in";
 export class UnitPlannedInTableComponent implements OnInit {
 
   @Input('unit') unit: Unit;
-  @Input('sevendaysplan') sevendaysplan:SevenDaysPlaningUnit[];
+  sevendaysplan:SevenDaysPlaningUnit[];
   daysAndMonths: DayAndDate[] = [];
   days: DayAndDate[] = [];
   sevendaysMatrix = {};

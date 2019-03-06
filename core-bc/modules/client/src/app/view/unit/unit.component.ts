@@ -76,17 +76,8 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
               return {displayName: unitplannedIn.name, value: unitplannedIn.id};
             }));
-            let today = new Date();
-            today.setHours(0, 0, 0, 0);
-            let idag = today.getTime();
-            this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.sort( (a:SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
-              (a.date > b.date ? -1 : 1));
-            this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() >= idag);
-
             this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
-
             this.updateSskCategoryValueMatrix(unit);
-
             this.updateVacants(unit);
             this.inited = true;
           } else {

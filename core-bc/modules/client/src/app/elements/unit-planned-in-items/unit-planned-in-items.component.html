@@ -1,6 +1,6 @@
 <form [formGroup]="addSevenDaysPlaningUnitForm" (ngSubmit)="saveFromEnhet()">
   <div>
-    <div>
+    <div *ngIf="!showPlus">
       <a (click)="addPlannedInUnit()">Lägg till <i class="fa fa-plus-square child"></i></a>
     </div>
     <div formArrayName="sevenDaysPlaningUnits"
@@ -29,6 +29,5 @@
       <vgr-button default="true" (click)="cancle()">Avbryt</vgr-button>
     </div>
   </div>
-
 </form>
 

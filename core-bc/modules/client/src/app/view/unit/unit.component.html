@@ -152,12 +152,12 @@
       <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
         <h6>Planerade in närmaste 8 dagarna:{{unit.name}}</h6>
           <div>
-            <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table>
+            <app-unit-planned-in-table [unit]="unit"></app-unit-planned-in-table>
           </div>
         <h6 *ngIf="units?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
         <div class="containers">
           <div *ngFor="let unit of units">
-            <app-unit-planned-in-table [unit]="unit" [sevendaysplan]="sevendaysplan"></app-unit-planned-in-table>
+            <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
           </div>
         </div>
       </vgr-page-block>
@@ -166,12 +166,22 @@
             <vgr-list-item #plannedunit>
               <vgr-list-item-header>
                 <vgr-list-column width="6">
-                  <div>Planerade patienter från andra enhet</div>
+                  <div>Planerade patienter från andra enheter</div>
                 </vgr-list-column>
               </vgr-list-item-header>
               <vgr-list-item-content [indentContent]="true">
                 <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit)"></app-unit-planned-in-items>
+              </vgr-list-item-content>
 
+            </vgr-list-item>
+            <vgr-list-item #oldplannedunit>
+              <vgr-list-item-header>
+                <vgr-list-column width="8">
+                  <div>Gamla poster: Planerade patienter från andra enheter</div>
+                </vgr-list-column>
+              </vgr-list-item-header>
+              <vgr-list-item-content [indentContent]="true">
+                <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" [oldPost]="true" [showPlus]="true" (cancelPlaningUnitEvent)="collapse(oldplannedunit)" (savePlaningUnitEvent)="collapse(oldplannedunit)"></app-unit-planned-in-items>
               </vgr-list-item-content>
 
             </vgr-list-item>

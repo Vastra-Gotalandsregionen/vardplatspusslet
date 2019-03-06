@@ -13,8 +13,11 @@ import {DropdownItem} from "../../domain/DropdownItem";
 })
 export class UnitPlannedInItemsComponent implements OnInit {
 
+  sevendaysplans: SevenDaysPlaningUnit[] = [];
   plannedInDropdownUnits: DropdownItem<number>[];
   addSevenDaysPlaningUnitForm: FormGroup;
+  @Input('showPlus') showPlus : boolean
+  @Input('oldPost') oldPost: boolean;
   @Input('clinic') clinic: Clinic;
   @Input('unit') unit: Unit;
   @Output('savePlaningUnitEvent') savePlaningUnitEvent = new EventEmitter();
@@ -24,14 +27,28 @@ export class UnitPlannedInItemsComponent implements OnInit {
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    debugger;
     this.plannedInDropdownUnits = this.unit.unitsPlannedIn.map(unitplannedIn => {
       return {displayName: unitplannedIn.name, value: unitplannedIn.id};
     });
     this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.plannedInDropdownUnits);
+    this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.sort( (a:SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
+      (a.date > b.date ? -1 : 1));
+
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let idag = today.getTime();
+    if (this.oldPost)
+    {
+      this.sevendaysplans = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() < idag);
+    }
+    else
+    {
+      this.sevendaysplans = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() >= idag);
+    }
     this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
-      sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.unit.sevenDaysPlaningUnits), [this.SevenDaysArrayCompare.bind(this)])
+      sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.sevendaysplans), [this.SevenDaysArrayCompare.bind(this)])
     });
+    this.oldPost = false;
 
   }
 
@@ -76,7 +93,6 @@ export class UnitPlannedInItemsComponent implements OnInit {
   }
 
   deleteSevenDaysPlaningUnit(id: number, index: number) {
-    debugger;
     this.sevenDaysPlaningUnits.removeAt(index);
     if (id !== null){
       this.http.delete('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + id)
