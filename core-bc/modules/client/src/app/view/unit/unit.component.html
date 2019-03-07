@@ -7,196 +7,206 @@
       {{unit?.name}}
     </div>
 
+    <!--
     <div style="display: inline-block; margin-left:45%;" *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
       <a [href]="'/api/unit/' + clinic.id + '/' + unit.id + '/kostLista'" target="_blank"
          style="text-decoration: none "><h2>Kostlista</h2></a>
     </div>
+    -->
+
   </div>
 </app-menu-title-row>
 
 <app-row>
   <app-left-column>
-    <vgr-page-block>
-      <h3>Dagens meddelanden:</h3>
-      <vgr-panel-container class="button-row">
-        <vgr-panel width="80%" *ngFor="let message of messages" themecolor="green">
-          <app-message [message]="message"></app-message>
-        </vgr-panel>
-      </vgr-panel-container>
-      <a routerLink="editMessages" *ngIf="hasEditUnitPermission()">
-        <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
-      </a>
-      <hr/>
-      <vgr-panel-container>
-        <vgr-panel width="80%" *ngIf="unit?.ssks.length > 0">
-          <table class="vpp-table">
-            <thead>
-            <tr>
-              <th>Vårdlag</th>
-              <th>Antal sängar</th>
-            </tr>
-            </thead>
-            <tr *ngFor="let ssk of unit?.ssks">
-              <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
-              <td>{{countBeds(ssk)}}</td>
-            </tr>
-          </table>
-        </vgr-panel>
-        <vgr-panel width="80%" *ngIf="unit?.hasCareBurdenWithAverage">
-          <table class="vpp-table">
-            <thead>
-            <tr>
-              <th>Vårdtyngd</th>
-              <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
-            </tr>
-            </thead>
-            <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
-              <td>säng{{" "+ bed.label}}</td>
-              <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
-                {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
-              </td>
-            </tr>
-            <tr>
-              <td>Medelvärde:</td>
-              <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td>
-            </tr>
-          </table>
-        </vgr-panel>
-
-        <vgr-panel width="80%" *ngIf="unit?.hasCareBurdenWithText">
-          <table class="vpp-table">
-            <thead>
-            <tr>
-              <th colspan="7" style="text-align: left">Vårdtyngd</th>
-            </tr>
-            <tr>
-              <th></th>
-              <th *ngFor="let cbk of unit?.careBurdenCategories" class="right" colspan="3">{{cbk.name}}</th>
-            </tr>
-            <tr>
-              <th>Vårdlag</th>
-              <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3" class="right">{{burdenvals}}</th>
-            </tr>
-            </thead>
-            <tr *ngFor="let ssk of unit?.ssks">
-              <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
-              <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
-                <span *ngFor="let value of unit?.careBurdenValues; let i = index">
-                  <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span>{{getMatrixValue(ssk, cbk, value)}}</span>
-                 </span>
-              </td>
-            </tr>
-          </table>
-        </vgr-panel>
-
-      </vgr-panel-container>
-    </vgr-page-block>
+      <div>
+          <vgr-page-block *ngIf="unit" class="{{showChangeBedOrder ? '' : 'transparent'}}">
+            <div>
+              <div *ngIf="showChangeBedOrder">
+                <p>Dra och släpp sängarna och spara sedan.</p>
+                <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
+                  <div class="order-row" *ngFor="let bed of unit.beds">
+                    {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
+                  </div>
+                </div>
+    
+                <div class="button-row">
+                  <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
+                                   (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
+                </div>
+              </div>
+    
+              <div *ngIf="!showChangeBedOrder" class="bed-table-wrapper">
+                <app-bed-table *ngIf="clinic && unit" [clinic]="clinic" [unit]="unit" (save)="ngOnInit()"></app-bed-table>
+    
+                <div class="button-row" style="padding: 0 0 16px 16px">
+                  <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
+                </div>
+              </div>
+            </div>
+    
+          </vgr-page-block>
+    
+          <vgr-page-block *ngIf="unit?.patients.length > 0">
+            <vgr-list [flexibleHeader]="true">
+    
+              <vgr-list-header>
+                <vgr-list-column-header width="10">Permission / teknisk plats</vgr-list-column-header>
+              </vgr-list-header>
+    
+              <vgr-list-item *ngFor="let patient of unit?.patients" #leavePatientItem>
+                <vgr-list-item-header>
+                  <vgr-list-column width="5">{{patient.label}}</vgr-list-column>
+                  <vgr-list-column width="5">{{format(patient.leaveStatus)}}</vgr-list-column>
+                </vgr-list-item-header>
+    
+                <vgr-list-item-content>
+                  Välj ledig säng
+                  <vgr-dropdown-select noItemSelectedLabel="Välj..." [(ngModel)]="chosenVacantBedId">
+                    <vgr-dropdown-item *ngFor="let item of vacantBeds" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                  </vgr-dropdown-select>
+    
+                  <div class="button-row">
+                    <vgr-button (click)="chooseBedForLeavePatient(patient); collapse(leavePatientItem)">Spara</vgr-button>
+                  </div>
+    
+                </vgr-list-item-content>
+              </vgr-list-item>
+            </vgr-list>
+          </vgr-page-block>
+          <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
+            <h6>Planerade in närmaste 8 dagarna:{{unit.name}}</h6>
+              <div>
+                <app-unit-planned-in-table [unit]="unit"></app-unit-planned-in-table>
+              </div>
+            <h6 *ngIf="units?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
+            <div class="containers">
+              <div *ngFor="let unit of units">
+                <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
+              </div>
+            </div>
+          </vgr-page-block>
+            <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
+              <vgr-list [flexibleHeader]="true">
+                <vgr-list-item #plannedunit>
+                  <vgr-list-item-header>
+                    <vgr-list-column width="6">
+                      <div>Planerade patienter från andra enheter</div>
+                    </vgr-list-column>
+                  </vgr-list-item-header>
+                  <vgr-list-item-content [indentContent]="true">
+                    <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit)"></app-unit-planned-in-items>
+                  </vgr-list-item-content>
+    
+                </vgr-list-item>
+                <vgr-list-item #oldplannedunit>
+                  <vgr-list-item-header>
+                    <vgr-list-column width="8">
+                      <div>Gamla poster: Planerade patienter från andra enheter</div>
+                    </vgr-list-column>
+                  </vgr-list-item-header>
+                  <vgr-list-item-content [indentContent]="true">
+                    <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" [oldPost]="true" [showPlus]="true" (cancelPlaningUnitEvent)="collapse(oldplannedunit)" (savePlaningUnitEvent)="collapse(oldplannedunit)"></app-unit-planned-in-items>
+                  </vgr-list-item-content>
+    
+                </vgr-list-item>
+              </vgr-list>
+            </vgr-page-block>
+          <vgr-page-block *ngIf="!unit">
+            <div *ngIf="!error">
+              <vgr-loader [small]="false"></vgr-loader>
+            </div>
+    
+            <div *ngIf="error">
+              <div class="alert">{{error}}</div>
+            </div>
+          </vgr-page-block>
+        </div>    
   </app-left-column>
 
   <app-right-column>
-    <div>
-      <vgr-page-block *ngIf="unit" class="{{showChangeBedOrder ? '' : 'transparent'}}">
-        <div>
-          <div *ngIf="showChangeBedOrder">
-            <p>Dra och släpp sängarna och spara sedan.</p>
-            <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
-              <div class="order-row" *ngFor="let bed of unit.beds">
-                {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
-              </div>
-            </div>
-
-            <div class="button-row">
-              <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
-                               (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
-            </div>
-          </div>
-
-          <div *ngIf="!showChangeBedOrder" class="bed-table-wrapper">
-            <app-bed-table *ngIf="clinic && unit" [clinic]="clinic" [unit]="unit" (save)="ngOnInit()"></app-bed-table>
-
-            <div class="button-row" style="padding: 0 0 16px 16px">
-              <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
-            </div>
-          </div>
-        </div>
-
-      </vgr-page-block>
-
-      <vgr-page-block *ngIf="unit?.patients.length > 0">
-        <vgr-list [flexibleHeader]="true">
-
-          <vgr-list-header>
-            <vgr-list-column-header width="10">Permission / teknisk plats</vgr-list-column-header>
-          </vgr-list-header>
-
-          <vgr-list-item *ngFor="let patient of unit?.patients" #leavePatientItem>
-            <vgr-list-item-header>
-              <vgr-list-column width="5">{{patient.label}}</vgr-list-column>
-              <vgr-list-column width="5">{{format(patient.leaveStatus)}}</vgr-list-column>
-            </vgr-list-item-header>
-
-            <vgr-list-item-content>
-              Välj ledig säng
-              <vgr-dropdown-select noItemSelectedLabel="Välj..." [(ngModel)]="chosenVacantBedId">
-                <vgr-dropdown-item *ngFor="let item of vacantBeds" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-              </vgr-dropdown-select>
-
-              <div class="button-row">
-                <vgr-button (click)="chooseBedForLeavePatient(patient); collapse(leavePatientItem)">Spara</vgr-button>
-              </div>
-
-            </vgr-list-item-content>
-          </vgr-list-item>
-        </vgr-list>
-      </vgr-page-block>
-      <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
-        <h6>Planerade in närmaste 8 dagarna:{{unit.name}}</h6>
-          <div>
-            <app-unit-planned-in-table [unit]="unit"></app-unit-planned-in-table>
-          </div>
-        <h6 *ngIf="units?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
-        <div class="containers">
-          <div *ngFor="let unit of units">
-            <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
-          </div>
-        </div>
-      </vgr-page-block>
-        <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
-          <vgr-list [flexibleHeader]="true">
-            <vgr-list-item #plannedunit>
-              <vgr-list-item-header>
-                <vgr-list-column width="6">
-                  <div>Planerade patienter från andra enheter</div>
-                </vgr-list-column>
-              </vgr-list-item-header>
-              <vgr-list-item-content [indentContent]="true">
-                <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit)"></app-unit-planned-in-items>
-              </vgr-list-item-content>
-
-            </vgr-list-item>
-            <vgr-list-item #oldplannedunit>
-              <vgr-list-item-header>
-                <vgr-list-column width="8">
-                  <div>Gamla poster: Planerade patienter från andra enheter</div>
-                </vgr-list-column>
-              </vgr-list-item-header>
-              <vgr-list-item-content [indentContent]="true">
-                <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" [oldPost]="true" [showPlus]="true" (cancelPlaningUnitEvent)="collapse(oldplannedunit)" (savePlaningUnitEvent)="collapse(oldplannedunit)"></app-unit-planned-in-items>
-              </vgr-list-item-content>
-
-            </vgr-list-item>
-          </vgr-list>
+      <vgr-page-block>
+          <h3>Dagens meddelanden:</h3>
+          <vgr-panel-container class="button-row">
+            <vgr-panel width="80%" *ngFor="let message of messages" themecolor="green">
+              <app-message [message]="message"></app-message>
+            </vgr-panel>
+          </vgr-panel-container>
+          <a routerLink="editMessages" *ngIf="hasEditUnitPermission()">
+            <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
+          </a>
+          <hr/>
+          <vgr-panel-container>
+    
+              <vgr-panel width="80%" *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
+                  <a [href]="'/api/unit/' + clinic.id + '/' + unit.id + '/kostLista'" target="_blank"
+                  style="text-decoration: none ">
+                    <span>Kostlista</span>
+                  </a>
+              </vgr-panel>
+    
+            <vgr-panel width="80%" *ngIf="unit?.ssks.length > 0">
+              <table class="vpp-table">
+                <thead>
+                <tr>
+                  <th>Vårdlag</th>
+                  <th>Antal sängar</th>
+                </tr>
+                </thead>
+                <tr *ngFor="let ssk of unit?.ssks">
+                  <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
+                  <td>{{countBeds(ssk)}}</td>
+                </tr>
+              </table>
+            </vgr-panel>
+            <vgr-panel width="80%" *ngIf="unit?.hasCareBurdenWithAverage">
+              <table class="vpp-table">
+                <thead>
+                <tr>
+                  <th>Vårdtyngd</th>
+                  <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
+                </tr>
+                </thead>
+                <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
+                  <td>säng{{" "+ bed.label}}</td>
+                  <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
+                    {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Medelvärde:</td>
+                  <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td>
+                </tr>
+              </table>
+            </vgr-panel>
+    
+            <vgr-panel width="80%" *ngIf="unit?.hasCareBurdenWithText">
+              <table class="vpp-table">
+                <thead>
+                <tr>
+                  <th colspan="7" style="text-align: left">Vårdtyngd</th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th *ngFor="let cbk of unit?.careBurdenCategories" class="right" colspan="3">{{cbk.name}}</th>
+                </tr>
+                <tr>
+                  <th>Vårdlag</th>
+                  <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3" class="right">{{burdenvals}}</th>
+                </tr>
+                </thead>
+                <tr *ngFor="let ssk of unit?.ssks">
+                  <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
+                  <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
+                    <span *ngFor="let value of unit?.careBurdenValues; let i = index">
+                      <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span>{{getMatrixValue(ssk, cbk, value)}}</span>
+                     </span>
+                  </td>
+                </tr>
+              </table>
+            </vgr-panel>
+    
+          </vgr-panel-container>
         </vgr-page-block>
-      <vgr-page-block *ngIf="!unit">
-        <div *ngIf="!error">
-          <vgr-loader [small]="false"></vgr-loader>
-        </div>
-
-        <div *ngIf="error">
-          <div class="alert">{{error}}</div>
-        </div>
-      </vgr-page-block>
-    </div>
-
   </app-right-column>
 </app-row>
