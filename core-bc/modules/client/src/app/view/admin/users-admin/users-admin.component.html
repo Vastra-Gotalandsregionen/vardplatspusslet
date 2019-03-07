@@ -60,7 +60,7 @@
                       <vgr-button default="true" (click)="saveUser(theListItem)"
                                   [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara
                       </vgr-button>
-                      <vgr-button default="true" (click)="collapse(theListItem)">Avbryt</vgr-button>
+                      <vgr-button buttonStyle="secondary" (click)="collapse(theListItem)">Avbryt</vgr-button>
                     </div>
                   </div>
     
@@ -106,7 +106,7 @@
                                    [hideLock]="true"></vgr-save-cancel>-->
                   <div class="containers">
                     <vgr-button default="true" (click)="saveUser(addListItem)" [disabled]="!(userForm.valid)">Spara</vgr-button>
-                    <vgr-button default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                    <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
                   </div>
                 </form>
               </vgr-list-item-content>
