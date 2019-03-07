@@ -1,10 +1,20 @@
-app-row {
+.menu-title-row {
   display: block;
   background: white;
   margin: 0 -20px;
-  padding: 0 20px;
+  padding: 5px 20px;
 
   border-bottom: 1px solid #006298;
 
+  app-menu,
+  .app-title,
+  .page-specific {
+    float: left;
+    position: relative;
+  }
+
+  .page-specific {
+    margin-left: 20px;
+  }
 
 }
