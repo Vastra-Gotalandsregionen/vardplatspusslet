@@ -12,14 +12,13 @@
 
 <app-row>
   <app-left-column>
+
+      <h1 class="page-title">Kliniker</h1>
+
       <vgr-page-block>
     
           <vgr-list>
 
-              <vgr-list-header>
-                  Välj klinik att redigera eller lägg till ny
-              </vgr-list-header>            
-´    
             <vgr-list-item *ngFor="let clinic of clinics" (expandedChanged)="setCurrentClinic($event, clinic)" #theListItem>
               <vgr-list-item-header>
                 <vgr-list-column [width]="3">{{clinic.id}}</vgr-list-column>

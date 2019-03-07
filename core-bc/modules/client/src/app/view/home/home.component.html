@@ -1,16 +1,11 @@
 <app-menu-title-row>
 
-  <div class="breadcrumbs">
-    Kliniker
-  </div>
-
 </app-menu-title-row>
 
 <app-row>
   <app-left-column>
+      <h1 class="page-title">Välj klinik</h1>
       <vgr-page-block *ngIf="clinics?.length > 0">
-          <h1>Välj klinik</h1>
-
           <ul>
             <li *ngFor="let clinic of clinics">
               <a [routerLink]="clinic.id">{{clinic.name}}</a>
