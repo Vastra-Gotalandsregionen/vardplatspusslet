@@ -1,21 +1,23 @@
-<div class="menu-trigger">
-  <i class="fa fa-bars"></i>
-  <div class="menu">
-    <ul>
-      <li><a routerLink="/">Hem</a></li>
-      <li class="sub-menu" *ngIf="loggedIn">
-        <span class="sub-menu-title">Administration <span class="bg-image-icon-chevron"></span></span>
-        <ul>
-          <li><a routerLink="/admin/clinics" *ngIf="admin">Kliniker</a></li>
-          <li><a routerLink="/admin/units">Avdelningar</a></li>
-          <li><a routerLink="/admin/users">Användare</a></li>
-          <li><a routerLink="/admin/statistics">Statistik</a></li>
-        </ul>
-      </li>
-      <li><a (click)="logout()" [routerLink]="null" *ngIf="loggedIn">Logga ut</a></li>
-      <li><a (click)="openLoginModal()" [routerLink]="null" *ngIf="!loggedIn">Logga in</a></li>
-    </ul>
+<div class="app-menu">
+  <div class="menu-trigger">
+    <i class="fa fa-bars"></i>
+    <div class="menu">
+      <ul>
+        <li><a routerLink="/">Hem</a></li>
+        <li class="sub-menu" *ngIf="loggedIn">
+          <span class="sub-menu-title">Administration <span class="bg-image-icon-chevron"></span></span>
+          <ul>
+            <li><a routerLink="/admin/clinics" *ngIf="admin">Kliniker</a></li>
+            <li><a routerLink="/admin/units">Avdelningar</a></li>
+            <li><a routerLink="/admin/users">Användare</a></li>
+            <li><a routerLink="/admin/statistics">Statistik</a></li>
+          </ul>
+        </li>
+        <li><a (click)="logout()" [routerLink]="null" *ngIf="loggedIn">Logga ut</a></li>
+        <li><a (click)="openLoginModal()" [routerLink]="null" *ngIf="!loggedIn">Logga in</a></li>
+      </ul>
+    </div>
   </div>
-</div>
 
-<app-login-modal></app-login-modal>
+  <app-login-modal></app-login-modal>
+</div>

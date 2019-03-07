@@ -1,8 +1,12 @@
 <div class="menu-title-row clearfix">
-  <app-menu></app-menu>
-    <h2 class="app-title">Vårdplatspusslet</h2>
 
-    <div class="page-specific">
-        <ng-content></ng-content>
-    </div>
+  <div class="menu-title-item">
+      <app-menu></app-menu>
   </div>
+  <div class="menu-title-item">
+      <h2 class="app-title">Vårdplatspusslet</h2>
+  </div>
+
+  <ng-content></ng-content>
+  
+</div>

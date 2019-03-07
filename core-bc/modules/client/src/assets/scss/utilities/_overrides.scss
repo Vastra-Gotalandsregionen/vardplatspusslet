@@ -14,6 +14,13 @@
   //background: transparent;
 }
 
+.full-width {
+  .page-block {
+    width: 100%;
+  }
+}
+
+
 app-left-column .page-block {
   background: #fff;
   padding: 20px;

@@ -49,10 +49,10 @@ export class UnitComponent implements OnInit, OnDestroy {
   sskCategoryValueMatrix = {};
 
 
-  constructor(private http: HttpClient,
-              private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private authService: AuthService) {
+  constructor(protected http: HttpClient,
+              protected formBuilder: FormBuilder,
+              protected route: ActivatedRoute,
+              protected authService: AuthService) {
 
     this.timerSubscription = interval(10000).subscribe(() => this.checkForChanges());
   }

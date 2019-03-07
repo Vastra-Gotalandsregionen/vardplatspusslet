@@ -7,6 +7,7 @@ import {ClinicComponent} from './view/clinic/clinic.component';
 import {HomeComponent} from './view/home/home.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UnitComponent} from './view/unit/unit.component';
+import {BedViewComponent} from './view/unit/bed-view/bed-view.component';
 import {KomponentkartanModule} from "vgr-komponentkartan";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ChevronRightComponent} from './elements/chevron-right/chevron-right.component';
@@ -58,6 +59,7 @@ registerLocaleData(localeSv, "sv-SE");
     ClinicComponent,
     HomeComponent,
     UnitComponent,
+    BedViewComponent,
     ChevronRightComponent,
     AdminComponent,
     ClinicsAdminComponent,
