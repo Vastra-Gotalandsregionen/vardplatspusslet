@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
@@ -20,6 +20,7 @@ import {ListItemComponent} from "vgr-komponentkartan";
 import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 import {UnitPlannedIn} from "../../domain/unit-planned-in";
 import {forEach} from "@angular/router/src/utils/collection";
+import {UnitPlannedInTableComponent} from "../../elements/unit-planned-in-table/unit-planned-in-table.component";
 
 @Component({
   selector: 'app-unit',
@@ -28,6 +29,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 })
 export class UnitComponent implements OnInit, OnDestroy {
 
+  @ViewChild('thisUnitPlannedInTable') thisUnitPlannedInTable: UnitPlannedInTableComponent;
   addSevenDaysPlaningUnitForm: FormGroup;
   unit: Unit;
   units: Unit[];
@@ -57,36 +59,38 @@ export class UnitComponent implements OnInit, OnDestroy {
     this.timerSubscription = interval(10000).subscribe(() => this.checkForChanges());
   }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
 
-      let clinicId = params.clinicId;
+  private updateView(clinicId, unitId)
+  {
+    this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
+      this.clinic = clinic;
 
-      this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
-        this.clinic = clinic;
-
-        this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
-          this.units = unitArray.filter(x => x.name !== this.unit.name);
-        });
+      this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
+        this.units = unitArray.filter(x => x.name !== this.unit.name);
       });
-      this.http.get<Unit>('/api/unit/' + clinicId + '/' + params.id)
-        .do(unit => {
-          if (unit) {
-            this.unit = unit;
-            this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
-              return {displayName: unitplannedIn.name, value: unitplannedIn.id};
-            }));
-            this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
-            this.updateSskCategoryValueMatrix(unit);
-            this.updateVacants(unit);
-            this.inited = true;
-          } else {
-            this.error = this.notFoundText;
-          }
-        })
-        .switchMap((unit: Unit) => this.http.get<Message[]>('/api/message/' + unit.id + '/today'))
-        .subscribe((messages: Message[]) => {
-          this.messages = messages;
+    });
+    this.http.get<Unit>('/api/unit/' + clinicId + '/' + unitId)
+      .do(unit => {
+        if (unit) {
+          this.unit = unit;
+          this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
+            return {displayName: unitplannedIn.name, value: unitplannedIn.id};
+          }));
+          this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
+          this.updateSskCategoryValueMatrix(unit);
+          this.updateVacants(unit);
+          this.inited = true;
+          this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
+            this.units = unitArray.filter(x => x.name !== this.unit.name);
+          });
+          this.thisUnitPlannedInTable.update(unit);
+        } else {
+          this.error = this.notFoundText;
+        }
+      })
+      .switchMap((unit: Unit) => this.http.get<Message[]>('/api/message/' + unit.id + '/today'))
+      .subscribe((messages: Message[]) => {
+        this.messages = messages;
       }, (error1: HttpErrorResponse) => {
         console.error(error1);
         if (error1.status === 404) {
@@ -95,10 +99,15 @@ export class UnitComponent implements OnInit, OnDestroy {
           this.error = error1.message;
         }
       });
-    });
   }
 
-
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      let clinicId = params.clinicId;
+      let unitId = params.id;
+      this.updateView(clinicId, unitId);
+    });
+  }
   ngOnDestroy(): void {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
@@ -327,6 +336,11 @@ export class UnitComponent implements OnInit, OnDestroy {
     this.ngOnInit();
   }
 
+  onUnitPlannedInItemsSave() {
+    this.updateView(this.clinic.id, this.unit.id);
+    //this.ngOnInit();
+     //this.thisUnitPlannedInTable.ngOnInit();
+  }
 
 
 }
