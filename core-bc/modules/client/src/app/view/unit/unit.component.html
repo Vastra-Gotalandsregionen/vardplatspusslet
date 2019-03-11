@@ -96,7 +96,7 @@
                 </vgr-list-column>
               </vgr-list-item-header>
               <vgr-list-item-content [indentContent]="true">
-                <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit); onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
+                <app-unit-planned-in-items #unitPlannedInItems *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit); onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
                   </vgr-list-item-content>
 
                 </vgr-list-item>
@@ -107,7 +107,7 @@
                     </vgr-list-column>
                   </vgr-list-item-header>
                   <vgr-list-item-content [indentContent]="true">
-                    <app-unit-planned-in-items *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" [oldPost]="true" [showPlus]="true" (cancelPlaningUnitEvent)="collapse(oldplannedunit)" (savePlaningUnitEvent)="collapse(oldplannedunit);onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
+                    <app-unit-planned-in-items #unitPlannedInItemsOld *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" [oldPost]="true" [showPlus]="true" (cancelPlaningUnitEvent)="collapse(oldplannedunit)" (savePlaningUnitEvent)="collapse(oldplannedunit);onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
                   </vgr-list-item-content>
 
                 </vgr-list-item>

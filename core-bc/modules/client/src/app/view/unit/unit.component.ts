@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {Unit} from "../../domain/unit";
 import {Bed} from "../../domain/bed";
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {Patient} from "../../domain/patient";
 import {Clinic} from "../../domain/clinic";
 import {Ssk} from "../../domain/ssk";
@@ -14,13 +14,11 @@ import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {CareBurdenValue} from "../../domain/careburdenvalue";
 import {DropdownItem} from "../../domain/DropdownItem";
-import {DayAndDate} from "../../domain/dayAndDate";
 import "rxjs-compat/add/operator/do";
 import {ListItemComponent} from "vgr-komponentkartan";
 import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
-import {UnitPlannedIn} from "../../domain/unit-planned-in";
-import {forEach} from "@angular/router/src/utils/collection";
 import {UnitPlannedInTableComponent} from "../../elements/unit-planned-in-table/unit-planned-in-table.component";
+import {UnitPlannedInItemsComponent} from "../../elements/unit-planned-in-items/unit-planned-in-items.component";
 
 @Component({
   selector: 'app-unit',
@@ -30,6 +28,9 @@ import {UnitPlannedInTableComponent} from "../../elements/unit-planned-in-table/
 export class UnitComponent implements OnInit, OnDestroy {
 
   @ViewChild('thisUnitPlannedInTable') thisUnitPlannedInTable: UnitPlannedInTableComponent;
+  @ViewChild('unitPlannedInItems') unitPlannedInItems: UnitPlannedInItemsComponent;
+  @ViewChild('unitPlannedInItemsOld') unitPlannedInItemsOld: UnitPlannedInItemsComponent;
+
   addSevenDaysPlaningUnitForm: FormGroup;
   unit: Unit;
   units: Unit[];
@@ -73,17 +74,31 @@ export class UnitComponent implements OnInit, OnDestroy {
       .do(unit => {
         if (unit) {
           this.unit = unit;
+
           this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
             return {displayName: unitplannedIn.name, value: unitplannedIn.id};
           }));
+
           this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
           this.updateSskCategoryValueMatrix(unit);
           this.updateVacants(unit);
           this.inited = true;
+
           this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
             this.units = unitArray.filter(x => x.name !== this.unit.name);
           });
-          this.thisUnitPlannedInTable.update(unit);
+
+          if (this.thisUnitPlannedInTable) {
+            this.thisUnitPlannedInTable.update(unit);
+          }
+
+          if (this.unitPlannedInItems) {
+            this.unitPlannedInItems.update(unit);
+          }
+
+          if (this.unitPlannedInItemsOld) {
+            this.unitPlannedInItemsOld.update(unit);
+          }
         } else {
           this.error = this.notFoundText;
         }

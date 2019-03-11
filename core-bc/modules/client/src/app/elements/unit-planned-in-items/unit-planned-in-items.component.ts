@@ -27,29 +27,30 @@ export class UnitPlannedInItemsComponent implements OnInit {
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.update(this.unit);
+  }
+
+  public update(unit: Unit) {
+    this.unit = unit;
     this.plannedInDropdownUnits = this.unit.unitsPlannedIn.map(unitplannedIn => {
       return {displayName: unitplannedIn.name, value: unitplannedIn.id};
     });
     this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.plannedInDropdownUnits);
-    this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.sort( (a:SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
+    this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.sort((a: SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
       (a.date > b.date ? -1 : 1));
 
     let today = new Date();
     today.setHours(0, 0, 0, 0);
     let idag = today.getTime();
-    if (this.oldPost)
-    {
+    if (this.oldPost) {
       this.sevendaysplans = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() < idag);
-    }
-    else
-    {
+    } else {
       this.sevendaysplans = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() >= idag);
     }
     this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
       sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.sevendaysplans), [this.SevenDaysArrayCompare.bind(this)])
     });
     this.oldPost = false;
-
   }
 
   private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {

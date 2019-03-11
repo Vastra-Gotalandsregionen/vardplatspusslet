@@ -11,7 +11,7 @@
     <vgr-card-column>
       <!-- The null option makes it at least 1, so therefore we check for >1. -->
       <div *ngIf="sskDropdownItems.length > 1" class="div-button7">
-        <label for="sskDropdown">SSK / Vårdlag:</label>
+        <label for="sskDropdown">Team / Vårdlag:</label>
         <vgr-dropdown-select id="sskDropdown" formControlName="ssk" >
           <vgr-dropdown-item *ngFor="let item of sskDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
         </vgr-dropdown-select>

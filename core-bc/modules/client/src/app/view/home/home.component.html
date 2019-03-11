@@ -8,7 +8,7 @@
       <vgr-page-block *ngIf="clinics?.length > 0">
           <ul>
             <li *ngFor="let clinic of clinics">
-              <a [routerLink]="clinic.id">{{clinic.name}}</a>
+              <a [routerLink]="'/' + clinic.id">{{clinic.name}}</a>
             </li>
           </ul>
         </vgr-page-block>
