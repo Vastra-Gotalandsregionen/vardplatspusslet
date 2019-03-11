@@ -1,67 +1,77 @@
 <app-menu-title-row>
-  <h1>Administration</h1>
+
+    <div class="menu-title-item">
+    <div class="breadcrumbs">
+        <a routerLink="../..">Startsida</a>
+        <app-chevron-right></app-chevron-right>
+      <a routerLink="..">Administration</a>
+        <app-chevron-right></app-chevron-right>
+        Avdelningar
+      </div>
+      </div>
+
 </app-menu-title-row>
 
 <app-row>
   <app-left-column>
+      <h1 class="page-title">Avdelningar</h1>
 
+      <vgr-page-block>
+    
+          <vgr-list [flexibleHeader]="true">
+            <vgr-list-header>
+              <vgr-list-column-header [width]="3">ID</vgr-list-column-header>
+              <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
+              <vgr-list-column-header [width]="4">Klinik</vgr-list-column-header>
+              <vgr-list-column-header [width]="4">Antal vårdlag</vgr-list-column-header>
+            </vgr-list-header>
+    
+            <vgr-list-item *ngFor="let unit of units" #theListItem>
+              <vgr-list-item-header>
+                <vgr-list-column [width]="3">{{unit.id}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{unit.name}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{unit.clinic?.name}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{unit.ssks?.length}}</vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content>
+                <app-units-admin-form [unit]="unit"
+                                      [clinics]="clinics"
+                                      [showId]="false"
+                                      [showDelete]="true"
+                                      (cancelEvent)="theListItem.toggleExpand()"
+                                      (openDeleteEvent)="openDeleteModal(unit)"
+                                      (saveEvent)="save(theListItem)"
+                                      *ngIf="clinics"
+                >
+    
+                </app-units-admin-form>
+              </vgr-list-item-content>
+            </vgr-list-item>
+    
+            <vgr-list-item #addListItem *ngIf="admin">
+              <vgr-list-item-header>
+                <vgr-list-column width="5">
+                  <div class="add-row vgr-icon-plus">Lägg till avdelning</div>
+                </vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content>
+                <app-units-admin-form [unit]="null"
+                                      [clinics]="clinics"
+                                      [showId]="true"
+                                      [showDelete]="false"
+                                      (cancelEvent)="addListItem.toggleExpand()"
+                                      (saveEvent)="save(addListItem)"
+                                      *ngIf="clinics">
+    
+                </app-units-admin-form>
+              </vgr-list-item-content>
+            </vgr-list-item>
+          </vgr-list>
+        </vgr-page-block>
   </app-left-column>
   <app-right-column>
-    <vgr-page-block>
-      <h2 style="margin-bottom: 16px">Avdelningar</h2>
-
-      <vgr-list [flexibleHeader]="true">
-        <vgr-list-header>
-          <vgr-list-column-header [width]="3">ID</vgr-list-column-header>
-          <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
-          <vgr-list-column-header [width]="4">Klinik</vgr-list-column-header>
-          <vgr-list-column-header [width]="4">Antal vårdlag</vgr-list-column-header>
-        </vgr-list-header>
-
-        <vgr-list-item *ngFor="let unit of units" #theListItem>
-          <vgr-list-item-header>
-            <vgr-list-column [width]="3">{{unit.id}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{unit.name}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{unit.clinic?.name}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{unit.ssks?.length}}</vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content>
-            <app-units-admin-form [unit]="unit"
-                                  [clinics]="clinics"
-                                  [showId]="false"
-                                  [showDelete]="true"
-                                  (cancelEvent)="theListItem.toggleExpand()"
-                                  (openDeleteEvent)="openDeleteModal(unit)"
-                                  (saveEvent)="save(theListItem)"
-                                  *ngIf="clinics"
-            >
-
-            </app-units-admin-form>
-          </vgr-list-item-content>
-        </vgr-list-item>
-
-        <vgr-list-item #addListItem *ngIf="admin">
-          <vgr-list-item-header>
-            <vgr-list-column width="5">
-              <div class="add-row vgr-icon-plus">Lägg till avdelning</div>
-            </vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content>
-            <app-units-admin-form [unit]="null"
-                                  [clinics]="clinics"
-                                  [showId]="true"
-                                  [showDelete]="false"
-                                  (cancelEvent)="addListItem.toggleExpand()"
-                                  (saveEvent)="save(addListItem)"
-                                  *ngIf="clinics">
-
-            </app-units-admin-form>
-          </vgr-list-item-content>
-        </vgr-list-item>
-      </vgr-list>
-    </vgr-page-block>
   </app-right-column>
 </app-row>
 

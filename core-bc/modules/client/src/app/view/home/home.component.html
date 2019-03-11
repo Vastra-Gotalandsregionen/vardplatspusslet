@@ -1,22 +1,22 @@
 <app-menu-title-row>
-  <h1>Välj klinik</h1>
+
 </app-menu-title-row>
 
 <app-row>
   <app-left-column>
-
+      <h1 class="page-title">Välj klinik</h1>
+      <vgr-page-block *ngIf="clinics?.length > 0">
+          <ul>
+            <li *ngFor="let clinic of clinics">
+              <a [routerLink]="clinic.id">{{clinic.name}}</a>
+            </li>
+          </ul>
+        </vgr-page-block>
+    
+        <vgr-page-block *ngIf="!loggedIn">
+          <app-login-form></app-login-form>
+        </vgr-page-block>
   </app-left-column>
   <app-right-column>
-    <vgr-page-block *ngIf="clinics?.length > 0">
-      <ul>
-        <li *ngFor="let clinic of clinics">
-          <a [routerLink]="clinic.id">{{clinic.name}}</a>
-        </li>
-      </ul>
-    </vgr-page-block>
-
-    <vgr-page-block *ngIf="!loggedIn">
-      <app-login-form></app-login-form>
-    </vgr-page-block>
   </app-right-column>
 </app-row>

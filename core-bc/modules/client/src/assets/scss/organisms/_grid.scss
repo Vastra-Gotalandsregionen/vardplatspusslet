@@ -88,11 +88,12 @@ body, textarea, input, select {
 app-left-column {
   min-height: 1px;
   padding-right: 10px;
-  width: $app-left-column-width-medium;
+  width: calc(100% - #{$app-right-column-width-medium});
+
 }
 
 app-right-column {
-  width: calc(100% - #{$app-left-column-width-medium});
+  width: $app-left-column-width-medium;
 
   &.full-width {
     width: 100%;
@@ -101,11 +102,13 @@ app-right-column {
 
 @media screen and (max-width: $desktop-width--medium) {
   app-left-column {
-    width: $app-left-column-width-small;
+    width: calc(100% - #{$app-right-column-width-small});
+
   }
 
   app-right-column {
-    width: calc(100% - #{$app-left-column-width-small});
+    width: $app-left-column-width-small;
+
   }
 }
 

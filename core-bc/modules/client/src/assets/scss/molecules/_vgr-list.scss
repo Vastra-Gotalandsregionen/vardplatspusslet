@@ -1,3 +1,40 @@
+// .page-block .list {
+//   //background-color: transparent;
+//   margin: 0;
+
+//   .list__items:before {
+//     height: 0px;
+//   }
+// }
+
+
+// .list-item {
+
+//   &.list-item--expanded,
+//   &.list-item--expanded:not(.list-item--compact) {
+//     margin-top: 1px;
+//   }
+
+// }
+
+.list {
+  .list__header {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .list__items {
+
+    &:before {
+      height: 0px;
+    }
+
+  }
+}
+
+
+
 .container .row .col {
   .list__header {
     width: auto;

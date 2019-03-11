@@ -1,110 +1,120 @@
 <app-menu-title-row>
-  <h1>Administration</h1>
-</app-menu-title-row>
+
+    <div class="menu-title-item">
+    <div class="breadcrumbs">
+        <a routerLink="../..">Startsida</a>
+        <app-chevron-right></app-chevron-right>
+        <a routerLink="..">Administration</a>
+        <app-chevron-right></app-chevron-right>
+        Användare
+    </div>
+    </div>
+  </app-menu-title-row>
 
 <app-row>
   <app-left-column>
 
+      <h1 class="page-title">Användare</h1>
+
+      <vgr-page-block>
+    
+          <vgr-list [flexibleHeader]="true">
+            <vgr-list-header>
+              <vgr-list-column-header [width]="3">VGR-ID</vgr-list-column-header>
+              <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
+              <vgr-list-column-header [width]="4">Roll</vgr-list-column-header>
+              <vgr-list-column-header [width]="4">Enheter</vgr-list-column-header>
+            </vgr-list-header>
+    
+            <vgr-list-item *ngFor="let user of users" (expandedChanged)="setCurrentUser($event, user)" #theListItem>
+              <vgr-list-item-header>
+                <vgr-list-column [width]="3">{{user.id}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{user.name}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{user.role}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{toUnitString(user.units)}}</vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content>
+                <form [formGroup]="userForm" *ngIf="userForm">
+    
+                  <div>
+                    <div>Roll:</div>
+                    <vgr-radio-group [disabled]="!admin"  formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+    
+                    </vgr-radio-group>
+                  </div>
+    
+                  <div>
+                    <div>Enheter:</div>
+                    <vgr-dropdown-select [multi]="true" formControlName="units" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched">
+                      <vgr-dropdown-item *ngFor="let item of unitDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                    </vgr-dropdown-select>
+                  </div>
+    
+                  <div class="container_edit">
+                    <div style="flex-grow: 10; flex-shrink: 0">
+                      <!--<vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>-->
+                      <a (click)="openDeleteModal(user)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+                    </div>
+                    <div style="flex-grow: 1; flex-shrink: 0">
+                      <vgr-button default="true" (click)="saveUser(theListItem)"
+                                  [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara
+                      </vgr-button>
+                      <vgr-button buttonStyle="secondary" (click)="collapse(theListItem)">Avbryt</vgr-button>
+                    </div>
+                  </div>
+    
+                  <!--<div class="clearfix button-row save-cancel-delete">
+                    <vgr-save-cancel (save)="saveUser()" (cancel)="theListItem.toggleExpand()"
+                                     [hideLock]="true"></vgr-save-cancel>
+                    <vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>
+                  </div>-->
+                </form>
+              </vgr-list-item-content>
+            </vgr-list-item>
+    
+            <vgr-list-item (expandedChanged)="setCurrentUser($event, null)" #addListItem>
+              <vgr-list-item-header>
+                <vgr-list-column width="5">
+                  <div class="add-row vgr-icon-plus">Lägg till användare</div>
+                </vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content [indentContent]="true">
+                <form [formGroup]="userForm" *ngIf="userForm">
+    
+                  <div>
+                    <div>VGR-ID:</div>
+                    <vgr-input formControlName="id" #addUserId [showValidation]="!userForm.get('id').valid && userForm.get('id').touched"></vgr-input>
+                  </div>
+                  <div>
+                    <div>Roll:</div>
+                    <vgr-radio-group [disabled]="!admin" formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+    
+                    </vgr-radio-group>
+                    <span *ngIf="!userForm.get('role').valid" style="color: red; background-color: mistyrose"> ! Fältet är Obligatoriskt</span>
+                  </div>
+    
+                  <div>
+                    <div>Enheter:</div>
+                    <vgr-dropdown-select [multi]="true" formControlName="units" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched">
+                      <vgr-dropdown-item *ngFor="let item of unitDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                    </vgr-dropdown-select>
+                  </div>
+    
+                 <!-- <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.toggleExpand()"
+                                   [hideLock]="true"></vgr-save-cancel>-->
+                  <div class="containers">
+                    <vgr-button default="true" (click)="saveUser(addListItem)" [disabled]="!(userForm.valid)">Spara</vgr-button>
+                    <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                  </div>
+                </form>
+              </vgr-list-item-content>
+            </vgr-list-item>
+          </vgr-list>
+        </vgr-page-block>
   </app-left-column>
   <app-right-column>
-    <vgr-page-block>
-      <h2 style="margin-bottom: 16px">Användare</h2>
-
-      <vgr-list [flexibleHeader]="true">
-        <vgr-list-header>
-          <vgr-list-column-header [width]="3">VGR-ID</vgr-list-column-header>
-          <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
-          <vgr-list-column-header [width]="4">Roll</vgr-list-column-header>
-          <vgr-list-column-header [width]="4">Enheter</vgr-list-column-header>
-        </vgr-list-header>
-
-        <vgr-list-item *ngFor="let user of users" (expandedChanged)="setCurrentUser($event, user)" #theListItem>
-          <vgr-list-item-header>
-            <vgr-list-column [width]="3">{{user.id}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{user.name}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{user.role}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{toUnitString(user.units)}}</vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content>
-            <form [formGroup]="userForm" *ngIf="userForm">
-
-              <div>
-                <div>Roll:</div>
-                <vgr-radio-group [disabled]="!admin"  formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
-
-                </vgr-radio-group>
-              </div>
-
-              <div>
-                <div>Enheter:</div>
-                <vgr-dropdown-select [multi]="true" formControlName="units" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched">
-                  <vgr-dropdown-item *ngFor="let item of unitDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-                </vgr-dropdown-select>
-              </div>
-
-              <div class="container_edit">
-                <div style="flex-grow: 10; flex-shrink: 0">
-                  <!--<vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>-->
-                  <a (click)="openDeleteModal(user)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-                </div>
-                <div style="flex-grow: 1; flex-shrink: 0">
-                  <vgr-button default="true" (click)="saveUser(theListItem)"
-                              [disabled]="!(userForm.get('units').valid && userForm.get('role').valid)">Spara
-                  </vgr-button>
-                  <vgr-button default="true" (click)="collapse(theListItem)">Avbryt</vgr-button>
-                </div>
-              </div>
-
-              <!--<div class="clearfix button-row save-cancel-delete">
-                <vgr-save-cancel (save)="saveUser()" (cancel)="theListItem.toggleExpand()"
-                                 [hideLock]="true"></vgr-save-cancel>
-                <vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>
-              </div>-->
-            </form>
-          </vgr-list-item-content>
-        </vgr-list-item>
-
-        <vgr-list-item (expandedChanged)="setCurrentUser($event, null)" #addListItem>
-          <vgr-list-item-header>
-            <vgr-list-column width="5">
-              <div class="add-row vgr-icon-plus">Lägg till användare</div>
-            </vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content [indentContent]="true">
-            <form [formGroup]="userForm" *ngIf="userForm">
-
-              <div>
-                <div>VGR-ID:</div>
-                <vgr-input formControlName="id" #addUserId [showValidation]="!userForm.get('id').valid && userForm.get('id').touched"></vgr-input>
-              </div>
-              <div>
-                <div>Roll:</div>
-                <vgr-radio-group [disabled]="!admin" formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">
-
-                </vgr-radio-group>
-                <span *ngIf="!userForm.get('role').valid" style="color: red; background-color: mistyrose"> ! Fältet är Obligatoriskt</span>
-              </div>
-
-              <div>
-                <div>Enheter:</div>
-                <vgr-dropdown-select [multi]="true" formControlName="units" [showValidation]="!userForm.get('units').valid && userForm.get('units').touched">
-                  <vgr-dropdown-item *ngFor="let item of unitDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-                </vgr-dropdown-select>
-              </div>
-
-             <!-- <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.toggleExpand()"
-                               [hideLock]="true"></vgr-save-cancel>-->
-              <div class="containers">
-                <vgr-button default="true" (click)="saveUser(addListItem)" [disabled]="!(userForm.valid)">Spara</vgr-button>
-                <vgr-button default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
-              </div>
-            </form>
-          </vgr-list-item-content>
-        </vgr-list-item>
-      </vgr-list>
-    </vgr-page-block>
   </app-right-column>
 </app-row>
 

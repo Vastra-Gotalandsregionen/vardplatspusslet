@@ -1,6 +1,8 @@
 <div id="theme-root" class="theme--blue">
 
-  <vgr-header textColor="black" circleColor="#ffffff" [userName]="getLoggedInDisplayName()"></vgr-header>
+  <vgr-header textColor="black" circleColor="#ffffff" [userName]="getLoggedInDisplayName()">
+    <vgr-header-menu></vgr-header-menu>
+  </vgr-header>
 
   <div class="container">
     <router-outlet></router-outlet>

@@ -1,32 +1,39 @@
 <app-menu-title-row>
-  <h1>{{clinic?.name}}</h1>
+  
+    <div class="menu-title-item">
+      <div class="breadcrumbs">
+        {{clinic?.name}}
+      </div>
+    </div>
+
 </app-menu-title-row>
 
 <app-row>
   <app-left-column>
 
+      <h1 class="page-title">Välj avdelning</h1>
+
+      <vgr-page-block>
+          <div *ngIf="units">   
+            <ul>
+              <li *ngFor="let unit of units">
+                <a [routerLink]="unit.id">{{unit.name}}</a>
+              </li>
+            </ul>
+    
+            <div *ngIf="units.length === 0 && loggedIn && !isFetchingUnits">
+              Du har inte behörighet att lista någon avdelning. För att komma till en avdelning behöver du adressen direkt till avdelningen.
+            </div>
+    
+            <div *ngIf="units.length === 0 && !loggedIn">
+              Prova att logga in för att lista avdelningar.
+    
+              <app-login-form></app-login-form>
+            </div>
+    
+          </div>
+        </vgr-page-block>
   </app-left-column>
   <app-right-column>
-    <vgr-page-block>
-      <div *ngIf="units">
-
-        <ul>
-          <li *ngFor="let unit of units">
-            <a [routerLink]="unit.id">{{unit.name}}</a>
-          </li>
-        </ul>
-
-        <div *ngIf="units.length === 0 && loggedIn && !isFetchingUnits">
-          Du har inte behörighet att lista någon avdelning. För att komma till en avdelning behöver du adressen direkt till avdelningen.
-        </div>
-
-        <div *ngIf="units.length === 0 && !loggedIn">
-          Prova att logga in för att lista avdelningar.
-
-          <app-login-form></app-login-form>
-        </div>
-
-      </div>
-    </vgr-page-block>
   </app-right-column>
 </app-row>

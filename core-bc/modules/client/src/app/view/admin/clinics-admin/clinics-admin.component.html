@@ -1,111 +1,118 @@
 <app-menu-title-row>
-  <h1>Administration</h1>
+
+    <div class="menu-title-item">
+  <div class="breadcrumbs">
+      <a routerLink="../..">Startsida</a>
+      <app-chevron-right></app-chevron-right>
+    <a routerLink="..">Administration</a>
+    <app-chevron-right></app-chevron-right>
+    Kliniker
+  </div>
+  </div>
+
 </app-menu-title-row>
 
 <app-row>
   <app-left-column>
 
-  </app-left-column>
-  <app-right-column>
-    <vgr-page-block>
-      <h2 style="margin-bottom: 16px">Kliniker</h2>
+      <h1 class="page-title">Kliniker</h1>
 
-      <vgr-list [flexibleHeader]="true">
-        <vgr-list-header>
-          <vgr-list-column-header>
-          </vgr-list-column-header>
-        </vgr-list-header>
+      <vgr-page-block>
+    
+          <vgr-list>
 
-        <vgr-list-item *ngFor="let clinic of clinics" (expandedChanged)="setCurrentClinic($event, clinic)" #theListItem>
-          <vgr-list-item-header>
-            <vgr-list-column [width]="3">{{clinic.id}}</vgr-list-column>
-            <vgr-list-column [width]="4">{{clinic.name}}</vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content>
-            <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
-
-              <div>
-                <div>Namn:</div>
-                <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
-                <!--<input formControlName="name"/>-->
-              </div>
-
-              <!--<div class="clearfix button-row save-cancel-delete">
-                <vgr-save-cancel (save)="saveClinic()" (cancel)="theListItem.toggleExpand()"
-                                 [hideLock]="true"></vgr-save-cancel>
-                <vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>
-              </div>-->
-
-              <div class="containers clearfix">
-                <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
-                  <!--<vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>-->
-                  <a (click)="openDeleteModal(clinic)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-
-                </div>
-
-                <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
-                  <vgr-button default="true" (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
-                  <vgr-button default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
-                </div>
-              </div>
-            </form>
-          </vgr-list-item-content>
-        </vgr-list-item>
-
-        <vgr-list-item (expandedChanged)="setCurrentClinic($event, null)" #addListItem>
-          <vgr-list-item-header>
-            <vgr-list-column width="5">
-              <div class="add-row vgr-icon-plus">Lägg till klinik</div>
-            </vgr-list-column>
-          </vgr-list-item-header>
-
-          <vgr-list-item-content [indentContent]="true">
-            <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
-              <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
-              <button type="submit" style="display:none">send</button>
-              <div class=" clearfix containers">
-                <div style="flex-grow: 6; flex-shrink: 0">
-                  <div>
-                    <div>ID:</div>
-                    <vgr-input formControlName="id" [showValidation]="!clinicForm.get('id').valid && clinicForm.get('id').touched " #addClinicId></vgr-input>
-                  </div>
+            <vgr-list-item *ngFor="let clinic of clinics" (expandedChanged)="setCurrentClinic($event, clinic)" #theListItem>
+              <vgr-list-item-header>
+                <vgr-list-column [width]="3">{{clinic.id}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{clinic.name}}</vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content>
+                <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
+    
                   <div>
                     <div>Namn:</div>
                     <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
+                    <!--<input formControlName="name"/>-->
                   </div>
-                </div>
-                <div style="align-self: flex-end; margin-top: 10px;">
-                  <!--<vgr-save-cancel (save)="saveClinic()" (cancel)="addListItem.toggleExpand()"
-                                   [hideLock]="true"></vgr-save-cancel>-->
-                  <vgr-button default="true" (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
-                  <vgr-button default="true" (click)="collapse(addListItem)" >Avbryt</vgr-button>
-                </div>
-              </div>
-            </form>
-          </vgr-list-item-content>
-
-          <!--<vgr-list-item-content [indentContent]="true">
-            <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
-              &lt;!&ndash; For some reason this is needed here, but not in the above form, in order for enter button to work. &ndash;&gt;
-              <button type="submit" style="display:none">send</button>
-
-              <div>
-                <div>ID:</div>
-                <input formControlName="id" #addClinicId/>
-              </div>
-              <div>
-                <div>Namn:</div>
-                <input formControlName="name"/>
-              </div>
-
-              <vgr-save-cancel (save)="saveClinic()" (cancel)="addListItem.toggleExpand()"
-                               [hideLock]="true"></vgr-save-cancel>
-            </form>
-          </vgr-list-item-content>-->
-        </vgr-list-item>
-      </vgr-list>
-    </vgr-page-block>
+    
+                  <!--<div class="clearfix button-row save-cancel-delete">
+                    <vgr-save-cancel (save)="saveClinic()" (cancel)="theListItem.toggleExpand()"
+                                     [hideLock]="true"></vgr-save-cancel>
+                    <vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>
+                  </div>-->
+    
+                  <div class="containers clearfix">
+                    <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
+                      <!--<vgr-button class="error" (click)="openDeleteModal(clinic)">Radera</vgr-button>-->
+                      <a (click)="openDeleteModal(clinic)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+    
+                    </div>
+    
+                    <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
+                      <vgr-button (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
+                      <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                    </div>
+                  </div>
+                </form>
+              </vgr-list-item-content>
+            </vgr-list-item>
+    
+            <vgr-list-item (expandedChanged)="setCurrentClinic($event, null)" #addListItem>
+              <vgr-list-item-header>
+                <vgr-list-column width="5">
+                  <div class="add-row vgr-icon-plus">Lägg till klinik</div>
+                </vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content [indentContent]="true">
+                <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
+                  <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
+                  <button type="submit" style="display:none">send</button>
+                  <div class=" clearfix containers">
+                    <div style="flex-grow: 6; flex-shrink: 0">
+                      <div>
+                        <div>ID:</div>
+                        <vgr-input formControlName="id" [showValidation]="!clinicForm.get('id').valid && clinicForm.get('id').touched " #addClinicId></vgr-input>
+                      </div>
+                      <div>
+                        <div>Namn:</div>
+                        <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
+                      </div>
+                    </div>
+                    <div style="align-self: flex-end; margin-top: 10px;">
+                      <!--<vgr-save-cancel (save)="saveClinic()" (cancel)="addListItem.toggleExpand()"
+                                       [hideLock]="true"></vgr-save-cancel>-->
+                      <vgr-button (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
+                      <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                    </div>
+                  </div>
+                </form>
+              </vgr-list-item-content>
+    
+              <!--<vgr-list-item-content [indentContent]="true">
+                <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
+                  &lt;!&ndash; For some reason this is needed here, but not in the above form, in order for enter button to work. &ndash;&gt;
+                  <button type="submit" style="display:none">send</button>
+    
+                  <div>
+                    <div>ID:</div>
+                    <input formControlName="id" #addClinicId/>
+                  </div>
+                  <div>
+                    <div>Namn:</div>
+                    <input formControlName="name"/>
+                  </div>
+    
+                  <vgr-save-cancel (save)="saveClinic()" (cancel)="addListItem.toggleExpand()"
+                                   [hideLock]="true"></vgr-save-cancel>
+                </form>
+              </vgr-list-item-content>-->
+            </vgr-list-item>
+          </vgr-list>
+        </vgr-page-block>
+  </app-left-column>
+  <app-right-column>
   </app-right-column>
 </app-row>
 
