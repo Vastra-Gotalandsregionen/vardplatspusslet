@@ -37,6 +37,7 @@ import {EditMessagesComponent} from './view/unit/edit-messages/edit-messages.com
 import {MessageComponent} from './elements/message/message.component';
 import {EditMessageComponent} from './elements/edit-message/edit-message.component';
 import {WidgetMessagesComponent} from './elements/widget-messages/widget-messages.component';
+import {WidgetSsksComponent} from './elements/widget-ssks/widget-ssks.component';
 import {CKEditorModule} from "ng2-ckeditor";
 import {JwtHttpInterceptor} from "./interceptor/jwt-http-interceptor";
 import {AdminGuard} from "./guard/admin.guard";
@@ -82,6 +83,7 @@ registerLocaleData(localeSv, "sv-SE");
     MessageComponent,
     EditMessageComponent,
     WidgetMessagesComponent,
+    WidgetSsksComponent,
     StatisticsComponent,
     LoginFormComponent,
     ErrorDialogComponent,
