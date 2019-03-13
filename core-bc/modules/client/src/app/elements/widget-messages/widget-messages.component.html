@@ -8,8 +8,8 @@
             </div>
         </div>
 
-        <div class="messages">
-            <app-message *ngFor="let message of messages" [message]="message"></app-message>
+        <div class="messages-wrap">
+            <app-message *ngFor="let message of messages" [message]="message" class="app-message"></app-message>
         </div>
 
         <div class="panel-footer panel-footer-right">
@@ -17,9 +17,6 @@
                 <span class="icon-with-text vgr-icon-edit">Redigera meddelanden</span>
             </a>
         </div>
-
-        
-
 
     </vgr-panel>
 </vgr-panel-container>
