@@ -64,3 +64,20 @@ vgr-panel.color--green .panel {
   }
 
 }
+
+.panel {
+
+  .panel-footer {
+
+    &.panel-footer-right {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    
+
+
+  }
+
+}

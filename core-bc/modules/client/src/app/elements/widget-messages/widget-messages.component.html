@@ -12,9 +12,14 @@
             <app-message *ngFor="let message of messages" [message]="message"></app-message>
         </div>
 
-        <a routerLink="editMessages" *ngIf="hasEditUnitPermission">
-            <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
-        </a>        
+        <div class="panel-footer panel-footer-right">
+            <a class="link-button discreet tight" routerLink="editMessages" *ngIf="hasEditUnitPermission">
+                <span class="icon-with-text vgr-icon-edit">Redigera meddelanden</span>
+            </a>
+        </div>
+
         
+
+
     </vgr-panel>
 </vgr-panel-container>
