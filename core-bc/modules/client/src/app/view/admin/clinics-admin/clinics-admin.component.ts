@@ -43,7 +43,6 @@ export class ClinicsAdminComponent implements OnInit {
   }
 
   private initClinicForm(clinic: Clinic) {
-    debugger;
     if (!clinic) {
       clinic = new Clinic();
     }
@@ -62,7 +61,6 @@ export class ClinicsAdminComponent implements OnInit {
   }
 
   saveClinic() {
-    debugger;
     let clinic = new Clinic();
     let clinicModel = this.clinicForm.value;
 
