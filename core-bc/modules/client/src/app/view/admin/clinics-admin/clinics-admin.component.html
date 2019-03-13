@@ -30,6 +30,7 @@
               </vgr-list-item-header>
     
               <vgr-list-item-content>
+
                 <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
 
                   <vgr-panel-container>
@@ -63,6 +64,7 @@
                     </div>
                   </div>
                 </form>
+
               </vgr-list-item-content>
             </vgr-list-item>
     
@@ -106,24 +108,6 @@
                 </form>
               </vgr-list-item-content>
     
-              <!--<vgr-list-item-content [indentContent]="true">
-                <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
-                  &lt;!&ndash; For some reason this is needed here, but not in the above form, in order for enter button to work. &ndash;&gt;
-                  <button type="submit" style="display:none">send</button>
-    
-                  <div>
-                    <div>ID:</div>
-                    <input formControlName="id" #addClinicId/>
-                  </div>
-                  <div>
-                    <div>Namn:</div>
-                    <input formControlName="name"/>
-                  </div>
-    
-                  <vgr-save-cancel (save)="saveClinic()" (cancel)="addListItem.toggleExpand()"
-                                   [hideLock]="true"></vgr-save-cancel>
-                </form>
-              </vgr-list-item-content>-->
             </vgr-list-item>
           </vgr-list>
         </vgr-page-block>

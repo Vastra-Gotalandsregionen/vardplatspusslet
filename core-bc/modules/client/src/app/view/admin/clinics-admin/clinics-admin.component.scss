@@ -1,6 +1,30 @@
-.containers
-{
+.containers {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.card__left-container {
+  border-right-width: 0;
+}
+
+.card-controls {
+  
+  .card-column {
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  .card__left-container {
+    .containers {
+      justify-content: flex-start;
+    }
+  }
+
+  .card__right-container {
+    .containers {
+      justify-content: flex-end;
+    }
+  }
+
 }
