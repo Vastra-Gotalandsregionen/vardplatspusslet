@@ -1,0 +1,20 @@
+<vgr-panel-container>
+    <vgr-panel width="12" themecolor="green">
+
+        <div class="row-layout panel-heading">
+            <span class="material-icons">email</span>
+            <div class="panel-heading-text">
+                <strong>Dagens meddelanden</strong>
+            </div>
+        </div>
+
+        <div class="messages">
+            <app-message *ngFor="let message of messages" [message]="message"></app-message>
+        </div>
+
+        <a routerLink="editMessages" *ngIf="hasEditUnitPermission">
+            <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
+        </a>        
+        
+    </vgr-panel>
+</vgr-panel-container>
