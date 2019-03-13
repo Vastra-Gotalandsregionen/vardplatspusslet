@@ -7,6 +7,9 @@
         <li class="sub-menu" *ngIf="loggedIn">
           <span class="sub-menu-title">Administration <span class="bg-image-icon-chevron"></span></span>
           <ul>
+            <li>
+              <a routerLink="/admin/managements" *ngIf="admin">Förvaltningar</a>
+            </li>
             <li><a routerLink="/admin/clinics" *ngIf="admin">Kliniker</a></li>
             <li><a routerLink="/admin/units">Avdelningar</a></li>
             <li><a routerLink="/admin/users">Användare</a></li>

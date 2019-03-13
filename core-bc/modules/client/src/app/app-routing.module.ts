@@ -13,11 +13,17 @@ import {UserLoggedInGuard} from "./guard/user-logged-in.guard";
 import {AdminGuard} from "./guard/admin.guard";
 import {HasEditUnitPermissionGuard} from "./guard/has-edit-unit-permission.guard";
 import {StatisticsComponent} from "./view/admin/statistics/statistics.component";
+import {ManagementsAdminComponent} from "./view/admin/managements-admin/managements-admin.component";
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'admin/managements',
+    component: ManagementsAdminComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: 'admin',

@@ -50,6 +50,7 @@ import { TheOtherBedIconsComponent } from './shared/the-other-bed-icons/the-othe
 import { BedTableComponent } from './shared/bed-table/bed-table.component';
 import { UnitPlannedInTableComponent } from './elements/unit-planned-in-table/unit-planned-in-table.component';
 import { UnitPlannedInItemsComponent } from './elements/unit-planned-in-items/unit-planned-in-items.component';
+import { ManagementsAdminComponent } from './view/admin/managements-admin/managements-admin.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -85,7 +86,8 @@ registerLocaleData(localeSv, "sv-SE");
     TheOtherBedIconsComponent,
     BedTableComponent,
     UnitPlannedInTableComponent,
-    UnitPlannedInItemsComponent
+    UnitPlannedInItemsComponent,
+    ManagementsAdminComponent,
   ],
   imports: [
     BrowserModule,

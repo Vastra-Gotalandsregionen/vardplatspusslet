@@ -1,27 +1,23 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
+
 import javax.persistence.*;
+import java.util.Set;
+import java.util.TreeSet;
 
-/**
- * @author Patrik Björk
- */
 @Entity
-@Table(name = "clinic")
-public class Clinic {
-
+@Table(name = "management")
+public class Management {
     @Id
     private String id;
 
     @Column
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Management management;
-
-    public Clinic() {
+    public Management() {
     }
 
-    public Clinic(String id, String name) {
+    public Management(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -42,11 +38,4 @@ public class Clinic {
         this.name = name;
     }
 
-    public Management getManagement() {
-        return management;
-    }
-
-    public void setManagement(Management management) {
-        this.management = management;
-    }
 }

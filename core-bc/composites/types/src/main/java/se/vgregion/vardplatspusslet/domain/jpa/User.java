@@ -36,6 +36,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Unit> units = new TreeSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Clinic> clinics = new TreeSet<>();
+
     @Column
     private Boolean inactivated = false;
 
@@ -85,5 +88,13 @@ public class User {
 
     public void setInactivated(Boolean inactivated) {
         this.inactivated = inactivated;
+    }
+
+    public Set<Clinic> getClinics() {
+        return clinics;
+    }
+
+    public void setClinics(Set<Clinic> clinics) {
+        this.clinics = clinics;
     }
 }
