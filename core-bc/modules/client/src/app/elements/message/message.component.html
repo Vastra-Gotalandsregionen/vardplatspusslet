@@ -1,4 +1,16 @@
-<div>{{message.date | date : 'yyyy-MM-dd'}}</div>
-<div>{{dayOfWeekLabel}}</div>
-<h2>{{message.heading}}</h2>
-<div [innerHTML]="message.text"></div>
+<div class="message">
+
+    <div class="date">
+        <span *ngIf="message.date">
+            {{message.date | date : 'yyyy-MM-dd'}}   
+        </span>
+        <span *ngIf="dayOfWeekLabel">{{dayOfWeekLabel}}</span>
+    </div>
+
+    <div class="message-title">
+        {{message.heading}}
+    </div>
+    <div class="message-content" [innerHTML]="message.text">
+    </div>
+
+</div>

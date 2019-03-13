@@ -20,6 +20,7 @@
 
 <app-row>
   <app-left-column>
+
       <div>
       <vgr-page-block *ngIf="unit" class="{{showChangeBedOrder ? '' : 'transparent'}}">
         <div>
@@ -127,16 +128,9 @@
 
   <app-right-column>
       <vgr-page-block class="transparent">
-          <h3>Dagens meddelanden:</h3>
-          <vgr-panel-container class="button-row">
-            <vgr-panel width="80%" *ngFor="let message of messages" themecolor="green">
-              <app-message [message]="message"></app-message>
-            </vgr-panel>
-          </vgr-panel-container>
-          <a routerLink="editMessages" *ngIf="hasEditUnitPermission()">
-            <div class="icon-with-text vgr-icon-edit">Redigera meddelanden</div>
-          </a>
-          <hr/>
+
+        <app-widget-messages [messages]="messages" [hasEditUnitPermission]="hasEditUnitPermission()"></app-widget-messages>
+
           <vgr-panel-container>
 
               <vgr-panel width="80%" *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">

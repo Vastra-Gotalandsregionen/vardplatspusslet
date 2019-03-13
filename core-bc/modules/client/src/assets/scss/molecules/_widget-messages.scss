@@ -1,0 +1,35 @@
+.messages {
+
+    app-message {
+
+        .message {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            margin: 10px 0;
+        }
+        
+        &:first-child {
+            .message {
+                border-top: 1px solid #ddd;
+            }
+        }
+    }
+
+    .message {
+        
+        .date {
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .message-title {
+            font-weight: bold;
+        }
+
+        .message-content {
+            color: inherit;
+        }
+
+    }
+
+}
