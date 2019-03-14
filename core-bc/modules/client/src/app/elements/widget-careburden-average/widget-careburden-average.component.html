@@ -1,0 +1,22 @@
+<vgr-panel-container *ngIf="unit?.hasCareBurdenWithAverage">
+  <vgr-panel width="12">
+      <table class="vpp-table">
+          <thead>
+          <tr>
+            <th>Vårdtyngd</th>
+            <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
+          </tr>
+          </thead>
+          <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
+            <td>säng{{" "+ bed.label}}</td>
+            <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
+              {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
+            </td>
+          </tr>
+          <tr>
+            <td>Medelvärde:</td>
+            <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td>
+          </tr>
+        </table>
+  </vgr-panel>
+</vgr-panel-container>

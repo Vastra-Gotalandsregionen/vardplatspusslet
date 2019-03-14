@@ -1,27 +1,16 @@
-<!--
-<p>SSK:s widget</p>
--->
-<!--
-<vgr-panel-container>
-    <vgr-panel width="12" themecolor="green">
-
-        <div class="row-layout panel-heading">
-            <span class="material-icons">email</span>
-            <div class="panel-heading-text">
-                <strong>Dagens meddelanden</strong>
-            </div>
-        </div>
-
-        <div class="messages-wrap">
-            <app-message *ngFor="let message of messages" [message]="message" class="app-message"></app-message>
-        </div>
-
-        <div class="panel-footer panel-footer-right">
-            <a class="link-button discreet tight" routerLink="editMessages" *ngIf="hasEditUnitPermission">
-                <span class="icon-with-text vgr-icon-edit">Redigera meddelanden</span>
-            </a>
-        </div>
-
-    </vgr-panel>
+<vgr-panel-container *ngIf="unit?.ssks.length > 0">
+  <vgr-panel width="12">
+    <table class="vpp-table">
+      <thead>
+      <tr>
+        <th>Vårdlag</th>
+        <th>Antal sängar</th>
+      </tr>
+      </thead>
+      <tr *ngFor="let ssk of unit?.ssks">
+        <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
+        <td>{{countBeds(ssk)}}</td>
+      </tr>
+    </table>
+  </vgr-panel>
 </vgr-panel-container>
--->

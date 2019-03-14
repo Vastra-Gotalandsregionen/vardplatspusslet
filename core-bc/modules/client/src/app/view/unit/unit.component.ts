@@ -35,7 +35,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   unit: Unit;
   units: Unit[];
   clinic: Clinic;
-  showRow: boolean = true;
   burdenvals: string;
   sevendaysplan: SevenDaysPlaningUnit[] = [];
   plannedInDropdownUnits: DropdownItem<number>[];
@@ -274,13 +273,8 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.ngOnInit();
       });
   }
-
-  countBeds(sskArg: Ssk) {
-    // Map to ssk, then filter out those with the same id and count the result.
-    return this.unit.beds.map(bed => bed.ssk).filter(ssk => ssk ? ssk.id === sskArg.id : false).length;
-  }
-
-  // To initial capital letter and lower case after first letter. Also replace underscore with space.
+  
+    // To initial capital letter and lower case after first letter. Also replace underscore with space.
   format(input: string) {
     if (!input) {
       return null;
@@ -301,52 +295,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     }
   }
 
-  patientCareBurden(patientChoices, burdenCategoriId) {
-    if (patientChoices!= null && patientChoices.length > 0){
-      let x =  patientChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
-      return x && x.careBurdenValue ? x.careBurdenValue.name: null;
-
-    }
-    else{
-      this.showRow = false;
-      return null;
-    }
-  }
-
-  CalculateAverage(burdenCategoriId) {
-    let burdenval = 0;
-    let antal = 0;
-    for (let bed of this.unit.beds)
-    {
-      if (bed.patient)
-      {
-        let x = bed.patient.careBurdenChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
-        if (x && x.careBurdenValue){
-          antal++;
-          burdenval +=  +x.careBurdenValue.name;
-        }
-      }
-    }
-    if (antal === 0) return 0;
-    return (burdenval/antal).toFixed(2);
-  }
-
-  getMatrixValue(ssk: Ssk, cbk: CareBurdenCategory, cbv: CareBurdenValue): string {
-    if (this.sskCategoryValueMatrix[ssk.label] && this.sskCategoryValueMatrix[ssk.label][cbk.name] && this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name]) {
-      return this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name];
-    } else {
-      return '0';
-    }
-  }
-
-  BedHasNoPatientWithCareBurden(patient: Patient) {
-     if ( patient != null && patient.careBurdenChoices && patient.careBurdenChoices.map(x => x.careBurdenValue)
-       .filter(z => z!= null && z.id).length > 0)
-       return false;
-     else return true;
-  }
-
-  collapse(element: ListItemComponent) {
+    collapse(element: ListItemComponent) {
     element.toggleExpand();
     this.ngOnInit();
   }
