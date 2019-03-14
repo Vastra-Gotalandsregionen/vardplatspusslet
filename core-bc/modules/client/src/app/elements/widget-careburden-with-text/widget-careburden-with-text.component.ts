@@ -12,8 +12,8 @@ import {Unit} from "../../domain/unit";
 })
 export class WidgetCareBurdenWithTextComponent implements OnInit {
 
+  @Input('burdenvals') burdenvals: string;
   @Input('unit') unit: Unit;
-
   @Input('sskCategoryValueMatrix') sskCategoryValueMatrix: {};
 
   constructor() {
