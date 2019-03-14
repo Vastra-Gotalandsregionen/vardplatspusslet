@@ -1,0 +1,131 @@
+.cb-circles {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: space-between;
+
+    &:after {
+        content: "";
+        flex: auto;
+    }
+  
+
+    .cb-circle-item {
+
+        display: block;
+        margin: 0 0 20px 0;
+        width: 120px;
+        
+
+        .cb-circle {
+            display: block;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .cb-circle-outer {
+            background: #ddd;
+            border: 1px solid #ddd;
+            height: 50px;
+            margin: 0 auto;
+            width: 50px;
+        }
+
+        .cb-circle-inner {
+            background: #fff;
+            border: 1px solid #ddd;
+            height: 80%;
+            width: 80%;
+            left: 10%;
+            top: 10%;
+
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;            
+        }
+
+        .cb-circle-label {
+            display: block;
+            text-align: center;
+        }
+
+        &.cb-circle-item-BLUE {
+            .cb-circle-outer {
+                background: $primary-color--blue;
+                border-color: $primary-color--blue;
+            }
+            .cb-circle-inner {
+                border-color: $primary-color--blue;
+            }
+        }
+
+        &.cb-circle-item-GREEN {
+            .cb-circle-outer {
+                background: $primary-color--green;
+                border-color: $primary-color--green;
+            }
+            .cb-circle-inner {
+                border-color: $primary-color--green;
+            }
+        }
+
+        &.cb-circle-item-RED {
+            .cb-circle-outer {
+                background: $primary-color--red;
+                border-color: $primary-color--red;
+            }
+            .cb-circle-inner {
+                border-color: $primary-color--red;
+            }
+        }
+
+        &.cb-circle-item-YELLOW {
+            .cb-circle-outer {
+                background: $primary-color--yellow;
+                border-color: $primary-color--yellow;
+            }
+            .cb-circle-inner {
+                border-color: $primary-color--yellow;
+            }
+        }
+
+        &.cb-circle-item-PURPLE {
+            .cb-circle-outer {
+                background: $primary-color--purple;
+                border-color: $primary-color--purple;
+            }
+            .cb-circle-inner {
+                border-color: $primary-color--purple;
+            }
+        }
+
+        &.cb-circle-item-PINK {
+            .cb-circle-outer {
+                background: $primary-color--pink;
+                border-color: $primary-color--pink;
+            }
+            .cb-circle-inner {
+                border-color: $primary-color--pink;
+            }
+        }
+
+        &.cb-circle-item-WHITE {
+            .cb-circle-outer {
+                background: #fff;;
+                border-color: #555;
+            }
+            .cb-circle-inner {
+                border-color: #555;
+            }
+        }
+
+
+    }
+
+    
+
+
+}
+  

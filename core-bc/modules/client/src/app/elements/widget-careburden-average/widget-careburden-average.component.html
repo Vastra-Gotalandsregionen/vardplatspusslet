@@ -1,5 +1,34 @@
 <vgr-panel-container *ngIf="unit?.hasCareBurdenWithAverage">
   <vgr-panel width="12">
+
+      <div class="row-layout panel-heading">
+          <div class="panel-heading-text">
+              <strong>Vårdtyngd - kategorier (medelvärde)</strong>
+          </div>
+      </div>
+
+      <!-- 
+      <div class="cb-circles">
+
+          <div *ngFor="let cbk of unit?.careBurdenCategories" class="cb-circle-item">
+            <span class="cb-circle cb-circle-outer">
+                <span class="cb-circle cb-circle-inner">
+                    <span class="cb-circle-val">
+                        {{countBeds(ssk)}}
+                    </span>
+                </span>
+            </span>
+            <span class="cb-circle-label">
+                {{ssk.label}}
+            </span>
+          </div>
+    
+  
+        </div>
+        -->
+  
+
+
       <table class="vpp-table">
           <thead>
           <tr>

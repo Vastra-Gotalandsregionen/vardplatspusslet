@@ -53,14 +53,25 @@ vgr-panel.transparent .panel {
   background: transparent;
 }
 
-vgr-panel.color--green .panel {
+vgr-panel .panel {
 
   .panel-heading {
-    color: #4a773c;
+    color: #006298;
+
+    margin-top: -10px;
+    margin-bottom: 10px;
   }
 
   .material-icons + .panel-heading-text {
     margin-left: 10px;
+  }
+
+}
+
+vgr-panel.color--green .panel {
+
+  .panel-heading {
+    color: #4a773c;
   }
 
 }
