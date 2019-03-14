@@ -1,17 +1,17 @@
 vgr-panel-container {
 
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 
-  .flex-width--4 {
-    flex: none;
-    width: 290px;
-  }
+  // .flex-width--4 {
+  //   flex: none;
+  //   width: 290px;
+  // }
 
-  @media screen and (min-width: $desktop-width--medium) {
-    .flex-width--4 {
-      width: 340px;
-    }
-  }
+  // @media screen and (min-width: $desktop-width--medium) {
+  //   .flex-width--4 {
+  //     width: 340px;
+  //   }
+  // }
 
   &.edit-messages-container vgr-panel {
     width: calc(#{$app-left-column-width-medium} + 80px);
@@ -19,7 +19,7 @@ vgr-panel-container {
   }
 
   vgr-panel {
-    width: calc(#{$app-left-column-width-medium} - 40px);
+    //width: calc(#{$app-left-column-width-medium} - 40px);
     margin-bottom: 18px;
   }
 

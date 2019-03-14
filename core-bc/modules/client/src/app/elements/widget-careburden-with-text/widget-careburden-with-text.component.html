@@ -1,29 +1,23 @@
-<vgr-panel-container *ngIf="unit?.hasCareBurdenWithText">
-  <vgr-panel width="12">
-
-      <table class="vpp-table">
-          <thead>
-          <tr>
-            <th colspan="7" style="text-align: left">Vårdtyngd</th>
-          </tr>
-          <tr>
-            <th></th>
-            <th *ngFor="let cbk of unit?.careBurdenCategories" class="right" colspan="3">{{cbk.name}}</th>
-          </tr>
-          <tr>
-            <th>Vårdlag</th>
-            <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3" class="right">{{burdenvals}}</th>
-          </tr>
-          </thead>
-          <tr *ngFor="let ssk of unit?.ssks">
-            <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
-            <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
-              <span *ngFor="let value of unit?.careBurdenValues; let i = index">
-                <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span>{{getMatrixValue(ssk, cbk, value)}}</span>
-               </span>
-            </td>
-          </tr>
-        </table>
-
-  </vgr-panel>
-</vgr-panel-container>
+<table class="vpp-table">
+    <thead>
+    <tr>
+      <th colspan="7" style="text-align: left">Vårdtyngd</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th *ngFor="let cbk of unit?.careBurdenCategories" class="right" colspan="3">{{cbk.name}}</th>
+    </tr>
+    <tr>
+      <th>Vårdlag</th>
+      <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3" class="right">{{burdenvals}}</th>
+    </tr>
+    </thead>
+    <tr *ngFor="let ssk of unit?.ssks">
+      <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
+      <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
+        <span *ngFor="let value of unit?.careBurdenValues; let i = index">
+          <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span>{{getMatrixValue(ssk, cbk, value)}}</span>
+          </span>
+      </td>
+    </tr>
+  </table>

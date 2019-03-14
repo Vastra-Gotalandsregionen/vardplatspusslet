@@ -129,15 +129,35 @@
   <app-right-column>
       <vgr-page-block class="transparent">
 
-        <app-widget-messages [messages]="messages" [hasEditUnitPermission]="hasEditUnitPermission()"></app-widget-messages>
+        <vgr-panel-container>
+            <vgr-panel width="12" themecolor="green">
+              <app-widget-messages [messages]="messages" [hasEditUnitPermission]="hasEditUnitPermission()"></app-widget-messages>
+            </vgr-panel>
+        </vgr-panel-container>
 
-        <app-widget-diet-list [clinic]="clinic" [unit]="unit"></app-widget-diet-list>
+        <vgr-panel-container *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
+            <vgr-panel width="12">
+                <app-widget-diet-list [clinic]="clinic" [unit]="unit"></app-widget-diet-list>
+            </vgr-panel>
+        </vgr-panel-container>
 
-        <app-widget-ssks [unit]="unit"></app-widget-ssks>
+        <vgr-panel-container *ngIf="unit?.ssks.length > 0">
+            <vgr-panel width="12">
+                <app-widget-ssks [unit]="unit"></app-widget-ssks>
+            </vgr-panel>
+        </vgr-panel-container>          
 
-        <app-widget-careburden-average [unit]="unit"></app-widget-careburden-average>
+        <vgr-panel-container *ngIf="unit?.hasCareBurdenWithAverage">
+          <vgr-panel width="12">
+              <app-widget-careburden-average [unit]="unit"></app-widget-careburden-average>
+          </vgr-panel>
+        </vgr-panel-container>                  
 
-        <app-widget-careburden-with-text [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
+        <vgr-panel-container *ngIf="unit?.hasCareBurdenWithText">
+          <vgr-panel width="12">
+              <app-widget-careburden-with-text [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
+          </vgr-panel>
+        </vgr-panel-container>                  
 
       </vgr-page-block>
   </app-right-column>
