@@ -1,9 +1,12 @@
 package se.vgregion.vardplatspusslet.repository;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
+import se.vgregion.vardplatspusslet.domain.jpa.Management;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ClinicRepository extends JpaRepository<Clinic, String> {
@@ -13,4 +16,6 @@ public interface ClinicRepository extends JpaRepository<Clinic, String> {
             type = EntityGraph.EntityGraphType.LOAD
     )
     List<Clinic> findAllByOrderById();
+    List<Clinic> findDistinctByManagementIsLike(Management management);
+    List<Clinic> findDistinctByIdIn(Collection<String> ids, Sort sort);
 }

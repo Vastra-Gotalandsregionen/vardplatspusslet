@@ -1,24 +1,23 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Clinic} from "../../domain/clinic";
+import {Subscription} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
-import {Clinic} from "../../domain/clinic";
-import {Unit} from "../../domain/unit";
 import {AuthService} from "../../service/auth.service";
-import {Subscription} from "rxjs";
+import {Management} from "../../domain/management";
 
 @Component({
-  selector: 'app-clinic',
-  templateUrl: './clinic.component.html',
-  styleUrls: ['./clinic.component.scss']
+  selector: 'app-management',
+  templateUrl: './management.component.html',
+  styleUrls: ['./management.component.scss']
 })
-export class ClinicComponent implements OnInit,OnDestroy {
+export class ManagementComponent implements OnDestroy {
 
-  clinic: Clinic;
-  units: Unit[];
+  management: Management;
+  clinics: Clinic[] = [];
   error: string;
-  management: string;
 
-  isFetchingUnits: boolean = false;
+  isFetchingClinics: boolean = false;
 
   notFoundText = 'Oops. Inget fanns här...';
 
@@ -32,16 +31,12 @@ export class ClinicComponent implements OnInit,OnDestroy {
     });
   }
 
-  ngOnInit(){
-    this.management = this.route.snapshot.queryParams['managementName'];
-  }
-
   fetch() {
     this.route.params.subscribe(params => {
 
-      this.http.get<Clinic>('/api/clinic/' + params.id).subscribe(clinic => {
-        if (clinic) {
-          this.clinic = clinic;
+      this.http.get<Management>('/api/management/' + params.id).subscribe(management => {
+        if (management) {
+          this.management = management;
         } else {
           this.error = this.notFoundText;
         }
@@ -52,15 +47,14 @@ export class ClinicComponent implements OnInit,OnDestroy {
         } else {
           this.error = error1.message;
         }
-        this.isFetchingUnits = false;
+        this.isFetchingClinics = false;
       });
-
-      this.isFetchingUnits = true; // To avoid flickering of text stating that the user doesn't have permission to any units.
-      this.http.get<Unit[]>('/api/unit?clinic=' + params.id).subscribe(units => {
-        this.units = units;
-        this.isFetchingUnits = false;
+      this.isFetchingClinics = true; // To avoid flickering of text stating that the user doesn't have permission to any clinics.
+      this.http.get<Clinic[]>('/api/clinic/management?management=' + params.id).subscribe(clinics => {
+        this.clinics = clinics;
+        this.isFetchingClinics = false;
       }, (error1 => {
-        this.isFetchingUnits = false;
+        this.isFetchingClinics = false;
       }));
 
     });

@@ -4,11 +4,11 @@
 
 <app-row>
   <app-left-column>
-      <h1 class="page-title">Välj klinik</h1>
-      <vgr-page-block *ngIf="clinics?.length > 0">
+      <h1 class="page-title">Välj Förvaltning</h1>
+      <vgr-page-block *ngIf="managements?.length > 0">
           <ul>
-            <li *ngFor="let clinic of clinics">
-              <a [routerLink]="'/' + clinic.id">{{clinic.name}}</a>
+            <li *ngFor="let management of managements">
+              <a [routerLink]="'/' + management.id">{{management.name}}</a>
             </li>
           </ul>
         </vgr-page-block>

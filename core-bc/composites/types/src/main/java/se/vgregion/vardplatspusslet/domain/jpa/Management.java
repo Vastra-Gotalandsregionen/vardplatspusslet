@@ -2,6 +2,7 @@ package se.vgregion.vardplatspusslet.domain.jpa;
 
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 

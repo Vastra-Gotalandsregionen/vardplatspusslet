@@ -32,6 +32,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   @ViewChild('unitPlannedInItemsOld') unitPlannedInItemsOld: UnitPlannedInItemsComponent;
 
   addSevenDaysPlaningUnitForm: FormGroup;
+  management: string;
   unit: Unit;
   units: Unit[];
   clinic: Clinic;
@@ -58,6 +59,7 @@ export class UnitComponent implements OnInit, OnDestroy {
               protected authService: AuthService) {
 
     this.timerSubscription = interval(10000).subscribe(() => this.checkForChanges());
+    this.management = this.route.snapshot.queryParams['managementName'];
   }
 
 

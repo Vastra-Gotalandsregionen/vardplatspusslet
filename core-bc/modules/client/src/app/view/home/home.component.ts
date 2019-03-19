@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Clinic} from "../../domain/clinic";
 import {AuthService} from "../../service/auth.service";
 import {Subscription} from "rxjs";
+import {Management} from "../../domain/management";
 
 @Component({
   selector: 'app-home',
@@ -11,20 +12,20 @@ import {Subscription} from "rxjs";
 })
 export class HomeComponent implements OnDestroy {
 
-  clinics: Clinic[];
+  managements: Management[];
 
   subscription: Subscription;
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
     this.subscription = this.authService.isUserLoggedIn.subscribe(value => {
-      this.fetchClinics();
+      this.fetchManagements();
     });
   }
 
-  fetchClinics() {
-    this.http.get<Clinic[]>('/api/clinic').subscribe(clinics => {
-      this.clinics = clinics;
+  fetchManagements() {
+    this.http.get<Management[]>('/api/management').subscribe(managements => {
+      this.managements = managements;
     });
   }
 

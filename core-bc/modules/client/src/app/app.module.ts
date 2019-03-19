@@ -52,6 +52,7 @@ import { BedTableComponent } from './shared/bed-table/bed-table.component';
 import { UnitPlannedInTableComponent } from './elements/unit-planned-in-table/unit-planned-in-table.component';
 import { UnitPlannedInItemsComponent } from './elements/unit-planned-in-items/unit-planned-in-items.component';
 import { ManagementsAdminComponent } from './view/admin/managements-admin/managements-admin.component';
+import { ManagementComponent } from './view/management/management.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -90,6 +91,7 @@ registerLocaleData(localeSv, "sv-SE");
     UnitPlannedInTableComponent,
     UnitPlannedInItemsComponent,
     ManagementsAdminComponent,
+    ManagementComponent,
   ],
   imports: [
     BrowserModule,

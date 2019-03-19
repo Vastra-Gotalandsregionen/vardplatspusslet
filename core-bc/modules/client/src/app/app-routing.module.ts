@@ -14,6 +14,7 @@ import {AdminGuard} from "./guard/admin.guard";
 import {HasEditUnitPermissionGuard} from "./guard/has-edit-unit-permission.guard";
 import {StatisticsComponent} from "./view/admin/statistics/statistics.component";
 import {ManagementsAdminComponent} from "./view/admin/managements-admin/managements-admin.component";
+import {ManagementComponent} from "./view/management/management.component";
 
 const routes: Routes = [
   {
@@ -48,19 +49,23 @@ const routes: Routes = [
     component: StatisticsComponent
   },
   {
-    path: ':id',
+    path: ':managementId/:id',
     component: ClinicComponent
   },
   {
-    path: ':clinicId/:id',
+    path: ':id',
+    component: ManagementComponent
+  },
+  {
+    path: ':managementId/:clinicId/:id',
     component: UnitComponent
   },
   {
-    path: ':clinicId/:id/bed-view',
+    path: ':managementId/:clinicId/:id/bed-view',
     component: BedViewComponent
   },
   {
-    path: ':clinicId/:id/editMessages',
+    path: ':managementId/:clinicId/:id/editMessages',
     component: EditMessagesComponent,
     canActivate: [HasEditUnitPermissionGuard]
   },

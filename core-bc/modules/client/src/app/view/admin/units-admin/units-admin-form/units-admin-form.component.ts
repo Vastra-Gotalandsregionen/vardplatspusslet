@@ -13,6 +13,7 @@ import {DietForChild} from "../../../../domain/dietforchild";
 import {DietForPatient} from "../../../../domain/dietforpatient";
 import {UnitPlannedIn} from "../../../../domain/unit-planned-in";
 import {DropdownItem} from "../../../../domain/DropdownItem";
+import {Management} from "../../../../domain/management";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -25,10 +26,15 @@ export class UnitsAdminFormComponent implements OnInit {
   @Input('showDelete') showDelete: boolean;
   @Input('unit') unit: Unit;
   @Input('clinics') clinics: Clinic[] = [];
+  @Input('managementId') managementId: string;
+  @Input('newUnit') newUnit:boolean;
+  managementDropdownItems: { displayName: string; value: string }[] = [];
 
   @Output() openDeleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
   @Output() saveEvent: EventEmitter<any> = new EventEmitter();
+
+  managementClinics:Clinic[] = [];
 
   unitForm: FormGroup;
 
@@ -45,6 +51,7 @@ export class UnitsAdminFormComponent implements OnInit {
   editDietForChildGroup: boolean;
   editDietForPatientGroup: boolean;
   editUnitPlannedIn: boolean;
+  managements: Management[] = [];
 
 
   constructor(private http: HttpClient,
@@ -62,13 +69,24 @@ export class UnitsAdminFormComponent implements OnInit {
 
   ngOnInit() {
 
-    this.clinicDropdownItems = this.clinics.map((clinic) => {
-      return {
-        displayName: clinic.name,
-        value: clinic.id
-      }
+    this.http.get<Management[]>('/api/management/').subscribe((managements: Management[]) => {
+      this.managements = managements;
+      this.managementDropdownItems = [{displayName: 'Välj', value: null}].concat(this.managements.map(management => {
+        return {
+          displayName: management.name,
+          value: management.id
+        }
+      }));
+      this.http.get<Clinic[]>('/api/clinic/management?management=' + this.managementId).subscribe(clinics => {
+        this.managementClinics = clinics;
+        this.clinicDropdownItems = this.managementClinics.map((clinic) => {
+          return {
+            displayName: clinic.name,
+            value: clinic.id
+          }
+        });
+      });
     });
-
     this.initUnitForm(this.unit);
   }
 
@@ -81,6 +99,7 @@ export class UnitsAdminFormComponent implements OnInit {
       id: [unit.id, Validators.required],
       name: [unit.name, Validators.required],
       clinic: [unit.clinic ? unit.clinic.id : null, Validators.required],
+      management: [unit.clinic.management ? unit.clinic.management.id : null, Validators.required],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
       dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
@@ -116,7 +135,20 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
       hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature]
     });
-
+    this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
+      if (mgId != null)
+      {
+        this.unitForm.get('clinic').setValue(null);
+        this.http.get<Clinic[]>('/api/clinic/management?management=' + mgId).subscribe(clinics => {
+          this.clinicDropdownItems = [{displayName: 'Välj', value: null}].concat(clinics.map((clinic) => {
+            return {
+              displayName: clinic.name,
+              value: clinic.id
+            }
+          }));
+        });
+      }
+    });
   }
 
   private reinitUnitForm(unit: Unit) {
@@ -204,10 +236,11 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasKostFeature = unitModel.hasKostFeature;
     unit.hasMotherChildDietFeature = unitModel.hasMotherChildDietFeature;
     unit.hasUnitPlannedInFeature = unitModel.hasUnitPlannedInFeature;
-
     if (unitModel.clinic) {
       unit.clinic = new Clinic();
       unit.clinic.id = unitModel.clinic;
+      unit.clinic.management = new Management();
+      unit.clinic.management.id = unitModel.management;
     }
     unit.ssks = unitModel.ssks;
     unit.servingClinics = unitModel.servingClinics;

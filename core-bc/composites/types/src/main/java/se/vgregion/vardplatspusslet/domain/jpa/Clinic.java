@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "clinic")
-public class Clinic {
+public class Clinic implements Comparable<Clinic>{
 
     @Id
     private String id;
@@ -48,5 +48,10 @@ public class Clinic {
 
     public void setManagement(Management management) {
         this.management = management;
+    }
+
+    @Override
+    public int compareTo(Clinic o) {
+        return this.getId().compareTo(o.getId());
     }
 }
