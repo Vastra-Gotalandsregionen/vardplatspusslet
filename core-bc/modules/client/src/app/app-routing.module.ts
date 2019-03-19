@@ -67,7 +67,6 @@ const routes: Routes = [
   },
   {
     path: ':managementId/:clinicId/:id/editMessages',
-    path: ':clinicId/:id/kpi-view',
     component: KpiViewComponent
   },
   {
