@@ -12,9 +12,10 @@
 
   <div class="menu-title-item right">
     <div class="dashboards clearfix">
-        <span class="dashboard-title">Vyer:</span>
+        <span class="dashboard-title">Vy:</span>
         <span>Kombinerad</span>
         <a routerLink="bed-view">Sängar</a>
+        <a routerLink="kpi-view">KPI</a>
     </div>
   </div>
 
@@ -131,79 +132,36 @@
   <app-right-column>
       <vgr-page-block class="transparent">
 
-        <app-widget-messages [messages]="messages" [hasEditUnitPermission]="hasEditUnitPermission()"></app-widget-messages>
-
-          <vgr-panel-container>
-
-              <vgr-panel width="80%" *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
-                  <a [href]="'/api/unit/' + clinic.id + '/' + unit.id + '/kostLista'" target="_blank"
-                  style="text-decoration: none ">
-                    <span>Kostlista</span>
-                  </a>
-              </vgr-panel>
-
-            <vgr-panel width="80%" *ngIf="unit?.ssks.length > 0">
-              <table class="vpp-table">
-                <thead>
-                <tr>
-                  <th>Vårdlag</th>
-                  <th>Antal sängar</th>
-                </tr>
-                </thead>
-                <tr *ngFor="let ssk of unit?.ssks">
-                  <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
-                  <td>{{countBeds(ssk)}}</td>
-                </tr>
-              </table>
+        <vgr-panel-container>
+            <vgr-panel width="12" themecolor="green">
+              <app-widget-messages [messages]="messages" [hasEditUnitPermission]="hasEditUnitPermission()"></app-widget-messages>
             </vgr-panel>
-            <vgr-panel width="80%" *ngIf="unit?.hasCareBurdenWithAverage">
-              <table class="vpp-table">
-                <thead>
-                <tr>
-                  <th>Vårdtyngd</th>
-                  <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
-                </tr>
-                </thead>
-                <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
-                  <td>säng{{" "+ bed.label}}</td>
-                  <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
-                    {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Medelvärde:</td>
-                  <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td>
-                </tr>
-              </table>
-            </vgr-panel>
+        </vgr-panel-container>
 
-            <vgr-panel width="80%" *ngIf="unit?.hasCareBurdenWithText">
-              <table class="vpp-table">
-                <thead>
-                <tr>
-                  <th colspan="7" style="text-align: left">Vårdtyngd</th>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th *ngFor="let cbk of unit?.careBurdenCategories" class="right" colspan="3">{{cbk.name}}</th>
-                </tr>
-                <tr>
-                  <th>Vårdlag</th>
-                  <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3" class="right">{{burdenvals}}</th>
-                </tr>
-                </thead>
-                <tr *ngFor="let ssk of unit?.ssks">
-                  <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
-                  <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
-                    <span *ngFor="let value of unit?.careBurdenValues; let i = index">
-                      <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span>{{getMatrixValue(ssk, cbk, value)}}</span>
-                     </span>
-                  </td>
-                </tr>
-              </table>
+        <vgr-panel-container *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
+            <vgr-panel width="12">
+                <app-widget-diet-list [clinic]="clinic" [unit]="unit"></app-widget-diet-list>
             </vgr-panel>
+        </vgr-panel-container>
 
-          </vgr-panel-container>
-        </vgr-page-block>
+        <vgr-panel-container *ngIf="unit?.ssks.length > 0">
+            <vgr-panel width="12">
+                <app-widget-ssks [unit]="unit"></app-widget-ssks>
+            </vgr-panel>
+        </vgr-panel-container>          
+
+        <vgr-panel-container *ngIf="unit?.hasCareBurdenWithAverage">
+          <vgr-panel width="12">
+              <app-widget-careburden-average [unit]="unit"></app-widget-careburden-average>
+          </vgr-panel>
+        </vgr-panel-container>                  
+
+        <vgr-panel-container *ngIf="unit?.hasCareBurdenWithText">
+          <vgr-panel width="12">
+              <app-widget-careburden-with-text [burdenvals]="burdenvals" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
+          </vgr-panel>
+        </vgr-panel-container>                  
+
+      </vgr-page-block>
   </app-right-column>
 </app-row>

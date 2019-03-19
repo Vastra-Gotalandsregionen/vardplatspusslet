@@ -33,3 +33,30 @@
     }
 
 }
+
+.messages-wrap {
+
+    margin-top: 5px;
+
+    .expandable-div {
+        border-bottom: 1px solid #ddd;
+        margin: 5px 0;
+        padding: 5px 0;
+    }
+
+    .app-message {
+        &:first-child {
+            .expandable-div {
+                border-top: 1px solid #ddd;
+            }
+        }
+    }
+
+    .date {
+        color: #666;
+        font-size: 0.8em;
+    }
+
+
+
+}

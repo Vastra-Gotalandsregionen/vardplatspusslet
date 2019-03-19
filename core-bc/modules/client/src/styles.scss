@@ -13,6 +13,7 @@
 @import "assets/scss/molecules/menu";
 @import "assets/scss/molecules/menu-title-row";
 @import "assets/scss/molecules/panel";
+@import "assets/scss/molecules/careburden-circles";
 @import "assets/scss/molecules/vgr-list";
 @import "assets/scss/molecules/widget-messages";
 
@@ -123,9 +124,6 @@ div.save-cancel {
   background-color: $primary-color--red;
 }
 
-$primary-color--yellow : #f2a900;
-$primary-color--purple : #582c83;
-$primary-color--pink : rgba(255, 192, 203, 1);
 
 .ssk-YELLOW, .YELLOW {
   background-color:$primary-color--yellow;

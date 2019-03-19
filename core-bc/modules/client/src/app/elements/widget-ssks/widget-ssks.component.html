@@ -1,0 +1,38 @@
+<div class="row-layout panel-heading">
+    <div class="panel-heading-text">
+        <strong>Vårdtyngd - SSK</strong>
+    </div>
+</div>
+
+<div class="cb-circles">
+
+  <div *ngFor="let ssk of unit?.ssks" class="cb-circle-item cb-circle-item-{{ssk.color}}">
+    <span class="cb-circle cb-circle-outer">
+        <span class="cb-circle cb-circle-inner">
+            <span class="cb-circle-val">
+                {{countBeds(ssk)}}
+            </span>
+        </span>
+    </span>
+    <span class="cb-circle-label">
+        {{ssk.label}}
+    </span>
+  </div>
+
+
+</div>
+
+<!--
+<table class="vpp-table">
+<thead>
+<tr>
+  <th>Vårdlag</th>
+  <th>Antal sängar</th>
+</tr>
+</thead>
+<tr *ngFor="let ssk of unit?.ssks">
+  <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
+  <td>{{countBeds(ssk)}}</td>
+</tr>
+</table>
+-->

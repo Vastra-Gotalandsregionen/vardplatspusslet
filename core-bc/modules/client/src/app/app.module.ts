@@ -8,6 +8,7 @@ import {HomeComponent} from './view/home/home.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {UnitComponent} from './view/unit/unit.component';
 import {BedViewComponent} from './view/unit/bed-view/bed-view.component';
+import {KpiViewComponent} from './view/unit/kpi-view/kpi-view.component';
 import {KomponentkartanModule} from "vgr-komponentkartan";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ChevronRightComponent} from './elements/chevron-right/chevron-right.component';
@@ -36,7 +37,11 @@ import {LoginModalComponent} from './elements/login-modal/login-modal.component'
 import {EditMessagesComponent} from './view/unit/edit-messages/edit-messages.component';
 import {MessageComponent} from './elements/message/message.component';
 import {EditMessageComponent} from './elements/edit-message/edit-message.component';
+import {WidgetCareBurdenAverageComponent} from './elements/widget-careburden-average/widget-careburden-average.component';
+import {WidgetCareBurdenWithTextComponent} from './elements/widget-careburden-with-text/widget-careburden-with-text.component';
+import {WidgetDietListComponent} from './elements/widget-diet-list/widget-diet-list.component';
 import {WidgetMessagesComponent} from './elements/widget-messages/widget-messages.component';
+import {WidgetSsksComponent} from './elements/widget-ssks/widget-ssks.component';
 import {CKEditorModule} from "ng2-ckeditor";
 import {JwtHttpInterceptor} from "./interceptor/jwt-http-interceptor";
 import {AdminGuard} from "./guard/admin.guard";
@@ -63,6 +68,7 @@ registerLocaleData(localeSv, "sv-SE");
     HomeComponent,
     UnitComponent,
     BedViewComponent,
+    KpiViewComponent,
     ChevronRightComponent,
     AdminComponent,
     ClinicsAdminComponent,
@@ -82,7 +88,11 @@ registerLocaleData(localeSv, "sv-SE");
     EditMessagesComponent,
     MessageComponent,
     EditMessageComponent,
+    WidgetCareBurdenAverageComponent,
+    WidgetCareBurdenWithTextComponent,
+    WidgetDietListComponent,
     WidgetMessagesComponent,
+    WidgetSsksComponent,
     StatisticsComponent,
     LoginFormComponent,
     ErrorDialogComponent,

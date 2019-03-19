@@ -4,6 +4,7 @@ import {ClinicComponent} from "./view/clinic/clinic.component";
 import {HomeComponent} from "./view/home/home.component";
 import {UnitComponent} from "./view/unit/unit.component";
 import {BedViewComponent} from "./view/unit/bed-view/bed-view.component";
+import {KpiViewComponent} from "./view/unit/kpi-view/kpi-view.component";
 import {AdminComponent} from "./view/admin/admin.component";
 import {ClinicsAdminComponent} from "./view/admin/clinics-admin/clinics-admin.component";
 import {UnitsAdminComponent} from "./view/admin/units-admin/units-admin.component";
@@ -63,6 +64,11 @@ const routes: Routes = [
   {
     path: ':managementId/:clinicId/:id/bed-view',
     component: BedViewComponent
+  },
+  {
+    path: ':managementId/:clinicId/:id/editMessages',
+    path: ':clinicId/:id/kpi-view',
+    component: KpiViewComponent
   },
   {
     path: ':managementId/:clinicId/:id/editMessages',
