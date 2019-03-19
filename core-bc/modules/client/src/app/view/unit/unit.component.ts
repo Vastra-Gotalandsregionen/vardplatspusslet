@@ -58,7 +58,6 @@ export class UnitComponent implements OnInit, OnDestroy {
               protected authService: AuthService) {
 
     this.timerSubscription = interval(10000).subscribe(() => this.checkForChanges());
-    this.management = this.route.snapshot.queryParams['managementName'];
   }
 
 
@@ -66,6 +65,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   {
     this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
       this.clinic = clinic;
+      this.management = clinic.management.name;
 
       this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
         this.units = unitArray.filter(x => x.name !== this.unit.name);

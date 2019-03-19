@@ -15,6 +15,12 @@ public interface ClinicRepository extends JpaRepository<Clinic, String> {
             attributePaths = {"management"},
             type = EntityGraph.EntityGraphType.LOAD
     )
+    Clinic findOne(String id);
+
+    @EntityGraph(
+            attributePaths = {"management"},
+            type = EntityGraph.EntityGraphType.LOAD
+    )
     List<Clinic> findAllByOrderById();
     List<Clinic> findDistinctByManagementIsLike(Management management);
     List<Clinic> findDistinctByIdIn(Collection<String> ids, Sort sort);

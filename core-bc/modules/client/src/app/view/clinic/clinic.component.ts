@@ -11,7 +11,7 @@ import {Subscription} from "rxjs";
   templateUrl: './clinic.component.html',
   styleUrls: ['./clinic.component.scss']
 })
-export class ClinicComponent implements OnInit,OnDestroy {
+export class ClinicComponent implements OnDestroy {
 
   clinic: Clinic;
   units: Unit[];
@@ -32,16 +32,13 @@ export class ClinicComponent implements OnInit,OnDestroy {
     });
   }
 
-  ngOnInit(){
-    this.management = this.route.snapshot.queryParams['managementName'];
-  }
 
   fetch() {
     this.route.params.subscribe(params => {
-
       this.http.get<Clinic>('/api/clinic/' + params.id).subscribe(clinic => {
         if (clinic) {
           this.clinic = clinic;
+          this.management = clinic.management.name;
         } else {
           this.error = this.notFoundText;
         }
