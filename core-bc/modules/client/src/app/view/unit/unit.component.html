@@ -115,6 +115,16 @@
                   </vgr-list-item-content>
 
                 </vgr-list-item>
+                <vgr-list-item>
+                  <vgr-list-item-header>
+                    <vgr-list-column width="8">
+                      <div>Vårdtyngd med text värde: Alternativ 2</div>
+                    </vgr-list-column>
+                  </vgr-list-item-header>
+                  <vgr-list-item-content [indentContent]="true">
+                    <app-widget-careburden-with-text-compact-alt [burdenvals]="burdenvals" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text-compact-alt>
+                  </vgr-list-item-content>
+                </vgr-list-item>
               </vgr-list>
             </vgr-page-block>
           <vgr-page-block *ngIf="!unit">

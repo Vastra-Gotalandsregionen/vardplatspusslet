@@ -79,6 +79,7 @@ export class UnitsAdminFormComponent implements OnInit {
       }));
       this.http.get<Clinic[]>('/api/clinic/management?management=' + this.managementId).subscribe(clinics => {
         this.managementClinics = clinics;
+        this.unitForm.get('clinic').setValue(this.unit.clinic.id);
         this.clinicDropdownItems = this.managementClinics.map((clinic) => {
           return {
             displayName: clinic.name,

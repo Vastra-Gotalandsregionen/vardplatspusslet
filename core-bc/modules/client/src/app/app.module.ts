@@ -58,6 +58,7 @@ import { UnitPlannedInTableComponent } from './elements/unit-planned-in-table/un
 import { UnitPlannedInItemsComponent } from './elements/unit-planned-in-items/unit-planned-in-items.component';
 import { ManagementsAdminComponent } from './view/admin/managements-admin/managements-admin.component';
 import { ManagementComponent } from './view/management/management.component';
+import { WidgetCareburdenWithTextCompactAltComponent } from './elements/widget-careburden-with-text-compact-alt/widget-careburden-with-text-compact-alt.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -102,6 +103,7 @@ registerLocaleData(localeSv, "sv-SE");
     UnitPlannedInItemsComponent,
     ManagementsAdminComponent,
     ManagementComponent,
+    WidgetCareburdenWithTextCompactAltComponent,
   ],
   imports: [
     BrowserModule,

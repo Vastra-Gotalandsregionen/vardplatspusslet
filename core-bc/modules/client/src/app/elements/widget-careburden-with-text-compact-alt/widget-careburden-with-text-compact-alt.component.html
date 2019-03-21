@@ -1,0 +1,20 @@
+<table>
+  <thead>
+  <tr>
+    <th></th>
+    <th *ngFor="let cbk of unit?.careBurdenCategories" colspan="3">{{cbk.name}}</th>
+  </tr>
+  <tr>
+    <th>Vårdlag</th>
+    <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3">{{burdenvals}}</th>
+  </tr>
+  </thead>
+  <tr *ngFor="let ssk of unit?.ssks">
+    <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
+    <td *ngFor="let cbk of unit?.careBurdenCategories" class="center" colspan="3">
+        <span *ngFor="let value of unit?.careBurdenValues; let i = index">
+          <span>{{getMatrixValue(ssk, cbk, value)}}</span><span *ngIf="i < unit?.careBurdenValues.length-1"> - </span >
+          </span>
+    </td>
+  </tr>
+</table>

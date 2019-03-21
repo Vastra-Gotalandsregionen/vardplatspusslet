@@ -80,7 +80,7 @@ export class UnitComponent implements OnInit, OnDestroy {
             return {displayName: unitplannedIn.name, value: unitplannedIn.id};
           }));
 
-          this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(' - ');
+          this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(',   ');
           this.updateSskCategoryValueMatrix(unit);
           this.updateVacants(unit);
           this.inited = true;
@@ -188,7 +188,6 @@ export class UnitComponent implements OnInit, OnDestroy {
           this.unit.patients.splice(this.unit.patients.indexOf(thisPatient), 1);
         }
       }
-
       this.updateSskCategoryValueMatrix(unit);
       this.updateVacants(unit);
     });
