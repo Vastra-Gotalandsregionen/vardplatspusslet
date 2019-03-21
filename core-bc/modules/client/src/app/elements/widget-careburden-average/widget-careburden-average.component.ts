@@ -30,8 +30,6 @@ export class WidgetCareBurdenAverageComponent implements OnInit {
  }
 
  patientCareBurden(patientChoices, burdenCategoriId) {
-  console.log("patientCareBurden");
-
   if (patientChoices!= null && patientChoices.length > 0){
     let x =  patientChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
     return x && x.careBurdenValue ? x.careBurdenValue.name: null;
