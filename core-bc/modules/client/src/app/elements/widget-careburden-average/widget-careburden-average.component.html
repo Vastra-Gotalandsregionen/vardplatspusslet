@@ -5,43 +5,42 @@
     </div>
 </div>
 
-<!-- 
 <div class="cb-circles">
 
     <div *ngFor="let cbk of unit?.careBurdenCategories" class="cb-circle-item">
       <span class="cb-circle cb-circle-outer">
           <span class="cb-circle cb-circle-inner">
               <span class="cb-circle-val">
-                  {{countBeds(ssk)}}
+                {{CalculateAverage(cbk.id)}}
               </span>
           </span>
       </span>
       <span class="cb-circle-label">
-          {{ssk.label}}
+        {{cbk.name}}
       </span>
     </div>
 
 
   </div>
-  -->
 
-
-
-<table class="vpp-table">
-    <thead>
-    <tr>
-      <th>Vårdtyngd</th>
-      <th *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{cbk.name}}</th>
-    </tr>
-    </thead>
-    <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
-      <td>säng{{" "+ bed.label}}</td>
-      <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">
-        {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
-      </td>
-    </tr>
-    <tr>
-      <td>Medelvärde:</td>
-      <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20">{{CalculateAverage(cbk.id)}}</td>
-    </tr>
-  </table>
+  <vgr-expandable-div [expanded]="false">
+    <vgr-expandable-div-header>
+      <p>Vårdtyngd per säng</p>
+    </vgr-expandable-div-header>
+    <vgr-expandable-div-content>
+        <table class="vpp-table">
+            <thead>
+            <tr>
+              <th class="left"></th>
+              <th class="right" *ngFor="let cbk of unit?.careBurdenCategories">{{cbk.name}}</th>
+            </tr>
+            </thead>
+            <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
+              <td class="left">{{" "+ bed.label}}</td>
+              <td class="right" *ngFor="let cbk of unit?.careBurdenCategories">
+                {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
+              </td>
+            </tr>
+          </table>
+    </vgr-expandable-div-content>
+  </vgr-expandable-div> 

@@ -170,6 +170,15 @@ a.icon-link {
     text-align: right;
   }
 
+  th.left,
+  td.left {
+    text-align: left;
+  }
+
+  td.strong {
+    font-weight: bold;
+  }
+
 }
 
 @font-face {
