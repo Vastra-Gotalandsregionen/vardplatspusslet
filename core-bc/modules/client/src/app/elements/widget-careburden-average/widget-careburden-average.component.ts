@@ -13,7 +13,7 @@ import {Unit} from "../../domain/unit";
 export class WidgetCareBurdenAverageComponent implements OnInit {
 
   @Input('unit') unit: Unit;
-  @Input('burdenvals') burdenvals: string;
+  @Input('bedsExpanded') bedsExpanded: boolean;
 
   constructor() {
   }

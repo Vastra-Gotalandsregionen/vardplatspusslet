@@ -66,6 +66,10 @@ const routes: Routes = [
     component: BedViewComponent
   },
   {
+    path: ':managementId/:clinicId/:id/kpi-view',
+    component: KpiViewComponent
+  },
+  {
     path: ':managementId/:clinicId/:id/editMessages',
     component: KpiViewComponent
   },
