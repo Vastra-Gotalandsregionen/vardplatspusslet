@@ -1,12 +1,9 @@
 <div class="dashboards clearfix">
-    <span class="dashboard-title">Vy:</span>
-    <span>Kombinerad</span>
-    <a routerLink="bed-view">Sängar</a>
-    <a routerLink="kpi-view">KPI</a>
+    <span class="dashboard-item dashboard-title">Vy:</span>
 
+    <span *ngFor="let dashboardPage of dashboardPages" class="dashboard-item">
+        <a *ngIf="!dashboardPage.isCurrentPage" routerLink="{{dashboardPage.route}}">{{dashboardPage.label}}</a>
+        <span *ngIf="dashboardPage.isCurrentPage" class="current-page">{{dashboardPage.label}}</span>
+    </span>
 
-    <!--
-
-        path: ':managementId/:clinicId/:id/kpi-view',
-    -->
 </div>

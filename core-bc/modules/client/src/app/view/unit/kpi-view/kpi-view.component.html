@@ -9,13 +9,8 @@
   </div>
 
   <div class="menu-title-item right">
-      <div class="dashboards clearfix">
-          <span class="dashboard-title">Vy:</span>
-          <a routerLink="..">Kombinerad</a>
-          <a routerLink="../bed-view">Sängar</a>
-          <span>KPI</span>
-      </div>
-    </div>
+      <app-dashboard-menu *ngIf="unit" [unit]="unit" type="unit-dashboard"></app-dashboard-menu>
+  </div>
 
 </app-menu-title-row>
 
