@@ -11,12 +11,7 @@
   </div>
 
   <div class="menu-title-item right">
-    <div class="dashboards clearfix">
-        <span class="dashboard-title">Vy:</span>
-        <span>Kombinerad</span>
-        <a routerLink="bed-view">Sängar</a>
-        <a routerLink="kpi-view">KPI</a>
-    </div>
+      <app-dashboard-menu [unit]="unit" type="unit-dashboard"></app-dashboard-menu>
   </div>
 
 </app-menu-title-row>
