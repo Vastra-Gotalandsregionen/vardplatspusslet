@@ -1,0 +1,9 @@
+<div class="dashboards clearfix">
+    <span class="dashboard-item dashboard-title">Vy:</span>
+
+    <span *ngFor="let dashboardPage of dashboardPages" class="dashboard-item">
+        <a *ngIf="!dashboardPage.isCurrentPage" routerLink="{{dashboardPage.route}}">{{dashboardPage.label}}</a>
+        <span *ngIf="dashboardPage.isCurrentPage" class="current-page">{{dashboardPage.label}}</span>
+    </span>
+
+</div>

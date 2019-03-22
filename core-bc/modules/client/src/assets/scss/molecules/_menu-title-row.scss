@@ -24,14 +24,20 @@
         margin: -5px 0;
         height: 40px;
 
-        a,
-        span {
+        .dashboard-item {
             float: left;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        a,
+        .current-page,
+        .dashboard-title {
             display: block;
             height: 40px;
             margin: 0 1px 0 0;
             padding: 5px 10px;
-            
         }
 
         a {
@@ -47,7 +53,7 @@
             }
         }
 
-        span {
+        .current-page {
             background: #006298;
             color: #fff;
         }
