@@ -200,13 +200,14 @@
         <div *ngIf="editBurdenValueGroup">
           <div formArrayName="careBurdenValues" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
-              <vgr-input formControlName="name" placeholder="kategori ..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input>
-
+              <vgr-input [ngClass]="{'warn': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)"  *ngIf="unitForm.get('careBurden').value == 'tal'" formControlName="name" placeholder="Siffra: 123..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input>
+              <vgr-input  *ngIf="unitForm.get('careBurden').value == 'text' || unitForm.get('careBurden').value == 'inget'" formControlName="name" placeholder="text.." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input>
               <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg (valfritt)'">
                 <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
               </vgr-dropdown-select>
 
               <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+              <span *ngIf="getcareBurdenValidation(i)" class="is-invalid">Fältet kan innehålla bara siffror </span>
             </div>
           </div>
           <div class="edit">

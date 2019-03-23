@@ -54,6 +54,7 @@ export class UnitsAdminFormComponent implements OnInit {
   editUnitPlannedIn: boolean;
   managements: Management[] = [];
   careBurdenOptions: SelectableItem<string>[];
+  careBurdenValueIsNumber: boolean = false;
 
 
   constructor(private http: HttpClient,
@@ -88,6 +89,9 @@ export class UnitsAdminFormComponent implements OnInit {
           }
         });
         this.initUnitForm(this.unit);
+
+        this.unitForm.get('careBurden').valueChanges
+          .subscribe(value => this.changeCareBurden(value));
       });
     });
     this.careBurdenOptions = [
@@ -96,8 +100,6 @@ export class UnitsAdminFormComponent implements OnInit {
       {displayName: 'Inget', value: "inget"}
     ];
 
-    this.unitForm.get('careBurden').valueChanges
-      .subscribe(value => this.changeCareBurden(value));
   }
 
   private initUnitForm(unit: Unit) {
@@ -275,15 +277,23 @@ export class UnitsAdminFormComponent implements OnInit {
     if(value == "text")
     {
       this.unit.careBurden = "text";
+      this.careBurdenValues.controls.map(i => i.get('name').clearValidators());
+      this.careBurdenValues.controls.map(i => i.get('name').setValidators(Validators.required));
+      this.careBurdenValues.controls.map(i => i.get('name').updateValueAndValidity());
     }
     else if (value == "tal")
     {
       this.unit.careBurden == "tal";
-
+      this.careBurdenValueIsNumber = true;
+      this.careBurdenValues.controls.map(i => i.get('name').setValidators(Validators.pattern(/^[0-9]+$/)));
+      this.careBurdenValues.controls.map(i => i.get('name').updateValueAndValidity());
     }
     else
     {
       this.unit.careBurden = "inget";
+      this.careBurdenValues.controls.map(i => i.get('name').clearValidators());
+      this.careBurdenValues.controls.map(i => i.get('name').setValidators(Validators.required));
+      this.careBurdenValues.controls.map(i => i.get('name').updateValueAndValidity());
     }
   }
 
@@ -435,7 +445,8 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateCareBurdenValues(): FormGroup{
     return this.formBuilder.group({
       id: [null],
-      name: [null, Validators.required]
+      name: [null],
+      color: [null]
     });
   }
 
@@ -611,6 +622,10 @@ export class UnitsAdminFormComponent implements OnInit {
     return (this.unitForm.get('careBurdenValues') as FormArray).at(index).get('name').touched;
   }
 
+  getcareBurdenValidation(index: number)
+  {
+    return (this.unitForm.get('careBurdenValues') as FormArray).at(index).get('name').hasError('pattern');
+  }
   getMotherDietValidation(index: number)
   {return (this.unitForm.get('dietForMothers') as FormArray).at(index).get('name').touched;
   }
@@ -628,4 +643,12 @@ export class UnitsAdminFormComponent implements OnInit {
     return (this.unitForm.get('unitsPlannedIn') as FormArray).at(index).get('name').touched;
   }
 
+  checkCareBurdenFor(index: number)
+  {
+    if (this.careBurdenValueIsNumber || this.unit.careBurden == 'tal')
+    {
+      (this.unitForm.get('careBurdenValues') as FormArray).at(index).get('name').setValidators(Validators.pattern(/^[0-9]+$/));
+      (this.unitForm.get('careBurdenValues') as FormArray).at(index).get('name').updateValueAndValidity();
+    }
+  }
 }
