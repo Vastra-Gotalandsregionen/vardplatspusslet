@@ -115,7 +115,7 @@
                   </vgr-list-item-content>
 
                 </vgr-list-item>
-                <vgr-list-item>
+                <vgr-list-item  *ngIf="unit.careBurden == 'text'">
                   <vgr-list-item-header>
                     <vgr-list-column width="8">
                       <div>Vårdtyngd med text värde: Alternativ 2</div>
@@ -154,19 +154,19 @@
             </vgr-panel>
         </vgr-panel-container>
 
-        <vgr-panel-container *ngIf="unit?.ssks.length > 0">
+        <vgr-panel-container *ngIf="unit?.ssks.length > 0 && unit.careBurden !== 'inget'">
             <vgr-panel width="12">
                 <app-widget-ssks [unit]="unit"></app-widget-ssks>
             </vgr-panel>
         </vgr-panel-container>          
 
-        <vgr-panel-container *ngIf="unit?.hasCareBurdenWithAverage">
+        <vgr-panel-container *ngIf="unit?.careBurden == 'tal'">
           <vgr-panel width="12">
               <app-widget-careburden-average [unit]="unit" [bedsExpanded]="false"></app-widget-careburden-average>
           </vgr-panel>
         </vgr-panel-container>                  
 
-        <vgr-panel-container *ngIf="unit?.hasCareBurdenWithText">
+        <vgr-panel-container *ngIf="unit?.careBurden == 'text'">
           <vgr-panel width="12">
               <app-widget-careburden-with-text [burdenvals]="burdenvals" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
           </vgr-panel>

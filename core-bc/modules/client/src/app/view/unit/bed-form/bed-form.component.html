@@ -74,7 +74,7 @@
           <vgr-input id="carePlan" formControlName="carePlan"></vgr-input>
         </div>
 
-        <div *ngIf="unit.hasCareBurdenWithAverage || unit.hasCareBurdenWithText" class="div-button10">
+        <div *ngIf="unit?.careBurden == 'tal' || unit?.careBurden == 'text'" class="div-button10">
             <label>Vårdtyngd</label>
             <div formArrayName="careBurdenChoices" *ngFor="let careBurdenCategory of unit.careBurdenCategories let i = index;"
                  class="clearfix">

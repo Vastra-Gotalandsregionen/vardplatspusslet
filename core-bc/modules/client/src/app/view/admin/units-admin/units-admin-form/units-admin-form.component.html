@@ -51,11 +51,16 @@
           <vgr-checkbox label="Rond" formControlName="hasRondFeature"></vgr-checkbox>
           <vgr-checkbox label="Amning" formControlName="hasAmningFeature"></vgr-checkbox>
           <vgr-checkbox label="Information" formControlName="hasInfoFeature"></vgr-checkbox>
-          <vgr-checkbox label="Vårdtyngd med sifrror och medelvärde" formControlName="hasCareBurdenWithAverage"></vgr-checkbox>
-          <vgr-checkbox label="Vårdtyngd med enbart text" formControlName="hasCareBurdenWithText"></vgr-checkbox>
           <vgr-checkbox label="Kost" formControlName="hasKostFeature"></vgr-checkbox>
           <vgr-checkbox label="Kost Mor/Barn" formControlName="hasMotherChildDietFeature"></vgr-checkbox>
           <vgr-checkbox label="Planerad Enhet in" formControlName="hasUnitPlannedInFeature"></vgr-checkbox>
+          <br>
+          <div>
+            <div>Vårdtyngdsval: </div>
+            <vgr-radio-group formControlName="careBurden" [options]="careBurdenOptions" [vertical]="false">
+            </vgr-radio-group>
+          </div>
+
 
 
 

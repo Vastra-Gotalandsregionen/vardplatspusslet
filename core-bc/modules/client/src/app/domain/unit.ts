@@ -46,8 +46,6 @@ export class Unit {
   hasInfoFeature: boolean;
   careBurdenCategories: CareBurdenCategory[];
   careBurdenValues: CareBurdenValue[];
-  hasCareBurdenWithAverage: boolean;
-  hasCareBurdenWithText: boolean;
   hasMorKostFeature: boolean;
   hasBarnKostFeature: boolean;
   hasKostFeature: boolean;
@@ -55,4 +53,5 @@ export class Unit {
   hasUnitPlannedInFeature: boolean;
   unitsPlannedIn: UnitPlannedIn[];
   sevenDaysPlaningUnits: SevenDaysPlaningUnit[];
+  careBurden: string;
 }

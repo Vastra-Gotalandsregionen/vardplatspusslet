@@ -42,6 +42,9 @@ public class Unit implements Comparable<Unit> {
     @Column
     private String name;
 
+    @Column
+    private String careBurden;
+
     @OrderColumn(name = "order_")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Bed> beds = new ArrayList<>();
@@ -129,12 +132,6 @@ public class Unit implements Comparable<Unit> {
 
     @Column
     private Boolean hasInfoFeature;
-
-    @Column
-    private Boolean hasCareBurdenWithAverage;
-
-    @Column
-    private Boolean hasCareBurdenWithText;
 
     @Column
     private Boolean hasMorKostFeature;
@@ -379,23 +376,6 @@ public class Unit implements Comparable<Unit> {
         this.careBurdenValues = burdenValues;
     }
 
-
-    public Boolean getHasCareBurdenWithAverage() {
-        return hasCareBurdenWithAverage;
-    }
-
-    public void setHasCareBurdenWithAverage(Boolean hasCareBurdenWithAverage) {
-        this.hasCareBurdenWithAverage = hasCareBurdenWithAverage;
-    }
-
-    public Boolean getHasCareBurdenWithText() {
-        return hasCareBurdenWithText;
-    }
-
-    public void setHasCareBurdenWithText(Boolean hasCareBurdenWithText) {
-        this.hasCareBurdenWithText = hasCareBurdenWithText;
-    }
-
     public Boolean getHasMorKostFeature() {
         return hasMorKostFeature;
     }
@@ -490,6 +470,14 @@ public class Unit implements Comparable<Unit> {
         {
             sevenDaysPlaningUnit.setUnit(this);
         }
+    }
+
+    public String getCareBurden() {
+        return careBurden;
+    }
+
+    public void setCareBurden(String careBurden) {
+        this.careBurden = careBurden;
     }
 
     @Override

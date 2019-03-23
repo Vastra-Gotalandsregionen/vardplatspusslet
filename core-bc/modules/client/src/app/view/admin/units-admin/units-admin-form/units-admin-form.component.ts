@@ -14,6 +14,7 @@ import {DietForPatient} from "../../../../domain/dietforpatient";
 import {UnitPlannedIn} from "../../../../domain/unit-planned-in";
 import {DropdownItem} from "../../../../domain/DropdownItem";
 import {Management} from "../../../../domain/management";
+import {SelectableItem} from "vgr-komponentkartan";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -52,6 +53,7 @@ export class UnitsAdminFormComponent implements OnInit {
   editDietForPatientGroup: boolean;
   editUnitPlannedIn: boolean;
   managements: Management[] = [];
+  careBurdenOptions: SelectableItem<string>[];
 
 
   constructor(private http: HttpClient,
@@ -79,16 +81,23 @@ export class UnitsAdminFormComponent implements OnInit {
       }));
       this.http.get<Clinic[]>('/api/clinic/management?management=' + this.managementId).subscribe(clinics => {
         this.managementClinics = clinics;
-        this.unitForm.get('clinic').setValue(this.unit.clinic.id);
         this.clinicDropdownItems = this.managementClinics.map((clinic) => {
           return {
             displayName: clinic.name,
             value: clinic.id
           }
         });
+        this.initUnitForm(this.unit);
       });
     });
-    this.initUnitForm(this.unit);
+    this.careBurdenOptions = [
+      {displayName: 'Text', value: "text"},
+      {displayName: 'Tal', value: "tal"},
+      {displayName: 'Inget', value: "inget"}
+    ];
+
+    this.unitForm.get('careBurden').valueChanges
+      .subscribe(value => this.changeCareBurden(value));
   }
 
   private initUnitForm(unit: Unit) {
@@ -128,25 +137,24 @@ export class UnitsAdminFormComponent implements OnInit {
       hasRondFeature: [unit.hasRondFeature],
       hasAmningFeature: [unit.hasAmningFeature],
       hasInfoFeature: [unit.hasInfoFeature],
-      hasCareBurdenWithAverage: [unit.hasCareBurdenWithAverage],
-      hasCareBurdenWithText: [unit.hasCareBurdenWithText],
       hasMorKostFeature : [unit.hasMorKostFeature],
       hasBarnKostFeature : [unit.hasBarnKostFeature],
       hasKostFeature : [unit.hasKostFeature],
       hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
-      hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature]
+      hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature],
+      careBurden: [unit.careBurden? unit.careBurden: "inget"]
     });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
       if (mgId != null)
       {
         this.unitForm.get('clinic').setValue(null);
         this.http.get<Clinic[]>('/api/clinic/management?management=' + mgId).subscribe(clinics => {
-          this.clinicDropdownItems = [{displayName: 'Välj', value: null}].concat(clinics.map((clinic) => {
+          this.clinicDropdownItems = clinics.map((clinic) => {
             return {
               displayName: clinic.name,
               value: clinic.id
             }
-          }));
+          });
         });
       }
     });
@@ -189,13 +197,13 @@ export class UnitsAdminFormComponent implements OnInit {
       hasRondFeature: unit.hasRondFeature,
       hasAmningFeature: unit.hasAmningFeature,
       hasInfoFeature: unit.hasInfoFeature,
-      hasCareBurdenWithAverage: unit.hasCareBurdenWithAverage,
-      hasCareBurdenWithText: unit.hasCareBurdenWithText,
       hasMorKostFeature : unit.hasMorKostFeature,
       hasBarnKostFeature : unit.hasBarnKostFeature,
       hasKostFeature : unit.hasKostFeature,
       hasMotherChildDietFeature: unit.hasMotherChildDietFeature,
-      hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature
+      hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature,
+      careBurden: unit.careBurden
+
     });
 
   }
@@ -230,8 +238,6 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasRondFeature = unitModel.hasRondFeature;
     unit.hasAmningFeature = unitModel.hasAmningFeature;
     unit.hasInfoFeature = unitModel.hasInfoFeature;
-    unit.hasCareBurdenWithAverage = unitModel.hasCareBurdenWithAverage;
-    unit.hasCareBurdenWithText = unitModel.hasCareBurdenWithText;
     unit.hasMorKostFeature = unitModel.hasMorKostFeature;
     unit.hasBarnKostFeature = unitModel.hasBarnKostFeature;
     unit.hasKostFeature = unitModel.hasKostFeature;
@@ -252,6 +258,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.careBurdenValues = unitModel.careBurdenValues;
     unit.cleaningAlternatives = unitModel.cleaningAlternatives;
     unit.unitsPlannedIn = unitModel.unitsPlannedIn;
+    unit.careBurden = unitModel.careBurden;
 
     this.http.put('/api/unit?keepBeds=true', unit)
       .subscribe(() => {
@@ -262,6 +269,22 @@ export class UnitsAdminFormComponent implements OnInit {
 
   openDeleteModal(unit: Unit) {
     this.openDeleteEvent.emit(unit);
+  }
+
+  changeCareBurden(value : string): void{
+    if(value == "text")
+    {
+      this.unit.careBurden = "text";
+    }
+    else if (value == "tal")
+    {
+      this.unit.careBurden == "tal";
+
+    }
+    else
+    {
+      this.unit.careBurden = "inget";
+    }
   }
 
   cancel() {
