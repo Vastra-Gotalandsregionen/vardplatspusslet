@@ -52,24 +52,6 @@ th, td {
 }
 
 
-// Changes EA - start
-
-// table {
-
-//   th, td {
-//     border: 1px solid #ccc;
-//   }
-
-//   th {
-//     background: #ccc;
-//     background: #006298;
-//     color: #fff;
-//     border-color: #fff;
-//     font-weight: normal;
-//   }
-
-
-// }
 
 th, td {
   &.column-group {
@@ -83,6 +65,9 @@ th, td {
   }
 }
 
-// Changes EA - stop
+.patient-waits{
+  text-align:center ;
+
+}
 
 

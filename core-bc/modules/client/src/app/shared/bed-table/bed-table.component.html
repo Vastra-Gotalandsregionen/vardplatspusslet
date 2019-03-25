@@ -23,6 +23,7 @@
     <th *ngIf="unit.hasRondFeature">Rond</th>
     <th>Kön</th>
     <th>Tolk</th>
+    <th>Patient väntar</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -80,6 +81,12 @@
         <span class="ikon" *ngIf="bed.patient?.interpreter"
                [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>
         </span>
+      </td>
+      <td class="patient-waits">
+      <span class="ikon purple" *ngIf="bed.patientWaits"
+            [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
+        <i class="fa fa-hourglass-2"></i>
+      </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"

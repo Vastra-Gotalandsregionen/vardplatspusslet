@@ -2,12 +2,6 @@
      [appCallout]="'Planerad hemgång: ' + formatDate(bed.patient?.plannedLeaveDate)"><i class="fa fa-home purple"></i>
 </div>
 
-<div class="ikon" *ngIf="unit.servingClinics.length != 0 &&  bed.servingClinic != null || bed.patientWaits"
-     [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
-  <i class="fa fa-wheelchair purple"></i>
-</div>
-
-
 <div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
      [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons purple">list_alt</span>
 </div>
