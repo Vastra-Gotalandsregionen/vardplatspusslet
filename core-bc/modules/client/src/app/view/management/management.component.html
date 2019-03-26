@@ -9,30 +9,35 @@
 </app-menu-title-row>
 
 <app-row>
-  <app-left-column>
-    <h1 class="page-title">Välj klinik</h1>
 
-    <vgr-page-block>
-      <div *ngIf="clinics.length > 0">
-        <ul>
-          <li *ngFor="let clinic of clinics">
-            <a [routerLink]="clinic.id">{{clinic.name}}</a>
-          </li>
-        </ul>
+    <div class="container">
 
-        <div *ngIf="clinics.length === 0 && loggedIn && !isFetchingClinics">
-          Du har inte behörighet att lista någon Clinic. För att komma till en clinic behöver du adressen direkt till clinicen .
+        <div class="col c2">&nbsp;</div>
+
+        <div class="col c8">
+            <h1 class="page-title">Välj klinik</h1>
+
+            <vgr-page-block *ngIf="loggedIn">
+              <div *ngIf="clinics.length > 0">
+                <ul>
+                  <li *ngFor="let clinic of clinics">
+                    <a [routerLink]="clinic.id">{{clinic.name}}</a>
+                  </li>
+                </ul>
+        
+                <div *ngIf="clinics.length === 0 && loggedIn && !isFetchingClinics">
+                  Du har inte behörighet att lista någon Clinic. För att komma till en clinic behöver du adressen direkt till clinicen .
+                </div>
+        
+              </div>
+            </vgr-page-block>
+
+            <app-widget-login-panel *ngIf="!loggedIn"></app-widget-login-panel>
+
         </div>
 
-        <div *ngIf="clinics.length === 0 && !loggedIn">
-          Prova att logga in för att lista clinicer.
+        <div class="col c2">&nbsp;</div>
 
-          <app-login-form></app-login-form>
-        </div>
+    </div>     
 
-      </div>
-    </vgr-page-block>
-  </app-left-column>
-  <app-right-column>
-  </app-right-column>
 </app-row>

@@ -41,6 +41,7 @@ import {EditMessageComponent} from './elements/edit-message/edit-message.compone
 import {WidgetCareBurdenAverageComponent} from './elements/widget-careburden-average/widget-careburden-average.component';
 import {WidgetCareBurdenWithTextComponent} from './elements/widget-careburden-with-text/widget-careburden-with-text.component';
 import {WidgetDietListComponent} from './elements/widget-diet-list/widget-diet-list.component';
+import {WidgetLoginPanelComponent} from './elements/widget-login-panel/widget-login-panel.component';
 import {WidgetMessagesComponent} from './elements/widget-messages/widget-messages.component';
 import {WidgetSsksComponent} from './elements/widget-ssks/widget-ssks.component';
 import {CKEditorModule} from "ng2-ckeditor";
@@ -95,6 +96,7 @@ registerLocaleData(localeSv, "sv-SE");
     WidgetCareBurdenWithTextComponent,
     WidgetDietListComponent,
     WidgetMessagesComponent,
+    WidgetLoginPanelComponent,
     WidgetSsksComponent,
     StatisticsComponent,
     LoginFormComponent,

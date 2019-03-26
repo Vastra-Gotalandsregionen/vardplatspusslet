@@ -1,13 +1,35 @@
 <form>
-  <h3>Logga in</h3>
+
+    <vgr-title-value-layout>
+
+        <vgr-title-value title="VGR-ID:">
+            <input [(ngModel)]="userId" name="USER"/>
+        </vgr-title-value>
+
+        <vgr-title-value title="Lösenord:">
+            <input [(ngModel)]="password" name="PASSWORD" type="password"/>
+        </vgr-title-value>
+
+        
+  </vgr-title-value-layout>
+
+
+  <!--
   <div>
     VGR-ID:
-    <div><input [(ngModel)]="userId" name="USER"/></div>
+    <div>
+      <input [(ngModel)]="userId" name="USER"/>
+    </div>
   </div>
   <div>
     Lösenord:
-    <div><input [(ngModel)]="password" name="PASSWORD" type="password"/></div>
+    <div>
+      <input [(ngModel)]="password" name="PASSWORD" type="password"/>
+    </div>
   </div>
+  -->
+
+
   <div class="button-row">
     <vgr-button default="true" (click)="login()" type="submit">Logga in</vgr-button>
   </div>
