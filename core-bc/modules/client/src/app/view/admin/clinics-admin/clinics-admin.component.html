@@ -13,107 +13,114 @@
 </app-menu-title-row>
 
 <app-row>
-  <app-left-column>
 
-      <h1 class="page-title">Kliniker</h1>
+    <div class="container">
 
-      <vgr-page-block>
+        <div class="col c2">&nbsp;</div>
     
-          <vgr-list>
+        <div class="col c8">
+            <h1 class="page-title">Kliniker</h1>
 
-            <vgr-list-item *ngFor="let clinic of clinics" (expandedChanged)="setCurrentClinic($event, clinic)" #theListItem>
-              <vgr-list-item-header>
-                <vgr-list-column [width]="3">{{clinic.id}}</vgr-list-column>
-                <vgr-list-column [width]="4">{{clinic.name}}</vgr-list-column>
-                <vgr-list-column [width]="4">{{clinic.management?.name}}</vgr-list-column>
-
-              </vgr-list-item-header>
+            <vgr-page-block>
+          
+                <vgr-list>
+      
+                  <vgr-list-item *ngFor="let clinic of clinics" (expandedChanged)="setCurrentClinic($event, clinic)" #theListItem>
+                    <vgr-list-item-header>
+                      <vgr-list-column [width]="3">{{clinic.id}}</vgr-list-column>
+                      <vgr-list-column [width]="4">{{clinic.name}}</vgr-list-column>
+                      <vgr-list-column [width]="4">{{clinic.management?.name}}</vgr-list-column>
+      
+                    </vgr-list-item-header>
+          
+                    <vgr-list-item-content>
+      
+                      <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
+      
+                        <vgr-panel-container>
+                          <vgr-panel [width]="6" [noborder]="true">
+                          <div>Namn:</div>
+                          <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
+                          </vgr-panel>
+      
+                          <vgr-panel [width]="6" [noborder]="true">
+      
+                            <div>Förvaltning:</div>
+      
+                            <vgr-dropdown-select formControlName="management" [showValidation]="!clinicForm.get('management').valid && clinicForm.get('management').touched">
+                              <vgr-dropdown-item *ngFor="let item of managementDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                            </vgr-dropdown-select>
+      
+                          </vgr-panel>
+                          </vgr-panel-container>
+      
+          
+                        <div class="containers clearfix">
+      
+                          <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
+                            <a (click)="openDeleteModal(clinic)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+          
+                          </div>
+          
+                          <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
+                            <vgr-button (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
+                            <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                          </div>
+                        </div>
+                      </form>
+      
+                    </vgr-list-item-content>
+                  </vgr-list-item>
+          
+                  <vgr-list-item (expandedChanged)="setCurrentClinic($event, null)" #addListItem>
+                    <vgr-list-item-header>
+                      <vgr-list-column width="5">
+                        <div class="add-row vgr-icon-plus">Lägg till klinik</div>
+                      </vgr-list-column>
+                    </vgr-list-item-header>
+          
+                    <vgr-list-item-content [indentContent]="true">
+                      <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
+                        <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
+                        <button type="submit" style="display:none">send</button>
+                        <vgr-panel-container>
+                          <vgr-panel [width]="4" [noborder]="true">
+                          <div>
+                            <div>
+                              <div>ID:</div>
+                              <vgr-input formControlName="id" [showValidation]="!clinicForm.get('id').valid && clinicForm.get('id').touched " #addClinicId></vgr-input>
+                            </div>
+                            <div>
+                              <div>Namn:</div>
+                              <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
+                            </div>
+                          </div>
+                          </vgr-panel>
+                          <vgr-panel [width]="4" [noborder]="true">
+                            <div>Förvaltning:</div>
+                          <vgr-dropdown-select formControlName="management" [showValidation]="!clinicForm.get('management').valid && clinicForm.get('management').touched">
+                            <vgr-dropdown-item *ngFor="let item of managementDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                          </vgr-dropdown-select>
+                          </vgr-panel>
+                          <vgr-panel [width]="4" [noborder]="true"  style="margin-top:80px;">
+                            <div >
+                              <vgr-button (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
+                              <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                            </div>
+                          </vgr-panel>
+                        </vgr-panel-container>
+                      </form>
+                    </vgr-list-item-content>
+          
+                  </vgr-list-item>
+                </vgr-list>
+              </vgr-page-block>    
+        </div>
     
-              <vgr-list-item-content>
-
-                <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
-
-                  <vgr-panel-container>
-                    <vgr-panel [width]="6" [noborder]="true">
-                    <div>Namn:</div>
-                    <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
-                    </vgr-panel>
-
-                    <vgr-panel [width]="6" [noborder]="true">
-
-                      <div>Förvaltning:</div>
-
-                      <vgr-dropdown-select formControlName="management" [showValidation]="!clinicForm.get('management').valid && clinicForm.get('management').touched">
-                        <vgr-dropdown-item *ngFor="let item of managementDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-                      </vgr-dropdown-select>
-
-                    </vgr-panel>
-                    </vgr-panel-container>
-
+        <div class="col c2">&nbsp;</div>
     
-                  <div class="containers clearfix">
+    </div>  
 
-                    <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
-                      <a (click)="openDeleteModal(clinic)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-    
-                    </div>
-    
-                    <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
-                      <vgr-button (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
-                      <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
-                    </div>
-                  </div>
-                </form>
-
-              </vgr-list-item-content>
-            </vgr-list-item>
-    
-            <vgr-list-item (expandedChanged)="setCurrentClinic($event, null)" #addListItem>
-              <vgr-list-item-header>
-                <vgr-list-column width="5">
-                  <div class="add-row vgr-icon-plus">Lägg till klinik</div>
-                </vgr-list-column>
-              </vgr-list-item-header>
-    
-              <vgr-list-item-content [indentContent]="true">
-                <form [formGroup]="clinicForm" (ngSubmit)="saveClinic()">
-                  <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
-                  <button type="submit" style="display:none">send</button>
-                  <vgr-panel-container>
-                    <vgr-panel [width]="4" [noborder]="true">
-                    <div>
-                      <div>
-                        <div>ID:</div>
-                        <vgr-input formControlName="id" [showValidation]="!clinicForm.get('id').valid && clinicForm.get('id').touched " #addClinicId></vgr-input>
-                      </div>
-                      <div>
-                        <div>Namn:</div>
-                        <vgr-input formControlName="name" [showValidation]="!clinicForm.get('name').valid && clinicForm.get('name').touched "></vgr-input>
-                      </div>
-                    </div>
-                    </vgr-panel>
-                    <vgr-panel [width]="4" [noborder]="true">
-                      <div>Förvaltning:</div>
-                    <vgr-dropdown-select formControlName="management" [showValidation]="!clinicForm.get('management').valid && clinicForm.get('management').touched">
-                      <vgr-dropdown-item *ngFor="let item of managementDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-                    </vgr-dropdown-select>
-                    </vgr-panel>
-                    <vgr-panel [width]="4" [noborder]="true"  style="margin-top:80px;">
-                      <div >
-                        <vgr-button (click)="saveClinic()" [disabled]="!clinicForm.valid">Spara</vgr-button>
-                        <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
-                      </div>
-                    </vgr-panel>
-                  </vgr-panel-container>
-                </form>
-              </vgr-list-item-content>
-    
-            </vgr-list-item>
-          </vgr-list>
-        </vgr-page-block>
-  </app-left-column>
-  <app-right-column>
-  </app-right-column>
 </app-row>
 
 <app-delete-modal [itemLabel]="clinicForDeletion?.name" (confirmDelete)="confirmDelete()"></app-delete-modal>

@@ -3,20 +3,44 @@
 </app-menu-title-row>
 
 <app-row>
-  <app-left-column>
-      <h1 class="page-title">Välj förvaltning</h1>
-      <vgr-page-block *ngIf="managements?.length > 0">
-          <ul>
-            <li *ngFor="let management of managements">
-              <a [routerLink]="'/' + management.id">{{management.name}}</a>
-            </li>
-          </ul>
-        </vgr-page-block>
-    
-        <vgr-page-block *ngIf="!loggedIn">
-          <app-login-form></app-login-form>
-        </vgr-page-block>
-  </app-left-column>
-  <app-right-column>
-  </app-right-column>
+
+    <div class="container" *ngIf="!loggedIn">
+
+        <div class="row">
+      
+          <div class="col c4">&nbsp;</div>
+      
+      
+          <div class="col c4">
+              <app-widget-login-panel></app-widget-login-panel>
+          </div>
+      
+      
+          <div class="col c4">&nbsp;</div>
+      
+        </div>
+      
+      </div>
+
+
+      <div class="container" *ngIf="loggedIn">
+
+          <div class="col c2">&nbsp;</div>
+
+          <div class="col c8">
+              <h1 class="page-title">Välj förvaltning</h1>
+              <vgr-page-block *ngIf="managements?.length > 0">
+                  <ul>
+                    <li *ngFor="let management of managements">
+                      <a [routerLink]="'/' + management.id">{{management.name}}</a>
+                    </li>
+                  </ul>
+                </vgr-page-block>
+          </div>
+
+          <div class="col c2">&nbsp;</div>
+
+      </div>     
+
+
 </app-row>
