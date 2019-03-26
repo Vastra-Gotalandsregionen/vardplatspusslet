@@ -1,7 +1,8 @@
 <table>
   <thead>
   <tr *ngIf="unit.careBurden !== 'inget' || unit.hasMotherChildDietFeature || unit.hasMorRondFeature || unit.hasBarnRondFeature">
-    <th [colSpan]="4"></th>
+    <th *ngIf="unit.hasPatientNameColumn" [colSpan]="4"></th>
+    <th *ngIf="!unit.hasPatientNameColumn" [colSpan]="3"></th>
     <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last" *ngIf="unit.careBurden !== 'inget'">Vårdtyngd</th>
     <th *ngIf="unit.hasMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
     <th *ngIf="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0) > 0" [colSpan]="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0)"></th>
@@ -11,7 +12,7 @@
   <tr>
     <th>Rum/säng</th>
     <th>Status</th>
-    <th>Patient</th>
+    <th *ngIf="unit.hasPatientNameColumn">Patient</th>
     <th>Team</th>
     <th class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index" [hidden]="unit.careBurden == 'inget'">{{cbc.name}}</th>
     <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature">Mor</th>
@@ -35,7 +36,7 @@
 
       <td><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}" [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></td>
 
-      <td><span>{{bed.patient?.label}}</span></td>
+      <td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>
 
       <td><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></td>
 

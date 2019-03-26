@@ -54,4 +54,5 @@ export class Unit {
   unitsPlannedIn: UnitPlannedIn[];
   sevenDaysPlaningUnits: SevenDaysPlaningUnit[];
   careBurden: string;
+  hasPatientNameColumn: boolean;
 }

@@ -148,6 +148,9 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean hasUnitPlannedInFeature;
 
+    @Column
+    private Boolean hasPatientNameColumn;
+
     public Unit() {
 
     }
@@ -478,6 +481,14 @@ public class Unit implements Comparable<Unit> {
 
     public void setCareBurden(String careBurden) {
         this.careBurden = careBurden;
+    }
+
+    public Boolean getHasPatientNameColumn() {
+        return hasPatientNameColumn;
+    }
+
+    public void setHasPatientNameColumn(Boolean hasPatientNameColumn) {
+        this.hasPatientNameColumn = hasPatientNameColumn;
     }
 
     @Override
