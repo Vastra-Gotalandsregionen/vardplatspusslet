@@ -2,10 +2,6 @@
      [appCallout]="'Planerad hemgång: ' + formatDate(bed.patient?.plannedLeaveDate)"><i class="fa fa-home purple"></i>
 </div>
 
-<div class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
-     [appCallout]="'Vårdplan: ' + bed.patient?.carePlan"><span class="material-icons purple">list_alt</span>
-</div>
-
 <div class="ikon" *ngIf="bed.patient?.patientExaminations.length > 0"
      [appCallout]="'Patient har bokade undersökningar'"><i class="fa fa-stethoscope purple"></i>
 </div>

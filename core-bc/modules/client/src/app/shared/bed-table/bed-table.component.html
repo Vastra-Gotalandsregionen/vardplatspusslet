@@ -25,6 +25,7 @@
     <th>Kön</th>
     <th>Tolk</th>
     <th>Patient väntar</th>
+    <th *ngIf="unit.hasCarePlan">Vårdplan</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -88,6 +89,11 @@
             [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
         <i class="fa fa-hourglass-2"></i>
       </span>
+      </td>
+      <td *ngIf="unit.hasCarePlan">
+        <span class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
+             [appCallout]="'Vårdplan: ' + bed.patient?.carePlan">{{bed.patient?.carePlan.length > 7 ? bed.patient?.carePlan.substr(0,7)+'...': bed.patient?.carePlan}}
+        </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
