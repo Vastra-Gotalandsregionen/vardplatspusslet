@@ -14,53 +14,49 @@
 
 </app-menu-title-row>
 
-<app-row>
+<app-layout>
 
-    <app-layout>
+  <app-layout-row>
+    
+    <app-layout-column width=12>
+        <vgr-page-block *ngIf="unit" class="full-width {{showChangeBedOrder ? '' : 'transparent'}}">
+            <div>
+              <div *ngIf="showChangeBedOrder">
+                <p>Dra och släpp sängarna och spara sedan.</p>
+                <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
+                  <div class="order-row" *ngFor="let bed of unit.beds">
+                    {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
+                  </div>
+                </div>
+    
+                <div class="button-row">
+                  <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
+                                    (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
+                </div>
+              </div>
+    
+              <div *ngIf="!showChangeBedOrder" class="bed-table-wrapper">
+                <app-bed-table *ngIf="clinic && unit" [clinic]="clinic" [unit]="unit" (save)="ngOnInit()"></app-bed-table>
+    
+                <div class="button-row" style="padding: 0 0 16px 16px">
+                  <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
+                </div>
+              </div>
+            </div>
+    
+          </vgr-page-block>
+    
+          <vgr-page-block *ngIf="!unit">
+            <div *ngIf="!error">
+              <vgr-loader [small]="false"></vgr-loader>
+            </div>
+    
+            <div *ngIf="error">
+              <div class="alert">{{error}}</div>
+            </div>
+          </vgr-page-block>
+    </app-layout-column>
       
-        <app-layout-row>
-          
-          <app-layout-column width=12>
-              <vgr-page-block *ngIf="unit" class="full-width {{showChangeBedOrder ? '' : 'transparent'}}">
-                  <div>
-                    <div *ngIf="showChangeBedOrder">
-                      <p>Dra och släpp sängarna och spara sedan.</p>
-                      <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
-                        <div class="order-row" *ngFor="let bed of unit.beds">
-                          {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
-                        </div>
-                      </div>
-          
-                      <div class="button-row">
-                        <vgr-save-cancel [hideLock]="true" (save)="saveBedOrder()"
-                                          (cancel)="hideChangeBedOrder()"></vgr-save-cancel>
-                      </div>
-                    </div>
-          
-                    <div *ngIf="!showChangeBedOrder" class="bed-table-wrapper">
-                      <app-bed-table *ngIf="clinic && unit" [clinic]="clinic" [unit]="unit" (save)="ngOnInit()"></app-bed-table>
-          
-                      <div class="button-row" style="padding: 0 0 16px 16px">
-                        <vgr-button (click)="changeBedOrder()">Byt ordning</vgr-button>
-                      </div>
-                    </div>
-                  </div>
-          
-                </vgr-page-block>
-          
-                <vgr-page-block *ngIf="!unit">
-                  <div *ngIf="!error">
-                    <vgr-loader [small]="false"></vgr-loader>
-                  </div>
-          
-                  <div *ngIf="error">
-                    <div class="alert">{{error}}</div>
-                  </div>
-                </vgr-page-block>
-          </app-layout-column>
-            
-        </app-layout-row>
-  
-      </app-layout>  
+  </app-layout-row>
 
-</app-row>
+</app-layout>

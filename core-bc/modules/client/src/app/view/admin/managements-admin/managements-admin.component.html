@@ -12,91 +12,87 @@
 
 </app-menu-title-row>
 
-<app-row>
-
-    <app-layout>
+<app-layout>
       
-        <app-layout-row>
-          
-          <app-layout-column width=2></app-layout-column>
-          
-          <app-layout-column width=8>
-              <h1 class="page-title">Förvaltningar</h1>
+  <app-layout-row>
+    
+    <app-layout-column width=2></app-layout-column>
+    
+    <app-layout-column width=8>
+        <h1 class="page-title">Förvaltningar</h1>
 
-              <vgr-page-block>
-          
-                <vgr-list>
-          
-                  <vgr-list-item *ngFor="let management of managements" (expandedChanged)="setCurrentManagement($event, management)" #theListItem>
-                    <vgr-list-item-header>
-                      <vgr-list-column [width]="3">{{management.id}}</vgr-list-column>
-                      <vgr-list-column [width]="4">{{management.name}}</vgr-list-column>
-                    </vgr-list-item-header>
-          
-                    <vgr-list-item-content>
-                      <form [formGroup]="managementForm" (ngSubmit)="saveManagement()">
-          
-                        <div>
-                          <div>Namn:</div>
-                          <vgr-input formControlName="name" [showValidation]="!managementForm.get('name').valid && managementForm.get('name').touched "></vgr-input>
-                        </div>
-          
-                        <div class="containers clearfix">
-                          <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
-                            <a (click)="openDeleteModal(management)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-          
-                          </div>
-          
-                          <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
-                            <vgr-button (click)="saveManagement()" [disabled]="!managementForm.valid">Spara</vgr-button>
-                            <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
-                          </div>
-                        </div>
-                      </form>
-                    </vgr-list-item-content>
-                  </vgr-list-item>
-          
-                  <vgr-list-item (expandedChanged)="setCurrentManagement($event, null)" #addListItem>
-                    <vgr-list-item-header>
-                      <vgr-list-column width="5">
-                        <div class="add-row vgr-icon-plus">Lägg till Förvaltning</div>
-                      </vgr-list-column>
-                    </vgr-list-item-header>
-          
-                    <vgr-list-item-content [indentContent]="true">
-                      <form [formGroup]="managementForm" (ngSubmit)="saveManagement()">
-                        <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
-                        <button type="submit" style="display:none">send</button>
-                        <div class=" clearfix containers">
-                          <div style="flex-grow: 6; flex-shrink: 0">
-                            <div>
-                              <div>ID:</div>
-                              <vgr-input formControlName="id" [showValidation]="!managementForm.get('id').valid && managementForm.get('id').touched " #addManagementId></vgr-input>
-                            </div>
-                            <div>
-                              <div>Namn:</div>
-                              <vgr-input formControlName="name" [showValidation]="!managementForm.get('name').valid && managementForm.get('name').touched "></vgr-input>
-                            </div>
-                          </div>
-                          <div style="align-self: flex-end; margin-top: 10px;">
-                            <vgr-button (click)="saveManagement()" [disabled]="!managementForm.valid">Spara</vgr-button>
-                            <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
-                          </div>
-                        </div>
-                      </form>
-                    </vgr-list-item-content>
-          
-                  </vgr-list-item>
-                </vgr-list>
-              </vgr-page-block>               
-          </app-layout-column>
-          
-          <app-layout-column width=2></app-layout-column>
-  
-        </app-layout-row>
-  
-      </app-layout>  
+        <vgr-page-block>
+    
+          <vgr-list>
+    
+            <vgr-list-item *ngFor="let management of managements" (expandedChanged)="setCurrentManagement($event, management)" #theListItem>
+              <vgr-list-item-header>
+                <vgr-list-column [width]="3">{{management.id}}</vgr-list-column>
+                <vgr-list-column [width]="4">{{management.name}}</vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content>
+                <form [formGroup]="managementForm" (ngSubmit)="saveManagement()">
+    
+                  <div>
+                    <div>Namn:</div>
+                    <vgr-input formControlName="name" [showValidation]="!managementForm.get('name').valid && managementForm.get('name').touched "></vgr-input>
+                  </div>
+    
+                  <div class="containers clearfix">
+                    <div style="flex-grow: 8; flex-shrink: 0; margin-top: 20px">
+                      <a (click)="openDeleteModal(management)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+    
+                    </div>
+    
+                    <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
+                      <vgr-button (click)="saveManagement()" [disabled]="!managementForm.valid">Spara</vgr-button>
+                      <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                    </div>
+                  </div>
+                </form>
+              </vgr-list-item-content>
+            </vgr-list-item>
+    
+            <vgr-list-item (expandedChanged)="setCurrentManagement($event, null)" #addListItem>
+              <vgr-list-item-header>
+                <vgr-list-column width="5">
+                  <div class="add-row vgr-icon-plus">Lägg till Förvaltning</div>
+                </vgr-list-column>
+              </vgr-list-item-header>
+    
+              <vgr-list-item-content [indentContent]="true">
+                <form [formGroup]="managementForm" (ngSubmit)="saveManagement()">
+                  <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
+                  <button type="submit" style="display:none">send</button>
+                  <div class=" clearfix containers">
+                    <div style="flex-grow: 6; flex-shrink: 0">
+                      <div>
+                        <div>ID:</div>
+                        <vgr-input formControlName="id" [showValidation]="!managementForm.get('id').valid && managementForm.get('id').touched " #addManagementId></vgr-input>
+                      </div>
+                      <div>
+                        <div>Namn:</div>
+                        <vgr-input formControlName="name" [showValidation]="!managementForm.get('name').valid && managementForm.get('name').touched "></vgr-input>
+                      </div>
+                    </div>
+                    <div style="align-self: flex-end; margin-top: 10px;">
+                      <vgr-button (click)="saveManagement()" [disabled]="!managementForm.valid">Spara</vgr-button>
+                      <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
+                    </div>
+                  </div>
+                </form>
+              </vgr-list-item-content>
+    
+            </vgr-list-item>
+          </vgr-list>
+        </vgr-page-block>               
+    </app-layout-column>
+    
+    <app-layout-column width=2></app-layout-column>
 
-</app-row>
+  </app-layout-row>
+
+</app-layout>
 
 <app-delete-modal [itemLabel]="managementForDeletion?.name" (confirmDelete)="confirmDelete()"></app-delete-modal>

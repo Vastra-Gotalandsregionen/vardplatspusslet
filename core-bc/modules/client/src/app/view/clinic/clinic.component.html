@@ -10,39 +10,35 @@
 
 </app-menu-title-row>
 
-<app-row>
+<app-layout>
 
-    <app-layout>
+  <app-layout-row>
+    
+    <app-layout-column width=2></app-layout-column>
+    
+    <app-layout-column width=8>
+        <h1 class="page-title">Välj avdelning</h1>
+
+        <vgr-page-block *ngIf="loggedIn">
+            <div *ngIf="units">   
+              <ul>
+                <li *ngFor="let unit of units">
+                  <a [routerLink]="unit.id">{{unit.name}}</a>
+                </li>
+              </ul>
       
-        <app-layout-row>
-          
-          <app-layout-column width=2></app-layout-column>
-          
-          <app-layout-column width=8>
-              <h1 class="page-title">Välj avdelning</h1>
+              <div *ngIf="units.length === 0 && loggedIn && !isFetchingUnits">
+                Du har inte behörighet att lista någon avdelning. För att komma till en avdelning behöver du adressen direkt till avdelningen.
+              </div>
+      
+            </div>
+          </vgr-page-block>
 
-              <vgr-page-block *ngIf="loggedIn">
-                  <div *ngIf="units">   
-                    <ul>
-                      <li *ngFor="let unit of units">
-                        <a [routerLink]="unit.id">{{unit.name}}</a>
-                      </li>
-                    </ul>
-            
-                    <div *ngIf="units.length === 0 && loggedIn && !isFetchingUnits">
-                      Du har inte behörighet att lista någon avdelning. För att komma till en avdelning behöver du adressen direkt till avdelningen.
-                    </div>
-            
-                  </div>
-                </vgr-page-block>
-  
-                <app-widget-login-panel *ngIf="!loggedIn"></app-widget-login-panel>
-          </app-layout-column>
-          
-          <app-layout-column width=2></app-layout-column>
-  
-        </app-layout-row>
-  
-      </app-layout>  
+          <app-widget-login-panel *ngIf="!loggedIn"></app-widget-login-panel>
+    </app-layout-column>
+    
+    <app-layout-column width=2></app-layout-column>
 
-</app-row>
+  </app-layout-row>
+
+</app-layout>

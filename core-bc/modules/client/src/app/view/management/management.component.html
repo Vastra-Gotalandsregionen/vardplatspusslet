@@ -8,39 +8,35 @@
 
 </app-menu-title-row>
 
-<app-row>
+<app-layout>
 
-    <app-layout>
-      
-        <app-layout-row>
-          
-          <app-layout-column width=2></app-layout-column>
-          
-          <app-layout-column width=8>
-              <h1 class="page-title">Välj klinik</h1>
+  <app-layout-row>
+    
+    <app-layout-column width=2></app-layout-column>
+    
+    <app-layout-column width=8>
+        <h1 class="page-title">Välj klinik</h1>
 
-              <vgr-page-block *ngIf="loggedIn">
-                <div *ngIf="clinics.length > 0">
-                  <ul>
-                    <li *ngFor="let clinic of clinics">
-                      <a [routerLink]="clinic.id">{{clinic.name}}</a>
-                    </li>
-                  </ul>
-          
-                  <div *ngIf="clinics.length === 0 && loggedIn && !isFetchingClinics">
-                    Du har inte behörighet att lista någon Clinic. För att komma till en clinic behöver du adressen direkt till clinicen .
-                  </div>
-          
-                </div>
-              </vgr-page-block>
-  
-              <app-widget-login-panel *ngIf="!loggedIn"></app-widget-login-panel>
-          </app-layout-column>
-          
-          <app-layout-column width=2></app-layout-column>
-  
-        </app-layout-row>
-  
-      </app-layout>  
+        <vgr-page-block *ngIf="loggedIn">
+          <div *ngIf="clinics.length > 0">
+            <ul>
+              <li *ngFor="let clinic of clinics">
+                <a [routerLink]="clinic.id">{{clinic.name}}</a>
+              </li>
+            </ul>
+    
+            <div *ngIf="clinics.length === 0 && loggedIn && !isFetchingClinics">
+              Du har inte behörighet att lista någon Clinic. För att komma till en clinic behöver du adressen direkt till clinicen .
+            </div>
+    
+          </div>
+        </vgr-page-block>
 
-</app-row>
+        <app-widget-login-panel *ngIf="!loggedIn"></app-widget-login-panel>
+    </app-layout-column>
+    
+    <app-layout-column width=2></app-layout-column>
+
+  </app-layout-row>
+
+</app-layout>
