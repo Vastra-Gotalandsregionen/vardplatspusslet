@@ -1,6 +1,6 @@
-<table>
+<table class="bed-table bed-table3">
   <thead>
-  <tr *ngIf="unit.careBurden !== 'inget' || unit.hasMotherChildDietFeature || unit.hasMorRondFeature || unit.hasBarnRondFeature">
+  <tr *ngIf="unit.careBurden !== 'inget' || unit.hasMotherChildDietFeature || unit.hasMorRondFeature || unit.hasBarnRondFeature" class="header-row">
     <th *ngIf="unit.hasPatientNameColumn" [colSpan]="4"></th>
     <th *ngIf="!unit.hasPatientNameColumn" [colSpan]="3"></th>
     <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last" *ngIf="unit.careBurden !== 'inget'">Vårdtyngd</th>
@@ -9,7 +9,7 @@
     <th *ngIf="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0) > 0" [colSpan]="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0)" class="column-group first last">Ronder</th>
     <th [colSpan]="50"></th>
   </tr>
-  <tr>
+  <tr class="header-row header-row-primary">
     <th>Rum/säng</th>
     <th>Status</th>
     <th *ngIf="unit.hasPatientNameColumn">Patient</th>
