@@ -1,21 +1,3 @@
-<!--
-<div class="message">
-
-    <div class="date">
-        <span *ngIf="message.date">
-            {{message.date | date : 'yyyy-MM-dd'}}   
-        </span>
-        <span *ngIf="dayOfWeekLabel">{{dayOfWeekLabel}}</span>
-    </div>
-
-    <div class="message-title">
-        {{message.heading}}
-    </div>
-    <div class="message-content" [innerHTML]="message.text">
-    </div>
-
-</div>
--->
 <vgr-expandable-div [expanded]="true">
         <vgr-expandable-div-header>
             <strong>{{message.heading}}</strong>

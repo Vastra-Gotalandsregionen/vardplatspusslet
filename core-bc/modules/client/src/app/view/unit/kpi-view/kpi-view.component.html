@@ -16,37 +16,46 @@
 
 <app-row>
 
-    <div>
-
-        <vgr-panel-container>
-
-            <vgr-panel width="6" themecolor="green">
+    <app-layout>
+      
+        <app-layout-row>
+          
+          <app-layout-column width=6>
               <app-widget-messages [messages]="messages" [hasEditUnitPermission]="hasEditUnitPermission()"></app-widget-messages>
-            </vgr-panel>
+          </app-layout-column>
+          
+          <app-layout-column width=6>
+            <app-widget-diet-list [clinic]="clinic" [unit]="unit"></app-widget-diet-list>
+          </app-layout-column>
+  
+        </app-layout-row>
 
-            <vgr-panel width="6" *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
-                <app-widget-diet-list [clinic]="clinic" [unit]="unit"></app-widget-diet-list>
-            </vgr-panel>
+        <app-layout-row>
+          
+            <app-layout-column width=6>
+                <app-widget-ssks *ngIf="unit?.ssks.length > 0" [unit]="unit"></app-widget-ssks>
+            </app-layout-column>
+            
+            <app-layout-column width=6>
 
-        </vgr-panel-container>
+                <app-widget-careburden-average *ngIf="unit?.careBurden == 'tal'" [unit]="unit" [bedsExpanded]="true"></app-widget-careburden-average>
+                
+                <app-widget-careburden-with-text *ngIf="unit?.careBurden == 'text'" [burdenvals]="burdenvals" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
 
-        <vgr-panel-container>
-
-          <vgr-panel width="6" *ngIf="unit?.ssks.length > 0">
-              <app-widget-ssks [unit]="unit"></app-widget-ssks>
-          </vgr-panel>
-
-          <vgr-panel width="6" *ngIf="unit?.careBurden == 'tal'">
-              <app-widget-careburden-average [unit]="unit" [bedsExpanded]="true"></app-widget-careburden-average>
-          </vgr-panel>
-
-          <vgr-panel width="6" *ngIf="unit?.careBurden == 'text'">
-              <app-widget-careburden-with-text [burdenvals]="burdenvals" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
-          </vgr-panel>
-
-
-        </vgr-panel-container>                  
-
-      </div>  
+                <vgr-panel-container>
+                    <vgr-panel width="6" *ngIf="unit?.careBurden == 'tal'">
+                        
+                    </vgr-panel>
+                    <vgr-panel width="6" *ngIf="unit?.careBurden == 'text'">
+                        
+                    </vgr-panel>
+                  </vgr-panel-container>                  
+            
+            </app-layout-column>
+    
+          </app-layout-row>
+  
+  
+      </app-layout>  
 
 </app-row>

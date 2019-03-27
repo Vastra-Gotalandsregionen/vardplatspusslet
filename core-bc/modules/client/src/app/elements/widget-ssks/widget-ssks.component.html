@@ -1,26 +1,31 @@
-<div class="row-layout panel-heading">
-    <div class="panel-heading-text">
-        <strong>Vårdtyngd - SSK</strong>
-    </div>
-</div>
+<vgr-panel-container *ngIf="unit?.ssks.length > 0 && unit.careBurden !== 'inget'">
+    <vgr-panel width="12">
 
-<div class="cb-circles">
+      <div class="row-layout panel-heading">
+          <div class="panel-heading-text">
+              <strong>Vårdtyngd - SSK</strong>
+          </div>
+      </div>
 
-  <div *ngFor="let ssk of unit?.ssks" class="cb-circle-item cb-circle-item-{{ssk.color}}">
-    <span class="cb-circle cb-circle-outer">
-        <span class="cb-circle cb-circle-inner">
-            <span class="cb-circle-val">
-                {{countBeds(ssk)}}
-            </span>
-        </span>
-    </span>
-    <span class="cb-circle-label">
-        {{ssk.label}}
-    </span>
-  </div>
+      <div class="cb-circles">
 
+        <div *ngFor="let ssk of unit?.ssks" class="cb-circle-item cb-circle-item-{{ssk.color}}">
+          <span class="cb-circle cb-circle-outer">
+              <span class="cb-circle cb-circle-inner">
+                  <span class="cb-circle-val">
+                      {{countBeds(ssk)}}
+                  </span>
+              </span>
+          </span>
+          <span class="cb-circle-label">
+              {{ssk.label}}
+          </span>
+        </div>
 
-</div>
+      </div>
+
+  </vgr-panel>
+</vgr-panel-container>
 
 <!--
 <table class="vpp-table">

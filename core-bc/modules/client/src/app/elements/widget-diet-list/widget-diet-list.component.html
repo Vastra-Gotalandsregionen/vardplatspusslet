@@ -1,3 +1,9 @@
-<a [href]="'/api/unit/' + clinic.id + '/' + unit.id + '/kostLista'" target="_blank" style="text-decoration: none ">
-    <span>Kostlista</span>
-</a>
+<vgr-panel-container *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
+    <vgr-panel width="12">
+
+        <a [href]="'/api/unit/' + clinic.id + '/' + unit.id + '/kostLista'" target="_blank" style="text-decoration: none ">
+            <span>Kostlista</span>
+        </a>
+
+    </vgr-panel>
+</vgr-panel-container>

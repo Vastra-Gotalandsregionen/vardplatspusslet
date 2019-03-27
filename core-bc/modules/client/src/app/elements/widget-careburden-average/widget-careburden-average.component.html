@@ -1,46 +1,51 @@
+<vgr-panel-container *ngIf="unit?.careBurden == 'tal'">
+  <vgr-panel width="12">
 
-<div class="row-layout panel-heading">
-    <div class="panel-heading-text">
-        <strong>Vårdtyngd - kategorier (medelvärde)</strong>
+    <div class="row-layout panel-heading">
+        <div class="panel-heading-text">
+            <strong>Vårdtyngd - kategorier (medelvärde)</strong>
+        </div>
     </div>
-</div>
 
-<div class="cb-circles">
+    <div class="cb-circles">
 
-    <div *ngFor="let cbk of unit?.careBurdenCategories" class="cb-circle-item">
-      <span class="cb-circle cb-circle-outer">
-          <span class="cb-circle cb-circle-inner">
-              <span class="cb-circle-val">
-                {{CalculateAverage(cbk.id)}}
+        <div *ngFor="let cbk of unit?.careBurdenCategories" class="cb-circle-item">
+          <span class="cb-circle cb-circle-outer">
+              <span class="cb-circle cb-circle-inner">
+                  <span class="cb-circle-val">
+                    {{CalculateAverage(cbk.id)}}
+                  </span>
               </span>
           </span>
-      </span>
-      <span class="cb-circle-label">
-        {{cbk.name}}
-      </span>
-    </div>
+          <span class="cb-circle-label">
+            {{cbk.name}}
+          </span>
+        </div>
 
 
-  </div>
+      </div>
 
-  <vgr-expandable-div [expanded]="bedsExpanded">
-    <vgr-expandable-div-header>
-      <p>Vårdtyngd per säng</p>
-    </vgr-expandable-div-header>
-    <vgr-expandable-div-content>
-        <table class="vpp-table">
-            <thead>
-            <tr>
-              <th class="left"></th>
-              <th class="right" *ngFor="let cbk of unit?.careBurdenCategories">{{cbk.name}}</th>
-            </tr>
-            </thead>
-            <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
-              <td class="left">{{" "+ bed.label}}</td>
-              <td class="right" *ngFor="let cbk of unit?.careBurdenCategories">
-                {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
-              </td>
-            </tr>
-          </table>
-    </vgr-expandable-div-content>
-  </vgr-expandable-div> 
+      <vgr-expandable-div [expanded]="bedsExpanded">
+        <vgr-expandable-div-header>
+          <p>Vårdtyngd per säng</p>
+        </vgr-expandable-div-header>
+        <vgr-expandable-div-content>
+            <table class="vpp-table">
+                <thead>
+                <tr>
+                  <th class="left"></th>
+                  <th class="right" *ngFor="let cbk of unit?.careBurdenCategories">{{cbk.name}}</th>
+                </tr>
+                </thead>
+                <tr *ngFor="let bed of unit?.beds; let i= index" [hidden]="BedHasNoPatientWithCareBurden(bed.patient)">
+                  <td class="left">{{" "+ bed.label}}</td>
+                  <td class="right" *ngFor="let cbk of unit?.careBurdenCategories">
+                    {{patientCareBurden(bed.patient?.careBurdenChoices, cbk.id)}}
+                  </td>
+                </tr>
+              </table>
+        </vgr-expandable-div-content>
+      </vgr-expandable-div> 
+
+  </vgr-panel>
+</vgr-panel-container>

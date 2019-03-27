@@ -1,35 +1,40 @@
-<div class="row-layout panel-heading">
-  <div class="panel-heading-text">
-      <strong>Vårdtyngd per kategori</strong>
-  </div>
-</div>
+<vgr-panel-container>
+    <vgr-panel width="6" *ngIf="unit?.careBurden == 'text'">
+        <div class="row-layout panel-heading">
+            <div class="panel-heading-text">
+                <strong>Vårdtyngd per kategori</strong>
+            </div>
+          </div>
+          
+          <div class="careburden-text-wrap">
+            <div class="careburden-text-ssk" *ngFor="let ssk of unit?.ssks">
+          
+              <div class="careburden-text-ssk-label">
+                  <span class="ssk-color ssk-{{ssk.color}}"></span> Vårdlag {{ssk.label}}
+              </div>
+          
+              <table class="vpp-table">
+                  <thead>
+                      <tr>
+                          <th></th>
+                          <th *ngFor="let cbk of unit?.careBurdenCategories" class="right">{{cbk.name}}</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let value of unit?.careBurdenValues; let i = index">
+                        <td>{{value.name}}</td>
+                        <td *ngFor="let cbk of unit?.careBurdenCategories" class="right">
+                            {{getMatrixValue(ssk, cbk, value)}}
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+          
+            </div>
+          </div>        
+    </vgr-panel>
+</vgr-panel-container>                  
 
-<div class="careburden-text-wrap">
-  <div class="careburden-text-ssk" *ngFor="let ssk of unit?.ssks">
-
-    <div class="careburden-text-ssk-label">
-        <span class="ssk-color ssk-{{ssk.color}}"></span> Vårdlag {{ssk.label}}
-    </div>
-
-    <table class="vpp-table">
-        <thead>
-            <tr>
-                <th></th>
-                <th *ngFor="let cbk of unit?.careBurdenCategories" class="right">{{cbk.name}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let value of unit?.careBurdenValues; let i = index">
-              <td>{{value.name}}</td>
-              <td *ngFor="let cbk of unit?.careBurdenCategories" class="right">
-                  {{getMatrixValue(ssk, cbk, value)}}
-              </td>
-            </tr>
-        </tbody>
-    </table>
-
-  </div>
-</div>
 
 <!--
 <table class="vpp-table">
