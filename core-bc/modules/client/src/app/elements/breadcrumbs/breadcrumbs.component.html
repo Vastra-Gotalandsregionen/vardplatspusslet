@@ -1,0 +1,11 @@
+<div class="breadcrumbs">
+
+    <span *ngFor="let page of pages" class="breadcrumb-item">
+        <a *ngIf="!page.isCurrentPage" routerLink="{{page.route}}">{{page.label}}</a>
+        <app-chevron-right *ngIf="!page.isCurrentPage"></app-chevron-right>
+
+        <span *ngIf="page.isCurrentPage" class="current-page">{{page.label}}</span>
+    </span>
+    
+</div>
+    

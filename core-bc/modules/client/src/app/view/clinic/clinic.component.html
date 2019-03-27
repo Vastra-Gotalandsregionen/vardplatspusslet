@@ -1,11 +1,7 @@
 <app-menu-title-row>
   
     <div class="menu-title-item">
-      <div class="breadcrumbs">
-        <a routerLink="..">{{management}}</a>
-        <app-chevron-right></app-chevron-right>
-        {{clinic?.name}}
-      </div>
+        <app-breadcrumbs *ngIf="clinic" type="clinic" [current]="clinic"></app-breadcrumbs>
     </div>
 
 </app-menu-title-row>

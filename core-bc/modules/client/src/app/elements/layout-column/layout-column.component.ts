@@ -11,7 +11,13 @@ export class LayoutColumnComponent {
   @Input() class: string;
   @HostBinding('class')
   get classes(): string {
-      return this.getColumnWidthClass() + ' ' + this.class;
+    let classes = this.getColumnWidthClass();
+
+    if(this.class != undefined) {
+      classes = classes + ' ' + this.class;
+    }
+
+      return classes;
   }
 
   private getColumnWidthClass(): string {

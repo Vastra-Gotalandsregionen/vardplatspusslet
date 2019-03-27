@@ -1,9 +1,7 @@
 <app-menu-title-row>
 
   <div class="menu-title-item">
-    <div class="breadcrumbs">
-      {{management?.name}}
-    </div>
+      <app-breadcrumbs *ngIf="management" type="management" [current]="management"></app-breadcrumbs>
   </div>
 
 </app-menu-title-row>

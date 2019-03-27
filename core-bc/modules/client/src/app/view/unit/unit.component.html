@@ -1,17 +1,11 @@
 <app-menu-title-row>
 
 <div class="menu-title-item">
-<div class="breadcrumbs">
-<a routerLink="../..">{{management}}</a>
-<app-chevron-right></app-chevron-right>
-<a routerLink="..">{{clinic?.name}}</a>
-<app-chevron-right></app-chevron-right>
-{{unit?.name}}
-</div>
+  <app-breadcrumbs *ngIf="unit" type="unit" [current]="unit"></app-breadcrumbs>
 </div>
 
 <div class="menu-title-item right">
-<app-dashboard-menu *ngIf="unit" [unit]="unit" type="unit-dashboard"></app-dashboard-menu>
+  <app-dashboard-menu *ngIf="unit" [unit]="unit" type="unit-dashboard"></app-dashboard-menu>
 </div>
 
 </app-menu-title-row>
