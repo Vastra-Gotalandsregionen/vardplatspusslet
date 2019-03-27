@@ -12,38 +12,42 @@
   
   <app-row>
 
-      <div class="container">
+        <app-layout>
+      
+                <app-layout-row>
+                  
+                  <app-layout-column width=2></app-layout-column>
+                  
+                  <app-layout-column width=8>
+                        <h1 class="page-title">Administration</h1>
 
-          <div class="col c2">&nbsp;</div>
-      
-          <div class="col c8">
-              <h1 class="page-title">Administration</h1>
-
-              <vgr-page-block>
-                  <ul>
-                    <li>
-                      <a routerLink="/admin/managements">Förvaltningar</a>
-                    </li>
-                    <li>
-                        <a routerLink="/admin/clinics">Kliniker</a>
-                    </li>
-                    <li>
-                        <a routerLink="/admin/units">Avdelningar</a>
-                    </li>
-                    <li>
-                        <a routerLink="/admin/users">Användare</a>
-                    </li>
-                    <li>
-                        <a routerLink="/admin/statistics">Statistik</a>
-                    </li>
-      
-                  </ul>
-      
-                </vgr-page-block>
-          </div>
-      
-          <div class="col c2">&nbsp;</div>
-      
-      </div>  
-
+                        <vgr-page-block>
+                            <ul>
+                              <li>
+                                <a routerLink="/admin/managements">Förvaltningar</a>
+                              </li>
+                              <li>
+                                  <a routerLink="/admin/clinics">Kliniker</a>
+                              </li>
+                              <li>
+                                  <a routerLink="/admin/units">Avdelningar</a>
+                              </li>
+                              <li>
+                                  <a routerLink="/admin/users">Användare</a>
+                              </li>
+                              <li>
+                                  <a routerLink="/admin/statistics">Statistik</a>
+                              </li>
+                
+                            </ul>
+                
+                        </vgr-page-block>                    
+                  </app-layout-column>
+                  
+                  <app-layout-column width=2></app-layout-column>
+          
+                </app-layout-row>
+          
+              </app-layout>  
+            
   </app-row>  
