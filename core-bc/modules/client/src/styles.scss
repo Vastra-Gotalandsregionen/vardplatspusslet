@@ -4,6 +4,7 @@
 @import "../node_modules/dragula/dist/dragula.min.css"; // todo try taking the css from https://github.com/valor-software/ng2-dragula and see if it is better.
 
 @import "assets/scss/utilities/variables";
+@import "assets/scss/utilities/grid";
 
 @import "assets/scss/atoms/link";
 @import "assets/scss/atoms/headings";
@@ -19,7 +20,6 @@
 @import "assets/scss/molecules/widget-messages";
 
 @import "assets/scss/organisms/block";
-@import "assets/scss/organisms/grid";
 @import "assets/scss/organisms/header";
 
 @import "assets/scss/utilities/overrides";

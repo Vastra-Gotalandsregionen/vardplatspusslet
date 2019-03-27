@@ -36,6 +36,9 @@ import {RightColumnComponent} from './elements/right-column/right-column.compone
 import {LoginModalComponent} from './elements/login-modal/login-modal.component';
 import {EditMessagesComponent} from './view/unit/edit-messages/edit-messages.component';
 import {DashboardMenuComponent} from './elements/dashboard-menu/dashboard-menu.component';
+import {LayoutComponent} from './elements/layout/layout.component';
+import {LayoutColumnComponent} from './elements/layout-column/layout-column.component';
+import {LayoutRowComponent} from './elements/layout-row/layout-row.component';
 import {MessageComponent} from './elements/message/message.component';
 import {EditMessageComponent} from './elements/edit-message/edit-message.component';
 import {WidgetCareBurdenAverageComponent} from './elements/widget-careburden-average/widget-careburden-average.component';
@@ -90,6 +93,9 @@ registerLocaleData(localeSv, "sv-SE");
     LoginModalComponent,
     EditMessagesComponent,
     DashboardMenuComponent,
+    LayoutComponent,
+    LayoutColumnComponent,
+    LayoutRowComponent,
     MessageComponent,
     EditMessageComponent,
     WidgetCareBurdenAverageComponent,

@@ -1,21 +1,22 @@
-body, textarea, input, select {
-  background: 0;
-  border-radius: 0;
-  margin: 0
-}
 
-.addon, .btn-sm, .nav, textarea, input, select {
-  outline: 0;
-  font-size: 14px
-}
+// body, textarea, input, select {
+//   background: 0;
+//   border-radius: 0;
+//   margin: 0
+// }
 
-.smooth {
-  transition: all .2s
-}
+// .addon, .btn-sm, .nav, textarea, input, select {
+//   outline: 0;
+//   font-size: 14px
+// }
 
-.btn, .nav a {
-  text-decoration: none
-}
+// .smooth {
+//   transition: all .2s
+// }
+
+// .btn, .nav a {
+//   text-decoration: none
+// }
 
 .container {
   margin: 0 20px;
@@ -77,6 +78,11 @@ body, textarea, input, select {
 
 .c1 {
   width: 8.33%
+}
+
+.col-inner {
+  min-height: 1px;
+  width: 100%;
 }
 
 @media(max-width: 870px) {
