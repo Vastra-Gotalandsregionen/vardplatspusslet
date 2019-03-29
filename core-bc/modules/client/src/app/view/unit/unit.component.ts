@@ -34,7 +34,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   addSevenDaysPlaningUnitForm: FormGroup;
   management: string;
   unit: Unit;
-  units: Unit[];
+  allUnitsOnSameClinic: Unit[];
   clinic: Clinic;
   burdenvals: string;
   sevendaysplan: SevenDaysPlaningUnit[] = [];
@@ -66,11 +66,8 @@ export class UnitComponent implements OnInit, OnDestroy {
     this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
       this.clinic = clinic;
       this.management = clinic.management.name;
-
-      this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
-        this.units = unitArray.filter(x => x.name !== this.unit.name);
-      });
     });
+
     this.http.get<Unit>('/api/unit/' + clinicId + '/' + unitId)
       .do(unit => {
         if (unit) {
@@ -86,7 +83,7 @@ export class UnitComponent implements OnInit, OnDestroy {
           this.inited = true;
 
           this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
-            this.units = unitArray.filter(x => x.name !== this.unit.name);
+            this.allUnitsOnSameClinic = unitArray.filter(x => x.name !== this.unit.name);
           });
 
           if (this.thisUnitPlannedInTable) {

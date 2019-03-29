@@ -88,6 +88,7 @@
               <vgr-input [small]="true" formControlName="label" [showValidation]="getCareTeamValidation(i)"></vgr-input>
 
               <vgr-dropdown-select [showValidation]="getSskValidation(i)" formControlName="color">
+                <vgr-dropdown-item [value]="null">Välj färg (valfritt)</vgr-dropdown-item>
                 <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
               </vgr-dropdown-select>
               <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
