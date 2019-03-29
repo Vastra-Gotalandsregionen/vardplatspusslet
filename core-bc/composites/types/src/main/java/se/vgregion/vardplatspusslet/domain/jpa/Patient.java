@@ -108,6 +108,9 @@ public class Patient {
     @Column
     private String infoDiet;
 
+    @Column
+    private String relatedInformation;
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new LinkedHashSet<>();
@@ -432,6 +435,14 @@ public class Patient {
 
     public void setInfoDiet(String infoDiet) {
         this.infoDiet = infoDiet;
+    }
+
+    public String getRelatedInformation() {
+        return relatedInformation;
+    }
+
+    public void setRelatedInformation(String relatedInformation) {
+        this.relatedInformation = relatedInformation;
     }
 
     @Override

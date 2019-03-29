@@ -69,25 +69,6 @@
 
         </div>
 
-        <div *ngIf="unit.hasCarePlan" class="div-button10">
-          <label for="carePlan">Vårdplan</label>
-          <!--<vgr-input id="carePlan" formControlName="carePlan"></vgr-input>-->
-          <vgr-textarea  id="carePlan" formControlName="carePlan" width="94%"></vgr-textarea>
-        </div>
-
-        <div *ngIf="unit?.careBurden == 'tal' || unit?.careBurden == 'text'" class="div-button10">
-            <label>Vårdtyngd</label>
-            <div formArrayName="careBurdenChoices" *ngFor="let careBurdenCategory of unit.careBurdenCategories let i = index;"
-                 class="clearfix">
-              <div [formGroupName]="i" class="containers">
-                <label>{{careBurdenCategory.name}}</label>
-                <vgr-dropdown-select formControlName="careBurdenValueId" noItemSelectedLabel="Välj" style="margin-left: 20px">
-                  <vgr-dropdown-item *ngFor="let item of careBurdenValuesOptions" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-                </vgr-dropdown-select>
-              </div>
-            </div>
-        </div>
-
         <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
           <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
         </div>
@@ -124,16 +105,29 @@
           <vgr-checkbox formControlName="rond" label="Rond"></vgr-checkbox>
         </div>
 
+        <div *ngIf="unit.hasCarePlan" class="div-button10">
+          <label for="carePlan">Vårdplan</label>
+          <!--<vgr-input id="carePlan" formControlName="carePlan"></vgr-input>-->
+          <vgr-textarea  id="carePlan" formControlName="carePlan" width="94%"></vgr-textarea>
+        </div>
+
+        <div class="div-button10">
+          <div>Övriga anteckningar</div>
+          <vgr-textarea formControlName="relatedInformation" width="94%"></vgr-textarea>
+        </div>
       </div>
     </vgr-card-column>
     <vgr-card-column>
-      <div class="div-button10">
-        <p>Tolk</p>
-        <div class="containers" formGroupName="tolkGroup">
-          <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
-          <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
-          <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
-          <input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
+
+      <div *ngIf="unit?.careBurden == 'tal' || unit?.careBurden == 'text'" class="div-button10">
+        <label>Vårdtyngd</label>
+        <div formArrayName="careBurdenChoices" *ngFor="let careBurdenCategory of unit.careBurdenCategories let i = index;">
+          <div [formGroupName]="i" class="containers careburden">
+            <label>{{careBurdenCategory.name}}</label>
+            <vgr-dropdown-select formControlName="careBurdenValueId" noItemSelectedLabel="Välj">
+              <vgr-dropdown-item *ngFor="let item of careBurdenValuesOptions" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+            </vgr-dropdown-select>
+          </div>
         </div>
       </div>
 
@@ -235,33 +229,28 @@
           <input formControlName="kommentar" style="width: 100%"/>
         </div>
       </div>
+
     </vgr-card-column>
   </vgr-card>
 
   <hr style="width: 95%; margin-left: 0"/>
   <vgr-card>
-    <vgr-card-column>
-      <div class="div-button10">
-        <div>Övriga anteckningar</div>
-        <vgr-textarea formControlName="relatedInformation" width="90%"></vgr-textarea>
-      </div>
-    </vgr-card-column>
 
     <vgr-card-column>
       <div  *ngIf="unit.hasCleaningFeature" class="div-button10">
         <p>Städning</p>
-      <div class="containers" formGroupName="cleaningGroup">
+      <div class="containers" formGroupName="cleaningGroup" id="cleanInfo">
         <vgr-checkbox formControlName="cleaningalternativeExists"></vgr-checkbox>
 
         <vgr-dropdown-select *ngIf="cleaningAlternativesDropdownItems?.length != 0"
                              formControlName="cleaningAlternative"
                              noItemSelectedLabel="Välj"
-                             [disabled]="!bedForm.get('cleaningGroup.cleaningalternativeExists').value">
+                             [disabled]="!bedForm.get('cleaningGroup.cleaningalternativeExists').value" [small]="true">
           <vgr-dropdown-item *ngFor="let item of cleaningAlternativesDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
         </vgr-dropdown-select>
 
-        <input formControlName="cleaningInfo" *ngIf="bedForm.get('cleaningGroup.cleaningalternativeExists').value" style="width: 40%; margin-left: 5px"/>
-        <input formControlName="cleaningInfo" disabled *ngIf="!bedForm.get('cleaningGroup.cleaningalternativeExists').value" style="width: 40%; margin-left: 5px"/>
+        <input formControlName="cleaningInfo" *ngIf="bedForm.get('cleaningGroup.cleaningalternativeExists').value"/>
+        <input formControlName="cleaningInfo" disabled *ngIf="!bedForm.get('cleaningGroup.cleaningalternativeExists').value"/>
       </div>
       </div>
     </vgr-card-column>

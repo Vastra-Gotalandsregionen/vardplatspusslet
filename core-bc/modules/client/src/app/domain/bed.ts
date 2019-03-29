@@ -11,7 +11,6 @@ export class Bed {
   ssk: Ssk;
   servingClinic: ServingClinic;
   patientWaits: boolean;
-  relatedInformation: string;
   cleaningalternativeExists: boolean;
   cleaningInfo: string;
   cleaningAlternative: CleaningAlternative;

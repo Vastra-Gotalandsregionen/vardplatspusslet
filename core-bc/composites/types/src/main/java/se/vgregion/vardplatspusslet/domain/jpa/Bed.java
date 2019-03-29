@@ -52,8 +52,6 @@ public class Bed {
     @Column
     private Boolean patientWaits;
 
-    @Column
-    private String relatedInformation;
 
     @Column
     private Boolean cleaningalternativeExists;
@@ -121,14 +119,6 @@ public class Bed {
 
     public void setPatientWaits(Boolean patientWaits) {
         this.patientWaits = patientWaits;
-    }
-
-    public String getRelatedInformation() {
-        return relatedInformation;
-    }
-
-    public void setRelatedInformation(String relatedInformation) {
-        this.relatedInformation = relatedInformation;
     }
 
     public CleaningAlternative getCleaningAlternative() {
