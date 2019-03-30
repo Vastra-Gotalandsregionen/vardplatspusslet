@@ -27,6 +27,7 @@
     <th>Tolk</th>
     <th>Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
+    <th>Övrigt anteckning</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -95,6 +96,11 @@
       <td *ngIf="unit.hasCarePlan">
         <span class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
              [appCallout]="'Vårdplan: ' + bed.patient?.carePlan">{{bed.patient?.carePlan.length > 7 ? bed.patient?.carePlan.substr(0,7)+'...': bed.patient?.carePlan}}
+        </span>
+      </td>
+      <td>
+        <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
+                [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 7 ? bed.patient?.relatedInformation.substr(0,7)+'...': bed.patient?.relatedInformation}}
         </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">
