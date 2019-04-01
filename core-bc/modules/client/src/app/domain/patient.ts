@@ -49,6 +49,7 @@ export class Patient {
   infoDietChild: string;
   diet: DietForPatient;
   infoDiet: string;
+  relatedInformation: string;
 }
 
 enum LeaveStatus {

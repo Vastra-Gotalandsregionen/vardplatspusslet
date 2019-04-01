@@ -121,7 +121,8 @@ export class BedFormComponent implements OnInit {
           information: +[patient.information],
           kommentar: [patient.kommentar]
         }),
-        careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(patient))
+        careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(patient)),
+        relatedInformation: [patient.relatedInformation]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -134,8 +135,6 @@ export class BedFormComponent implements OnInit {
         cleaningInfo: [bed.cleaningInfo ? bed.cleaningInfo : null],
         cleaningalternativeExists: [bed.cleaningalternativeExists ? bed.cleaningalternativeExists : null]
       }),
-
-      relatedInformation: [bed.relatedInformation]
     });
 
     this.bedForm.get('patient.tolkGroup.interpreter').valueChanges
@@ -267,6 +266,8 @@ export class BedFormComponent implements OnInit {
           }
         }) : null;
 
+      bed.patient.relatedInformation = bedModel.patient.relatedInformation;
+
     } else {
       bed.patient = null;
     }
@@ -287,7 +288,6 @@ export class BedFormComponent implements OnInit {
       bed.cleaningalternativeExists = false;
     }
     bed.patientWaits = bedModel.waitingforbedGroup.waitingpatient;
-    bed.relatedInformation = bedModel.relatedInformation;
 
     this.http.put('/api/bed/' + this.clinicId + '/' + this.unit.id, bed)
       .subscribe(bed => {

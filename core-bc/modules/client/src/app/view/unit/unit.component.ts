@@ -66,52 +66,51 @@ export class UnitComponent implements OnInit, OnDestroy {
     this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
       this.clinic = clinic;
       this.management = clinic.management.name;
+      this.http.get<Unit>('/api/unit/' + clinicId + '/' + unitId)
+        .do(unit => {
+          if (unit) {
+            this.unit = unit;
+            this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
+              this.allUnitsOnSameClinic = unitArray.filter(x => x.name !== this.unit.name);
+            });
+
+            this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
+              return {displayName: unitplannedIn.name, value: unitplannedIn.id};
+            }));
+
+            this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(',   ');
+            this.updateSskCategoryValueMatrix(unit);
+            this.updateVacants(unit);
+            this.inited = true;
+            if (this.thisUnitPlannedInTable) {
+              this.thisUnitPlannedInTable.update(unit);
+            }
+
+            if (this.unitPlannedInItems) {
+              this.unitPlannedInItems.update(unit);
+            }
+
+            if (this.unitPlannedInItemsOld) {
+              this.unitPlannedInItemsOld.update(unit);
+            }
+          } else {
+            this.error = this.notFoundText;
+          }
+        })
+        .switchMap((unit: Unit) => this.http.get<Message[]>('/api/message/' + unit.id + '/today'))
+        .subscribe((messages: Message[]) => {
+          this.messages = messages;
+        }, (error1: HttpErrorResponse) => {
+          console.error(error1);
+          if (error1.status === 404) {
+            this.error = this.notFoundText;
+          } else {
+            this.error = error1.message;
+          }
+        });
+
     });
 
-    this.http.get<Unit>('/api/unit/' + clinicId + '/' + unitId)
-      .do(unit => {
-        if (unit) {
-          this.unit = unit;
-
-          this.plannedInDropdownUnits = [{displayName: 'Välj', value: null}].concat(this.unit.unitsPlannedIn.map(unitplannedIn => {
-            return {displayName: unitplannedIn.name, value: unitplannedIn.id};
-          }));
-
-          this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(',   ');
-          this.updateSskCategoryValueMatrix(unit);
-          this.updateVacants(unit);
-          this.inited = true;
-
-          this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
-            this.allUnitsOnSameClinic = unitArray.filter(x => x.name !== this.unit.name);
-          });
-
-          if (this.thisUnitPlannedInTable) {
-            this.thisUnitPlannedInTable.update(unit);
-          }
-
-          if (this.unitPlannedInItems) {
-            this.unitPlannedInItems.update(unit);
-          }
-
-          if (this.unitPlannedInItemsOld) {
-            this.unitPlannedInItemsOld.update(unit);
-          }
-        } else {
-          this.error = this.notFoundText;
-        }
-      })
-      .switchMap((unit: Unit) => this.http.get<Message[]>('/api/message/' + unit.id + '/today'))
-      .subscribe((messages: Message[]) => {
-        this.messages = messages;
-      }, (error1: HttpErrorResponse) => {
-        console.error(error1);
-        if (error1.status === 404) {
-          this.error = this.notFoundText;
-        } else {
-          this.error = error1.message;
-        }
-      });
   }
 
   ngOnInit() {
@@ -158,7 +157,7 @@ export class UnitComponent implements OnInit, OnDestroy {
           thisBed.occupied = incomingBed.occupied;
           thisBed.label = incomingBed.label;
           thisBed.patient = incomingBed.patient;
-          thisBed.relatedInformation = incomingBed.relatedInformation;
+          //thisBed.relatedInformation = incomingBed.relatedInformation;
         }
       }
 
@@ -172,6 +171,7 @@ export class UnitComponent implements OnInit, OnDestroy {
           thisPatient.leaveStatus = incomingPatient.leaveStatus;
           thisPatient.label = incomingPatient.label;
           thisPatient.gender = incomingPatient.gender;
+          thisPatient.relatedInformation = incomingPatient.relatedInformation;
         } else {
           // Not found means it is a new patient
           this.unit.patients.push(incomingPatient);

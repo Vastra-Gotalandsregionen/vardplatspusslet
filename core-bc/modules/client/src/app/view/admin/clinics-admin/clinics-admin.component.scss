@@ -28,3 +28,19 @@
   }
 
 }
+
+#firstchild{
+  flex-grow: 6;
+  flex-shrink: 0;
+}
+
+#secondchild
+{
+  margin-right:4.2rem;
+}
+
+.saveCancel {
+  align-self: flex-end;
+  margin-top: 10px;
+}
+

@@ -82,9 +82,9 @@
                 </div>
               </div>
             </vgr-page-block>
-              <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
+              <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature || unit.careBurden == 'text'">
                 <vgr-list [flexibleHeader]="true">
-                  <vgr-list-item #plannedunit>
+                  <vgr-list-item #plannedunit *ngIf="unit?.hasUnitPlannedInFeature">
                     <vgr-list-item-header>
                       <vgr-list-column width="6">
                         <div>Planerade patienter från andra enheter</div>
@@ -93,9 +93,8 @@
                     <vgr-list-item-content [indentContent]="true">
                       <app-unit-planned-in-items #unitPlannedInItems *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit); onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
                         </vgr-list-item-content>
-      
                       </vgr-list-item>
-                      <vgr-list-item #oldplannedunit>
+                      <vgr-list-item #oldplannedunit *ngIf="unit?.hasUnitPlannedInFeature">
                         <vgr-list-item-header>
                           <vgr-list-column width="8">
                             <div>Gamla poster: Planerade patienter från andra enheter</div>
