@@ -1,11 +1,12 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "careBurdenValue")
 
-public class CareBurdenValue {
+public class CareBurdenValue implements Comparable<CareBurdenValue> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -39,5 +40,10 @@ public class CareBurdenValue {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    @Override
+    public int compareTo(CareBurdenValue o) {
+        return Comparator.nullsLast(Comparator.comparing(o2 -> ((CareBurdenValue) o2).name)).compare(this, o);
     }
 }

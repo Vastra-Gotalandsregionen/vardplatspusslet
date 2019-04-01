@@ -71,4 +71,11 @@ export class EditMessagesComponent implements OnInit {
     this.messages.push(newMessage);
     this.editMessages.push(newMessage);
   }
+
+  cancel(message: Message) {
+    this.editMessages.splice(this.editMessages.indexOf(message), 1);
+    if (!message.id) {
+      this.messages.splice(this.messages.indexOf(message), 1);
+    }
+  }
 }

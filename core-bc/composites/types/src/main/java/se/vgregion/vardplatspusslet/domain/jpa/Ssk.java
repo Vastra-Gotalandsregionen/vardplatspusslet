@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Comparator;
 
 /**
  * SSK is synomymous with "vårdlag".
@@ -56,6 +57,6 @@ public class Ssk implements Comparable<Ssk> {
 
     @Override
     public int compareTo(Ssk o) {
-        return this.label.compareTo(o.getLabel());
+        return Comparator.nullsLast(Comparator.comparing(o2 -> ((Ssk) o2).label)).compare(this, o);
     }
 }

@@ -1,10 +1,23 @@
 <app-menu-title-row>
-  <div class="col app-right-column breadcrumbs">
-    <a routerLink="../..">{{clinic?.name}}</a>
-    <app-chevron-right></app-chevron-right>
-    <a routerLink="..">{{unit?.name}}</a>
-    <app-chevron-right></app-chevron-right>
-    Redigera meddelanden
+  <div class="menu-title-item">
+
+    <div class="breadcrumbs">
+      <span class="breadcrumb-item">
+        <a routerLink="../../..">{{clinic?.management?.name}}</a>
+        <app-chevron-right></app-chevron-right>
+      </span>
+
+      <span class="breadcrumb-item">
+        <a routerLink="../..">{{clinic?.name}}</a>
+        <app-chevron-right></app-chevron-right>
+      </span>
+
+      <span class="breadcrumb-item">
+        <a routerLink="..">{{unit?.name}}</a>
+        <app-chevron-right></app-chevron-right>
+        Redigera meddelanden
+      </span>
+    </div>
   </div>
 </app-menu-title-row>
 
@@ -26,7 +39,7 @@
 
         <div *ngIf="editMessages.indexOf(message) > -1">
           <app-edit-message [message]="message" (save)="save(message)"
-                            (cancel)="editMessages.splice(editMessages.indexOf(message), 1)"></app-edit-message>
+                            (cancel)="cancel(message)"></app-edit-message>
         </div>
       </vgr-panel>
 

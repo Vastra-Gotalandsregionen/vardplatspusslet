@@ -30,7 +30,8 @@ public class Bed {
     @Column
     private Boolean occupied;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    // Add orphanRemoval. Hope it doesn't cause any trouble.
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.EAGER)

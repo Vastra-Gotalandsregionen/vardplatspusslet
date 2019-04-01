@@ -16,3 +16,12 @@ vgr-panel .vgr-icon-plus {
 a.delete {
   float: right;
 }
+
+vgr-panel-container {
+  flex-wrap: wrap;
+}
+
+vgr-panel {
+  min-width: 560px;
+  max-width: 50%;
+}

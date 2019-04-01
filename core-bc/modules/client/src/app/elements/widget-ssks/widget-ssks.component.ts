@@ -18,9 +18,9 @@ export class WidgetSsksComponent implements OnInit {
   ngOnInit() {
   }
 
-  countBeds(sskArg: Ssk) {
+  countOccupiedBeds(sskArg: Ssk) {
     // Map to ssk, then filter out those with the same id and count the result.
-    return this.unit.beds.map(bed => bed.ssk).filter(ssk => ssk ? ssk.id === sskArg.id : false).length;
+    return this.unit.beds.filter(bed => bed.occupied).map(bed => bed.ssk).filter(ssk => ssk ? ssk.id === sskArg.id : false).length;
   }  
 
 }

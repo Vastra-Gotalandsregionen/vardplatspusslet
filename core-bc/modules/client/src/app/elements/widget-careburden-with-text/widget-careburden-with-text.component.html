@@ -1,60 +1,58 @@
-<vgr-panel-container>
-    <vgr-panel width="6" *ngIf="unit?.careBurden == 'text'">
-        <div class="row-layout panel-heading">
-            <div class="panel-heading-text">
-                <strong>Vårdtyngd per kategori</strong>
-            </div>
-          </div>
-          
-          <div class="careburden-text-wrap">
-            <div class="careburden-text-ssk" *ngFor="let ssk of unit?.ssks">
-          
-              <div class="careburden-text-ssk-label">
-                  <span class="ssk-color ssk-{{ssk.color}}"></span> Vårdlag {{ssk.label}}
-              </div>
-          
-              <table class="vpp-table">
-                  <thead>
-                      <tr>
-                          <th></th>
-                          <th *ngFor="let cbk of unit?.careBurdenCategories" class="right">{{cbk.name}}</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let value of unit?.careBurdenValues; let i = index">
-                        <td>{{value.name}}</td>
-                        <td *ngFor="let cbk of unit?.careBurdenCategories" class="right">
-                            {{getMatrixValue(ssk, cbk, value)}}
-                        </td>
-                      </tr>
-                  </tbody>
-              </table>
-          
-            </div>
-          </div>        
-    </vgr-panel>
-</vgr-panel-container>                  
+<div class="row-layout panel-heading">
+  <div class="panel-heading-text">
+    <strong>Vårdtyngd per kategori</strong>
+  </div>
+</div>
 
+<div class="careburden-text-wrap" *ngIf="!(unit?.careBurdenCategories.length <=2 && unit?.careBurdenValues.length <= 2)">
+  <div class="careburden-text-ssk" *ngFor="let ssk of unit?.ssks">
 
-<!--
-<table class="vpp-table">
-    <thead>
-    <tr>
-      <th></th>
-      <th *ngFor="let cbk of unit?.careBurdenCategories" class="right" colspan="3">{{cbk.name}}</th>
-    </tr>
-    <tr>
-      <th>Vårdlag</th>
-      <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3" class="right">{{burdenvals}}</th>
-    </tr>
-    </thead>
-    <tr *ngFor="let ssk of unit?.ssks">
-      <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
-      <td *ngFor="let cbk of unit?.careBurdenCategories" class="pad-left-20" colspan="3">
-        <span *ngFor="let value of unit?.careBurdenValues; let i = index">
-          <span *ngIf="i == unit?.careBurdenValues.length-1"> - </span ><span>{{getMatrixValue(ssk, cbk, value)}}</span>
-          </span>
+    <div class="careburden-text-ssk-label">
+      <span class="ssk-color ssk-{{ssk.color}}"></span> Vårdlag {{ssk.label}}
+    </div>
+
+    <table class="vpp-table">
+      <thead>
+      <tr>
+        <th></th>
+        <th *ngFor="let cbk of unit?.careBurdenCategories" class="right">{{cbk.name}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let value of unit?.careBurdenValues; let i = index">
+        <td>{{value.name}}</td>
+        <td *ngFor="let cbk of unit?.careBurdenCategories" class="right">
+          {{getMatrixValue(ssk, cbk, value)}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<table class="vpp-table center" *ngIf="unit?.careBurdenCategories.length <=2 && unit?.careBurdenValues.length <= 2">
+  <thead>
+  <tr>
+    <th></th>
+    <th *ngFor="let cbk of unit?.careBurdenCategories" class="riddght right-border left-border"
+        [colSpan]="unit?.careBurdenValues.length">{{cbk.name}}</th>
+  </tr>
+  <tr>
+    <th>Vårdlag</th>
+    <ng-container *ngFor="let cbk of unit?.careBurdenCategories">
+      <th *ngFor="let cbv of unit?.careBurdenValues; let i = index"
+          class="{{cbv.name?.toLowerCase() === 'röd' ? 'red-cell' : ''}} {{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}}">{{cbv.name}}</th>
+    </ng-container>
+  </tr>
+  </thead>
+  <tr *ngFor="let ssk of unit?.ssks">
+    <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
+    <ng-container *ngFor="let cbk of unit?.careBurdenCategories">
+      <td *ngFor="let value of unit?.careBurdenValues; let i = index"
+          class="{{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}}">
+        {{getMatrixValue(ssk, cbk, value)}}
       </td>
-    </tr>
-  </table>
-  -->
+    </ng-container>
+  </tr>
+</table>

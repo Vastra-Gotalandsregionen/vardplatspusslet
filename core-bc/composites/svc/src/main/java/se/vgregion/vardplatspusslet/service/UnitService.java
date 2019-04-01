@@ -6,11 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.vgregion.vardplatspusslet.domain.jpa.*;
-import se.vgregion.vardplatspusslet.repository.*;
+import se.vgregion.vardplatspusslet.domain.jpa.Bed;
+import se.vgregion.vardplatspusslet.domain.jpa.CareBurdenCategory;
+import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
+import se.vgregion.vardplatspusslet.domain.jpa.DietForChild;
+import se.vgregion.vardplatspusslet.domain.jpa.DietForMother;
+import se.vgregion.vardplatspusslet.domain.jpa.DietForPatient;
+import se.vgregion.vardplatspusslet.domain.jpa.Role;
+import se.vgregion.vardplatspusslet.domain.jpa.SevenDaysPlaningUnit;
+import se.vgregion.vardplatspusslet.domain.jpa.Unit;
+import se.vgregion.vardplatspusslet.domain.jpa.UnitPlannedIn;
+import se.vgregion.vardplatspusslet.domain.jpa.User;
+import se.vgregion.vardplatspusslet.repository.ClinicRepository;
+import se.vgregion.vardplatspusslet.repository.DietForChildRepository;
+import se.vgregion.vardplatspusslet.repository.DietForMotherRepository;
+import se.vgregion.vardplatspusslet.repository.DietForPatientRepository;
+import se.vgregion.vardplatspusslet.repository.SevenDaysPlaningRepository;
+import se.vgregion.vardplatspusslet.repository.UnitPlannedInRepository;
+import se.vgregion.vardplatspusslet.repository.UnitRepository;
+import se.vgregion.vardplatspusslet.repository.UserRepository;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -47,6 +67,9 @@ public class UnitService {
     @Autowired
     private  SevenDaysPlaningRepository sevenDaysPlaningRepository;
 
+    @Autowired
+    private DataSource dataSource;
+
     public UnitService(UserRepository userRepository,
                        UnitRepository unitRepository,
                        ClinicRepository clinicRepository,
@@ -79,6 +102,7 @@ public class UnitService {
 
         updateDiets(unit);
         updatePlannedIns(unit);
+        cascadeDeleteCareBurdenCategories(unit);
 
         // We need to remove all beds from the unit first, or we may get a constraint exception (at least when we change order of beds).
         unit.setBeds(null);
@@ -86,6 +110,50 @@ public class UnitService {
         unit.setBeds(beds);
 
         return unitRepository.save(unit);
+    }
+
+    private void cascadeDeleteCareBurdenCategories(Unit unit) {
+        // Cascade remove careBurdenCategories
+        List<Integer> categoriesToKeep = unit.getCareBurdenCategories().stream()
+                .map(CareBurdenCategory::getId)
+                .collect(Collectors.toList());
+
+        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+
+        String sql = "select careburdencategories_id from unit_careburdencategory " +
+                "where unit_id like :unitId and careburdencategories_id not in (:categoriesToKeep)";
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("categoriesToKeep", categoriesToKeep);
+        parameters.addValue("unitId", unit.getId());
+
+        List<Long> careBurdenCategoriesToRemove = namedParameterJdbcTemplate.queryForList(sql, parameters, Long.class);
+
+        int update = 0;
+        if (careBurdenCategoriesToRemove.size() > 0) {
+
+            parameters = new MapSqlParameterSource();
+            parameters.addValue("careBurdenCategoriesToRemove", careBurdenCategoriesToRemove);
+
+            sql = "select id from careburdenchoice where careburdencategory_id in (:careBurdenCategoriesToRemove)";
+
+            List<Long> careBurdenChoicesToRemove = namedParameterJdbcTemplate.queryForList(sql, parameters, Long.class);
+
+            if (careBurdenChoicesToRemove.size() > 0) {
+                sql = "delete from patient_careburdenchoice where careburdenchoices_id in (:careBurdenChoicesToRemove)";
+
+                parameters = new MapSqlParameterSource();
+                parameters.addValue("careBurdenChoicesToRemove", careBurdenChoicesToRemove);
+
+                update = namedParameterJdbcTemplate.update(sql, parameters);
+            }
+
+            sql = "delete from careburdenchoice where careburdencategory_id in (:careBurdenCategoriesToRemove)";
+            parameters = new MapSqlParameterSource();
+            parameters.addValue("careBurdenCategoriesToRemove", careBurdenCategoriesToRemove);
+
+            update = namedParameterJdbcTemplate.update(sql, parameters);
+        }
     }
 
     private void updateDiets(Unit unit) {
@@ -200,9 +268,11 @@ public class UnitService {
         example2.setUnit(unit);
         example3.setUnit(unit);
 
-        List<DietForMother> dietForMothers = dietForMotherRepository.findAll(Example.of(example1));
-        List<DietForChild> dietForChildren = dietForChildRepository.findAll(Example.of(example2));
-        List<DietForPatient> dietForPatients = dietForPatientRepository.findAll(Example.of(example3));
+        Sort.Order order = new Sort.Order(Sort.Direction.ASC, "name").ignoreCase();
+        Sort sort = new Sort(order);
+        List<DietForMother> dietForMothers = dietForMotherRepository.findAll(Example.of(example1), sort);
+        List<DietForChild> dietForChildren = dietForChildRepository.findAll(Example.of(example2), sort);
+        List<DietForPatient> dietForPatients = dietForPatientRepository.findAll(Example.of(example3), sort);
 
         unit.setDietForMothers(dietForMothers);
         unit.setDietForChildren(dietForChildren);

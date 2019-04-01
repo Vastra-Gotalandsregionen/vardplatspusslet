@@ -1,0 +1,18 @@
+@import "../../../../node_modules/vgr-komponentkartan/assets/partials/_settings.colors.scss";
+
+.center{
+  text-align: center;
+}
+
+.left-border {
+  border-left: 1px solid #888888;
+}
+
+.right-border {
+  border-right: 1px solid #888888;
+}
+
+.red-cell {
+  background: $primary-color--red;
+  color: #ffffff;
+}

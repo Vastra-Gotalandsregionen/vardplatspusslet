@@ -7,10 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Comparator;
 
 @Entity
 @Table(name= "careBurdenCategory")
-public class CareBurdenCategory {
+public class CareBurdenCategory implements Comparable<CareBurdenCategory> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -33,5 +34,10 @@ public class CareBurdenCategory {
 
     public void setName(String kategori) {
         this.name = kategori;
+    }
+
+    @Override
+    public int compareTo(CareBurdenCategory o) {
+        return Comparator.nullsLast(Comparator.comparing(o2 -> ((CareBurdenCategory) o2).name)).compare(this, o);
     }
 }

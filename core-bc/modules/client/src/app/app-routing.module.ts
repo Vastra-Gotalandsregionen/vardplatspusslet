@@ -71,10 +71,6 @@ const routes: Routes = [
   },
   {
     path: ':managementId/:clinicId/:id/editMessages',
-    component: KpiViewComponent
-  },
-  {
-    path: ':managementId/:clinicId/:id/editMessages',
     component: EditMessagesComponent,
     canActivate: [HasEditUnitPermissionGuard]
   },

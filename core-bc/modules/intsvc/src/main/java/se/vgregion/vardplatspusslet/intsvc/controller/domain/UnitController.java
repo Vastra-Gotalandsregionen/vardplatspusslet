@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
 @Controller
 @RequestMapping("/unit")
@@ -54,7 +55,21 @@ public class UnitController extends BaseController {
             return new ArrayList<>();
         }
 
-        return unitService.getUnits(clinicId, userId);
+        List<Unit> units = unitService.getUnits(clinicId, userId);
+
+        for (Unit unit : units) {
+            sortCollections(unit);
+        }
+
+        return units;
+    }
+
+    private void sortCollections(Unit unit) {
+        // To sort. Has been tricky to sort by JPA.
+        unit.setSsks(new TreeSet<>(unit.getSsks()));
+        unit.setCareBurdenCategories(new TreeSet<>(unit.getCareBurdenCategories()));
+        unit.setCareBurdenValues(new TreeSet<>(unit.getCareBurdenValues()));
+        unit.setCleaningAlternatives(new TreeSet<>(unit.getCleaningAlternatives()));
     }
 
     @RequestMapping(value = "/{clinicId}/{id}", method = RequestMethod.GET)
@@ -65,6 +80,8 @@ public class UnitController extends BaseController {
         Unit unit = unitService.findUnitByIdAndClinic(id, clinic);
 
         if (unit != null) {
+            sortCollections(unit);
+
             return ResponseEntity.ok(unit);
         } else {
             return ResponseEntity.notFound().build();

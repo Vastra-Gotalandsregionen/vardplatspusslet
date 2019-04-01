@@ -1,11 +1,12 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 
 @Entity
 @Table(name = "cleaningalternative")
-public class CleaningAlternative {
+public class CleaningAlternative implements Comparable<CleaningAlternative> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -38,4 +39,8 @@ public class CleaningAlternative {
         this.description = description;
     }
 
+    @Override
+    public int compareTo(CleaningAlternative o) {
+        return Comparator.nullsLast(Comparator.comparing(o2 -> ((CleaningAlternative) o2).description)).compare(this, o);
+    }
 }

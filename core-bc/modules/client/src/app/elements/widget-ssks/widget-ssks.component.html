@@ -3,7 +3,7 @@
 
       <div class="row-layout panel-heading">
           <div class="panel-heading-text">
-              <strong>Vårdtyngd - SSK</strong>
+              <strong>Patienter per team</strong>
           </div>
       </div>
 
@@ -13,7 +13,7 @@
           <span class="cb-circle cb-circle-outer">
               <span class="cb-circle cb-circle-inner">
                   <span class="cb-circle-val">
-                      {{countBeds(ssk)}}
+                      {{countOccupiedBeds(ssk)}}
                   </span>
               </span>
           </span>
@@ -37,7 +37,7 @@
 </thead>
 <tr *ngFor="let ssk of unit?.ssks">
   <td><span class="ssk-color ssk-{{ssk.color}}"></span> {{ssk.label}}</td>
-  <td>{{countBeds(ssk)}}</td>
+  <td>{{countOccupiedBeds(ssk)}}</td>
 </tr>
 </table>
 -->
