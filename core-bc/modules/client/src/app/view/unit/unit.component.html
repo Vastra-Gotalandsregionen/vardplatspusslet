@@ -75,9 +75,9 @@
               <div>
                 <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>
               </div>
-              <h6 *ngIf="units?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
+              <h6 *ngIf="allUnitsOnSameClinic?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
               <div class="containers">
-                <div *ngFor="let unit of units">
+                <div *ngFor="let unit of allUnitsOnSameClinic">
                   <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
                 </div>
               </div>

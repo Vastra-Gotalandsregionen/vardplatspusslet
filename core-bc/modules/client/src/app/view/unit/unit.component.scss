@@ -72,6 +72,10 @@ rod {
   display: flex;
   flex-wrap: wrap;
   margin-top: 3px;
+
+  > div {
+    margin-right: 24px;
+  }
 }
 
 h2{

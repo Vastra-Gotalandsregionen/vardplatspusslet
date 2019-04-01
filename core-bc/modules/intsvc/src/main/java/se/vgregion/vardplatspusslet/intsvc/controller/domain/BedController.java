@@ -30,12 +30,6 @@ public class BedController {
     @Autowired
     private BedService bedService;
 
-     /*@RequestMapping(value = "", method = RequestMethod.GET)
-     @ResponseBody
-     public List<Bed> getBeds() {
-         return Arrays.asList(new Bed());
-     }*/
-
     @RequestMapping(value = "/{clinicId}/{unitId}", method = RequestMethod.PUT)
     @ResponseBody
 //    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")

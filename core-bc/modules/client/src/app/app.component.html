@@ -1,5 +1,8 @@
 <div id="theme-root" class="theme--blue">
 
+  <div class="alert" *ngIf="newVersionAvailable">
+    En ny version av Vårdplatspusslet finns tillgänglig. <a onclick="javascript: location.reload()">Ladda om sidan </a> för att uppdatera.
+  </div>
   <vgr-header textColor="black" circleColor="#ffffff" [userName]="getLoggedInDisplayName()">
   </vgr-header>
 
