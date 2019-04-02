@@ -1,23 +1,26 @@
-// .page-block .list {
-//   //background-color: transparent;
-//   margin: 0;
-
-//   .list__items:before {
-//     height: 0px;
-//   }
-// }
-
-
-// .list-item {
-
-//   &.list-item--expanded,
-//   &.list-item--expanded:not(.list-item--compact) {
-//     margin-top: 1px;
-//   }
-
-// }
-
 .list {
+
+  &.transparent {
+    background-color: transparent;
+
+    .list-item {
+      border-top: 2px solid #f0f0f0;
+      margin-top: 0;
+    }
+
+
+    .list-item.list-item--expanded:not(.list-item--compact) {
+      box-shadow: 3px 3px 9px 0 rgba(0, 0, 0, 0.3);
+      margin-top: 14px;
+
+      box-shadow: none;
+      border: 2px solid #ddd;
+    }
+
+
+  }
+
+
   .list__header {
     position: relative;
     width: 100%;
