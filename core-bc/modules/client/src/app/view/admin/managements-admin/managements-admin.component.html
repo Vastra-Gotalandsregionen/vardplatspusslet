@@ -24,6 +24,11 @@
         <vgr-page-block>
     
           <vgr-list>
+
+            <vgr-list-header>
+              <vgr-list-column-header [width]="3">ID</vgr-list-column-header>
+              <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
+            </vgr-list-header>
     
             <vgr-list-item *ngFor="let management of managements" (expandedChanged)="setCurrentManagement($event, management)" #theListItem>
               <vgr-list-item-header>

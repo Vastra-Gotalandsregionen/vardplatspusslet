@@ -24,6 +24,12 @@
         <vgr-page-block>
       
             <vgr-list>
+
+            <vgr-list-header>
+                <vgr-list-column-header [width]="3">ID</vgr-list-column-header>
+                <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
+                <vgr-list-column-header [width]="4">Förvaltning</vgr-list-column-header>
+              </vgr-list-header>
   
               <vgr-list-item *ngFor="let clinic of clinics" (expandedChanged)="setCurrentClinic($event, clinic)" #theListItem>
                 <vgr-list-item-header>
