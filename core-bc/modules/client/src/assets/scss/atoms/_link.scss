@@ -2,3 +2,7 @@ a.tooltip-icon {
   border-bottom: none;
   display: inline-block;
 }
+
+a:hover {
+  border-bottom: 1px solid transparent;
+}
