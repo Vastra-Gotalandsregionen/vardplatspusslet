@@ -70,53 +70,88 @@
                 </vgr-list-item>
               </vgr-list>
             </vgr-page-block>
-            <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
-              <h6>Planerade in närmaste 8 dagarna:{{unit.name}}</h6>
-              <div>
-                <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>
-              </div>
-              <h6 *ngIf="allUnitsOnSameClinic?.length > 0">Planerade in närmaste 8 dagarna:Övriga avdelningar</h6>
-              <div class="containers">
-                <div *ngFor="let unit of allUnitsOnSameClinic">
-                  <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
-                </div>
-              </div>
-            </vgr-page-block>
-              <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature || unit?.careBurden == 'text'">
-                <vgr-list [flexibleHeader]="true">
-                  <vgr-list-item #plannedunit *ngIf="unit?.hasUnitPlannedInFeature">
-                    <vgr-list-item-header>
-                      <vgr-list-column width="6">
-                        <div>Planerade patienter från andra enheter</div>
+
+            <vgr-list allowMultipleExpandedItems="true" *ngIf="unit?.hasUnitPlannedInFeature">
+
+                <vgr-list-item expanded="true">
+                  <vgr-list-item-header>
+                      <vgr-list-column width="12">
+                        <div>Planerade in närmaste 8 dagarna: {{unit.name}}</div>
                       </vgr-list-column>
                     </vgr-list-item-header>
                     <vgr-list-item-content [indentContent]="true">
-                      <app-unit-planned-in-items #unitPlannedInItems *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit); onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
-                        </vgr-list-item-content>
-                      </vgr-list-item>
-                      <vgr-list-item #oldplannedunit *ngIf="unit?.hasUnitPlannedInFeature">
-                        <vgr-list-item-header>
-                          <vgr-list-column width="8">
-                            <div>Gamla poster: Planerade patienter från andra enheter</div>
-                          </vgr-list-column>
-                        </vgr-list-item-header>
-                        <vgr-list-item-content [indentContent]="true">
-                          <app-unit-planned-in-items #unitPlannedInItemsOld *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" [oldPost]="true" [showPlus]="true" (cancelPlaningUnitEvent)="collapse(oldplannedunit)" (savePlaningUnitEvent)="collapse(oldplannedunit);onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
-                        </vgr-list-item-content>
-      
-                      </vgr-list-item>
-                      <vgr-list-item  *ngIf="unit.careBurden == 'text'">
-                        <vgr-list-item-header>
-                          <vgr-list-column width="8">
-                            <div>Vårdtyngd med text värde: Alternativ 2</div>
-                          </vgr-list-column>
-                        </vgr-list-item-header>
-                        <vgr-list-item-content [indentContent]="true">
-                          <app-widget-careburden-with-text-compact-alt [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text-compact-alt>
-                        </vgr-list-item-content>
-                      </vgr-list-item>
-                    </vgr-list>
-                  </vgr-page-block>
+                        <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>  
+                    </vgr-list-item-content>
+                </vgr-list-item>
+
+                <vgr-list-item expanded="true" *ngFor="let unit of allUnitsOnSameClinic">
+                    <vgr-list-item-header>
+                        <vgr-list-column width="12">
+                          <div>Planerade in närmaste 8 dagarna: {{unit.name}}</div>
+                        </vgr-list-column>
+                      </vgr-list-item-header>
+                      <vgr-list-item-content [indentContent]="true">
+                          <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
+                      </vgr-list-item-content>
+                  </vgr-list-item>
+                  
+
+            </vgr-list>
+
+            <!--
+            <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
+
+              <h6>Planerade in närmaste 8 dagarna: {{unit.name}}</h6>
+              <div>
+                <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>
+              </div>
+              <h6 *ngIf="allUnitsOnSameClinic?.length > 0">Planerade in närmaste 8 dagarna: Övriga avdelningar</h6>
+              <div *ngFor="let unit of allUnitsOnSameClinic">
+                <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
+              </div>
+
+
+
+
+            </vgr-page-block>
+            -->
+
+            <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature || unit?.careBurden == 'text'">
+              <vgr-list [flexibleHeader]="false">
+                <vgr-list-item #plannedunit *ngIf="unit?.hasUnitPlannedInFeature">
+                  <vgr-list-item-header>
+                    <vgr-list-column width="12">
+                      <div>Planerade patienter från andra enheter</div>
+                    </vgr-list-column>
+                  </vgr-list-item-header>
+                  <vgr-list-item-content [indentContent]="true">
+                    <app-unit-planned-in-items #unitPlannedInItems *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" (cancelPlaningUnitEvent)="collapse(plannedunit)" (savePlaningUnitEvent)="collapse(plannedunit); onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
+                      </vgr-list-item-content>
+                    </vgr-list-item>
+                    <vgr-list-item #oldplannedunit *ngIf="unit?.hasUnitPlannedInFeature">
+                      <vgr-list-item-header>
+                        <vgr-list-column width="12">
+                          <div>Gamla poster: Planerade patienter från andra enheter</div>
+                        </vgr-list-column>
+                      </vgr-list-item-header>
+                      <vgr-list-item-content [indentContent]="true">
+                        <app-unit-planned-in-items #unitPlannedInItemsOld *ngIf="unit !== null" [unit]="unit" [clinic]="clinic" [oldPost]="true" [showPlus]="true" (cancelPlaningUnitEvent)="collapse(oldplannedunit)" (savePlaningUnitEvent)="collapse(oldplannedunit);onUnitPlannedInItemsSave();"></app-unit-planned-in-items>
+                      </vgr-list-item-content>
+    
+                    </vgr-list-item>
+                    <vgr-list-item  *ngIf="unit.careBurden == 'text'">
+                      <vgr-list-item-header>
+                        <vgr-list-column width="12">
+                          <div>Vårdtyngd med text värde: Alternativ 2</div>
+                        </vgr-list-column>
+                      </vgr-list-item-header>
+                      <vgr-list-item-content [indentContent]="true">
+                        <app-widget-careburden-with-text-compact-alt [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text-compact-alt>
+                      </vgr-list-item-content>
+                    </vgr-list-item>
+                  </vgr-list>
+                </vgr-page-block>
+
                 <vgr-page-block *ngIf="!unit">
                   <div *ngIf="!error">
                     <vgr-loader [small]="false"></vgr-loader>
