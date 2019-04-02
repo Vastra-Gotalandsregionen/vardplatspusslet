@@ -36,7 +36,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   unit: Unit;
   allUnitsOnSameClinic: Unit[];
   clinic: Clinic;
-  burdenvals: string;
   sevendaysplan: SevenDaysPlaningUnit[] = [];
   plannedInDropdownUnits: DropdownItem<number>[];
   error: string;
@@ -78,7 +77,6 @@ export class UnitComponent implements OnInit, OnDestroy {
               return {displayName: unitplannedIn.name, value: unitplannedIn.id};
             }));
 
-            this.burdenvals = this.unit.careBurdenValues.map(x => x.name).join(',   ');
             this.updateSskCategoryValueMatrix(unit);
             this.updateVacants(unit);
             this.inited = true;

@@ -1,3 +1,5 @@
+@import "../../../../node_modules/vgr-komponentkartan/assets/partials/_settings.colors.scss";
+
 table {
   margin-top: 10px;
   background: #ffffff;
@@ -58,4 +60,8 @@ table {
 
 .center{
   text-align: center;
+}
+
+.every-second {
+  background: $primary-color--default-dimmed;
 }

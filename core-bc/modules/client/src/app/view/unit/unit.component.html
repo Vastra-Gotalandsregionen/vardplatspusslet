@@ -112,7 +112,7 @@
                           </vgr-list-column>
                         </vgr-list-item-header>
                         <vgr-list-item-content [indentContent]="true">
-                          <app-widget-careburden-with-text-compact-alt [burdenvals]="burdenvals" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text-compact-alt>
+                          <app-widget-careburden-with-text-compact-alt [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text-compact-alt>
                         </vgr-list-item-content>
                       </vgr-list-item>
                     </vgr-list>
@@ -142,7 +142,7 @@
     
             <vgr-panel-container *ngIf="unit?.careBurden == 'text'">
               <vgr-panel width="12">
-                  <app-widget-careburden-with-text [burdenvals]="burdenvals" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
+                  <app-widget-careburden-with-text [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
               </vgr-panel>
             </vgr-panel-container>                  
     

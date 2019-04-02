@@ -1,0 +1,2 @@
+<span *ngIf="ssk?.color" class="{{'icon-colored-' + ssk?.color + ' fa fa-users'}}" [appCallout]="ssk.label"></span>
+<span *ngIf="ssk && !ssk?.color">{{ssk.label}}</span>

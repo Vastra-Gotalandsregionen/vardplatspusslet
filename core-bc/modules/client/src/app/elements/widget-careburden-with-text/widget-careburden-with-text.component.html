@@ -8,7 +8,7 @@
   <div class="careburden-text-ssk" *ngFor="let ssk of unit?.ssks">
 
     <div class="careburden-text-ssk-label">
-      <span class="ssk-color ssk-{{ssk.color}}"></span> Vårdlag {{ssk.label}}
+      Vårdlag <app-ssk-icon [ssk]="ssk"></app-ssk-icon>
     </div>
 
     <table class="vpp-table">
@@ -47,7 +47,7 @@
   </tr>
   </thead>
   <tr *ngFor="let ssk of unit?.ssks">
-    <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
+    <td><app-ssk-icon [ssk]="ssk"></app-ssk-icon></td>
     <ng-container *ngFor="let cbk of unit?.careBurdenCategories">
       <td *ngFor="let value of unit?.careBurdenValues; let i = index"
           class="{{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}}">
