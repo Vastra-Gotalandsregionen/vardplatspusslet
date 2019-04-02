@@ -29,7 +29,7 @@
 
   </vgr-panel-container>
 
-  <vgr-card>
+  <vgr-card *ngIf="unit">
     <vgr-card-column>
       <vgr-card-section [expanded]="true" [title]="'Funktionsval'" [readonly]="false">
         <vgr-title-value-layout>
