@@ -1,20 +1,25 @@
-<table>
+<table class="center">
   <thead>
   <tr>
     <th></th>
-    <th *ngFor="let cbk of unit?.careBurdenCategories" colspan="3">{{cbk.name}}</th>
+    <th *ngFor="let cbk of unit?.careBurdenCategories; let j = index" class="{{j % 2 === 0 ? 'every-second' : ''}}"
+        [colSpan]="unit?.careBurdenValues.length">{{cbk.name}}</th>
   </tr>
   <tr>
     <th>Vårdlag</th>
-    <th *ngFor="let cbv of unit?.careBurdenCategories" colspan="3">{{burdenvals}}</th>
+    <ng-container *ngFor="let cbk of unit?.careBurdenCategories; let j = index">
+      <th *ngFor="let cbv of unit?.careBurdenValues; let i = index"
+          class="{{cbv.name?.toLowerCase() === 'röd' ? 'red-cell' : ''}} {{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}} {{j % 2 === 0 ? 'every-second' : ''}}">{{cbv.name}}</th>
+    </ng-container>
   </tr>
   </thead>
   <tr *ngFor="let ssk of unit?.ssks">
-    <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
-    <td *ngFor="let cbk of unit?.careBurdenCategories" class="center" colspan="3">
-        <span *ngFor="let value of unit?.careBurdenValues; let i = index">
-          <span>{{getMatrixValue(ssk, cbk, value)}}</span><span *ngIf="i < unit?.careBurdenValues.length-1"> - </span >
-          </span>
-    </td>
+    <td><app-ssk-icon [ssk]="ssk"></app-ssk-icon></td>
+    <ng-container *ngFor="let cbk of unit?.careBurdenCategories; let j = index">
+      <td *ngFor="let value of unit?.careBurdenValues; let i = index"
+          class="{{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}} {{j % 2 === 0 ? 'every-second' : ''}}">
+        {{getMatrixValue(ssk, cbk, value)}}
+      </td>
+    </ng-container>
   </tr>
 </table>

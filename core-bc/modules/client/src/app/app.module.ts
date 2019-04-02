@@ -26,7 +26,6 @@ import localeSv from "@angular/common/locales/sv";
 import {UnitsAdminFormComponent} from './view/admin/units-admin/units-admin-form/units-admin-form.component';
 import {CalloutComponent} from './shared/callout.component';
 import {CalloutDirective} from './shared/callout.directive';
-import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {BedFormComponent} from './view/unit/bed-form/bed-form.component';
 import {RowComponent} from './elements/row/row.component';
 import {LeftColumnComponent} from './elements/left-column/left-column.component';
@@ -65,6 +64,7 @@ import { UnitPlannedInItemsComponent } from './elements/unit-planned-in-items/un
 import { ManagementsAdminComponent } from './view/admin/managements-admin/managements-admin.component';
 import { ManagementComponent } from './view/management/management.component';
 import { WidgetCareburdenWithTextCompactAltComponent } from './elements/widget-careburden-with-text-compact-alt/widget-careburden-with-text-compact-alt.component';
+import { SskIconComponent } from './elements/ssk-icon/ssk-icon.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -116,6 +116,7 @@ registerLocaleData(localeSv, "sv-SE");
     ManagementsAdminComponent,
     ManagementComponent,
     WidgetCareburdenWithTextCompactAltComponent,
+    SskIconComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,7 +128,6 @@ registerLocaleData(localeSv, "sv-SE");
     ReactiveFormsModule,
     DragulaModule.forRoot(),
     AppRoutingModule,
-    AngularFontAwesomeModule,
     CKEditorModule
   ],
   entryComponents: [

@@ -11,7 +11,6 @@ import {CareBurdenValue} from "../../domain/careburdenvalue";
 })
 export class WidgetCareburdenWithTextCompactAltComponent implements OnInit {
 
-  @Input('burdenvals') burdenvals: string;
   @Input('unit') unit: Unit;
   @Input('sskCategoryValueMatrix') sskCategoryValueMatrix: {};
 

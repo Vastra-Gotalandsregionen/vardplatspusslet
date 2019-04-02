@@ -43,11 +43,11 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/*", "input": "node_modules/@fortawesome/fontawesome-free/", "output": "./assets/fontawesome" }
             ],
             "styles": [
               "node_modules/vgr-komponentkartan/assets/komponentkartan.scss",
-              "node_modules/font-awesome/css/font-awesome.css",
               "src/styles.scss"
             ],
             "scripts": []

@@ -145,6 +145,37 @@ div.save-cancel {
   box-sizing: border-box;
 }
 
+.icon-colored-BLUE {
+  color: $primary-color--blue;
+}
+
+.icon-colored-GREEN {
+  color: $primary-color--green;
+}
+
+.icon-colored-RED {
+  color: $primary-color--red;
+}
+
+.icon-colored-YELLOW {
+  color: $primary-color--yellow;
+}
+
+.icon-colored-PURPLE {
+  color: $primary-color--purple;
+}
+
+.icon-colored-PINK {
+  color: $primary-color--pink;
+}
+
+.icon-colored-WHITE {
+  color: #ffffff;
+  //border: 1px solid #555555;
+  //box-sizing: border-box;
+  text-shadow: 1px 1px 0px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
 a.icon-link {
   border-bottom: none;
   text-decoration: none;

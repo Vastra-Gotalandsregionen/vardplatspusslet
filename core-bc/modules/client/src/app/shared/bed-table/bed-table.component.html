@@ -37,14 +37,16 @@
     <tr (click)="toggleRow(i)" class="clickable">
       <td>{{bed.label}}</td>
 
-      <td><span class="status-color status-{{bed.occupied ? 'OCCUPIED' : 'VACANT'}}" [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></td>
+      <td><span class="{{bed.occupied ? 'fa fa-bed' : ''}}" [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></td>
 
       <td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>
 
-      <td><span class="ssk-color ssk-{{bed.ssk?.color}}"></span></td>
+      <td><app-ssk-icon [ssk]="bed.ssk"></app-ssk-icon></td>
 
       <td class="care-burden-value column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index" [hidden]="unit.careBurden == 'inget'">
-        <span *ngIf="getCareBurdenValue(cbc, bed.patient?.careBurdenChoices) as careBurdenValue" [ngClass]="careBurdenValue.color ? 'only-color ' + careBurdenValue.color: ''">{{careBurdenValue.name}}</span>
+        <span *ngIf="getCareBurdenValue(cbc, bed.patient?.careBurdenChoices) as careBurdenValue" [ngClass]="careBurdenValue.color ? 'fa fa-weight-hanging icon-colored-' + careBurdenValue.color: ''">
+          {{!careBurdenValue.color ? careBurdenValue.name : ''}}
+        </span>
       </td>
 
       <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietMother?.name}}</td>
