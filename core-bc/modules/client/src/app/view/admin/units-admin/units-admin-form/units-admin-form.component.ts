@@ -28,7 +28,6 @@ export class UnitsAdminFormComponent implements OnInit {
   @Input('unit') unit: Unit;
   @Input('clinics') clinics: Clinic[] = [];
   @Input('managementId') managementId: string;
-  @Input('newUnit') newUnit:boolean;
   managementDropdownItems: { displayName: string; value: string }[] = [];
 
   @Output() openDeleteEvent: EventEmitter<any> = new EventEmitter();
@@ -111,7 +110,7 @@ export class UnitsAdminFormComponent implements OnInit {
       id: [unit.id, Validators.required],
       name: [unit.name, Validators.required],
       clinic: [unit.clinic ? unit.clinic.id : null, Validators.required],
-      management: [unit.clinic.management ? unit.clinic.management.id : null, Validators.required],
+      management: [unit.clinic && unit.clinic.management ? unit.clinic.management.id : null, Validators.required],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
       dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
       dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),

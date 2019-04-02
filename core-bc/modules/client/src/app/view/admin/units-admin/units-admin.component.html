@@ -27,8 +27,8 @@
               <vgr-list-header>
                 <vgr-list-column-header [width]="3">ID</vgr-list-column-header>
                 <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
-                <vgr-list-column-header [width]="4">Klinik</vgr-list-column-header>
                 <vgr-list-column-header [width]="4">Förvaltning</vgr-list-column-header>
+                <vgr-list-column-header [width]="4">Klinik</vgr-list-column-header>
                 <vgr-list-column-header [width]="4">Antal vårdlag</vgr-list-column-header>
               </vgr-list-header>
       
@@ -36,8 +36,8 @@
                 <vgr-list-item-header>
                   <vgr-list-column [width]="3">{{unit.id}}</vgr-list-column>
                   <vgr-list-column [width]="4">{{unit.name}}</vgr-list-column>
-                  <vgr-list-column [width]="4">{{unit.clinic?.name}}</vgr-list-column>
                   <vgr-list-column [width]="4">{{unit.clinic?.management?.name}}</vgr-list-column>
+                  <vgr-list-column [width]="4">{{unit.clinic?.name}}</vgr-list-column>
                   <vgr-list-column [width]="4">{{unit.ssks?.length}}</vgr-list-column>
                 </vgr-list-item-header>
       
@@ -50,7 +50,7 @@
                                         (cancelEvent)="theListItem.toggleExpand()"
                                         (openDeleteEvent)="openDeleteModal(unit)"
                                         (saveEvent)="save(theListItem)"
-                                        *ngIf="clinics"
+                                        *ngIf="clinics && theListItem.expanded"
                   >
       
                   </app-units-admin-form>
@@ -67,7 +67,6 @@
                 <vgr-list-item-content>
                   <app-units-admin-form [unit]="null"
                                         [clinics]="clinics"
-                                        [newUnit]="true"
                                         [showId]="true"
                                         [showDelete]="false"
                                         (cancelEvent)="addListItem.toggleExpand()"

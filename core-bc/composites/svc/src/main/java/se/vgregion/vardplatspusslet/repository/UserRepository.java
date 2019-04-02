@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, String> {
      * @return The {@link User}
      */
     @EntityGraph(
-            attributePaths = {"units.clinic"},
+            attributePaths = {"units.clinic.management"},
             type = EntityGraph.EntityGraphType.LOAD
     )
     User findUserById(String userId);

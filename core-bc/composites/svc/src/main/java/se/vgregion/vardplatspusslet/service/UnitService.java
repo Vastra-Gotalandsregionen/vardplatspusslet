@@ -120,11 +120,19 @@ public class UnitService {
 
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
-        String sql = "select careburdencategories_id from unit_careburdencategory " +
-                "where unit_id like :unitId and careburdencategories_id not in (:categoriesToKeep)";
-
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("categoriesToKeep", categoriesToKeep);
+
+        String sql;
+        if (categoriesToKeep.size() > 0) {
+            parameters.addValue("categoriesToKeep", categoriesToKeep);
+
+            sql = "select careburdencategories_id from unit_careburdencategory " +
+                    "where unit_id like :unitId and careburdencategories_id not in (:categoriesToKeep)";
+        } else {
+            sql = "select careburdencategories_id from unit_careburdencategory " +
+                    "where unit_id like :unitId";
+        }
+
         parameters.addValue("unitId", unit.getId());
 
         List<Long> careBurdenCategoriesToRemove = namedParameterJdbcTemplate.queryForList(sql, parameters, Long.class);
@@ -201,7 +209,9 @@ public class UnitService {
 
         if (user.getRole().equals(Role.USER)) {
             List<String> usersUnitIds = user.getUnits().stream().map(Unit::getId).collect(Collectors.toList());
-            List<Unit> units = unitRepository.findDistinctByIdIn(usersUnitIds, new Sort("clinic.name", "name"));
+
+            List<Unit> units = unitRepository.findDistinctByIdIn(usersUnitIds,
+                    new Sort("clinic.management.name", "clinic.name", "name"));
 
             for (Unit unit : units) {
                 populateWithDiets(unit);
@@ -225,7 +235,9 @@ public class UnitService {
             List<Unit> units;
             if (clinicId == null) {
                 List<String> unitIds = unitRepository.findAll().stream().map(Unit::getId).collect(Collectors.toList());
-                units = unitRepository.findDistinctByIdIn(unitIds, new Sort("clinic.name", "name"));
+
+                units = unitRepository.findDistinctByIdIn(unitIds,
+                        new Sort("clinic.management.name", "clinic.name", "name"));
             } else {
                 // To sort according to id.
                 units = unitRepository.findDistinctByClinicIsLike(clinicRepository.getOne(clinicId))

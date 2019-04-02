@@ -82,7 +82,7 @@
                 </div>
               </div>
             </vgr-page-block>
-              <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature || unit.careBurden == 'text'">
+              <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature || unit?.careBurden == 'text'">
                 <vgr-list [flexibleHeader]="true">
                   <vgr-list-item #plannedunit *ngIf="unit?.hasUnitPlannedInFeature">
                     <vgr-list-item-header>

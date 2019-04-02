@@ -56,8 +56,14 @@ public class ClinicService {
 
     public List<Clinic> getManagementClinics(String managementId, String userId) {
         User user = userRepository.findOne(userId);
+
         if (user.getRole().equals(Role.USER)) {
-            List<String> usersClinicIds = user.getClinics().stream().map(Clinic::getId).collect(Collectors.toList());
+
+            List<String> usersClinicIds = user.getUnits().stream()
+                    .map(Unit::getClinic)
+                    .map(Clinic::getId).
+                    collect(Collectors.toList());
+
             List<Clinic> clinics = clinicRepository.findDistinctByIdIn(usersClinicIds, new Sort("management.name", "name"));
 
             if (managementId == null) {

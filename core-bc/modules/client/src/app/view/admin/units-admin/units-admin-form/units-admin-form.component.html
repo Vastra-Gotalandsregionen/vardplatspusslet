@@ -14,15 +14,15 @@
 
     <vgr-panel [width]="6" [noborder]="true">
 
-      <div *ngIf="newUnit">Förvaltning:</div>
+      <div>Förvaltning:</div>
 
-      <vgr-dropdown-select formControlName="management" [showValidation]="!unitForm.get('management').valid && unitForm.get('management').touched" *ngIf="newUnit">
+      <vgr-dropdown-select formControlName="management" [showValidation]="!unitForm.get('management').valid && unitForm.get('management').touched">
         <vgr-dropdown-item *ngFor="let item of managementDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
       </vgr-dropdown-select>
 
       <div>Klinik:</div>
 
-      <vgr-dropdown-select formControlName="clinic" [showValidation]="!unitForm.get('clinic').valid && unitForm.get('clinic').touched" [disabled]="newUnit && !unitForm.get('management').value">
+      <vgr-dropdown-select formControlName="clinic" [showValidation]="!unitForm.get('clinic').valid && unitForm.get('clinic').touched">
         <vgr-dropdown-item *ngFor="let item of clinicDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
       </vgr-dropdown-select>
     </vgr-panel>

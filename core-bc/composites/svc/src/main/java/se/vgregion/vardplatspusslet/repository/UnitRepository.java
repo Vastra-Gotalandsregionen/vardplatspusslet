@@ -31,7 +31,7 @@ public interface UnitRepository extends JpaRepository<Unit, String> {
     Unit findUnitWithBeds(@Param("id") String id);
 
     @EntityGraph(
-            attributePaths = {"clinic", "ssks",
+            attributePaths = {"clinic", "clinic.management", "ssks",
                     "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
             type = EntityGraph.EntityGraphType.LOAD
     )

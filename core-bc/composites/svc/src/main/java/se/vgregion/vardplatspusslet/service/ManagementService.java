@@ -7,11 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Management;
 import se.vgregion.vardplatspusslet.domain.jpa.Role;
+import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.domain.jpa.User;
 import se.vgregion.vardplatspusslet.repository.ManagementRepository;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +28,8 @@ public class ManagementService {
         User user = userRepository.findUserById(userId);
 
         if (user.getRole().equals(Role.USER)) {
-            List<Clinic> userClinins = new ArrayList<>(user.getClinics());
-            return userClinins.stream()
+            return user.getUnits().stream()
+                    .map(Unit::getClinic)
                     .filter(clinic -> clinic.getManagement() != null)
                     .map(Clinic::getManagement)
                     .distinct()
