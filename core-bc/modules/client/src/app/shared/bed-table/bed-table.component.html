@@ -27,7 +27,7 @@
     <th>Tolk</th>
     <th>Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
-    <th>Övrigt anteckning</th>
+    <th>Övrig anteckning</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -49,11 +49,17 @@
         </span>
       </td>
 
-      <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietMother?.name}}</td>
+      <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">
+        <span [appCallout]="bed.patient?.infoDietMother">{{bed.patient?.dietMother?.name}}</span>
+      </td>
 
-      <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietChild?.name}}</td>
+      <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature">
+        <span [appCallout]="bed.patient?.infoDietChild">{{bed.patient?.dietChild?.name}}</span>
+      </td>
 
-      <td *ngIf="unit.hasKostFeature" [colSpan]="1">{{bed.patient?.diet?.name}}</td>
+      <td *ngIf="unit.hasKostFeature" [colSpan]="1">
+        <span [appCallout]="bed.patient?.infoDiet">{{bed.patient?.diet?.name}}</span>
+      </td>
 
       <td *ngIf="unit.hasAmningFeature">
         <span class="ikon" *ngIf="bed.patient?.amning === '1'"
@@ -102,12 +108,12 @@
       </td>
       <td>
         <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
-                [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 7 ? bed.patient?.relatedInformation.substr(0,7)+'...': bed.patient?.relatedInformation}}
+                [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}
         </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
-             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + ', ' + bed.cleaningInfo: '')"><i class="fa fa-leaf purple"></i>
+             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf purple"></i>
         </span>
       </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
