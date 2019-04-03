@@ -1,0 +1,38 @@
+.table {
+    margin-top: 10px;
+    background: #ffffff;
+    line-height: 1.3;
+  
+  
+    td:nth-child(1) {
+      min-width:90px;
+    }
+  
+    th {
+      font-weight: bold;
+    }
+  
+    th, td {
+      border: 1px solid #888;
+      padding: 1px 4px;
+    }
+  
+    .sum {
+      font-weight: bold;
+    }
+  
+    th, td {
+      &.column-group {
+        &.first {
+          border-left-width: 3px;
+        }
+    
+        &.last {
+          border-right-width: 3px;
+        }
+      }
+    }
+  
+  }
+  
+  

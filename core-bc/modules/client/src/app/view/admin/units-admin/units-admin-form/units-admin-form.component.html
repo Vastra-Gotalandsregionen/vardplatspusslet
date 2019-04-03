@@ -29,7 +29,7 @@
 
   </vgr-panel-container>
 
-  <vgr-card>
+  <vgr-card *ngIf="unit">
     <vgr-card-column>
       <vgr-card-section [expanded]="true" [title]="'Funktionsval'" [readonly]="false">
         <vgr-title-value-layout>
@@ -94,7 +94,7 @@
               <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
-          <div  class="edit">
+          <div  class="edit clearfix">
             <a (click)="addSsk()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdlag</span></a>
           </div>
         </div>
@@ -120,7 +120,7 @@
               <a (click)="deleteServingClinic(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
-          <div class="edit">
+          <div class="edit clearfix">
             <a (click)="addServingClinic()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till upsprungs klinik</span></a>
           </div>
         </div>
@@ -146,7 +146,7 @@
               <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
-          <div class="edit">
+          <div class="edit clearfix">
             <a (click)="addCleaningAlternative()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till städningsalternativ</span></a>
           </div>
         </div>
@@ -172,7 +172,7 @@
               <a (click)= "deleteCareBurdenCategories(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
-          <div class="edit">
+          <div class="edit clearfix">
             <a (click)="addCareBurdenCategories()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdskategori</span></a>
           </div>
         </div>
@@ -205,7 +205,7 @@
               <span *ngIf="getcareBurdenValidation(i)" class="is-invalid">Fältet kan innehålla bara siffror </span>
             </div>
           </div>
-          <div class="edit">
+          <div class="edit clearfix">
             <a (click)="addCareBurdenValues()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdsvärde</span></a>
           </div>
         </div>
@@ -230,7 +230,7 @@
               <a (click)= "deleteDietForMother(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
-          <div class="edit">
+          <div class="edit clearfix">
             <a (click)="addDietForMother()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för mor</span></a>
           </div>
         </div>
@@ -255,7 +255,7 @@
               <a (click)= "deleteDietForChild(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
-          <div class="edit">
+          <div class="edit clearfix">
             <a (click)="addDietForChild()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för barn</span></a>
           </div>
         </div>
