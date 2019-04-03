@@ -5,7 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Comparator;
+
+import static java.util.Comparator.*;
 
 @Entity
 @Table(name = "management")
@@ -42,6 +43,6 @@ public class Management implements Comparable<Management> {
 
     @Override
     public int compareTo(Management o) {
-        return Comparator.nullsLast(Comparator.comparing(o2 -> ((Management) o2).name)).compare(this, o);
+        return comparing(Management::getName, nullsLast(naturalOrder())).compare(this, o);
     }
 }

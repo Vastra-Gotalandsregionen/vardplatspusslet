@@ -1,7 +1,13 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import javax.persistence.*;
-import java.util.Comparator;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import static java.util.Comparator.*;
 
 
 @Entity
@@ -41,6 +47,6 @@ public class CleaningAlternative implements Comparable<CleaningAlternative> {
 
     @Override
     public int compareTo(CleaningAlternative o) {
-        return Comparator.nullsLast(Comparator.comparing(o2 -> ((CleaningAlternative) o2).description)).compare(this, o);
+        return comparing(CleaningAlternative::getDescription, nullsLast(naturalOrder())).compare(this, o);
     }
 }

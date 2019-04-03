@@ -1,7 +1,14 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import javax.persistence.*;
-import java.util.Comparator;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import static java.util.Comparator.*;
 
 @Entity
 @Table(name = "careBurdenValue")
@@ -44,6 +51,6 @@ public class CareBurdenValue implements Comparable<CareBurdenValue> {
 
     @Override
     public int compareTo(CareBurdenValue o) {
-        return Comparator.nullsLast(Comparator.comparing(o2 -> ((CareBurdenValue) o2).name)).compare(this, o);
+        return comparing(CareBurdenValue::getName, nullsLast(naturalOrder())).compare(this, o);
     }
 }

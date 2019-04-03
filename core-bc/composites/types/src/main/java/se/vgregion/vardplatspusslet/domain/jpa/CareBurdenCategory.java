@@ -7,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Comparator;
+
+import static java.util.Comparator.*;
 
 @Entity
 @Table(name= "careBurdenCategory")
@@ -38,6 +39,6 @@ public class CareBurdenCategory implements Comparable<CareBurdenCategory> {
 
     @Override
     public int compareTo(CareBurdenCategory o) {
-        return Comparator.nullsLast(Comparator.comparing(o2 -> ((CareBurdenCategory) o2).name)).compare(this, o);
+        return comparing(CareBurdenCategory::getName, nullsLast(naturalOrder())).compare(this, o);
     }
 }
