@@ -22,7 +22,7 @@
                   <p>Dra och släpp sängarna och spara sedan.</p>
                   <div dragula="ROWS" [(dragulaModel)]="bedsOrder">
                     <div class="order-row" *ngFor="let bed of unit.beds">
-                      {{bed.label}} <span class="ssk-color ssk-{{bed.ssk?.color}}"></span>
+                      {{bed.label}} <app-ssk-icon [ssk]="bed.ssk"></app-ssk-icon>
                     </div>
                   </div>
       

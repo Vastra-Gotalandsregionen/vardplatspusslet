@@ -60,10 +60,10 @@
              [appCallout]="'Normal amning'"><i class="fa fa-circle-o purple"></i>
         </span>
         <span class="ikon" *ngIf="bed.patient?.amning === '2'"
-             [appCallout]="'Amningshjälp'"><i class="fa fa-dot-circle-o purple"></i>
+             [appCallout]="'Amningshjälp'"><i class="far fa-dot-circle purple"></i>
         </span>
         <span class="ikon" *ngIf="bed.patient?.amning === '3'"
-             [appCallout]="'Amningsmottagning'"><i class="fa fa-dot-circle-o purple"></i> <i class="fa fa-dot-circle-o purple"></i>
+             [appCallout]="'Amningsmottagning'"><i class="far fa-dot-circle purple"></i> <i class="far fa-dot-circle purple"></i>
         </span>
       </td>
 
@@ -92,7 +92,7 @@
       <td class="patient-waits">
       <span class="ikon purple" *ngIf="bed.patientWaits"
             [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
-        <i class="fa fa-hourglass-2"></i>
+        <i class="far fa-hourglass"></i>
       </span>
       </td>
       <td *ngIf="unit.hasCarePlan">

@@ -3,34 +3,38 @@
 </app-menu-title-row>
 
 <app-layout>
-  
+
   <app-layout-row *ngIf="!loggedIn">
-    
+
     <app-layout-column width=4></app-layout-column>
-    
+
     <app-layout-column width=4>
       <app-widget-login-panel></app-widget-login-panel>
     </app-layout-column>
-    
+
     <app-layout-column width=4></app-layout-column>
 
   </app-layout-row>
 
   <app-layout-row *ngIf="loggedIn">
-    
+
     <app-layout-column width=2></app-layout-column>
-    
+
     <app-layout-column width=8>
       <h1 class="page-title">Välj förvaltning</h1>
       <vgr-page-block *ngIf="managements?.length > 0">
-          <ul>
-            <li *ngFor="let management of managements">
-              <a [routerLink]="'/' + management.id">{{management.name}}</a>
-            </li>
-          </ul>
-        </vgr-page-block>
+        <ul>
+          <li *ngFor="let management of managements">
+            <a [routerLink]="'/' + management.id">{{management.name}}</a>
+          </li>
+        </ul>
+      </vgr-page-block>
+
+      <vgr-page-block *ngIf="errorMessage">
+        <p>{{errorMessage}}</p>
+      </vgr-page-block>
     </app-layout-column>
-    
+
     <app-layout-column width=2></app-layout-column>
 
   </app-layout-row>

@@ -72,7 +72,7 @@ export class UsersAdminComponent implements OnInit {
         id: [user.id, Validators.required],
         name: [user.name],
         role: [user.role, Validators.required],
-        units: [user.units ? user.units.map(unit => unit.id) : defaulSelection, Validators.required]
+        units: [user.units ? user.units.map(unit => unit.id) : defaulSelection]
       });
     }
   }
@@ -89,7 +89,7 @@ export class UsersAdminComponent implements OnInit {
 
     userSaveRequest.id = userModel.id;
     userSaveRequest.role = userModel.role;
-    userSaveRequest.unitIds = userModel.units;
+    userSaveRequest.unitIds = userModel.units || [];
 
     this.http.put('/api/user', userSaveRequest)
       .subscribe(() => {

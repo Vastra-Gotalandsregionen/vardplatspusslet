@@ -1,14 +1,15 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
 
-import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "management")
-public class Management {
+public class Management implements Comparable<Management> {
     @Id
     private String id;
 
@@ -39,4 +40,8 @@ public class Management {
         this.name = name;
     }
 
+    @Override
+    public int compareTo(Management o) {
+        return Comparator.nullsLast(Comparator.comparing(o2 -> ((Management) o2).name)).compare(this, o);
+    }
 }

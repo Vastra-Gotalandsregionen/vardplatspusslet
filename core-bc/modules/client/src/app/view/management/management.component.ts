@@ -33,7 +33,6 @@ export class ManagementComponent implements OnDestroy {
 
   fetch() {
     this.route.params.subscribe(params => {
-
       this.http.get<Management>('/api/management/' + params.id).subscribe(management => {
         if (management) {
           this.management = management;
@@ -47,8 +46,8 @@ export class ManagementComponent implements OnDestroy {
         } else {
           this.error = error1.message;
         }
-        this.isFetchingClinics = false;
       });
+
       this.isFetchingClinics = true; // To avoid flickering of text stating that the user doesn't have permission to any clinics.
       this.http.get<Clinic[]>('/api/clinic/management?management=' + params.id).subscribe(clinics => {
         this.clinics = clinics;
