@@ -33,6 +33,7 @@ public class ManagementService {
                     .filter(clinic -> clinic.getManagement() != null)
                     .map(Clinic::getManagement)
                     .distinct()
+                    .sorted()
                     .collect(Collectors.toList());
 
         } else if(user.getRole().equals(Role.ADMIN)){

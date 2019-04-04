@@ -19,7 +19,7 @@ import {CalloutComponent} from './callout.component';
     '[style.position]': '"relative"'
   }
 })
-export class CalloutDirective implements OnDestroy{
+export class CalloutDirective implements OnDestroy {
   @Input() appCallout: String = '';
 
   private element: HTMLElement;
@@ -35,18 +35,19 @@ export class CalloutDirective implements OnDestroy{
 
   }
 
-  @HostListener('mouseenter') onmouseenter()
-  {
-    this.calloutRef = this.createCallout(this.appCallout);
-    let calloutEl = this.calloutRef.location.nativeElement;
-    let targetPosX = this.elementRef.nativeElement.offsetLeft;
-    let targetPosY = this.elementRef.nativeElement.offsetTop;
+  @HostListener('mouseenter') onmouseenter() {
+    if (this.appCallout && this.appCallout.length > 0) {
+      this.calloutRef = this.createCallout(this.appCallout);
+      let calloutEl = this.calloutRef.location.nativeElement;
+      let targetPosX = this.elementRef.nativeElement.offsetLeft;
+      let targetPosY = this.elementRef.nativeElement.offsetTop;
 
-    calloutEl.style.left = (targetPosX + this.elementRef.nativeElement.offsetWidth + 12) + 'px';
-    calloutEl.style.top = (targetPosY) + 'px';
+      calloutEl.style.left = (targetPosX + this.elementRef.nativeElement.offsetWidth + 12) + 'px';
+      calloutEl.style.top = (targetPosY) + 'px';
+    }
   }
 
-  @HostListener('mouseleave') onmouseleave(){
+  @HostListener('mouseleave') onmouseleave() {
     this.hideCallout();
   }
 

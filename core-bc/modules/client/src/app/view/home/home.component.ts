@@ -1,6 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Clinic} from "../../domain/clinic";
 import {AuthService} from "../../service/auth.service";
 import {Subscription} from "rxjs";
 import {Management} from "../../domain/management";
@@ -15,6 +14,7 @@ export class HomeComponent implements OnDestroy {
   managements: Management[];
 
   subscription: Subscription;
+  errorMessage: string;
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
@@ -24,8 +24,15 @@ export class HomeComponent implements OnDestroy {
   }
 
   fetchManagements() {
+    this.errorMessage = null;
     this.http.get<Management[]>('/api/management').subscribe(managements => {
       this.managements = managements;
+
+      if (!managements || managements.length === 0) {
+        this.errorMessage = 'Du har inte behörighet till någon förvaltning.';
+      } else {
+        this.errorMessage = null;
+      }
     });
   }
 

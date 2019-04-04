@@ -27,7 +27,7 @@
     <th>Tolk</th>
     <th>Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
-    <th>Övrigt anteckning</th>
+    <th>Övrig anteckning</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -105,12 +105,12 @@
       </td>
       <td>
         <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
-                [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 7 ? bed.patient?.relatedInformation.substr(0,7)+'...': bed.patient?.relatedInformation}}
+                [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}
         </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
-             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + ', ' + bed.cleaningInfo: '')"><i class="fa fa-leaf purple"></i>
+             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf purple"></i>
         </span>
       </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>

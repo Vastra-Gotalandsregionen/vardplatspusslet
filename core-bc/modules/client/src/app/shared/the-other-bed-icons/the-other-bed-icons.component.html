@@ -23,7 +23,8 @@
 </div>
 
 <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender !== 'BARN' && unit.hasVuxenPatientFeature"
-     [appCallout]="'Vuxen Patient'"><i class="fa fa-male purple" *ngIf="bed.patient.gender === 'MAN'"></i>
+     [appCallout]="'Vuxen Patient'">
+  <i class="fa fa-male purple" *ngIf="bed.patient.gender === 'MAN'"></i>
   <i class="fa fa-female purple" *ngIf="bed.patient.gender === 'KVINNA'"></i>
 </div>
 
@@ -37,9 +38,8 @@
 </div>
 
 <div class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
-     [appCallout]="'Infekterad'"><i class="fa fa-male rod" *ngIf="bed.patient.gender === 'MAN'"></i>
-  <i class="fa fa-female rod" *ngIf="bed.patient.gender === 'KVINNA'"></i>
-  <i class="fa fa-child rod" *ngIf="bed.patient.gender === 'BARN'"></i>
+     [appCallout]="'Infekterad'">
+  <i class="fa fa-bug"></i>
 </div>
 
 <div class="ikon" *ngIf="bed.patient?.infectionSensitive && unit.hasInfectionSensitiveFeature"
@@ -62,8 +62,8 @@
      [appCallout]="'THG'"><i class="fa fa-undo purple"></i>
 </div>
 <div class="ikon" *ngIf="bed.patient?.information === '2' && unit.hasInfoFeature"
-     [appCallout]="'THG med barn'"><i class="fa fa-odnoklassniki purple"></i>
+     [appCallout]="'THG med barn'"><i class="fa fa-baby purple"></i>
 </div>
 <div class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasInfoFeature"
-     [appCallout]="'Föräldrarum'"><i class="fa fa-weixin purple"></i>
+     [appCallout]="'Föräldrarum'"><i class="fa fa-user-friends purple"></i>
 </div>

@@ -278,21 +278,18 @@ export class UnitsAdminFormComponent implements OnInit {
   changeCareBurden(value : string): void{
     if(value == "text")
     {
-      this.unit.careBurden = "text";
       this.careBurdenValues.controls.map(i => i.get('name').clearValidators());
       this.careBurdenValues.controls.map(i => i.get('name').setValidators(Validators.required));
       this.careBurdenValues.controls.map(i => i.get('name').updateValueAndValidity());
     }
     else if (value == "tal")
     {
-      this.unit.careBurden == "tal";
       this.careBurdenValueIsNumber = true;
       this.careBurdenValues.controls.map(i => i.get('name').setValidators(Validators.pattern(/^[0-9]+$/)));
       this.careBurdenValues.controls.map(i => i.get('name').updateValueAndValidity());
     }
     else
     {
-      this.unit.careBurden = "inget";
       this.careBurdenValues.controls.map(i => i.get('name').clearValidators());
       this.careBurdenValues.controls.map(i => i.get('name').setValidators(Validators.required));
       this.careBurdenValues.controls.map(i => i.get('name').updateValueAndValidity());

@@ -18,6 +18,8 @@ import java.time.DayOfWeek;
 import java.util.Comparator;
 import java.util.Date;
 
+import static java.util.Comparator.*;
+
 @Entity
 @Table(name = "message")
 public class Message implements Comparable<Message> {
@@ -98,10 +100,10 @@ public class Message implements Comparable<Message> {
             return 0;
         }
 
-        Comparator<Message> dayOfWeek = Comparator.comparing(m1 -> m1.dayOfWeek, Comparator.nullsFirst(Comparator.naturalOrder()));
-        Comparator<Message> date = Comparator.comparing(m1 -> m1.date, Comparator.nullsFirst(Comparator.naturalOrder()));
-        Comparator<Message> heading = Comparator.comparing(m1 -> m1.heading, Comparator.nullsFirst(Comparator.naturalOrder()));
-        Comparator<Message> id = Comparator.comparing(m1 -> m1.id, Comparator.nullsFirst(Comparator.naturalOrder()));
+        Comparator<Message> dayOfWeek = comparing(m1 -> m1.dayOfWeek, nullsFirst(naturalOrder()));
+        Comparator<Message> date = comparing(m1 -> m1.date, nullsFirst(naturalOrder()));
+        Comparator<Message> heading = comparing(m1 -> m1.heading, nullsFirst(naturalOrder()));
+        Comparator<Message> id = comparing(m1 -> m1.id, nullsFirst(naturalOrder()));
 
         return dayOfWeek
                 .thenComparing(date)

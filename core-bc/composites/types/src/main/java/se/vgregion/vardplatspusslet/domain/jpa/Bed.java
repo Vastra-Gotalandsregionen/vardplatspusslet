@@ -30,8 +30,8 @@ public class Bed {
     @Column
     private Boolean occupied;
 
-    // Add orphanRemoval. Hope it doesn't cause any trouble.
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    // Can't have orphanRemoval since we may want to keep the patient connected to a unit when its on leave.
+    @OneToOne(cascade = CascadeType.ALL)
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.EAGER)
