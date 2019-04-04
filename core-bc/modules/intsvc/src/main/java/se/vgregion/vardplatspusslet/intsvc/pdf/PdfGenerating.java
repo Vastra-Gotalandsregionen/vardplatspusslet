@@ -57,8 +57,8 @@ public class PdfGenerating {
             addTableHeader(table, header);
             for (Bed bed : unit.getBeds()) {
                 String bedName = bed.getLabel();
-                String dietMother = bed.getOccupied() ? (bed.getPatient().getDietMother() != null ?  bed.getPatient().getDietMother().getName(): "") : "";
-                String dietChild = bed.getOccupied() ? (bed.getPatient().getDietChild() != null ?  bed.getPatient().getDietChild().getName(): "") : "";
+                String dietMother = isTrue(bed.getOccupied()) ? (bed.getPatient().getDietMother() != null ?  bed.getPatient().getDietMother().getName(): "") : "";
+                String dietChild = isTrue(bed.getOccupied()) ? (bed.getPatient().getDietChild() != null ?  bed.getPatient().getDietChild().getName(): "") : "";
                 String infoMother = dietMother.length() > 0 ? bed.getPatient().getInfoDietMother(): "";
                 String infoChild = dietChild.length() > 0 ? bed.getPatient().getInfoDietChild(): "";
                 if (dietMother.length() > 0 || dietChild.length() > 0)
@@ -77,9 +77,9 @@ public class PdfGenerating {
             addTableHeader(table, header);
             for (Bed bed : unit.getBeds()) {
                 String bedName = bed.getLabel();
-                String dietMother = Boolean.TRUE.equals(bed.getOccupied()) ? (bed.getPatient().getDietMother() != null ?  bed.getPatient().getDietMother().getName(): "") : "";
-                String dietChild = Boolean.TRUE.equals(bed.getOccupied()) ? (bed.getPatient().getDietChild() != null ?  bed.getPatient().getDietChild().getName(): "") : "";
-                String dietPatient = Boolean.TRUE.equals(bed.getOccupied()) ? (bed.getPatient().getDiet() != null ?  bed.getPatient().getDiet().getName(): "") : "";
+                String dietMother = isTrue(bed.getOccupied()) ? (bed.getPatient().getDietMother() != null ?  bed.getPatient().getDietMother().getName(): "") : "";
+                String dietChild = isTrue(bed.getOccupied()) ? (bed.getPatient().getDietChild() != null ?  bed.getPatient().getDietChild().getName(): "") : "";
+                String dietPatient = isTrue(bed.getOccupied()) ? (bed.getPatient().getDiet() != null ?  bed.getPatient().getDiet().getName(): "") : "";
                 String infoMother = dietMother.length() > 0 ? bed.getPatient().getInfoDietMother(): "";
                 String infoChild = dietChild.length() > 0 ? bed.getPatient().getInfoDietChild(): "";
                 String info = dietPatient.length() > 0 ? bed.getPatient().getInfoDiet(): "";
