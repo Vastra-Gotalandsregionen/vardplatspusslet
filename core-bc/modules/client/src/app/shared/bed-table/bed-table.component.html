@@ -49,11 +49,14 @@
         </span>
       </td>
 
-      <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietMother?.name}}</td>
+      <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature"> <span class="ikon"
+                                                                                     [appCallout]="bed.patient?.infoDietMother">{{bed.patient?.dietMother?.name}}</span></td>
 
-      <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature">{{bed.patient?.dietChild?.name}}</td>
+      <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature"><span class="ikon"
+                                                                                 [appCallout]="bed.patient?.infoDietChild">{{bed.patient?.dietChild?.name}}</span></td>
 
-      <td *ngIf="unit.hasKostFeature" [colSpan]="1">{{bed.patient?.diet?.name}}</td>
+      <td *ngIf="unit.hasKostFeature" [colSpan]="1"><span class="ikon"
+                                                          [appCallout]="bed.patient?.infoDiet">{{bed.patient?.diet?.name}}</span></td>
 
       <td *ngIf="unit.hasAmningFeature">
         <span class="ikon" *ngIf="bed.patient?.amning === '1'"
@@ -92,7 +95,7 @@
       <td class="patient-waits">
       <span class="ikon purple" *ngIf="bed.patientWaits"
             [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
-        <i class="fa fa-hourglass-2"></i>
+        <i class="fa fa-hourglass-half"></i>
       </span>
       </td>
       <td *ngIf="unit.hasCarePlan">
