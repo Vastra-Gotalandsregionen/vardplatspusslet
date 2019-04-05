@@ -55,4 +55,5 @@ export class Unit {
   sevenDaysPlaningUnits: SevenDaysPlaningUnit[];
   careBurden: string;
   hasPatientNameColumn: boolean;
+  hasPatientFromClinicFeature: boolean;
 }

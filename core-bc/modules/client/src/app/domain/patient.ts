@@ -4,6 +4,7 @@ import {CareBurdenChoice} from "./careburdenchoice";
 import {DietForMother} from "./dietformother";
 import {DietForChild} from "./dietforchild";
 import {DietForPatient} from "./dietforpatient";
+import {ServingClinic} from "./servingclinic";
 
 export class Patient {
 
@@ -50,6 +51,7 @@ export class Patient {
   diet: DietForPatient;
   infoDiet: string;
   relatedInformation: string;
+  fromClinic: ServingClinic;
 }
 
 enum LeaveStatus {

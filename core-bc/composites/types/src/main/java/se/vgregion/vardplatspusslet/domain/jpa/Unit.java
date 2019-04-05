@@ -151,6 +151,9 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean hasPatientNameColumn;
 
+    @Column
+    private Boolean hasPatientFromClinicFeature;
+
     public Unit() {
 
     }
@@ -489,6 +492,14 @@ public class Unit implements Comparable<Unit> {
 
     public void setHasPatientNameColumn(Boolean hasPatientNameColumn) {
         this.hasPatientNameColumn = hasPatientNameColumn;
+    }
+
+    public Boolean getHasPatientFromClinicFeature() {
+        return hasPatientFromClinicFeature;
+    }
+
+    public void setHasPatientFromClinicFeature(Boolean hasPatientFromClinicFeature) {
+        this.hasPatientFromClinicFeature = hasPatientFromClinicFeature;
     }
 
     @Override

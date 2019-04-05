@@ -122,7 +122,8 @@ export class BedFormComponent implements OnInit {
           kommentar: [patient.kommentar]
         }),
         careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(patient)),
-        relatedInformation: [patient.relatedInformation]
+        relatedInformation: [patient.relatedInformation],
+        fromClinic: [patient.fromClinic != null ? patient.fromClinic.id : null]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -267,6 +268,8 @@ export class BedFormComponent implements OnInit {
         }) : null;
 
       bed.patient.relatedInformation = bedModel.patient.relatedInformation;
+      bed.patient.fromClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.patient.fromClinic);
+
 
     } else {
       bed.patient = null;

@@ -60,6 +60,13 @@
 
         </div>
 
+        <div class="div-button7" *ngIf="unit.hasPatientFromClinicFeature">
+          <p>Klinik</p>
+          <vgr-dropdown-select *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="fromClinic">
+            <vgr-dropdown-item *ngFor="let item of servingKlinikerDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+          </vgr-dropdown-select>
+        </div>
+
         <div class="div-button10">
           <p>Planerad hemgång</p>
           <div class="containers">

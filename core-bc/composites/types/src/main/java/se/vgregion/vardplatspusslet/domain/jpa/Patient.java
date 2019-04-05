@@ -133,6 +133,9 @@ public class Patient {
     @Column
     private String amning;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private ServingClinic fromClinic;
+
     public Long getId() {
         return id;
     }
@@ -443,6 +446,14 @@ public class Patient {
 
     public void setRelatedInformation(String relatedInformation) {
         this.relatedInformation = relatedInformation;
+    }
+
+    public ServingClinic getFromClinic() {
+        return fromClinic;
+    }
+
+    public void setFromClinic(ServingClinic fromClinic) {
+        this.fromClinic = fromClinic;
     }
 
     @Override
