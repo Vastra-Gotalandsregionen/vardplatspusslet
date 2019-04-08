@@ -36,7 +36,7 @@ public class PdfGenerating {
         Boolean motherChildDiet = isTrue(unit.getHasMotherChildDietFeature());
         Boolean diet = isTrue(unit.getHasKostFeature());
         Integer antalColumn = motherChildDiet && diet ? 2: diet || motherChildDiet? 1 : 0;
-        if (antalColumn == 1 && unit.getHasKostFeature()) {
+        if (antalColumn == 1 && isTrue(unit.getHasKostFeature())) {
             String header[] = {"Säng", "Kost", "Info"};
             table = new PdfPTable(3);
             addTableHeader(table, header);
@@ -51,7 +51,7 @@ public class PdfGenerating {
                     table.addCell(info);
                 }
             }
-        } else if (antalColumn == 1 && unit.getHasMotherChildDietFeature()) {
+        } else if (antalColumn == 1 && isTrue(unit.getHasMotherChildDietFeature())) {
             String header[] = {"Säng", "Kost Mor", "Info", "Kost barn",  "Info"};
             table = new PdfPTable(5);
             addTableHeader(table, header);
