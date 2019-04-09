@@ -77,7 +77,7 @@ export class BedFormComponent implements OnInit {
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
-      bedstatus: [bed.bedStatus],
+      bedstatus: [bed.bedStatus != null ? bed.bedStatus : 'VACANT'],
       label: [bed.label, [Validators.required]],
       patient: this.formBuilder.group({
         id: [patient.id],
