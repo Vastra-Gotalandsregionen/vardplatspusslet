@@ -3,10 +3,13 @@
     <vgr-card-column>
       <label for="bedName">Namn:</label>
       <vgr-input id="bedName" formControlName="label" [showValidation]="!bedForm.get('label').valid"></vgr-input>
-      <div class="div-button7">
+     <!-- <div class="div-button7">
         <vgr-checkbox formControlName="occupied" label="Upptagen {{busyInfo}}" (checkedChanged)="busyInfo = ''"></vgr-checkbox>
-      </div>
+      </div>-->
 
+      <div>
+        <vgr-radio-group formControlName="bedstatus" [options]="bedStatusOptions" [vertical]="true">
+      </vgr-radio-group></div>
     </vgr-card-column>
     <vgr-card-column>
       <!-- The null option makes it at least 1, so therefore we check for >1. -->
@@ -27,9 +30,9 @@
     </vgr-card-column>
   </vgr-card>
 
-  <hr style="width: 95%; margin-left: 0" [ngStyle]="{display: bedForm.get('occupied').value ? 'block' : 'none'}"/>
+  <hr style="width: 95%; margin-left: 0" [ngStyle]="{display: bedForm.get('bedstatus').value == 'OCCUPIED' ? 'block' : 'none'}"/>
 
-  <vgr-card formGroupName="patient" [ngStyle]="{display: bedForm.get('occupied').value ? 'block' : 'none'}">
+  <vgr-card formGroupName="patient" [ngStyle]="{display: bedForm.get('bedstatus').value == 'OCCUPIED' ? 'block' : 'none'}">
     <vgr-card-column>
       <div>
         <div class="div-button10" [hidden]="!unit.hasPatientNameColumn">

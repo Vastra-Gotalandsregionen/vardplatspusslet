@@ -9,6 +9,7 @@ import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
 import {DropdownItem} from "../../../domain/DropdownItem";
+import {BedStatus} from "../../../domain/bed-status";
 
 @Component({
   selector: 'app-bed-form',
@@ -34,6 +35,7 @@ export class BedFormComponent implements OnInit {
   prevCleanGroup: string;
   prevCleanInfo: string;
   busyInfo: string;
+  bedStatusOptions: SelectableItem<string>[];
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -56,6 +58,13 @@ export class BedFormComponent implements OnInit {
   }
 
   private initForm(bed: Bed) {
+
+    this.bedStatusOptions = [
+      {displayName: 'Upptagen', value: 'OCCUPIED'},
+      {displayName: 'Ledig', value: 'VACANT'},
+      {displayName: 'Reserverad', value: 'RESERVED'}
+    ];
+
     if (!bed) {
       bed = new Bed();
     }
@@ -65,10 +74,10 @@ export class BedFormComponent implements OnInit {
     } else {
       patient = bed.patient;
     }
-
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
       occupied: [bed.occupied],
+      bedstatus: [bed.bedStatus],
       label: [bed.label, [Validators.required]],
       patient: this.formBuilder.group({
         id: [patient.id],
@@ -212,7 +221,8 @@ export class BedFormComponent implements OnInit {
     bed.id = bedModel.id;
     bed.label = bedModel.label;
     bed.occupied = !!bedModel.occupied;
-    if (bed.occupied) {
+    bed.bedStatus = bedModel.bedstatus;
+    if (bed.bedStatus == 'OCCUPIED') {
       bed.patient = new Patient();
       bed.patient.id = bedModel.patient.id;
       bed.patient.label = bedModel.patient.label;

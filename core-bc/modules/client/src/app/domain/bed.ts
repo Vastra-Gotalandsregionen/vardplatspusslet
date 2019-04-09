@@ -14,6 +14,5 @@ export class Bed {
   cleaningalternativeExists: boolean;
   cleaningInfo: string;
   cleaningAlternative: CleaningAlternative;
-
-
+  bedStatus: string;
 }

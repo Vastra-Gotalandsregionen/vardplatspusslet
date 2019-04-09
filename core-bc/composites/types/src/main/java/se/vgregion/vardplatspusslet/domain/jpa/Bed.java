@@ -30,6 +30,9 @@ public class Bed {
     @Column
     private Boolean occupied;
 
+    @Column
+    private BedStatus bedStatus;
+
     // Can't have orphanRemoval since we may want to keep the patient connected to a unit when its on leave.
     @OneToOne(cascade = CascadeType.ALL)
     private Patient patient;
@@ -152,6 +155,14 @@ public class Bed {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public BedStatus getBedStatus() {
+        return bedStatus;
+    }
+
+    public void setBedStatus(BedStatus bedStatus) {
+        this.bedStatus = bedStatus;
     }
 
     @Override

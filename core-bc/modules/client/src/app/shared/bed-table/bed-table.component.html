@@ -38,7 +38,7 @@
     <tr (click)="toggleRow(i)" class="clickable">
       <td>{{bed.label}}</td>
 
-      <td><span class="{{bed.occupied ? 'fa fa-bed' : ''}}" [appCallout]="bed.occupied ? 'Upptagen' : 'Ledig'"></span></td>
+      <td><span class="{{bed.bedStatus == 'OCCUPIED' ? 'fa fa-bed' : bed.bedStatus == 'RESERVED' ? 'fa fa-registered' : ''}}" [appCallout]="bed.bedStatus == 'OCCUPIED'? 'Upptagen' : bed.bedStatus == 'VACANT' ? 'Ledig' :'Reserverad'"></span></td>
 
       <td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>
 
