@@ -73,7 +73,7 @@
           
 
 
-            <vgr-panel-container>
+            <vgr-panel-container class="block">
               <vgr-panel width="12">
           
                   <div class="row-layout panel-heading">
@@ -177,7 +177,7 @@
     
             <app-widget-careburden-average [unit]="unit" [bedsExpanded]="false"></app-widget-careburden-average>
     
-            <vgr-panel-container *ngIf="unit?.careBurden == 'text'">
+            <vgr-panel-container class="block" *ngIf="unit?.careBurden == 'text'">
               <vgr-panel width="12">
                   <app-widget-careburden-with-text [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
               </vgr-panel>
