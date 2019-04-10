@@ -19,7 +19,7 @@
           <vgr-dropdown-item *ngFor="let item of sskDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
         </vgr-dropdown-select>
       </div>
-      <div formGroupName="waitingforbedGroup">
+      <div formGroupName="waitingforbedGroup" *ngIf="unit.hasPatientWaitsFeature">
         <div class="div-button7">
           <vgr-checkbox formControlName="waitingpatient" label="Patient väntar"></vgr-checkbox>
           <vgr-dropdown-select *ngIf="servingKlinikerDropdownItems.length != 0" formControlName="servingKlinik" [disabled]="!bedForm.get('waitingforbedGroup.waitingpatient').value">
