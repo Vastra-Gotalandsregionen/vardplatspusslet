@@ -22,7 +22,7 @@
     <th class="column-group first" *ngIf="unit.hasMorRondFeature">Mor</th>
     <th class="column-group last" *ngIf="unit.hasBarnRondFeature">Barn</th>
     <th *ngIf="unit.hasRondFeature">Rond</th>
-    <th>Kön</th>
+    <th *ngIf="unit.hasGenderFeature">Kön</th>
     <th>Hemgång</th>
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
@@ -83,10 +83,10 @@
         <span *ngIf="bed.patient?.rond" class="ikon"><i class="fa fa-user-md purple"></i></span>
       </td>
 
-      <td *ngIf="bed.patient?.gender === 'MAN'"><i class="fa fa-male purple"></i></td>
-      <td *ngIf="bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple"></i></td>
-      <td *ngIf="bed.patient?.gender === 'BARN'"><i class="fa fa-child purple"></i></td>
-      <td *ngIf="bed.patient?.gender === null"></td>
+      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'MAN'"><i class="fa fa-male purple"></i></td>
+      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple"></i></td>
+      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'BARN'"><i class="fa fa-child purple"></i></td>
+      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === null"></td>
       <td class="center">{{bed.patient?.plannedLeaveDate|date: 'd'}}{{bed.patient?.plannedLeaveDate ? '/' : null}}{{bed.patient?.plannedLeaveDate|date: 'M'}}</td>
       <td *ngIf="unit.hasPatientFromClinicFeature">{{bed.patient?.fromClinic?.name}}</td>
       <td>

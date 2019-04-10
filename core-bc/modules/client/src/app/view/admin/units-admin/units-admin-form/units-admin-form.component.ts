@@ -145,7 +145,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature],
       careBurden: [unit.careBurden? unit.careBurden: "inget"],
       hasPatientNameColumn: [unit.hasPatientNameColumn],
-      hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature]
+      hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature],
+      hasGenderColumn: [unit.hasGenderFeature]
     });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
       if (mgId != null)
@@ -207,7 +208,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature,
       careBurden: unit.careBurden,
       hasPatientNameColumn: unit.hasPatientNameColumn,
-      hasPatientFromClinicFeature : unit.hasPatientFromClinicFeature
+      hasPatientFromClinicFeature : unit.hasPatientFromClinicFeature,
+      hasGenderColumn: unit.hasGenderFeature
     });
 
   }
@@ -265,6 +267,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.careBurden = unitModel.careBurden;
     unit.hasPatientNameColumn = unitModel.hasPatientNameColumn;
     unit.hasPatientFromClinicFeature = unitModel.hasPatientFromClinicFeature;
+    unit.hasGenderFeature = unitModel.hasGenderColumn;
 
     this.http.put('/api/unit?keepBeds=true', unit)
       .subscribe(() => {
