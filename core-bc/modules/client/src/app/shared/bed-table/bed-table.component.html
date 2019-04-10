@@ -26,7 +26,7 @@
     <th>Hemgång</th>
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
-    <th>Patient väntar</th>
+    <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
     <th>Övrig anteckning</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
@@ -94,7 +94,7 @@
                [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>
         </span>
       </td>
-      <td class="patient-waits">
+      <td class="patient-waits" *ngIf="unit.hasPatientWaitsFeature">
       <span class="ikon purple" *ngIf="bed.patientWaits"
             [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
         <i class="fa fa-hourglass-half"></i>

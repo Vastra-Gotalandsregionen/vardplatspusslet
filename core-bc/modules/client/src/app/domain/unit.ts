@@ -57,4 +57,5 @@ export class Unit {
   hasPatientNameColumn: boolean;
   hasPatientFromClinicFeature: boolean;
   hasGenderFeature: boolean;
+  hasPatientWaitsFeature: boolean;
 }
