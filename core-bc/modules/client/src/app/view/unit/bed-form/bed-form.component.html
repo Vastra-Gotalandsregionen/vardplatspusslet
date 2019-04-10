@@ -141,7 +141,6 @@
         </div>
       </div>
 
-
       <div *ngIf="unit.hasPalFeature" class="div-button10">
         <label for="carePlan">PAL</label>
         <vgr-input formControlName="pal" width="15%"></vgr-input>
@@ -183,6 +182,16 @@
 
             <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
           </div>
+        </div>
+      </div>
+
+      <div class="div-button10">
+        <p>Tolk</p>
+        <div class="containers" formGroupName="tolkGroup">
+          <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
+          <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
+          <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
+          <vgr-input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"></vgr-input>
         </div>
       </div>
 
