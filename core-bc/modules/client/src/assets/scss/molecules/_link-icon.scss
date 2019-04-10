@@ -1,0 +1,26 @@
+.link-icon {
+
+    border-bottom: none;
+    padding-bottom: none;
+    text-decoration: none;
+
+    .material-icons {
+        position: relative;
+        top: 5px;
+    }
+
+    .link-icon-text {
+        display: inline-block;
+        margin-left: 3px;
+    }
+
+    &:hover {
+        font-weight: normal;
+        letter-spacing: 0;
+
+        .link-icon-text {
+            text-decoration: underline;
+        }
+    }
+
+}

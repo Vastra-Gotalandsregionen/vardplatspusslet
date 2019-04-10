@@ -11,7 +11,7 @@
     </div>
 </app-menu-title-row>
 
-<app-layout>
+<app-layout class="vpp-statistics-panel">
 
   <app-layout-row>
     
@@ -19,32 +19,59 @@
     
     <app-layout-column width=8>
         <h1 class="page-title">Statistik</h1>
-        <vgr-page-block>
-            <h2>Statistik över planerad hemgång kontra faktisk hemgång</h2>
+
+        <vgr-panel-container>
+          <vgr-panel width="12">
       
-            <div class="clearfix row">
-              <span class="datepicker-section">
-                <label>Från:</label>
-                <vgr-datepicker [selectedDate]="fromDate.value" [formControl]="fromDate" [maxDate]="maxDate" [minDate]="minDate"></vgr-datepicker>
-              </span>
-      
-              <span class="datepicker-section">
-                <label>Till och med: </label>
-                <vgr-datepicker [selectedDate]="toDate.value" [formControl]="toDate" [maxDate]="maxDate" [minDate]="minDate"></vgr-datepicker>
-              </span>
-            </div>
-      
-            <div>
-              <table>
-                <tr *ngFor="let unit of units">
-                  <td>{{unit.clinic?.name}}</td>
-                  <td>{{unit.name}}</td>
-                  <td><a [href]="'/api/statistics/patientLeave?unitId=' + unit.id + '&fromDate=' + toString(fromDate.value) + '&toDate=' + toString(toDate.value)">Hämta</a> </td>
-                </tr>
-              </table>
-            </div>
-          </vgr-page-block>                  
-    </app-layout-column>
+              <div class="row-layout panel-heading">
+                  <span class="material-icons">timeline</span>
+                  <div class="panel-heading-text">
+                      <strong>Statistik över planerad hemgång kontra faktisk hemgång</strong>
+                  </div>
+              </div>
+
+              <div class="statistics-filters clearfix">
+                <span class="statistics-filters-item">
+                  <label>Från:</label>
+                  <vgr-datepicker [selectedDate]="fromDate.value" [formControl]="fromDate" [maxDate]="maxDate" [minDate]="minDate"></vgr-datepicker>
+                </span>
+        
+                <span class="statistics-filters-item">
+                  <label>Till och med: </label>
+                  <vgr-datepicker [selectedDate]="toDate.value" [formControl]="toDate" [maxDate]="maxDate" [minDate]="minDate"></vgr-datepicker>
+                </span>
+              </div>
+
+
+              <div>
+                <table class="vpp-table">
+                  <thead>
+                    <tr>
+                      <th class="left">Klinik</th>
+                      <th class="left">Avdelning</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tr *ngFor="let unit of units">
+                    <td>{{unit.clinic?.name}}</td>
+                    <td>{{unit.name}}</td>
+                    <td>
+                      <!--
+                      <a [href]="getPatientLeaveURL(unit)">
+                        <span class="material-icons">save_alt</span> Hämta
+                      </a> 
+                      -->
+                      <app-link-icon label="Hämta" icon="file_download" [url]="'/api/statistics/patientLeave?unitId=' + unit.id + '&fromDate=' + toString(fromDate.value) + '&toDate=' + toString(toDate.value)" ></app-link-icon>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+  
+              
+          </vgr-panel>
+        </vgr-panel-container>
+
+      </app-layout-column>
     
     <app-layout-column width=2></app-layout-column>
 
