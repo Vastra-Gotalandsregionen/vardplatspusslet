@@ -16,13 +16,16 @@
 @import "assets/scss/molecules/panel";
 @import "assets/scss/molecules/careburden-circles";
 @import "assets/scss/molecules/careburden-text";
+@import "assets/scss/molecules/link-icon";
 @import "assets/scss/molecules/vgr-list";
+@import "assets/scss/molecules/vpp-table";
 @import "assets/scss/molecules/widget-messages";
 
 @import "assets/scss/organisms/bed-table";
 @import "assets/scss/organisms/block";
 @import "assets/scss/organisms/header";
 @import "assets/scss/organisms/table";
+@import "assets/scss/organisms/vpp-statistics";
 
 @import "assets/scss/utilities/overrides";
 
@@ -180,38 +183,6 @@ div.save-cancel {
 a.icon-link {
   border-bottom: none;
   text-decoration: none;
-}
-
-.vpp-table {
-
-  width: 100%;
-
-  tbody td, thead th {
-    border-bottom: 1px solid #aaa;
-  }
-
-  td {
-    padding: 4px 8px;
-  }
-
-  th {
-    font-weight: bold;
-  }
-
-  th.right,
-  td.right {
-    text-align: right;
-  }
-
-  th.left,
-  td.left {
-    text-align: left;
-  }
-
-  td.strong {
-    font-weight: bold;
-  }
-
 }
 
 @font-face {

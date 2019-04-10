@@ -1,0 +1,32 @@
+.vpp-table {
+
+    width: 100%;
+  
+    tbody td, thead th {
+      border-bottom: 1px solid #aaa;
+    }
+  
+    td {
+      padding: 4px 8px;
+    }
+  
+    th {
+      font-weight: bold;
+      padding: 2px 8px;
+    }
+  
+    th.right,
+    td.right {
+      text-align: right;
+    }
+  
+    th.left,
+    td.left {
+      text-align: left;
+    }
+  
+    td.strong {
+      font-weight: bold;
+    }
+  
+  }
