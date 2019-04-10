@@ -57,8 +57,7 @@
       
                     <div class="container_edit">
                       <div style="flex-grow: 10; flex-shrink: 0">
-                        <!--<vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>-->
-                        <a (click)="openDeleteModal(user)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+                          <app-link-icon (click)="openDeleteModal(user)" class="warning" label="Ta bort användare" icon="delete"></app-link-icon>
                       </div>
                       <div style="flex-grow: 1; flex-shrink: 0">
                         <vgr-button default="true" (click)="saveUser(theListItem)"

@@ -1,4 +1,5 @@
-<a class="link-icon" href="{{url}}">
+<a class="link-icon" [attr.href]="url ?  url : null">
     <span class="material-icons">{{icon}}</span>
     <span class="link-icon-text">{{label}}</span>
 </a>
+
