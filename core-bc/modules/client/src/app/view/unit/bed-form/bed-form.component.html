@@ -78,6 +78,14 @@
           </div>
 
         </div>
+        <div *ngIf="unit.hasInfoFeature" class="div-button10">
+          <div>Information</div>
+          <div class="info" formGroupName="infoGroup">
+            <vgr-radio-group formControlName="information" [options]="informationOptions" [vertical]="true">
+            </vgr-radio-group>
+            <input formControlName="kommentar"/>
+          </div>
+        </div>
 
         <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
           <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
@@ -237,15 +245,6 @@
             <vgr-dropdown-item *ngFor="let item of dietDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
           </vgr-dropdown-select>
           <textarea formControlName="infoDiet" class="div-left5" cols="40"></textarea>
-        </div>
-      </div>
-
-      <div *ngIf="unit.hasInfoFeature" class="div-button10">
-        <div>Information</div>
-        <div class="info" formGroupName="infoGroup">
-          <vgr-radio-group formControlName="information" [options]="informationOptions" [vertical]="true">
-          </vgr-radio-group>
-          <input formControlName="kommentar" style="width: 100%"/>
         </div>
       </div>
 
