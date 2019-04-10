@@ -85,6 +85,26 @@
   width: 100%;
 }
 
+.row {
+
+  .col-inner {
+    padding: 0 10px;
+  }
+
+  app-layout-column:first-child {
+    .col-inner {
+      padding-left: 0;
+    }
+  }
+
+  app-layout-column:last-child {
+    .col-inner {
+      padding-right: 0;
+    }
+  }
+
+}
+
 @media(max-width: 870px) {
   .row .col {
     width: 100%
