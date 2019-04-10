@@ -56,4 +56,5 @@ export class Unit {
   careBurden: string;
   hasPatientNameColumn: boolean;
   hasPatientFromClinicFeature: boolean;
+  hasGenderFeature: boolean;
 }
