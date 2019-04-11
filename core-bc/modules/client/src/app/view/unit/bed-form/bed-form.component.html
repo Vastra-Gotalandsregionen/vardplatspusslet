@@ -41,7 +41,7 @@
           <!--<span *ngIf="bedForm.get('patient.label').hasError('pattern')" class="help-text"> Inga siffror i namnet</span>-->
         </div>
 
-        <div class="div-button10">
+        <div class="div-button10" *ngIf="unit.hasGenderFeature">
           <div>Kön</div>
           <vgr-dropdown-select formControlName="gender">
             <vgr-dropdown-item *ngFor="let item of genderDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
@@ -54,13 +54,10 @@
             <vgr-dropdown-item *ngFor="let item of leaveStatusesDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
           </vgr-dropdown-select>
         </div>
-        <div *ngIf="unit.hasLeftDateFeature" class="div-button10">
-          <div class="row-with-icon"><span>Gick hem</span> <span class="material-icons" appCallout="Gör sängen ledig och lägg till i statistiken">info</span></div>
-          <div class="containers">
-            <!--<vgr-datepicker formControlName="leftDate"></vgr-datepicker>-->
-            <vgr-button (click)="executeHasLeft()" class="div-left2">Gick hem</vgr-button>
-          </div>
 
+        <div *ngIf="unit.hasPalFeature" class="div-button10">
+          <label for="carePlan">PAL</label>
+          <vgr-input formControlName="pal" width="15%"></vgr-input>
         </div>
 
         <div class="div-button7" *ngIf="unit.hasPatientFromClinicFeature">
@@ -87,51 +84,23 @@
           </div>
         </div>
 
-        <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
-          <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.has23oFeature" class="div-button7">
-          <vgr-checkbox formControlName="electiv23O" label="Electiv 23O"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.has24oFeature" class="div-button7">
-          <vgr-checkbox formControlName="electiv24O" label="Electiv 24O"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.hasVuxenPatientFeature" class="div-button7">
-          <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.hasInfekteradFeature" class="div-button7">
-          <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.hasInfectionSensitiveFeature" class="div-button7">
-          <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.hasMorRondFeature" class="div-button7">
-          <vgr-checkbox formControlName="morRond" label="Rond Mor"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.hasBarnRondFeature" class="div-button7">
-          <vgr-checkbox formControlName="barnRond" label="Rond Barn"></vgr-checkbox>
-        </div>
-
-        <div *ngIf="unit.hasRondFeature" class="div-button7">
-          <vgr-checkbox formControlName="rond" label="Rond"></vgr-checkbox>
+        <div *ngIf="unit.hasLeftDateFeature" class="div-button10">
+          <div class="row-with-icon"><span>Gick hem</span> <span class="material-icons" appCallout="Gör sängen ledig och lägg till i statistiken">info</span></div>
+          <div class="containers">
+            <!--<vgr-datepicker formControlName="leftDate"></vgr-datepicker>-->
+            <vgr-button (click)="executeHasLeft()" class="div-left2">Gick hem</vgr-button>
+          </div>
         </div>
 
         <div *ngIf="unit.hasCarePlan" class="div-button10">
           <label for="carePlan">Vårdplan</label>
           <!--<vgr-input id="carePlan" formControlName="carePlan"></vgr-input>-->
-          <vgr-textarea  id="carePlan" formControlName="carePlan" width="94%"></vgr-textarea>
+          <vgr-textarea  id="carePlan" formControlName="carePlan" width="85%"></vgr-textarea>
         </div>
 
         <div class="div-button10">
           <div>Övriga anteckningar</div>
-          <vgr-textarea formControlName="relatedInformation" width="94%"></vgr-textarea>
+          <vgr-textarea formControlName="relatedInformation" width="85%"></vgr-textarea>
         </div>
       </div>
     </vgr-card-column>
@@ -147,34 +116,6 @@
             </vgr-dropdown-select>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="unit.hasPalFeature" class="div-button10">
-        <label for="carePlan">PAL</label>
-        <vgr-input formControlName="pal" width="15%"></vgr-input>
-      </div>
-      <div  *ngIf="unit.hasSekretessFeature" class="div-button10">
-        <p>Sekretess</p>
-        <div class="containers" formGroupName="sekretessGroup">
-          <vgr-checkbox formControlName="sekretess"></vgr-checkbox>
-          <input formControlName="sekretessInfo" disabled *ngIf="!bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
-          <input formControlName="sekretessInfo" *ngIf="bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
-        </div>
-      </div>
-
-      <div  *ngIf="unit.hasSmittaFeature" class="div-button10">
-        <p>Smitta</p>
-        <div class="containers" formGroupName="smittaGroup">
-          <vgr-checkbox formControlName="smitta"></vgr-checkbox>
-          <input formControlName="smittaInfo" disabled *ngIf="!bedForm.get('patient.smittaGroup.smitta').value" class="width30"/>
-          <input formControlName="smittaInfo" *ngIf="bedForm.get('patient.smittaGroup.smitta').value" class="width50"/>
-        </div>
-      </div>
-
-      <div *ngIf="unit.hasAmningFeature" class="div-button10">
-        <div>Amning</div>
-        <vgr-radio-group formControlName="amning" [options]="amningOptions" [vertical]="false">
-        </vgr-radio-group>
       </div>
 
       <div class="div-button10">
@@ -193,16 +134,6 @@
         </div>
       </div>
 
-      <div class="div-button10">
-        <p>Tolk</p>
-        <div class="containers" formGroupName="tolkGroup">
-          <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
-          <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
-          <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
-          <vgr-input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"></vgr-input>
-        </div>
-      </div>
-
       <div *ngIf="unit.hasHendelseFeature" class="div-button10">
         <div class="containers">
           <label>Händelser</label>
@@ -218,6 +149,7 @@
           </div>
         </div>
       </div>
+
       <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button10">
         <p>Kost Mor</p>
         <div class="containers" formGroupName="kostMorGroup">
@@ -247,6 +179,77 @@
           <textarea formControlName="infoDiet" class="div-left5" cols="40"></textarea>
         </div>
       </div>
+
+      <div class="div-button10">
+        <p>Tolk</p>
+        <div class="containers" formGroupName="tolkGroup">
+          <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
+          <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
+          <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
+          <vgr-input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"></vgr-input>
+        </div>
+      </div>
+
+      <div *ngIf="unit.hasAmningFeature" class="div-button10">
+        <div>Amning</div>
+        <vgr-radio-group formControlName="amning" [options]="amningOptions" [vertical]="false">
+        </vgr-radio-group>
+      </div>
+
+      <div  *ngIf="unit.hasSekretessFeature" class="div-button10">
+        <p>Sekretess</p>
+        <div class="containers" formGroupName="sekretessGroup">
+          <vgr-checkbox formControlName="sekretess"></vgr-checkbox>
+          <input formControlName="sekretessInfo" disabled *ngIf="!bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
+          <input formControlName="sekretessInfo" *ngIf="bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
+        </div>
+      </div>
+
+      <div  *ngIf="unit.hasSmittaFeature" class="div-button10">
+        <p>Smitta</p>
+        <div class="containers" formGroupName="smittaGroup">
+          <vgr-checkbox formControlName="smitta"></vgr-checkbox>
+          <input formControlName="smittaInfo" disabled *ngIf="!bedForm.get('patient.smittaGroup.smitta').value" class="width30"/>
+          <input formControlName="smittaInfo" *ngIf="bedForm.get('patient.smittaGroup.smitta').value" class="width50"/>
+        </div>
+      </div>
+
+      <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
+        <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.has23oFeature" class="div-button7">
+        <vgr-checkbox formControlName="electiv23O" label="Electiv 23O"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.has24oFeature" class="div-button7">
+        <vgr-checkbox formControlName="electiv24O" label="Electiv 24O"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasVuxenPatientFeature" class="div-button7">
+        <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasInfekteradFeature" class="div-button7">
+        <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasInfectionSensitiveFeature" class="div-button7">
+        <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasMorRondFeature" class="div-button7">
+        <vgr-checkbox formControlName="morRond" label="Rond Mor"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasBarnRondFeature" class="div-button7">
+        <vgr-checkbox formControlName="barnRond" label="Rond Barn"></vgr-checkbox>
+      </div>
+
+      <div *ngIf="unit.hasRondFeature" class="div-button7">
+        <vgr-checkbox formControlName="rond" label="Rond"></vgr-checkbox>
+      </div>
+
 
     </vgr-card-column>
   </vgr-card>
