@@ -41,11 +41,15 @@ vgr-button.error .text-button {
   margin: 0;
 }
 
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
+.clearfix {
+
+  &:after {
+    content: " ";
+    clear: both;
+    display: table;
+  }
 }
+
 
 div.save-cancel {
   justify-content: flex-end;
@@ -63,6 +67,15 @@ div.save-cancel {
       float: left;
     }
   }
+
+  .delete-btn-wrap {
+    float: left;
+  }
+  
+  .main-btn-wrap {
+    float: right;
+  }
+
 }
 
 /*vgr-list-item.list-item.list-item--expanded:not(.list-item--compact) {
