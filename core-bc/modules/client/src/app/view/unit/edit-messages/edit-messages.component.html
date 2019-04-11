@@ -29,12 +29,11 @@
         <div *ngIf="editMessages.indexOf(message) === -1">
           <app-message [message]="message"></app-message>
 
-          <div class="button-row">
-            <a appCallout="Redigera" class="tooltip-icon" (click)="editMessage(message)"><span
-              class="vgr-icon-edit"></span></a>
-            <a appCallout="Radera" class="tooltip-icon delete" (click)="delete(message)"><span
-              class="vgr-icon-trashcan"></span></a>
+          <div class="button-row clearfix">
+            <app-link-icon class="delete-btn-wrap" (click)="delete(message)" class="warning" label="Ta bort meddelande" icon="delete"></app-link-icon>            
+            <app-link-icon class="main-btn-wrap" (click)="editMessage(message)" label="Redigera meddelande" icon="delete"></app-link-icon>
           </div>
+
         </div>
 
         <div *ngIf="editMessages.indexOf(message) > -1">
