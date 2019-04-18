@@ -191,8 +191,8 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   private updateSskCategoryValueMatrix(unit) {
     this.sskCategoryValueMatrix = {};
-   // loopa över unit.ssks
-   // this.sskCategoryValueMatrix()
+    // loopa över unit.ssks
+    // this.sskCategoryValueMatrix()
     let unitSsks = unit.ssks;
     let sskPatientsChoices;
     let sskPatients;
@@ -217,21 +217,31 @@ export class UnitComponent implements OnInit, OnDestroy {
         .forEach(choice => {
           if (this.sskCategoryValueMatrix[ssk.label]){
             if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name]) {
-              if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name]) {
+              if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] &&
+                choice.careBurdenValue.countedIn) {
                 this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name]++;
               } else {
-                this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+                if (choice.careBurdenValue.countedIn)
+                {
+                  this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+                }
               }
             } else {
               this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
-              this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+              if (choice.careBurdenValue.countedIn)
+              {
+                this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+              }
             }
           }
           else
           {
             this.sskCategoryValueMatrix[ssk.label] = {};
             this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
-            this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+            if (choice.careBurdenValue.countedIn)
+            {
+              this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+            }
           }
         });
     })

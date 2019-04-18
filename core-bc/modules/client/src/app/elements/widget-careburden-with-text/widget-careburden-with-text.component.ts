@@ -29,7 +29,4 @@ export class WidgetCareBurdenWithTextComponent implements OnInit {
       return '0';
     }
   }
-
- 
-
 }

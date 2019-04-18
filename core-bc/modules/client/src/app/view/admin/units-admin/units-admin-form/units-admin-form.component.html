@@ -185,7 +185,7 @@
         <table class="vpp-table" *ngIf="!editBurdenValueGroup">
 
           <tr *ngFor="let burden of unit?.careBurdenValues|| []">
-            <td>{{burden.name}}</td>
+            <td><vgr-checkbox [checked]="burden.countedIn" [disabled]="true"></vgr-checkbox>{{burden.name}}</td>
             <td><span class="care-burden-value-color {{burden.color}}"></span></td>
           </tr>
 
@@ -198,6 +198,7 @@
         <div *ngIf="editBurdenValueGroup">
           <div formArrayName="careBurdenValues" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
+              <vgr-checkbox formControlName="countedIn"></vgr-checkbox>
               <vgr-input [ngClass]="{'warn': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)"  *ngIf="unitForm.get('careBurden').value == 'tal'" formControlName="name" placeholder="Siffra: 123..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input>
               <vgr-input  *ngIf="unitForm.get('careBurden').value == 'text' || unitForm.get('careBurden').value == 'inget'" formControlName="name" placeholder="text.." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input>
               <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg (valfritt)'">
