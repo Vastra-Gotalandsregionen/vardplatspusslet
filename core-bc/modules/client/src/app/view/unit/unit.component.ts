@@ -126,7 +126,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   private updateVacants(unit) {
     this.vacantBeds = unit.beds
-      .filter(bed => !bed.occupied)
+      .filter(bed => bed.bedStatus != 'OCCUPIED')
       .map(bed => {
         return {
           displayName: bed.label,
@@ -152,7 +152,8 @@ export class UnitComponent implements OnInit, OnDestroy {
         if (found) {
           thisBed = found;
 
-          thisBed.occupied = incomingBed.occupied;
+          //thisBed.occupied = incomingBed.occupied;
+          thisBed.bedStatus = incomingBed.bedStatus;
           thisBed.label = incomingBed.label;
           thisBed.patient = incomingBed.patient;
           //thisBed.relatedInformation = incomingBed.relatedInformation;
@@ -198,7 +199,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
     unitSsks.forEach(ssk => {
       sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
-        .filter(z => z.occupied === true && z.patient).map(x => x.patient);
+        .filter(z => z.bedStatus === 'OCCUPIED' && z.patient).map(x => x.patient);
 
       if (sskPatients.length === 0) return;
       sskPatientsChoices = <CareBurdenChoice[]>sskPatients.map(x => x.careBurdenChoices).reduce(((previousValue, currentValue) => {
@@ -263,7 +264,8 @@ export class UnitComponent implements OnInit, OnDestroy {
 
     let bed = this.unit.beds.find(bed => bed.id === this.chosenVacantBedId);
     bed.patient = patient;
-    bed.occupied = true;
+    //bed.occupied = true;
+    bed.bedStatus = 'OCCUPIED';
     this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {
         this.ngOnInit();
