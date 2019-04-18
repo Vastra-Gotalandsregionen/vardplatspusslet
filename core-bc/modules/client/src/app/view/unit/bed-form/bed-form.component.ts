@@ -76,7 +76,7 @@ export class BedFormComponent implements OnInit {
     }
     this.bedForm = this.formBuilder.group({
       id: [bed.id],
-      occupied: [bed.occupied],
+      //occupied: [bed.occupied],
       bedstatus: [bed.bedStatus != null ? bed.bedStatus : 'VACANT'],
       label: [bed.label, [Validators.required]],
       patient: this.formBuilder.group({
@@ -220,7 +220,7 @@ export class BedFormComponent implements OnInit {
     let bedModel = this.bedForm.value;
     bed.id = bedModel.id;
     bed.label = bedModel.label;
-    bed.occupied = !!bedModel.occupied;
+    //bed.occupied = !!bedModel.occupied;
     bed.bedStatus = bedModel.bedstatus;
     if (bed.bedStatus == 'OCCUPIED') {
       bed.patient = new Patient();

@@ -20,7 +20,7 @@ export class WidgetSsksComponent implements OnInit {
 
   countOccupiedBeds(sskArg: Ssk) {
     // Map to ssk, then filter out those with the same id and count the result.
-    return this.unit.beds.filter(bed => bed.occupied).map(bed => bed.ssk).filter(ssk => ssk ? ssk.id === sskArg.id : false).length;
+    return this.unit.beds.filter(bed => bed.bedStatus === 'OCCUPIED').map(bed => bed.ssk).filter(ssk => ssk ? ssk.id === sskArg.id : false).length;
   }  
 
 }
