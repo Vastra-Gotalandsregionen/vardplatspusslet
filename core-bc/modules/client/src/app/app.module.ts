@@ -39,6 +39,7 @@ import {DashboardMenuComponent} from './elements/dashboard-menu/dashboard-menu.c
 import {LayoutComponent} from './elements/layout/layout.component';
 import {LayoutColumnComponent} from './elements/layout-column/layout-column.component';
 import {LayoutRowComponent} from './elements/layout-row/layout-row.component';
+import {LinkIconComponent} from './elements/link-icon/link-icon.component';
 import {MessageComponent} from './elements/message/message.component';
 import {EditMessageComponent} from './elements/edit-message/edit-message.component';
 import {WidgetCareBurdenAverageComponent} from './elements/widget-careburden-average/widget-careburden-average.component';
@@ -98,6 +99,7 @@ registerLocaleData(localeSv, "sv-SE");
     LayoutComponent,
     LayoutColumnComponent,
     LayoutRowComponent,
+    LinkIconComponent,
     MessageComponent,
     EditMessageComponent,
     WidgetCareBurdenAverageComponent,

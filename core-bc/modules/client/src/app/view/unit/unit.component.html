@@ -70,62 +70,47 @@
                 </vgr-list-item>
               </vgr-list>
             </vgr-page-block>
-          <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
-            <vgr-list allowMultipleExpandedItems="true" *ngIf="unit?.hasUnitPlannedInFeature" class="transparent">
-              <vgr-list-header>
-                <div class="row-layout panel-heading">
-                  <span class="material-icons">schedule</span>
-                  <div class="panel-heading-text">
-                    <strong>Planerade in närmaste 8 dagarna: </strong>
+          
+
+
+            <vgr-panel-container class="block">
+              <vgr-panel width="12">
+          
+                  <div class="row-layout panel-heading">
+                      <span class="material-icons">schedule</span>
+                      <div class="panel-heading-text">
+                          <strong>Planerade in närmaste 8 dagarna: </strong>
+                      </div>
                   </div>
-                </div>
-              </vgr-list-header>
+          
+                  <vgr-list allowMultipleExpandedItems="true" *ngIf="unit?.hasUnitPlannedInFeature" class="transparent">
 
-              <vgr-list-item [expanded]="true">
-                <vgr-list-item-header>
-                  <vgr-list-column width="8">
-                    <div>{{unit.name}}</div>
-                  </vgr-list-column>
-                </vgr-list-item-header>
-                <vgr-list-item-content [indentContent]="true">
-                  <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>
-                </vgr-list-item-content>
-              </vgr-list-item>
-
-              <vgr-list-item [expanded]="false" *ngFor="let unit of allUnitsOnSameClinic">
-                <vgr-list-item-header>
-                  <vgr-list-column width="8">
-                    <div>{{unit.name}}</div>
-                  </vgr-list-column>
-                </vgr-list-item-header>
-                <vgr-list-item-content [indentContent]="true">
-                  <app-unit-planned-in-table [unit]="unit"></app-unit-planned-in-table>
-                </vgr-list-item-content>
-              </vgr-list-item>
-
-
-            </vgr-list>
-
-          </vgr-page-block>
-
-
-            <!--
-            <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature">
-
-              <h6>Planerade in närmaste 8 dagarna: {{unit.name}}</h6>
-              <div>
-                <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>
-              </div>
-              <h6 *ngIf="allUnitsOnSameClinic?.length > 0">Planerade in närmaste 8 dagarna: Övriga avdelningar</h6>
-              <div *ngFor="let unit of allUnitsOnSameClinic">
-                <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
-              </div>
-
-
-
-
-            </vgr-page-block>
-            -->
+                      <vgr-list-item [expanded]="true">
+                        <vgr-list-item-header>
+                            <vgr-list-column width="12">
+                              <strong>{{unit.name}}</strong>
+                            </vgr-list-column>
+                          </vgr-list-item-header>
+                          <vgr-list-item-content [indentContent]="true">
+                              <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>  
+                          </vgr-list-item-content>
+                      </vgr-list-item>
+      
+                      <vgr-list-item [expanded]="false" *ngFor="let unit of allUnitsOnSameClinic">
+                          <vgr-list-item-header>
+                              <vgr-list-column width="12">
+                                  <strong>{{unit.name}}</strong>
+                              </vgr-list-column>
+                            </vgr-list-item-header>
+                            <vgr-list-item-content [indentContent]="true">
+                                <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
+                            </vgr-list-item-content>
+                        </vgr-list-item>
+      
+                  </vgr-list>
+                  
+              </vgr-panel>
+          </vgr-panel-container>    
 
           <vgr-page-block *ngIf="unit?.hasUnitPlannedInFeature || unit?.careBurden == 'text'">
             <vgr-list [flexibleHeader]="false">
@@ -192,7 +177,7 @@
     
             <app-widget-careburden-average [unit]="unit" [bedsExpanded]="false"></app-widget-careburden-average>
     
-            <vgr-panel-container *ngIf="unit?.careBurden == 'text'">
+            <vgr-panel-container class="block" *ngIf="unit?.careBurden == 'text'">
               <vgr-panel width="12">
                   <app-widget-careburden-with-text [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
               </vgr-panel>

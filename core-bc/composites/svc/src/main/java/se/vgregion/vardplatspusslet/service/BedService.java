@@ -3,11 +3,7 @@ package se.vgregion.vardplatspusslet.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.vgregion.vardplatspusslet.domain.jpa.Bed;
-import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
-import se.vgregion.vardplatspusslet.domain.jpa.Patient;
-import se.vgregion.vardplatspusslet.domain.jpa.PatientLeave;
-import se.vgregion.vardplatspusslet.domain.jpa.Unit;
+import se.vgregion.vardplatspusslet.domain.jpa.*;
 import se.vgregion.vardplatspusslet.repository.BedRepository;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.PatientLeaveRepository;
@@ -74,14 +70,14 @@ public class BedService {
             if(bed.getPatientWaits() == null || !bed.getPatientWaits())
                 bed.setServingClinic(null);
             if (patient != null) {
-                if (bed.getOccupied() == null || !bed.getOccupied()) {
+                if (bed.getBedStatus() == null || bed.getBedStatus() != BedStatus.OCCUPIED) {
                     // If there is a patient but it is set as unoccupied, the patient should be deleted.
                     bed.setPatient(null);
                     patientRepository.delete(patient);
                 } else if (patient.getLeaveStatus() != null) {
                     // Put on leave means removing from bed and attaching to unit instead.
                     bed.setPatient(null);
-                    bed.setOccupied(false);
+                    bed.setBedStatus(BedStatus.VACANT);
                     bedRepository.save(bed);
 
                     unit.getPatients().add(patient);

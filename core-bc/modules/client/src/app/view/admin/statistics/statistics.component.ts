@@ -47,4 +47,10 @@ export class StatisticsComponent implements OnInit {
     return clonedDate.toISOString().slice(0, 10);
   }
 
+  getPatientLeaveURL(unit: Unit) : string {
+    let patientLeaveURL = '/api/statistics/patientLeave?unitId=' + unit.id + '&fromDate=' + this.toString(this.fromDate.value) + '&toDate=' + this.toString(this.toDate.value);
+
+    return patientLeaveURL;
+  }
+
 }

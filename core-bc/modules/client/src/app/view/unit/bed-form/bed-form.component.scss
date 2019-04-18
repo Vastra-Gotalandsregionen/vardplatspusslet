@@ -79,9 +79,20 @@ input[disabled]
 }
 
 .info{
-  border: lightgrey solid 1px;
-  width: 79%;
-  padding-left: 1px;
+  border: grey solid 1px;
+  width: 85%;
+}
+
+.info input
+{
+  border-bottom: 0;
+  width: 100%;
+  box-sizing:border-box;
+  border-left: 0;
+  border-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0
 }
 
 .care{

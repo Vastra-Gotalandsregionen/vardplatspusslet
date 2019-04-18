@@ -26,7 +26,7 @@
     <th>Hemgång</th>
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
-    <th>Patient väntar</th>
+    <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
     <th>Övrig anteckning</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
@@ -60,14 +60,11 @@
                                                           [appCallout]="bed.patient?.infoDiet">{{bed.patient?.diet?.name}}</span></td>
 
       <td *ngIf="unit.hasAmningFeature">
-        <span class="ikon" *ngIf="bed.patient?.amning === '1'"
-             [appCallout]="'Normal amning'"><i class="fa fa-circle-o purple"></i>
-        </span>
         <span class="ikon" *ngIf="bed.patient?.amning === '2'"
-             [appCallout]="'Amningshjälp'"><i class="fa fa-dot-circle-o purple"></i>
+             [appCallout]="'Amningshjälp'"><i class="material-icons purple">adjust</i>
         </span>
         <span class="ikon" *ngIf="bed.patient?.amning === '3'"
-             [appCallout]="'Amningsmottagning'"><i class="fa fa-dot-circle-o purple"></i> <i class="fa fa-dot-circle-o purple"></i>
+             [appCallout]="'Amningsmottagning'"><i class="material-icons purple">adjust</i> <i class="material-icons purple">adjust</i>
         </span>
       </td>
 
@@ -83,9 +80,9 @@
         <span *ngIf="bed.patient?.rond" class="ikon"><i class="fa fa-user-md purple"></i></span>
       </td>
 
-      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'MAN'"><i class="fa fa-male purple"></i></td>
-      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'KVINNA'"><i class="fa fa-female purple"></i></td>
-      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'BARN'"><i class="fa fa-child purple"></i></td>
+      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'MAN'"><span [appCallout]="'Man'"><i class="fa fa-male purple"></i></span></td>
+      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'KVINNA'"><span [appCallout]="'Kvinna'" ><i class="fa fa-female purple"></i></span></td>
+      <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'BARN'"><span [appCallout]="'Barn'"><i class="fa fa-child purple"></i></span></td>
       <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === null"></td>
       <td class="center">{{bed.patient?.plannedLeaveDate|date: 'd'}}{{bed.patient?.plannedLeaveDate ? '/' : null}}{{bed.patient?.plannedLeaveDate|date: 'M'}}</td>
       <td *ngIf="unit.hasPatientFromClinicFeature">{{bed.patient?.fromClinic?.name}}</td>
@@ -94,7 +91,7 @@
                [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>
         </span>
       </td>
-      <td class="patient-waits">
+      <td class="patient-waits" *ngIf="unit.hasPatientWaitsFeature">
       <span class="ikon purple" *ngIf="bed.patientWaits"
             [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
         <i class="fa fa-hourglass-half"></i>
@@ -112,7 +109,7 @@
       </td>
       <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
-             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf purple"></i>
+             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf icon-colored-RED"></i>
         </span>
       </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>

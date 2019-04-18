@@ -18,12 +18,23 @@
 
 <div class="button-row">
   <label>Veckodag:</label>
+  <div>
   <vgr-dropdown-select [(ngModel)]="message.dayOfWeek">
     <vgr-dropdown-item *ngFor="let item of allWeekdays" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
   </vgr-dropdown-select>
+  </div>
   <a (click)="message.dayOfWeek = null">Rensa veckodag</a>
 </div>
 
-<div class="button-row">
+<div class="button-row clearfix">
+  <!--
   <vgr-save-cancel (save)="save()" (cancel)="cancel()" [hideLock]="true"></vgr-save-cancel>
+  -->
+  <div class="main-btn-wrap">
+    <vgr-button (click)="save()">Spara</vgr-button>
+    <vgr-button buttonStyle="secondary" (click)="cancel()" >Avbryt</vgr-button>
+  </div>
+
+
+
 </div>
