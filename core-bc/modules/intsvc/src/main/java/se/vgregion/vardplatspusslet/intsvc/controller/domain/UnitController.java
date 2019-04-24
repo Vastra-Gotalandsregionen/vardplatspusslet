@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
+import se.vgregion.vardplatspusslet.domain.jpa.Role;
 import se.vgregion.vardplatspusslet.domain.jpa.SevenDaysPlaningUnit;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
+import se.vgregion.vardplatspusslet.domain.jpa.User;
+import se.vgregion.vardplatspusslet.intsvc.controller.util.HttpUtil;
 import se.vgregion.vardplatspusslet.intsvc.pdf.PdfGenerating;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.UnitRepository;
+import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.SevenDaysPlanningUnitService;
 import se.vgregion.vardplatspusslet.service.UnitService;
 
@@ -26,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeSet;
 
 @Controller
@@ -39,10 +45,16 @@ public class UnitController extends BaseController {
     private UnitRepository unitRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ClinicRepository clinicRepository;
 
     @Autowired
     private SevenDaysPlanningUnitService sevenDaysPlanningUnitService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
@@ -107,8 +119,15 @@ public class UnitController extends BaseController {
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
+    @PreAuthorize("@authService.isLoggedIn(authentication)")
     public ResponseEntity<Unit> saveUnit(@RequestBody Unit unit,
                                          @RequestParam(value = "keepBeds", required = false) Boolean keepBeds) {
+        User user = getUser();
+
+        if (!Role.ADMIN.equals(user.getRole()) && !user.getUnits().contains(unit)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         unitService.save(unit, keepBeds);
 
         return ResponseEntity.ok().build();
@@ -142,5 +161,16 @@ public class UnitController extends BaseController {
 
         sevenDaysPlanningUnitService.delete(clinicId, id, planingUnitId);
         return ResponseEntity.ok().build();
+    }
+
+
+    private User getUser() {
+        Optional<String> userIdFromRequest = HttpUtil.getUserIdFromRequest(request);
+
+        if (userIdFromRequest.isPresent()) {
+            return userRepository.findOne(userIdFromRequest.get());
+        } else {
+            return null;
+        }
     }
 }

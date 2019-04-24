@@ -96,7 +96,7 @@ public class BedService {
         Patient patient = bed.getPatient();
 
         bed.setPatient(null);
-        bed.setOccupied(false);
+        bed.setBedStatus(BedStatus.VACANT);
         bedRepository.save(bed);
 
         patientRepository.delete(patient);

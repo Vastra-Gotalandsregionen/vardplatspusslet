@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -30,17 +31,33 @@ public class PatientService {
 
         if (orphanPatients.size() > 0) {
 
+            // Remove patientCareBurdenChoiceJoins
             MapSqlParameterSource parameters = new MapSqlParameterSource();
             parameters.addValue("ids", orphanPatients);
 
-            int update1 = namedParameterJdbcTemplate.update("delete from patient_careburdenchoice pc" +
-                    " where pc.patient_id in (:ids)", parameters);
+            int update1 = namedParameterJdbcTemplate.update(
+                    "delete from patient_careburdenchoice pc where pc.patient_id in (:ids)",
+                    parameters
+            );
 
+            // Remove patientExaminations
+            namedParameterJdbcTemplate.update(
+                    "delete from patient_patientexamination ppe where ppe.patient_id in (:ids)",
+                    parameters
+            );
+            namedParameterJdbcTemplate.update(
+                    "delete from patientexamination pe where pe.id not in " +
+                            "(select distinct patientexaminations_id from patient_patientexamination)",
+                    new HashMap<>()
+            );
+
+            // Remove patients
             int update = namedParameterJdbcTemplate.update("delete from patient where id in (:ids)", parameters);
 
             LOGGER.info("Deleted " + update + " orphan patient entries and " + update1 + " patient_careburdenchoices");
         }
 
+        // Select all careburdenchoices which have no connection to patient.
         List<Long> orphanCareBurdenChoices = jdbcTemplate.queryForList("select id from careburdenchoice cbc" +
                 " where cbc.id not in " +
                 "(select distinct careburdenchoices_id from patient_careburdenchoice)",

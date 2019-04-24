@@ -16,14 +16,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import se.vgregion.vardplatspusslet.repository.MessageRepository;
 
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.util.Properties;
+
+import static org.mockito.Mockito.mock;
 
 @Configuration
 @ComponentScan(basePackages = {"se.vgregion.vardplatspusslet.service", "se.vgregion.vardplatspusslet.intsvc.controller"})
 @EnableJpaRepositories(basePackageClasses = {MessageRepository.class})
 @EnableTransactionManagement
 public class AppTestConfig {
+
+    @Bean
+    public HttpServletRequest httpServletRequest() {
+        return mock(HttpServletRequest.class);
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

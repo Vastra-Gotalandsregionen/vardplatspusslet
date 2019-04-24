@@ -9,7 +9,6 @@ import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
 import {DropdownItem} from "../../../domain/DropdownItem";
-import {BedStatus} from "../../../domain/bed-status";
 
 @Component({
   selector: 'app-bed-form',

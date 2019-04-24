@@ -3,8 +3,10 @@
     line-height: 1.3;
     width: 100%;
     word-break: break-all;
-  
-    th, td {
+
+    // This level of rule needed so that styling won't affect datepicker table
+    > thead > tr > th,
+    > tbody > tr > td {
       border: 1px solid #888;
       padding: 1px 4px;
     }
@@ -34,7 +36,7 @@
         opacity: 0;
       }
   
-      td {
+      > td {
         border: 1px solid #f0f0f0;
         border-bottom: none;
         padding: 18px 0;
