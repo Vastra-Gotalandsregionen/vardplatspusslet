@@ -23,13 +23,14 @@ export class ClinicsAdminComponent implements OnInit {
   @ViewChild("addClinicId") addClinicId: ElementRef;
 
   constructor(private http: HttpClient,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this.http.get<Management[]>('/api/management/').subscribe((managements: Management[]) => {
       this.managements = managements;
-      this.managementDropdownItems = this.managements.map(management =>{
-        return{
+      this.managementDropdownItems = this.managements.map(management => {
+        return {
           displayName: management.name,
           value: management.id
         }
@@ -60,18 +61,19 @@ export class ClinicsAdminComponent implements OnInit {
     }
   }
 
-  saveClinic() {
+  saveClinic(newClinic: boolean) {
     let clinic = new Clinic();
     let clinicModel = this.clinicForm.value;
 
     clinic.id = clinicModel.id;
     clinic.name = clinicModel.name;
-    if(clinicModel.management)
-    {
+
+    if (clinicModel.management) {
       clinic.management = new Management();
-      clinic.management.id= clinicModel.management;
+      clinic.management.id = clinicModel.management;
     }
-    this.http.put('/api/clinic', clinic)
+
+    this.http.put('/api/clinic' + (newClinic ? '?newClinic=true' : ''), clinic)
       .subscribe(() => {
         this.ngOnInit();
         this.addClinicId.nativeElement.focus();

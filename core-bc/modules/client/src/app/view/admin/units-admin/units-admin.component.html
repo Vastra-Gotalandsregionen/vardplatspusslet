@@ -43,6 +43,7 @@
                   <app-units-admin-form [unit]="unit"
                                         [managementId]="unit.clinic?.management?.id"
                                         [clinics]="clinics"
+                                        [newUnit]="false"
                                         [showId]="false"
                                         [showDelete]="true"
                                         (cancelEvent)="theListItem.toggleExpand()"
@@ -65,6 +66,7 @@
                 <vgr-list-item-content>
                   <app-units-admin-form [unit]="null"
                                         [clinics]="clinics"
+                                        [newUnit]="true"
                                         [showId]="true"
                                         [showDelete]="false"
                                         (cancelEvent)="addListItem.toggleExpand()"

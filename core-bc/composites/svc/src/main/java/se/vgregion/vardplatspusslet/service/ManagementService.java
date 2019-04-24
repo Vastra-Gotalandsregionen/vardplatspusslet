@@ -42,4 +42,8 @@ public class ManagementService {
             throw new RuntimeException("Unexpected role: " + user.getRole().name());
         }
     }
+
+    public boolean managementExists(String id) {
+        return managementRepository.findOne(id) != null;
+    }
 }

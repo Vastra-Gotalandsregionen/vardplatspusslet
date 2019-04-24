@@ -94,4 +94,8 @@ public class ClinicService {
         throw new RuntimeException("Unexpected role: " + user.getRole().name());
         }
     }
+
+    public boolean clinicExists(String id) {
+        return clinicRepository.findOne(id) != null;
+    }
 }

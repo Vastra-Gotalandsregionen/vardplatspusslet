@@ -54,14 +54,14 @@ export class ManagementsAdminComponent implements OnInit {
     }
   }
 
-  saveManagement() {
+  saveManagement(newManagement: boolean) {
     let management = new Management();
     let managementModel = this.managementForm.value;
 
     management.id = managementModel.id;
     management.name = managementModel.name;
 
-    this.http.put('/api/management', management)
+    this.http.put('/api/management' + (newManagement ? '?newManagement=true' : ''), management)
       .subscribe(() => {
         this.ngOnInit();
         this.addManagementId.nativeElement.focus();

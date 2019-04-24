@@ -120,12 +120,23 @@ public class UnitController extends BaseController {
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
     @PreAuthorize("@authService.isLoggedIn(authentication)")
-    public ResponseEntity<Unit> saveUnit(@RequestBody Unit unit,
-                                         @RequestParam(value = "keepBeds", required = false) Boolean keepBeds) {
+    public ResponseEntity<Object> saveUnit(@RequestBody Unit unit,
+                                         @RequestParam(value = "keepBeds", required = false) Boolean keepBeds,
+                                         @RequestParam(value = "newUnit", required = false) Boolean newUnit
+    ) {
         User user = getUser();
 
         if (!Role.ADMIN.equals(user.getRole()) && !user.getUnits().contains(unit)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (Boolean.TRUE.equals(newUnit) && unitService.unitExists(unit.getId())) {
+
+            return new ResponseEntity<>(
+                    new ApiError("En avdelning med ID=" + unit.getId() + " finns redan."),
+                    new HttpHeaders(),
+                    HttpStatus.BAD_REQUEST
+            );
         }
 
         unitService.save(unit, keepBeds);
