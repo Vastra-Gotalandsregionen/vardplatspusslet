@@ -48,7 +48,7 @@ CalculateAverage(burdenCategoriId) {
     if (bed.patient)
     {
       let x = bed.patient.careBurdenChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
-      if (x && x.careBurdenValue){
+      if (x && x.careBurdenValue && x.careBurdenValue.countedIn){
         antal++;
         burdenval +=  +x.careBurdenValue.name;
       }
@@ -57,6 +57,5 @@ CalculateAverage(burdenCategoriId) {
   if (antal === 0) return 0;
   return (burdenval/antal).toFixed(2);
 }
- 
 
 }

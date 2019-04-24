@@ -126,7 +126,7 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   private updateVacants(unit) {
     this.vacantBeds = unit.beds
-      .filter(bed => !bed.occupied)
+      .filter(bed => bed.bedStatus != 'OCCUPIED')
       .map(bed => {
         return {
           displayName: bed.label,
@@ -152,7 +152,8 @@ export class UnitComponent implements OnInit, OnDestroy {
         if (found) {
           thisBed = found;
 
-          thisBed.occupied = incomingBed.occupied;
+          //thisBed.occupied = incomingBed.occupied;
+          thisBed.bedStatus = incomingBed.bedStatus;
           thisBed.label = incomingBed.label;
           thisBed.patient = incomingBed.patient;
           //thisBed.relatedInformation = incomingBed.relatedInformation;
@@ -190,15 +191,15 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   private updateSskCategoryValueMatrix(unit) {
     this.sskCategoryValueMatrix = {};
-   // loopa över unit.ssks
-   // this.sskCategoryValueMatrix()
+    // loopa över unit.ssks
+    // this.sskCategoryValueMatrix()
     let unitSsks = unit.ssks;
     let sskPatientsChoices;
     let sskPatients;
 
     unitSsks.forEach(ssk => {
       sskPatients = this.unit.beds.filter(bed => bed.ssk && bed.ssk.id === ssk.id)
-        .filter(z => z.occupied === true && z.patient).map(x => x.patient);
+        .filter(z => z.bedStatus === 'OCCUPIED' && z.patient).map(x => x.patient);
 
       if (sskPatients.length === 0) return;
       sskPatientsChoices = <CareBurdenChoice[]>sskPatients.map(x => x.careBurdenChoices).reduce(((previousValue, currentValue) => {
@@ -216,21 +217,31 @@ export class UnitComponent implements OnInit, OnDestroy {
         .forEach(choice => {
           if (this.sskCategoryValueMatrix[ssk.label]){
             if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name]) {
-              if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name]) {
+              if (this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] &&
+                choice.careBurdenValue.countedIn) {
                 this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name]++;
               } else {
-                this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+                if (choice.careBurdenValue.countedIn)
+                {
+                  this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+                }
               }
             } else {
               this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
-              this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+              if (choice.careBurdenValue.countedIn)
+              {
+                this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+              }
             }
           }
           else
           {
             this.sskCategoryValueMatrix[ssk.label] = {};
             this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
-            this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+            if (choice.careBurdenValue.countedIn)
+            {
+              this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
+            }
           }
         });
     })
@@ -263,7 +274,8 @@ export class UnitComponent implements OnInit, OnDestroy {
 
     let bed = this.unit.beds.find(bed => bed.id === this.chosenVacantBedId);
     bed.patient = patient;
-    bed.occupied = true;
+    //bed.occupied = true;
+    bed.bedStatus = 'OCCUPIED';
     this.http.put('/api/bed/' + this.clinic.id + '/' + this.unit.id, bed)
       .subscribe(bed => {
         this.ngOnInit();

@@ -452,6 +452,7 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateCareBurdenValues(): FormGroup{
     return this.formBuilder.group({
       id: [null],
+      countedIn:[null],
       name: [null],
       color: [null]
     });
@@ -465,6 +466,7 @@ export class UnitsAdminFormComponent implements OnInit {
     return careburdenvalues.map(careburdenvalue => {
       return this.formBuilder.group( {
         id: careburdenvalue.id,
+        countedIn: careburdenvalue.countedIn,
         name: careburdenvalue.name,
         color: careburdenvalue.color
       })

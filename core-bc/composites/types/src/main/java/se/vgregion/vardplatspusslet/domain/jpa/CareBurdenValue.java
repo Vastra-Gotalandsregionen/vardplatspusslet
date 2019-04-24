@@ -22,8 +22,12 @@ public class CareBurdenValue implements Comparable<CareBurdenValue> {
     @Column
     private String name;
 
+    @Column
+    private Boolean countedIn;
+
     @Enumerated
     private Color color;
+
 
     public Integer getId() {
         return id;
@@ -43,6 +47,14 @@ public class CareBurdenValue implements Comparable<CareBurdenValue> {
 
     public Color getColor() {
         return color;
+    }
+
+    public Boolean getCountedIn() {
+        return countedIn;
+    }
+
+    public void setCountedIn(Boolean countedIn) {
+        this.countedIn = countedIn;
     }
 
     public void setColor(Color color) {

@@ -35,15 +35,6 @@
           <app-widget-careburden-average *ngIf="unit?.careBurden == 'tal'" [unit]="unit" [bedsExpanded]="true"></app-widget-careburden-average>
           
           <app-widget-careburden-with-text *ngIf="unit?.careBurden == 'text'" [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
-
-          <vgr-panel-container>
-              <vgr-panel width="6" *ngIf="unit?.careBurden == 'tal'">
-                  
-              </vgr-panel>
-              <vgr-panel width="6" *ngIf="unit?.careBurden == 'text'">
-                  
-              </vgr-panel>
-            </vgr-panel-container>                  
       
       </app-layout-column>
 
