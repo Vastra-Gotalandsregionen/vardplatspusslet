@@ -32,7 +32,7 @@ export class WidgetCareBurdenAverageComponent implements OnInit {
  patientCareBurden(patientChoices, burdenCategoriId) {
   if (patientChoices!= null && patientChoices.length > 0){
     let x =  patientChoices.find(x => x.careBurdenCategory.id === burdenCategoriId);
-    return x && x.careBurdenValue ? x.careBurdenValue.name: null;
+    return x && x.careBurdenValue  && x.careBurdenValue.countedIn ? x.careBurdenValue.name: null;
 
   }
   else{

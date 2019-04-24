@@ -9,7 +9,7 @@
     </div>
 
     <div class="careburden-text-wrap"
-         *ngIf="!(unit?.careBurdenCategories.length <=2 && unit?.careBurdenValues.length <= 2)">
+         *ngIf="!(unit?.careBurdenCategories.length <=2 && cbvs.length <= 2)">
       <div class="careburden-text-ssk" *ngFor="let ssk of unit?.ssks">
 
         <div class="careburden-text-ssk-label">
@@ -25,7 +25,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let value of unit?.careBurdenValues; let i = index">
+          <tr *ngFor="let value of cbvs; let i = index">
             <td>{{value.name}}</td>
             <td *ngFor="let cbk of unit?.careBurdenCategories" class="right">
               {{getMatrixValue(ssk, cbk, value)}}
@@ -37,18 +37,18 @@
       </div>
     </div>
 
-    <table class="vpp-table center" *ngIf="unit?.careBurdenCategories.length <=2 && unit?.careBurdenValues.length <= 2">
+    <table class="vpp-table center" *ngIf="unit?.careBurdenCategories.length <=2 && cbvs.length <= 2">
       <thead>
       <tr>
         <th></th>
         <th *ngFor="let cbk of unit?.careBurdenCategories" class="riddght right-border left-border"
-            [colSpan]="unit?.careBurdenValues.length">{{cbk.name}}
+            [colSpan]="cbvs.length">{{cbk.name}}
         </th>
       </tr>
       <tr>
         <th>Vårdlag</th>
         <ng-container *ngFor="let cbk of unit?.careBurdenCategories">
-          <th *ngFor="let cbv of unit?.careBurdenValues; let i = index"
+          <th *ngFor="let cbv of cbvs; let i = index"
               class="{{cbv.name?.toLowerCase() === 'röd' ? 'red-cell' : ''}} {{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}}">
             {{cbv.name}}
           </th>
@@ -60,7 +60,7 @@
           <app-ssk-icon [ssk]="ssk"></app-ssk-icon>
         </td>
         <ng-container *ngFor="let cbk of unit?.careBurdenCategories">
-          <td *ngFor="let value of unit?.careBurdenValues; let i = index"
+          <td *ngFor="let value of cbvs; let i = index"
               class="{{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}}">
             {{getMatrixValue(ssk, cbk, value)}}
           </td>

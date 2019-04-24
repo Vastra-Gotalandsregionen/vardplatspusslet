@@ -3,12 +3,12 @@
   <tr>
     <th></th>
     <th *ngFor="let cbk of unit?.careBurdenCategories; let j = index" class="{{j % 2 === 0 ? 'every-second' : ''}}"
-        [colSpan]="unit?.careBurdenValues.length">{{cbk.name}}</th>
+        [colSpan]="cbvs.length">{{cbk.name}}</th>
   </tr>
   <tr>
     <th>Vårdlag</th>
     <ng-container *ngFor="let cbk of unit?.careBurdenCategories; let j = index">
-      <th *ngFor="let cbv of unit?.careBurdenValues; let i = index"
+      <th *ngFor="let cbv of cbvs; let i = index"
           class="{{cbv.name?.toLowerCase() === 'röd' ? 'red-cell' : ''}} {{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}} {{j % 2 === 0 ? 'every-second' : ''}}">{{cbv.name}}</th>
     </ng-container>
   </tr>
@@ -16,7 +16,7 @@
   <tr *ngFor="let ssk of unit?.ssks">
     <td><app-ssk-icon [ssk]="ssk"></app-ssk-icon></td>
     <ng-container *ngFor="let cbk of unit?.careBurdenCategories; let j = index">
-      <td *ngFor="let value of unit?.careBurdenValues; let i = index"
+      <td *ngFor="let value of cbvs; let i = index"
           class="{{i === 0 ? 'left-border' : ''}} {{i === 1 ? 'right-border' : ''}} {{j % 2 === 0 ? 'every-second' : ''}}">
         {{getMatrixValue(ssk, cbk, value)}}
       </td>
