@@ -227,9 +227,9 @@ export class UnitComponent implements OnInit, OnDestroy {
                 }
               }
             } else {
-              this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
               if (choice.careBurdenValue.countedIn)
               {
+                this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name] = {};
                 this.sskCategoryValueMatrix[ssk.label][choice.careBurdenCategory.name][choice.careBurdenValue.name] = 1;
               }
             }
