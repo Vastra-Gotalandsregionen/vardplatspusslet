@@ -29,7 +29,6 @@
                 <vgr-list-column-header [width]="4">Namn</vgr-list-column-header>
                 <vgr-list-column-header [width]="4">Förvaltning</vgr-list-column-header>
                 <vgr-list-column-header [width]="4">Klinik</vgr-list-column-header>
-                <vgr-list-column-header [width]="4">Antal vårdlag</vgr-list-column-header>
               </vgr-list-header>
       
               <vgr-list-item *ngFor="let unit of units" #theListItem>
@@ -38,7 +37,6 @@
                   <vgr-list-column [width]="4">{{unit.name}}</vgr-list-column>
                   <vgr-list-column [width]="4">{{unit.clinic?.management?.name}}</vgr-list-column>
                   <vgr-list-column [width]="4">{{unit.clinic?.name}}</vgr-list-column>
-                  <vgr-list-column [width]="4">{{unit.ssks?.length}}</vgr-list-column>
                 </vgr-list-item-header>
       
                 <vgr-list-item-content>

@@ -39,15 +39,18 @@ const routes: Routes = [
   },
   {
     path: 'admin/units',
-    component: UnitsAdminComponent
+    component: UnitsAdminComponent,
+    canActivate: [UserLoggedInGuard]
   },
   {
     path: 'admin/users',
-    component: UsersAdminComponent
+    component: UsersAdminComponent,
+    canActivate: [UserLoggedInGuard]
   },
   {
     path: 'admin/statistics',
-    component: StatisticsComponent
+    component: StatisticsComponent,
+    canActivate: [UserLoggedInGuard]
   },
   {
     path: ':managementId/:id',
