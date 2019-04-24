@@ -176,12 +176,8 @@
             <app-widget-ssks [unit]="unit"></app-widget-ssks>
     
             <app-widget-careburden-average [unit]="unit" [bedsExpanded]="false"></app-widget-careburden-average>
-    
-            <vgr-panel-container class="block" *ngIf="unit?.careBurden == 'text'">
-              <vgr-panel width="12">
-                  <app-widget-careburden-with-text [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
-              </vgr-panel>
-            </vgr-panel-container>                  
+
+            <app-widget-careburden-with-text [unit]="unit" [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
     
           </vgr-page-block>
     </app-layout-column>
