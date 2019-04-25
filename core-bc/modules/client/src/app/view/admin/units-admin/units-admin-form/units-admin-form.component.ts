@@ -28,6 +28,7 @@ export class UnitsAdminFormComponent implements OnInit {
   @Input('unit') unit: Unit;
   @Input('clinics') clinics: Clinic[] = [];
   @Input('managementId') managementId: string;
+  @Input('newUnit') newUnit: boolean;
   managementDropdownItems: { displayName: string; value: string }[] = [];
 
   @Output() openDeleteEvent: EventEmitter<any> = new EventEmitter();
@@ -272,7 +273,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasGenderFeature = unitModel.hasGenderColumn;
     unit.hasPatientWaitsFeature = unitModel.hasPatientWaitesFeature;
 
-    this.http.put('/api/unit?keepBeds=true', unit)
+    this.http.put('/api/unit?keepBeds=true' + (this.newUnit ? '&newUnit=true' : ''), unit)
       .subscribe(() => {
         this.saveEvent.emit();
         this.unitForm.reset();

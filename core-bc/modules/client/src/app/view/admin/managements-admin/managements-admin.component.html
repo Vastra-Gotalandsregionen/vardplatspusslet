@@ -50,7 +50,7 @@
                     </div>
     
                     <div  style="flex-grow: 1; flex-shrink: 0; align-self: flex-end">
-                      <vgr-button (click)="saveManagement()" [disabled]="!managementForm.valid">Spara</vgr-button>
+                      <vgr-button (click)="saveManagement(false)" [disabled]="!managementForm.valid">Spara</vgr-button>
                       <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
                     </div>
                   </div>
@@ -81,7 +81,7 @@
                       </div>
                     </div>
                     <div style="align-self: flex-end; margin-top: 10px;">
-                      <vgr-button (click)="saveManagement()" [disabled]="!managementForm.valid">Spara</vgr-button>
+                      <vgr-button (click)="saveManagement(true)" [disabled]="!managementForm.valid">Spara</vgr-button>
                       <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
                     </div>
                   </div>

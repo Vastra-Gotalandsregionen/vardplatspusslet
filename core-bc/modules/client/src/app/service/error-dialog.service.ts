@@ -38,6 +38,8 @@ export class ErrorDialogService {
 
     if (statusCode === 401) {
       errorMessage = error.error;
+    } else if (error.error && error.error.message) {
+      errorMessage = error.error.message;
     } else {
       errorMessage = 'Tekniskt fel';
     }

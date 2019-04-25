@@ -2,7 +2,10 @@ package se.vgregion.vardplatspusslet.intsvc.controller.domain;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import se.vgregion.vardplatspusslet.domain.jpa.Management;
@@ -45,12 +48,25 @@ public class ManagementController extends BaseController{
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Management> saveManagemenet(@RequestBody Management management){
+    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
+    public ResponseEntity<Object> saveManagemenet(@RequestBody Management management,
+                                                  @RequestParam(value = "newManagement", required = false) Boolean newManagement){
+
+        if (Boolean.TRUE.equals(newManagement) && managementService.managementExists(management.getId())) {
+
+            return new ResponseEntity<>(
+                    new ApiError("En förvaltning med ID=" + management.getId() + " finns redan."),
+                    new HttpHeaders(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+
         return ResponseEntity.ok(managementRepository.save(management));
     }
 
     @RequestMapping(value = "/{managementId}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteManagement(@PathVariable("id") String managementId){
+    public ResponseEntity deleteManagement(@PathVariable("managementId") String managementId){
         managementRepository.delete(managementId);
         return ResponseEntity.noContent().build();
     }

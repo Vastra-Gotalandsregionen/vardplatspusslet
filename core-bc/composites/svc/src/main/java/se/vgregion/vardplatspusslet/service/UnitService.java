@@ -306,4 +306,8 @@ public class UnitService {
         List<SevenDaysPlaningUnit> sevenDaysPlaningUnits = sevenDaysPlaningRepository.findAll(Example.of(example));
         unit.setSevenDaysPlaningUnits(sevenDaysPlaningUnits);
     }
+
+    public boolean unitExists(String id) {
+        return unitRepository.findOne(id) != null;
+    }
 }
