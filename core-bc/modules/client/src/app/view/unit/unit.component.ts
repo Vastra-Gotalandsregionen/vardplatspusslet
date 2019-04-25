@@ -45,7 +45,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   showChangeBedOrder = false;
   bedsOrder: Bed[] = [];
   inited: boolean;
-
+  cbvs: CareBurdenValue[] = [];
   messages: Message[] = [];
   private timerSubscription: Subscription;
   sskCategoryValueMatrix = {};
@@ -69,6 +69,7 @@ export class UnitComponent implements OnInit, OnDestroy {
         .do(unit => {
           if (unit) {
             this.unit = unit;
+            this.cbvs = this.unit.careBurdenValues.filter(cbv => cbv.countedIn);
             this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
               this.allUnitsOnSameClinic = unitArray.filter(x => x.name !== this.unit.name);
             });
