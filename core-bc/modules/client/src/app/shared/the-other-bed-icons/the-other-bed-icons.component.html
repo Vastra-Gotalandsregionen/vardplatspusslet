@@ -59,14 +59,14 @@
 </div>
 
 <div class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasInfoFeature"
-     [appCallout]="'THG'"><i class="fa fa-undo purple"></i>
+     [appCallout]="'THG' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-undo purple"></i>
 </div>
 <div class="ikon" *ngIf="bed.patient?.information === '2' && unit.hasInfoFeature"
-     [appCallout]="'THG med barn'"><i class="fa fa-baby purple"></i>
+     [appCallout]="'THG med barn' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-baby purple"></i>
 </div>
 <div class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasInfoFeature"
-     [appCallout]="'Föräldrarum'"><i class="fa fa-user-friends purple"></i>
+     [appCallout]="'Föräldrarum' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-user-friends purple"></i>
 </div>
 <div class="ikon" *ngIf="bed.patient?.information === '4' && unit.hasInfoFeature"
-     [appCallout]="'Vanlig hemgång'"><i class="fa fa-arrow-right purple"></i>
+     [appCallout]="'Vanlig hemgång' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i>
 </div>

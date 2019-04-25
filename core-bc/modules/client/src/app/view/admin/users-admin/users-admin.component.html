@@ -44,7 +44,7 @@
       
                 <vgr-list-item-content>
                   <form [formGroup]="userForm" *ngIf="userForm">
-      
+
                     <div>
                       <div>Roll:</div>
                       <vgr-radio-group [disabled]="!admin"  formControlName="role" [options]="[{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'USER', value: 'USER'}]">

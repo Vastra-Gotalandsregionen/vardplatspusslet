@@ -1,4 +1,3 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -123,7 +122,7 @@ registerLocaleData(localeSv, "sv-SE");
     LoadingIndicatorComponent,
   ],
   imports: [
-    BrowserModule,
+    // BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     JwtModule,
