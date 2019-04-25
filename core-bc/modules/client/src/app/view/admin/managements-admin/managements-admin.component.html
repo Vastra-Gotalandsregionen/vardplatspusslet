@@ -66,7 +66,7 @@
               </vgr-list-item-header>
     
               <vgr-list-item-content [indentContent]="true">
-                <form [formGroup]="managementForm" (ngSubmit)="saveManagement()">
+                <form [formGroup]="managementForm" (ngSubmit)="saveManagement(true)">
                   <!-- For some reason this is needed here, but not in the above form, in order for enter button to work. -->
                   <button type="submit" style="display:none">send</button>
                   <div class=" clearfix containers">
