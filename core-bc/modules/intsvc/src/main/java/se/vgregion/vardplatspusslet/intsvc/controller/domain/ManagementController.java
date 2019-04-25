@@ -7,13 +7,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Management;
 import se.vgregion.vardplatspusslet.repository.ManagementRepository;
 import se.vgregion.vardplatspusslet.service.ManagementService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,6 +70,7 @@ public class ManagementController extends BaseController{
     }
 
     @RequestMapping(value = "/{managementId}", method = RequestMethod.DELETE)
+    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
     public ResponseEntity deleteManagement(@PathVariable("managementId") String managementId){
         managementRepository.delete(managementId);
         return ResponseEntity.noContent().build();

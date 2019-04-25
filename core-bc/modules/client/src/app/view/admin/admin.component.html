@@ -22,10 +22,10 @@
           <vgr-page-block>
               <ul>
                 <li>
-                  <a routerLink="/admin/managements">Förvaltningar</a>
+                  <a routerLink="/admin/managements" *ngIf="admin">Förvaltningar</a>
                 </li>
                 <li>
-                    <a routerLink="/admin/clinics">Kliniker</a>
+                    <a routerLink="/admin/clinics" *ngIf="admin">Kliniker</a>
                 </li>
                 <li>
                     <a routerLink="/admin/units">Avdelningar</a>
@@ -36,7 +36,6 @@
                 <li>
                     <a routerLink="/admin/statistics">Statistik</a>
                 </li>
-  
               </ul>
   
           </vgr-page-block>                    

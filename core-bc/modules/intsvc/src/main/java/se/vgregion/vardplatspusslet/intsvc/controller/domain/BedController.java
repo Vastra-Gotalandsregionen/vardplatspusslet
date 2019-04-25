@@ -9,23 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import se.vgregion.vardplatspusslet.domain.jpa.Bed;
-import se.vgregion.vardplatspusslet.repository.BedRepository;
-import se.vgregion.vardplatspusslet.repository.ClinicRepository;
-import se.vgregion.vardplatspusslet.repository.UnitRepository;
 import se.vgregion.vardplatspusslet.service.BedService;
 
 @Controller
 @RequestMapping("/bed")
 public class BedController {
-
-    @Autowired
-    private BedRepository bedRepository;
-
-    @Autowired
-    private UnitRepository unitRepository;
-
-    @Autowired
-    private ClinicRepository clinicRepository;
 
     @Autowired
     private BedService bedService;

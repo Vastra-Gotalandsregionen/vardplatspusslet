@@ -22,6 +22,8 @@ export class ManagementsAdminComponent implements OnInit {
   managementForm: FormGroup;
   managementForDeletion: Management;
 
+  isFetchingManagements: boolean = false;
+
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
   @ViewChild("addManagementId") addManagementId: ElementRef;
 
@@ -30,7 +32,9 @@ export class ManagementsAdminComponent implements OnInit {
 
   ngOnInit() {
 
+    this.isFetchingManagements = true;
     this.http.get<Management[]>('/api/management/')
+      .finally(() => this.isFetchingManagements = false)
       .subscribe((managements: Management[]) => {
         this.managements = managements;
       });

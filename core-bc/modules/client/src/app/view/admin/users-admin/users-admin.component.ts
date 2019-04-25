@@ -22,6 +22,9 @@ export class UsersAdminComponent implements OnInit {
   unitDropdownItems: DropdownItem<string>[] = [];
   unitMap: Map<string, Unit> = new Map<string, Unit>();
   userForDeletion: User;
+
+  isFetchingUsers: boolean = false;
+
   private units: Unit[];
 
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
@@ -32,7 +35,10 @@ export class UsersAdminComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
+
+    this.isFetchingUsers = true;
     this.http.get<User[]>('/api/user')
+      .finally(() => this.isFetchingUsers = false)
       .subscribe((users: User[]) => {
         this.users = users;
       });

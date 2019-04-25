@@ -18,10 +18,15 @@ export class StatisticsComponent implements OnInit {
   maxDate = new Date('2099-12-31');
   minDate = new Date('2000-01-01');
 
+  isFetchingUnits: boolean = false;
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+
+    this.isFetchingUnits = true;
     this.http.get<Unit[]>('/api/unit')
+      .finally(() => this.isFetchingUnits = false)
       .subscribe((units: Unit[]) => {
         this.units = units;
       });

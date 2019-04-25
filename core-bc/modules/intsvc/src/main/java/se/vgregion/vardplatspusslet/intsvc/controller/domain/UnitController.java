@@ -119,15 +119,19 @@ public class UnitController extends BaseController {
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    @PreAuthorize("@authService.isLoggedIn(authentication)")
+//    @PreAuthorize("@authService.isLoggedIn(authentication)")
     public ResponseEntity<Object> saveUnit(@RequestBody Unit unit,
                                          @RequestParam(value = "keepBeds", required = false) Boolean keepBeds,
                                          @RequestParam(value = "newUnit", required = false) Boolean newUnit
     ) {
         User user = getUser();
 
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError("Du är inte inloggad."));
+        }
+
         if (!Role.ADMIN.equals(user.getRole()) && !user.getUnits().contains(unit)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Du är inte behörig till " + unit.getName() + ".");
         }
 
         if (Boolean.TRUE.equals(newUnit) && unitService.unitExists(unit.getId())) {

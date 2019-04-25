@@ -32,13 +32,9 @@ export class ErrorDialogService {
   private setErrorMessage(component, error: HttpErrorResponse) {
     let errorMessage;
 
-    const statusCode = error.status;
-
     console.error(error.message);
 
-    if (statusCode === 401) {
-      errorMessage = error.error;
-    } else if (error.error && error.error.message) {
+    if (error.error && error.error.message) {
       errorMessage = error.error.message;
     } else {
       errorMessage = 'Tekniskt fel';

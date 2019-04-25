@@ -6,7 +6,11 @@
 
 </app-menu-title-row>
 
-<app-layout>
+<ng-template #loading>
+  <app-loading-indicator></app-loading-indicator>
+</ng-template>
+
+<app-layout *ngIf="!isFetchingClinics; else loading">
 
   <app-layout-row>
     

@@ -78,6 +78,7 @@ public class ClinicController extends BaseController {
     }
 
     @RequestMapping(value = "/{clinicId}", method = RequestMethod.DELETE)
+    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
     public ResponseEntity deleteClinic(@PathVariable("clinicId") String clinicId) {
         clinicRepository.delete(clinicId);
 

@@ -19,6 +19,8 @@ export class ClinicsAdminComponent implements OnInit {
   managements: Management[];
   managementDropdownItems: { displayName: string; value: string }[] = [];
 
+  isFetchingClinics: boolean = false;
+
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
   @ViewChild("addClinicId") addClinicId: ElementRef;
 
@@ -27,6 +29,8 @@ export class ClinicsAdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isFetchingClinics = true;
+
     this.http.get<Management[]>('/api/management/').subscribe((managements: Management[]) => {
       this.managements = managements;
       this.managementDropdownItems = this.managements.map(management => {
@@ -35,7 +39,9 @@ export class ClinicsAdminComponent implements OnInit {
           value: management.id
         }
       });
+
       this.http.get<Clinic[]>('/api/clinic/')
+        .finally(() => this.isFetchingClinics = false)
         .subscribe((clinics: Clinic[]) => {
           this.clinics = clinics;
         });

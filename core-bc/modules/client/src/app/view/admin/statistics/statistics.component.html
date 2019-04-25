@@ -11,7 +11,11 @@
     </div>
 </app-menu-title-row>
 
-<app-layout class="vpp-statistics-panel">
+<ng-template #loading>
+  <app-loading-indicator></app-loading-indicator>
+</ng-template>
+
+<app-layout *ngIf="!isFetchingUnits; else loading" class="vpp-statistics-panel">
 
   <app-layout-row>
     

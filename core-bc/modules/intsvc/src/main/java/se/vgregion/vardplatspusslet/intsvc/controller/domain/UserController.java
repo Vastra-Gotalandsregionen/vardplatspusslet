@@ -74,7 +74,7 @@ public class UserController extends BaseController {
                 .filter(unit -> userSaveRequest.getUnitIds().contains(unit.getId()))
                 .collect(Collectors.toSet());
 
-        // Units both authorized and in save request
+        // Units both authorized and in save request (intersection)
         Set<Unit> authorizedUnitsInSaveRequest = unitsInSaveRequest.stream()
                 .filter(authorizedUnits::contains)
                 .collect(Collectors.toSet());
@@ -88,10 +88,13 @@ public class UserController extends BaseController {
             user.setUnits(authorizedUnitsInSaveRequest);
         } else {
             // Remove the units which the saving user is authorized too and which is missing in the save request.
+            // Authorized and missing units mean they should be removed from user.
             HashSet<Unit> cloneAllUnits = new HashSet<>(allUnits);
             cloneAllUnits.removeAll(unitsInSaveRequest);
+
             Set<Unit> allMissingUnits = cloneAllUnits;
             authorizedUnits.retainAll(allMissingUnits);
+
             Set<Unit> toRemove = authorizedUnits; // authorized units which is also missing
             user.getUnits().removeAll(toRemove);
 
@@ -123,7 +126,8 @@ public class UserController extends BaseController {
             userRepository.delete(userId);
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                    new ApiError("Du har inte behörighet till användarens alla avdelningar. Då får du inte ta bort användaren."));
         }
 
     }

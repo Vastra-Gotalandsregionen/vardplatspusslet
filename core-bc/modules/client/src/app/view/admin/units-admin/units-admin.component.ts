@@ -20,12 +20,17 @@ export class UnitsAdminComponent implements OnInit {
   unitForDeletion: Unit;
   clinics: Clinic[];
 
+  isFetchingUnits: boolean = false;
+
   constructor(private http: HttpClient,
               private authService: AuthService) {}
 
   ngOnInit() {
 
+    this.isFetchingUnits = true;
+
     this.http.get<Unit[]>('/api/unit')
+      .finally(() => this.isFetchingUnits = false)
       .subscribe((units: Unit[]) => {
         this.units = units;
       });
