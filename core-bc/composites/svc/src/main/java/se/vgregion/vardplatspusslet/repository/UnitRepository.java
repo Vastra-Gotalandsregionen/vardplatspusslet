@@ -36,4 +36,13 @@ public interface UnitRepository extends JpaRepository<Unit, String> {
             type = EntityGraph.EntityGraphType.LOAD
     )
     List<Unit> findDistinctByIdIn(Collection<String> ids, Sort sort);
+
+    /*@EntityGraph(
+            attributePaths = {"clinic", "ssks",
+                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
+            type = EntityGraph.EntityGraphType.LOAD
+    )*/
+    @Query("select distinct u from Unit u join fetch u.careBurdenValues")
+    List<Unit> findAllWithCareBurdenValues();
+
 }
