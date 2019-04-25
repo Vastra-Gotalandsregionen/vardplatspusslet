@@ -40,6 +40,11 @@ public class TestUnitRepository implements UnitRepository {
     }
 
     @Override
+    public List<Unit> findAllWithCareBurdenValues() {
+        return null;
+    }
+
+    @Override
     public List<Unit> findAll() {
         return new ArrayList<>(units);
     }

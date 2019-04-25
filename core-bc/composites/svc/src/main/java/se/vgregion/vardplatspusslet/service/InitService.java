@@ -7,10 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.vgregion.vardplatspusslet.domain.jpa.Bed;
 import se.vgregion.vardplatspusslet.domain.jpa.BedStatus;
+import se.vgregion.vardplatspusslet.domain.jpa.CareBurdenValue;
+import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.repository.BedRepository;
+import se.vgregion.vardplatspusslet.repository.UnitRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -24,10 +28,25 @@ public class InitService {
     @Autowired
     private BedRepository bedRepository;
 
+    @Autowired
+    private UnitRepository unitRepository;
+
     @PostConstruct
     public void init() {
         try {
             patientService.removeOrphanPatientsWithCareBurdenChoices();
+
+            List<Unit> units = unitRepository.findAllWithCareBurdenValues();
+            Set<CareBurdenValue> cbvs;
+            for (Unit unit : units) {
+                cbvs = unit.getCareBurdenValues();
+                for (CareBurdenValue cbv : cbvs) {
+                    if (cbv.getCountedIn() == null) {
+                        cbv.setCountedIn(true);
+                    }
+                }
+                unitRepository.save(unit);
+            }
 
             List<Bed> all = bedRepository.findAll();
 
