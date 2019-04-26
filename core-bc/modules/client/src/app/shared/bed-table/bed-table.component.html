@@ -126,8 +126,12 @@
         </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">
-        <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
-             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf icon-colored-RED"></i>
+        <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature && bed.bedStatus === 'OCCUPIED'"
+             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf purple"></i>
+        </span>
+
+        <span class="ikon" *ngIf="bed.bedStatus === 'VACANT'"
+              [appCallout]="'Ska städas'"><i class="fa fa-leaf icon-colored-RED"></i>
         </span>
       </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
