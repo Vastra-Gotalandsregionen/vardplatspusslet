@@ -1,11 +1,6 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import static java.util.Comparator.*;
 
@@ -20,6 +15,9 @@ public class CleaningAlternative implements Comparable<CleaningAlternative> {
 
     @Column
     private String description;
+
+    @Enumerated
+    private Color color;
 
     public CleaningAlternative() {
     }
@@ -44,6 +42,10 @@ public class CleaningAlternative implements Comparable<CleaningAlternative> {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Color getColor() { return color; }
+
+    public void setColor(Color color) { this.color = color; }
 
     @Override
     public int compareTo(CleaningAlternative o) {

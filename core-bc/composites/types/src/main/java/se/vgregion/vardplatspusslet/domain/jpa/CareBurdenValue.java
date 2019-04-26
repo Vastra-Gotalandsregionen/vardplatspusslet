@@ -49,6 +49,10 @@ public class CareBurdenValue implements Comparable<CareBurdenValue> {
         return color;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public Boolean getCountedIn() {
         return countedIn;
     }
@@ -57,9 +61,6 @@ public class CareBurdenValue implements Comparable<CareBurdenValue> {
         this.countedIn = countedIn;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
 
     @Override
     public int compareTo(CareBurdenValue o) {

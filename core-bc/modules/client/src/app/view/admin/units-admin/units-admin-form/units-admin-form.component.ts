@@ -41,6 +41,7 @@ export class UnitsAdminFormComponent implements OnInit {
 
   clinicDropdownItems: { displayName: string; value: string }[] = [];
   colorDropdownItems: DropdownItem<string>[];
+  cleaningColorsDropdownItems : DropdownItem<string>[];
 
 
   editSsks: boolean;
@@ -68,6 +69,10 @@ export class UnitsAdminFormComponent implements OnInit {
       {displayName: 'Röd', value: 'RED'},
       {displayName: 'Vit', value: 'WHITE'}
     ];
+
+    this.cleaningColorsDropdownItems = [
+      {displayName: 'Blå', value: 'BLUE'},
+      {displayName: 'Röd', value: 'RED'}];
   }
 
   ngOnInit() {
@@ -389,7 +394,8 @@ export class UnitsAdminFormComponent implements OnInit {
   CreateCleaningAlternative(): FormGroup{
     return this.formBuilder.group({
       id: null,
-      description: [null, Validators.required]
+      description: [null, Validators.required],
+      color: [null]
     });
   }
 
@@ -401,7 +407,8 @@ export class UnitsAdminFormComponent implements OnInit {
     return cleanningalternatives.map(cleaningalternative => {
       return this.formBuilder.group( {
         id: cleaningalternative.id,
-        description: cleaningalternative.description
+        description: cleaningalternative.description,
+        color: cleaningalternative.color
       })
     });
   }
@@ -439,7 +446,6 @@ export class UnitsAdminFormComponent implements OnInit {
       })
     });
   }
-
 
   get careBurdenValues(): FormArray{
     return <FormArray>this.unitForm.get('careBurdenValues');

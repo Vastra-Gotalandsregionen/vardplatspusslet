@@ -135,6 +135,7 @@
 
           <tr *ngFor="let cleanalternative of unit?.cleaningAlternatives || []">
             <td>{{cleanalternative.description}}</td>
+            <td><span class="care-burden-value-color {{cleanalternative.color}}"></span></td>
           </tr>
 
           <tfoot>
@@ -147,6 +148,10 @@
           <div formArrayName="cleaningAlternatives" *ngFor="let cleanAlt of cleaningAlternatives.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input formControlName="description" [small]="true" placeholder="städ alternative..." [showValidation]="getCleaniningValidation(i)"></vgr-input>
+              <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg'">
+                <vgr-dropdown-item [value]="null">Välj färg</vgr-dropdown-item>
+                <vgr-dropdown-item *ngFor="let item of cleaningColorsDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+              </vgr-dropdown-select>
               <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
