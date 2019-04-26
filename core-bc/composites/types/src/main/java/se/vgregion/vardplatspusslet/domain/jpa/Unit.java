@@ -130,8 +130,6 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean hasAmningFeature;
 
-    @Column
-    private Boolean hasInfoFeature;
 
     @Column
     private Boolean hasMorKostFeature;
@@ -159,6 +157,12 @@ public class Unit implements Comparable<Unit> {
 
     @Column
     private Boolean hasPatientWaitsFeature;
+
+    @Column
+    private Boolean hasBackToHomeAlternativFeature;
+
+    @Column
+    private Boolean hasDatedBackHomeFeature;
 
 
     public Unit() {
@@ -365,14 +369,6 @@ public class Unit implements Comparable<Unit> {
         this.hasAmningFeature = hasAmningFeature;
     }
 
-    public Boolean getHasInfoFeature() {
-        return hasInfoFeature;
-    }
-
-    public void setHasInfoFeature(Boolean hasInfoFeature) {
-        this.hasInfoFeature = hasInfoFeature;
-    }
-
     public Set<CareBurdenCategory> getCareBurdenCategories() {
         return careBurdenCategories;
     }
@@ -523,6 +519,22 @@ public class Unit implements Comparable<Unit> {
 
     public void setHasPatientWaitsFeature(Boolean hasPatientWaitsFeature) {
         this.hasPatientWaitsFeature = hasPatientWaitsFeature;
+    }
+
+    public Boolean getHasBackToHomeAlternativFeature() {
+        return hasBackToHomeAlternativFeature;
+    }
+
+    public void setHasBackToHomeAlternativFeature(Boolean hasBackToHomeAlternativFeature) {
+        this.hasBackToHomeAlternativFeature = hasBackToHomeAlternativFeature;
+    }
+
+    public Boolean getHasDatedBackHomeFeature() {
+        return hasDatedBackHomeFeature;
+    }
+
+    public void setHasDatedBackHomeFeature(Boolean hasDatedBackHomeFeature) {
+        this.hasDatedBackHomeFeature = hasDatedBackHomeFeature;
     }
 
     @Override

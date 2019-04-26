@@ -138,7 +138,6 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnRondFeature: [unit.hasBarnRondFeature],
       hasRondFeature: [unit.hasRondFeature],
       hasAmningFeature: [unit.hasAmningFeature],
-      hasInfoFeature: [unit.hasInfoFeature],
       hasMorKostFeature : [unit.hasMorKostFeature],
       hasBarnKostFeature : [unit.hasBarnKostFeature],
       hasKostFeature : [unit.hasKostFeature],
@@ -148,7 +147,9 @@ export class UnitsAdminFormComponent implements OnInit {
       hasPatientNameColumn: [unit.hasPatientNameColumn],
       hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature],
       hasGenderColumn: [unit.hasGenderFeature],
-      hasPatientWaitesFeature: [unit.hasPatientWaitsFeature]
+      hasPatientWaitesFeature: [unit.hasPatientWaitsFeature],
+      hasBackToHomeAlternativFeature: [unit.hasBackToHomeAlternativFeature],
+      hasDatedBackHomeFeature: [unit.hasDatedBackHomeFeature]
     });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
       if (mgId != null)
@@ -202,7 +203,6 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnRondFeature: unit.hasBarnRondFeature,
       hasRondFeature: unit.hasRondFeature,
       hasAmningFeature: unit.hasAmningFeature,
-      hasInfoFeature: unit.hasInfoFeature,
       hasMorKostFeature : unit.hasMorKostFeature,
       hasBarnKostFeature : unit.hasBarnKostFeature,
       hasKostFeature : unit.hasKostFeature,
@@ -212,7 +212,9 @@ export class UnitsAdminFormComponent implements OnInit {
       hasPatientNameColumn: unit.hasPatientNameColumn,
       hasPatientFromClinicFeature : unit.hasPatientFromClinicFeature,
       hasGenderColumn: unit.hasGenderFeature,
-      hasPatientWaitesFeature: unit.hasPatientWaitsFeature
+      hasPatientWaitesFeature: unit.hasPatientWaitsFeature,
+      hasBackToHomeAlternativFeature : unit.hasBackToHomeAlternativFeature,
+      hasDatedBackHomeFeature: unit.hasDatedBackHomeFeature
     });
 
   }
@@ -246,7 +248,6 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasBarnRondFeature = unitModel.hasBarnRondFeature;
     unit.hasRondFeature = unitModel.hasRondFeature;
     unit.hasAmningFeature = unitModel.hasAmningFeature;
-    unit.hasInfoFeature = unitModel.hasInfoFeature;
     unit.hasMorKostFeature = unitModel.hasMorKostFeature;
     unit.hasBarnKostFeature = unitModel.hasBarnKostFeature;
     unit.hasKostFeature = unitModel.hasKostFeature;
@@ -272,6 +273,8 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasPatientFromClinicFeature = unitModel.hasPatientFromClinicFeature;
     unit.hasGenderFeature = unitModel.hasGenderColumn;
     unit.hasPatientWaitsFeature = unitModel.hasPatientWaitesFeature;
+    unit.hasBackToHomeAlternativFeature = unitModel.hasBackToHomeAlternativFeature;
+    unit.hasDatedBackHomeFeature = unitModel.hasDatedBackHomeFeature;
 
     this.http.put('/api/unit?keepBeds=true' + (this.newUnit ? '&newUnit=true' : ''), unit)
       .subscribe(() => {

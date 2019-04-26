@@ -23,12 +23,13 @@
     <th class="column-group last" *ngIf="unit.hasBarnRondFeature">Barn</th>
     <th *ngIf="unit.hasRondFeature">Rond</th>
     <th *ngIf="unit.hasGenderFeature">Kön</th>
-    <th>Hemgång</th>
+    <th *ngIf="unit.hasDatedBackHomeFeature">Hemgång</th>
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
     <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
-    <th>Övrig anteckning</th>
+    <th>Anteckningar</th>
+    <th *ngIf="unit.hasBackToHomeAlternativFeature">Hem alt.</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -86,8 +87,11 @@
       <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'KVINNA'"><span [appCallout]="'Kvinna'" ><i class="fa fa-female purple"></i></span></td>
       <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'BARN'"><span [appCallout]="'Barn'"><i class="fa fa-child purple"></i></span></td>
       <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === null"></td>
-      <td class="center">{{bed.patient?.plannedLeaveDate|date: 'd'}}{{bed.patient?.plannedLeaveDate ? '/' : null}}{{bed.patient?.plannedLeaveDate|date: 'M'}}</td>
+
+      <td class="center" *ngIf="unit.hasDatedBackHomeFeature">{{bed.patient?.plannedLeaveDate|date: 'd'}}{{bed.patient?.plannedLeaveDate ? '/' : null}}{{bed.patient?.plannedLeaveDate|date: 'M'}}</td>
+
       <td *ngIf="unit.hasPatientFromClinicFeature">{{bed.patient?.fromClinic?.name}}</td>
+
       <td>
         <span class="ikon" *ngIf="bed.patient?.interpreter"
                [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>
@@ -109,9 +113,27 @@
                 [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}
         </span>
       </td>
+      <td *ngIf="unit.hasBackToHomeAlternativFeature">
+        <span class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'THG' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-undo purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.information === '2' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'THG med barn' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-baby purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'Föräldrarum' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-user-friends purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.information === '4' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'Vanlig hemgång' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i>
+        </span>
+      </td>
       <td *ngIf="unit.hasCleaningFeature">
-        <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
-             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf icon-colored-RED"></i>
+        <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature && bed.bedStatus === 'OCCUPIED'"
+             [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')"><i class="fa fa-leaf purple"></i>
+        </span>
+
+        <span class="ikon" *ngIf="bed.bedStatus === 'VACANT'"
+              [appCallout]="'Ska städas'"><i class="fa fa-leaf icon-colored-RED"></i>
         </span>
       </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
