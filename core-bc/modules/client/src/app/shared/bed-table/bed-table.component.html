@@ -23,7 +23,7 @@
     <th class="column-group last" *ngIf="unit.hasBarnRondFeature">Barn</th>
     <th *ngIf="unit.hasRondFeature">Rond</th>
     <th *ngIf="unit.hasGenderFeature">Kön</th>
-    <th>Hemgång</th>
+    <th *ngIf="unit.hasDatedBackHomeFeature">Hemgång</th>
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
     <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
@@ -85,8 +85,11 @@
       <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'KVINNA'"><span [appCallout]="'Kvinna'" ><i class="fa fa-female purple"></i></span></td>
       <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === 'BARN'"><span [appCallout]="'Barn'"><i class="fa fa-child purple"></i></span></td>
       <td *ngIf="unit.hasGenderFeature && bed.patient?.gender === null"></td>
-      <td class="center">{{bed.patient?.plannedLeaveDate|date: 'd'}}{{bed.patient?.plannedLeaveDate ? '/' : null}}{{bed.patient?.plannedLeaveDate|date: 'M'}}</td>
+
+      <td class="center" *ngIf="unit.hasDatedBackHomeFeature">{{bed.patient?.plannedLeaveDate|date: 'd'}}{{bed.patient?.plannedLeaveDate ? '/' : null}}{{bed.patient?.plannedLeaveDate|date: 'M'}}</td>
+
       <td *ngIf="unit.hasPatientFromClinicFeature">{{bed.patient?.fromClinic?.name}}</td>
+
       <td>
         <span class="ikon" *ngIf="bed.patient?.interpreter"
                [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>

@@ -58,4 +58,5 @@ export class Unit {
   hasGenderFeature: boolean;
   hasPatientWaitsFeature: boolean;
   hasBackToHomeAlternativFeature: boolean;
+  hasDatedBackHomeFeature: boolean;
 }

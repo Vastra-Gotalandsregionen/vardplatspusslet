@@ -67,13 +67,12 @@
           </vgr-dropdown-select>
         </div>
 
-        <div class="div-button10">
+        <div class="div-button10" *ngIf="unit.hasDatedBackHomeFeature">
           <p>Planerad hemgång</p>
           <div class="containers">
             <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
             <a (click)="deleteDate()" class="div-left2"><i class="fa fa-times-rectangle-o child"></i></a>
           </div>
-
         </div>
         <div *ngIf="unit.hasBackToHomeAlternativFeature" class="div-button10">
           <div>Hemgång alternativ</div>
