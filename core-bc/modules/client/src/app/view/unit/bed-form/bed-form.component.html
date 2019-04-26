@@ -75,12 +75,12 @@
           </div>
 
         </div>
-        <div *ngIf="unit.hasInfoFeature" class="div-button10">
-          <div>Information</div>
+        <div *ngIf="unit.hasBackToHomeAlternativFeature" class="div-button10">
+          <div>Hemgång alternativ</div>
           <div class="info" formGroupName="infoGroup">
             <vgr-radio-group formControlName="information" [options]="informationOptions" [vertical]="true">
             </vgr-radio-group>
-            <input formControlName="kommentar"/>
+            <input formControlName="kommentar" placeholder="Kommentar ..."/>
           </div>
         </div>
 

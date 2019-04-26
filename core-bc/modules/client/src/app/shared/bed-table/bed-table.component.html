@@ -28,7 +28,8 @@
     <th>Tolk</th>
     <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
-    <th>Övrig anteckning</th>
+    <th>Anteckningar</th>
+    <th *ngIf="unit.hasBackToHomeAlternativFeature">Hem alt.</th>
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -105,6 +106,20 @@
       <td>
         <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
                 [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}
+        </span>
+      </td>
+      <td *ngIf="unit.hasBackToHomeAlternativFeature">
+        <span class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'THG' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-undo purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.information === '2' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'THG med barn' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-baby purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.information === '3' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'Föräldrarum' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-user-friends purple"></i>
+        </span>
+        <span class="ikon" *ngIf="bed.patient?.information === '4' && unit.hasBackToHomeAlternativFeature"
+             [appCallout]="'Vanlig hemgång' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i>
         </span>
       </td>
       <td *ngIf="unit.hasCleaningFeature">

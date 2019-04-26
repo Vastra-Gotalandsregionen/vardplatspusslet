@@ -43,7 +43,6 @@ export class Unit {
   hasBarnRondFeature: boolean;
   hasRondFeature: boolean;
   hasAmningFeature: boolean;
-  hasInfoFeature: boolean;
   careBurdenCategories: CareBurdenCategory[];
   careBurdenValues: CareBurdenValue[];
   hasMorKostFeature: boolean;
@@ -58,4 +57,5 @@ export class Unit {
   hasPatientFromClinicFeature: boolean;
   hasGenderFeature: boolean;
   hasPatientWaitsFeature: boolean;
+  hasBackToHomeAlternativFeature: boolean;
 }
