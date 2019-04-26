@@ -45,16 +45,10 @@ public class UnitController extends BaseController {
     private UnitRepository unitRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private ClinicRepository clinicRepository;
 
     @Autowired
     private SevenDaysPlanningUnitService sevenDaysPlanningUnitService;
-
-    @Autowired
-    private HttpServletRequest request;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
@@ -124,12 +118,13 @@ public class UnitController extends BaseController {
                                          @RequestParam(value = "keepBeds", required = false) Boolean keepBeds,
                                          @RequestParam(value = "newUnit", required = false) Boolean newUnit
     ) {
-        User user = getUser();
+        Optional<User> optionalUser = getUser();
 
-        if (user == null) {
+        if (!optionalUser.isPresent()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError("Du är inte inloggad."));
         }
 
+        User user = optionalUser.get();
         if (!Role.ADMIN.equals(user.getRole()) && !user.getUnits().contains(unit)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Du är inte behörig till " + unit.getName() + ".");
         }
@@ -178,14 +173,4 @@ public class UnitController extends BaseController {
         return ResponseEntity.ok().build();
     }
 
-
-    private User getUser() {
-        Optional<String> userIdFromRequest = HttpUtil.getUserIdFromRequest(request);
-
-        if (userIdFromRequest.isPresent()) {
-            return userRepository.findOne(userIdFromRequest.get());
-        } else {
-            return null;
-        }
-    }
 }

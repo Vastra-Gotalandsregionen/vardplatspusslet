@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Message} from "../../domain/message";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-message',
@@ -22,11 +23,14 @@ export class MessageComponent implements OnInit {
     ['SUNDAY', 'Söndag'],
   ]);
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
     this.dayOfWeekLabel = this.allDaysOfWeekMap.get(this.message.dayOfWeek);
   }
 
+  getHtml(text: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(text);
+  }
 }

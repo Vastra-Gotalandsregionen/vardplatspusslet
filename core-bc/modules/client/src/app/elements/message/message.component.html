@@ -9,6 +9,6 @@
                 </span>
                 <span *ngIf="dayOfWeekLabel">{{dayOfWeekLabel}}</span>
             </div>
-            <div [innerHTML]="message.text"></div>
+            <div [innerHTML]="getHtml(message.text)"></div>
         </vgr-expandable-div-content>
 </vgr-expandable-div>
