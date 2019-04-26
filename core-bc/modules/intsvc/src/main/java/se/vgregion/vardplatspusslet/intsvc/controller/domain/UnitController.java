@@ -144,6 +144,7 @@ public class UnitController extends BaseController {
     }
 
     @RequestMapping(value = "/{unitId}", method = RequestMethod.DELETE)
+    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
     public ResponseEntity deleteUnit(@PathVariable("unitId") String unitId) {
 
         unitRepository.delete(unitId);
@@ -153,23 +154,23 @@ public class UnitController extends BaseController {
 
     @RequestMapping(value = "/{clinicId}/{id}/sevenDaysPlaningUnit", method = RequestMethod.PUT)
     @ResponseBody
+    @PreAuthorize("@authService.hasUnitPermission(authentication, #unitId)")
     public ResponseEntity<Unit> saveSevenDaysPlaning(@PathVariable("clinicId") String clinicId,
-                                                          @PathVariable("id") String id,
+                                                          @PathVariable("id") String unitId,
                                                           @RequestBody List<SevenDaysPlaningUnit> sevenDaysPlaningUnits) {
-        /*Clinic clinic = clinicRepository.getOne(clinicId);
-        Unit unit = unitService.findUnitByIdAndClinic(id, clinic);*/
 
-        sevenDaysPlanningUnitService.save(clinicId, id, sevenDaysPlaningUnits);
+        sevenDaysPlanningUnitService.save(clinicId, unitId, sevenDaysPlaningUnits);
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(value = "/{clinicId}/{id}/{planingUnitId}", method = RequestMethod.DELETE)
     @ResponseBody
+    @PreAuthorize("@authService.hasUnitPermission(authentication, #unitId)")
     public ResponseEntity deleteSevenDaysPlaning(@PathVariable("clinicId") String clinicId,
-                                                          @PathVariable("id") String id,
+                                                          @PathVariable("id") String unitId,
                                                          @PathVariable("planingUnitId") Long planingUnitId) {
 
-        sevenDaysPlanningUnitService.delete(clinicId, id, planingUnitId);
+        sevenDaysPlanningUnitService.delete(clinicId, unitId, planingUnitId);
         return ResponseEntity.ok().build();
     }
 

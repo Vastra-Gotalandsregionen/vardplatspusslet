@@ -15,7 +15,7 @@ export class UserLoggedInGuard implements CanActivate {
     let authenticated = this.authService.isAuthenticated();
 
     if (!authenticated) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/'], { queryParams: { returnUrl: state.url }});
     }
 
     return authenticated;

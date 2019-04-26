@@ -2,6 +2,7 @@ package se.vgregion.vardplatspusslet.intsvc.controller.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class BedController {
 
     @RequestMapping(value = "/{clinicId}/{unitId}", method = RequestMethod.PUT)
     @ResponseBody
-//    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
+    @PreAuthorize("@authService.hasUnitPermission(authentication, #unitId)")
     public ResponseEntity<Bed> saveBed(@PathVariable("clinicId") String clinicId,
                                        @PathVariable("unitId") String unitId,
                                        @RequestBody Bed bed) {
@@ -31,6 +32,7 @@ public class BedController {
     }
 
     @RequestMapping(value = "/{clinicId}/{unitId}/{bedId}", method = RequestMethod.DELETE)
+    @PreAuthorize("@authService.hasUnitPermission(authentication, #unitId)")
     public ResponseEntity deleteBed(@PathVariable("clinicId") String clinicId,
                                     @PathVariable("unitId") String unitId,
                                     @PathVariable("bedId") Long bedId) {
@@ -43,6 +45,7 @@ public class BedController {
     @RequestMapping(value = "/patientHasLeft", method = RequestMethod.POST)
     @ResponseBody
 //    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
+    @PreAuthorize("@authService.hasUnitPermission(authentication, bed.unit.id)")
     public ResponseEntity<?> patientHasLeft(@RequestBody Bed bed) {
 
         if (bed.getPatient() == null) {
