@@ -24,9 +24,17 @@ abstract class BaseController {
         Optional<String> userIdFromRequest = HttpUtil.getUserIdFromRequest(request);
 
         if (userIdFromRequest.isPresent()) {
-            return Optional.ofNullable(userRepository.findOne(userIdFromRequest.get()));
+            return Optional.ofNullable(userRepository.findUserById(userIdFromRequest.get()));
         } else {
             return Optional.empty();
         }
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
     }
 }

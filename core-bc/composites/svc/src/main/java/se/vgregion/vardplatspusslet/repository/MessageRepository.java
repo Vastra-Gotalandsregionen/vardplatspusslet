@@ -2,6 +2,7 @@ package se.vgregion.vardplatspusslet.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import se.vgregion.vardplatspusslet.domain.jpa.Message;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 
@@ -16,4 +17,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     @Query("select m from Message m where m.unit = ?1 and (m.dayOfWeek = ?2 or m.date = ?3)")
     TreeSet<Message> findAllByUnitEqualsToday(Unit unit, DayOfWeek dayOfWeek, Date date);
 
+    @Query("select m from Message m join fetch m.unit where m.id = :id")
+    Message findByIdWithUnit(@Param("id") Long id);
 }
