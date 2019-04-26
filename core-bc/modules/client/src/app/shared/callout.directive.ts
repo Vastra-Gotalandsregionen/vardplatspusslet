@@ -7,7 +7,7 @@ import {
   OnDestroy,
   Optional,
   ViewContainerRef,
-  ComponentFactoryResolver, ComponentRef, HostListener
+  ComponentFactoryResolver, ComponentRef, HostListener, EmbeddedViewRef, Injector, ApplicationRef
 } from '@angular/core';
 
 import {CalloutComponent} from './callout.component';
@@ -29,6 +29,8 @@ export class CalloutDirective implements OnDestroy {
     private elementRef: ElementRef,
     private viewContainer: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
+    private injector: Injector,
+    private appRef: ApplicationRef,
     @Optional() private changeDetector: ChangeDetectorRef,
     @Optional() private zone: NgZone,
   ) {
@@ -69,9 +71,17 @@ export class CalloutDirective implements OnDestroy {
   private createCallout(content: String): ComponentRef<CalloutComponent> {
     this.viewContainer.clear();
 
-    let calloutComponentFactory =
-      this.componentFactoryResolver.resolveComponentFactory(CalloutComponent);
-    let calloutComponentRef = this.viewContainer.createComponent(calloutComponentFactory);
+    const calloutComponentRef = this.componentFactoryResolver
+      .resolveComponentFactory(CalloutComponent)
+      .create(this.injector);
+
+    // 2. Attach component to the appRef so that it's inside the ng component tree
+    this.appRef.attachView(calloutComponentRef.hostView);
+
+    const domElem = (calloutComponentRef.hostView as EmbeddedViewRef<any>)
+      .rootNodes[0] as HTMLElement;
+
+    document.body.appendChild(domElem);
 
     calloutComponentRef.instance.content = content;
 
