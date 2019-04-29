@@ -59,8 +59,8 @@ export class BedFormComponent implements OnInit {
   private initForm(bed: Bed) {
 
     this.bedStatusOptions = [
-      {displayName: 'Upptagen', value: 'OCCUPIED'},
       {displayName: 'Ledig', value: 'VACANT'},
+      {displayName: 'Upptagen', value: 'OCCUPIED'},
       {displayName: 'Reserverad', value: 'RESERVED'}
     ];
 

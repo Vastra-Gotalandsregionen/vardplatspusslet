@@ -78,7 +78,7 @@ public class MessageController extends BaseController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError("Du måste vara inloggad."));
         }
 
-        Message message = messageRepository.findOne(messageId);
+        Message message = messageRepository.findByIdWithUnit(messageId);
         if (!user.get().getRole().equals(Role.ADMIN) && !user.get().getUnits().contains(message.getUnit())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                     new ApiError("Du har inte behörighet till avdelningen.")

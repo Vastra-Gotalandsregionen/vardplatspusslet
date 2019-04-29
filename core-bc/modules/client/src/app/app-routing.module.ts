@@ -62,15 +62,18 @@ const routes: Routes = [
   },
   {
     path: ':managementId/:clinicId/:id',
-    component: UnitComponent
+    component: UnitComponent,
+    canActivate: [HasEditUnitPermissionGuard]
   },
   {
     path: ':managementId/:clinicId/:id/bed-view',
-    component: BedViewComponent
+    component: BedViewComponent,
+    canActivate: [HasEditUnitPermissionGuard]
   },
   {
     path: ':managementId/:clinicId/:id/kpi-view',
-    component: KpiViewComponent
+    component: KpiViewComponent,
+    canActivate: [HasEditUnitPermissionGuard]
   },
   {
     path: ':managementId/:clinicId/:id/editMessages',
