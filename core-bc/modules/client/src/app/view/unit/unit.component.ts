@@ -60,7 +60,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
 
-  private updateView(clinicId, unitId)
+  protected updateView(clinicId, unitId)
   {
     this.http.get<Clinic>('/api/clinic/' + clinicId).subscribe(clinic => {
       this.clinic = clinic;

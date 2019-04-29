@@ -40,7 +40,7 @@ export class DashboardMenuComponent implements OnInit {
 
   ngOnInit() {
 
-    let currentURL = this.router.url;
+    let currentURL = decodeURI(this.router.url);
 
     if(this.type == 'unit-dashboard') {
       let urlPrefix = '/' + this.unit.clinic.management.id + '/' + this.unit.clinic.id + '/' + this.unit.id;

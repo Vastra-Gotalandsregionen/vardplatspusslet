@@ -1,11 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {interval, Subscription} from "rxjs";
+import {FormBuilder} from "@angular/forms";
 import {AuthService} from "../../../service/auth.service";
 import "rxjs-compat/add/operator/do";
-import {ListItemComponent} from "vgr-komponentkartan";
 import {UnitComponent} from "../unit.component";
 
 @Component({
@@ -13,7 +11,7 @@ import {UnitComponent} from "../unit.component";
   templateUrl: './kpi-view.component.html',
   styleUrls: ['./kpi-view.component.scss']
 })
-export class KpiViewComponent extends UnitComponent {
+export class KpiViewComponent extends UnitComponent implements OnInit {
 
   constructor(protected http: HttpClient,
       protected formBuilder: FormBuilder,
@@ -23,7 +21,13 @@ export class KpiViewComponent extends UnitComponent {
     super(http, formBuilder, route, authService);
   }
 
-  
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      let clinicId = params.clinicId;
+      let unitId = params.id;
+      this.updateView(clinicId, unitId);
+    });
+  }
 }
 
 
