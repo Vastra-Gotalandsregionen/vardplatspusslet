@@ -37,18 +37,6 @@
      [appCallout]="'Sekretess'"><i class="fa fa-user-secret purple"></i>
 </div>
 
-<div class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
-     [appCallout]="'Infekterad'">
-  <i class="fa fa-bug"></i>
-</div>
-
-<div class="ikon" *ngIf="bed.patient?.infectionSensitive && unit.hasInfectionSensitiveFeature"
-     [appCallout]="'Infektionskänslig'"><i class="material-icons rod">grain</i>
-</div>
-
-<div class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
-     [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
-</div>
 
 <div class="ikon" *ngIf="bed.patient?.pal && unit.hasPalFeature"
      [appCallout]="'PAL: ' + bed.patient.pal"><i class="fa fa-user-md purple"></i>
