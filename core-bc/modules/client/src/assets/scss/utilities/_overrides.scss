@@ -39,5 +39,10 @@ body .list-item__content {
 }
 
 body .list__items:before {
+  content: none;
   width: auto;
+}
+
+body .list {
+  background: transparent;
 }
