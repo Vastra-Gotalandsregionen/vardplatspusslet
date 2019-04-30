@@ -53,7 +53,7 @@ public class ManagementController extends BaseController{
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
     @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
-    public ResponseEntity<Object> saveManagemenet(@RequestBody Management management,
+    public ResponseEntity<Object> saveManagement(@RequestBody Management management,
                                                   @RequestParam(value = "newManagement", required = false) Boolean newManagement){
 
         if (Boolean.TRUE.equals(newManagement) && managementService.managementExists(management.getId())) {
@@ -64,7 +64,6 @@ public class ManagementController extends BaseController{
                     HttpStatus.BAD_REQUEST
             );
         }
-
 
         return ResponseEntity.ok(managementRepository.save(management));
     }

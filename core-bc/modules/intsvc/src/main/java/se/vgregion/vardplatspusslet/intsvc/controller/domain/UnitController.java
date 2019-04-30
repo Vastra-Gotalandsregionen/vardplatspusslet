@@ -78,12 +78,13 @@ public class UnitController extends BaseController {
         unit.setCleaningAlternatives(new TreeSet<>(unit.getCleaningAlternatives()));
     }
 
-    @RequestMapping(value = "/{clinicId}/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{clinicId}/{unitId}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Unit> getUnit(@PathVariable("clinicId") String clinicId, @PathVariable("id") String id) {
+    @PreAuthorize("@authService.hasUnitPermission(authentication, #unitId)")
+    public ResponseEntity<Unit> getUnit(@PathVariable("clinicId") String clinicId, @PathVariable("unitId") String unitId) {
         Clinic clinic = clinicRepository.getOne(clinicId);
 
-        Unit unit = unitService.findUnitByIdAndClinic(id, clinic);
+        Unit unit = unitService.findUnitByIdAndClinic(unitId, clinic);
 
         if (unit != null) {
             sortCollections(unit);

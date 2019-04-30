@@ -1,6 +1,6 @@
-import {ComponentFactoryResolver, Inject, Injectable, ViewContainerRef, ViewRef} from '@angular/core';
-import {ErrorDialogComponent} from "../shared/error-dialog/error-dialog.component";
-import {HttpErrorResponse} from "@angular/common/http";
+import {ComponentFactoryResolver, Inject, Injectable, ViewContainerRef} from '@angular/core';
+import {ErrorDialogComponent} from '../shared/error-dialog/error-dialog.component';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class ErrorDialogService {
   constructor(@Inject(ComponentFactoryResolver) private factoryResolver) { }
 
   public setRootViewContainerRef(viewContainerRef: ViewContainerRef) {
-    this.rootViewContainer = viewContainerRef
+    this.rootViewContainer = viewContainerRef;
   }
 
   showErrorDialog(error: HttpErrorResponse) {
@@ -31,8 +31,6 @@ export class ErrorDialogService {
 
   private setErrorMessage(component, error: HttpErrorResponse) {
     let errorMessage;
-
-    console.error(error.message);
 
     if (error.error && error.error.message) {
       errorMessage = error.error.message;

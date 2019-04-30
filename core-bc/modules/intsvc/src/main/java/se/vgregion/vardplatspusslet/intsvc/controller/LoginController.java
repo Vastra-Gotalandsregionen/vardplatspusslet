@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import se.vgregion.vardplatspusslet.domain.jpa.Role;
 import se.vgregion.vardplatspusslet.domain.jpa.User;
 import se.vgregion.vardplatspusslet.domain.json.LoginRequest;
+import se.vgregion.vardplatspusslet.domain.json.TokenResponse;
+import se.vgregion.vardplatspusslet.intsvc.controller.domain.ApiError;
 import se.vgregion.vardplatspusslet.repository.UserRepository;
 import se.vgregion.vardplatspusslet.service.JwtUtil;
 import se.vgregion.vardplatspusslet.service.LdapLoginService;
@@ -42,7 +44,7 @@ public class LoginController {
 //    private boolean impersonateEnabled;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+    public ResponseEntity login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         try {
             User user = null;
             if (request.getHeader("iv-user") != null) {
@@ -58,15 +60,15 @@ public class LoginController {
 
             String token = JwtUtil.createToken(user.getId(), user.getName(), roles, CommonUtil.getUnitIds(user));
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new TokenResponse(token));
         } catch (FailedLoginException e) {
             LOGGER.warn(e.getClass().getCanonicalName() + " - " + e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(e.getMessage()));
         }
     }
 
     @RequestMapping(value = "/renew", method = RequestMethod.POST)
-    public ResponseEntity<String> renewJwt(@RequestBody String jwt) {
+    public ResponseEntity renewJwt(@RequestBody String jwt) {
 
         try {
             DecodedJWT decodedJWT = JwtUtil.verify(jwt);
@@ -77,9 +79,9 @@ public class LoginController {
 
             String token = JwtUtil.createToken(user.getId(), user.getName(), roles, CommonUtil.getUnitIds(user));
 
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(new TokenResponse(token));
         } catch (JWTVerificationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(e.getMessage()));
         }
 
     }

@@ -1,24 +1,22 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
-import {Unit} from "../../domain/unit";
-import {Bed} from "../../domain/bed";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Patient} from "../../domain/patient";
-import {Clinic} from "../../domain/clinic";
-import {Ssk} from "../../domain/ssk";
-import {Message} from "../../domain/message";
-import {interval, Subscription} from "rxjs";
-import {AuthService} from "../../service/auth.service";
-import {CareBurdenChoice} from "../../domain/careburdenchoice";
-import {CareBurdenCategory} from "../../domain/careBurdenCategory";
-import {CareBurdenValue} from "../../domain/careburdenvalue";
-import {DropdownItem} from "../../domain/DropdownItem";
-import "rxjs-compat/add/operator/do";
-import {ListItemComponent} from "vgr-komponentkartan";
-import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
-import {UnitPlannedInTableComponent} from "../../elements/unit-planned-in-table/unit-planned-in-table.component";
-import {UnitPlannedInItemsComponent} from "../../elements/unit-planned-in-items/unit-planned-in-items.component";
+import {Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {Unit} from '../../domain/unit';
+import {Bed} from '../../domain/bed';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Patient} from '../../domain/patient';
+import {Clinic} from '../../domain/clinic';
+import {Message} from '../../domain/message';
+import {interval, Subscription} from 'rxjs';
+import {AuthService} from '../../service/auth.service';
+import {CareBurdenChoice} from '../../domain/careburdenchoice';
+import {CareBurdenValue} from '../../domain/careburdenvalue';
+import {DropdownItem} from '../../domain/DropdownItem';
+import 'rxjs-compat/add/operator/do';
+import {ListItemComponent} from 'vgr-komponentkartan';
+import {SevenDaysPlaningUnit} from '../../domain/seven-days-planing-unit';
+import {UnitPlannedInTableComponent} from '../../elements/unit-planned-in-table/unit-planned-in-table.component';
+import {UnitPlannedInItemsComponent} from '../../elements/unit-planned-in-items/unit-planned-in-items.component';
 
 @Component({
   selector: 'app-unit',
@@ -27,6 +25,7 @@ import {UnitPlannedInItemsComponent} from "../../elements/unit-planned-in-items/
 })
 export class UnitComponent implements OnInit, OnDestroy {
 
+  @ViewChildren(UnitPlannedInTableComponent) unitsOnSameClinicTables: QueryList<UnitPlannedInTableComponent>;
   @ViewChild('thisUnitPlannedInTable') thisUnitPlannedInTable: UnitPlannedInTableComponent;
   @ViewChild('unitPlannedInItems') unitPlannedInItems: UnitPlannedInItemsComponent;
   @ViewChild('unitPlannedInItemsOld') unitPlannedInItemsOld: UnitPlannedInItemsComponent;
@@ -49,7 +48,6 @@ export class UnitComponent implements OnInit, OnDestroy {
   messages: Message[] = [];
   private timerSubscription: Subscription;
   sskCategoryValueMatrix = {};
-
 
   constructor(protected http: HttpClient,
               protected formBuilder: FormBuilder,
@@ -82,7 +80,7 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.updateVacants(unit);
             this.inited = true;
             if (this.thisUnitPlannedInTable) {
-              this.thisUnitPlannedInTable.update(unit);
+              this.thisUnitPlannedInTable.update();
             }
 
             if (this.unitPlannedInItems) {
@@ -157,6 +155,13 @@ export class UnitComponent implements OnInit, OnDestroy {
           thisBed.bedStatus = incomingBed.bedStatus;
           thisBed.label = incomingBed.label;
           thisBed.patient = incomingBed.patient;
+          thisBed.ssk = incomingBed.ssk;
+          thisBed.cleaningAlternative = incomingBed.cleaningAlternative;
+          thisBed.cleaningalternativeExists = incomingBed.cleaningalternativeExists;
+          thisBed.cleaningInfo = incomingBed.cleaningInfo;
+          thisBed.patientWaits = incomingBed.patientWaits;
+          thisBed.servingClinic = incomingBed.servingClinic;
+          // thisBed.
           //thisBed.relatedInformation = incomingBed.relatedInformation;
         }
       }
@@ -187,6 +192,29 @@ export class UnitComponent implements OnInit, OnDestroy {
       }
       this.updateSskCategoryValueMatrix(unit);
       this.updateVacants(unit);
+      this.updateMessages(unit);
+
+      this.updateUnitPlannedIns(unit, clinicId);
+    });
+  }
+
+  private updateUnitPlannedIns(unit, clinicId) {
+    if (this.unitPlannedInItemsOld) {
+      this.unitPlannedInItemsOld.update(unit);
+    }
+
+    this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
+
+      // We also include this unit, so we don't filter.
+      for (const incomingUnitOnSameClinic of unitArray) {
+
+        this.unitsOnSameClinicTables
+          .filter(table => table.unit.id === incomingUnitOnSameClinic.id)
+          .forEach(table => {
+            table.unit = incomingUnitOnSameClinic;
+            table.update();
+          });
+      }
     });
   }
 
@@ -282,8 +310,8 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.ngOnInit();
       });
   }
-  
-    // To initial capital letter and lower case after first letter. Also replace underscore with space.
+
+  // To initial capital letter and lower case after first letter. Also replace underscore with space.
   format(input: string) {
     if (!input) {
       return null;
@@ -311,11 +339,15 @@ export class UnitComponent implements OnInit, OnDestroy {
 
   onUnitPlannedInItemsSave() {
     this.updateView(this.clinic.id, this.unit.id);
-    //this.ngOnInit();
-     //this.thisUnitPlannedInTable.ngOnInit();
   }
 
 
+  private updateMessages(unit: Unit) {
+    this.http.get<Message[]>('/api/message/' + unit.id + '/today')
+      .subscribe((messages: Message[]) => {
+        this.messages = messages;
+      });
+  }
 }
 
 
