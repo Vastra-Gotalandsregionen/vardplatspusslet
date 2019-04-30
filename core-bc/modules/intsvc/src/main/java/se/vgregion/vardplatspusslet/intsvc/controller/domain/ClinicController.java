@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.codec.Utf8;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
@@ -12,6 +13,8 @@ import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.service.ClinicService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -64,11 +67,19 @@ public class ClinicController extends BaseController {
     @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
     public ResponseEntity<Object> saveClinic(@RequestBody Clinic clinic,
                                              @RequestParam(value = "newClinic", required = false) Boolean newClinic
-    ) {
-        if (Boolean.TRUE.equals(newClinic) && clinicService.clinicExists(clinic.getId())) {
+    ) throws UnsupportedEncodingException {
+
+        String id = clinic.getId().trim();
+        clinic.setId(id);
+        if (!id.equals(URLEncoder.encode(id, "UTF-8"))) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiError("Endast a-z, siffror, - och _ är tillåtna tecken för ID."));
+        }
+
+        if (Boolean.TRUE.equals(newClinic) && clinicService.clinicExists(id)) {
 
             return new ResponseEntity<>(
-                    new ApiError("En klinik med ID=" + clinic.getId() + " finns redan."),
+                    new ApiError("En klinik med ID=" + id + " finns redan."),
                     new HttpHeaders(),
                     HttpStatus.BAD_REQUEST
             );

@@ -28,6 +28,8 @@ import se.vgregion.vardplatspusslet.service.SevenDaysPlanningUnitService;
 import se.vgregion.vardplatspusslet.service.UnitService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -114,11 +116,11 @@ public class UnitController extends BaseController {
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-//    @PreAuthorize("@authService.isLoggedIn(authentication)")
     public ResponseEntity<Object> saveUnit(@RequestBody Unit unit,
                                          @RequestParam(value = "keepBeds", required = false) Boolean keepBeds,
                                          @RequestParam(value = "newUnit", required = false) Boolean newUnit
-    ) {
+    ) throws UnsupportedEncodingException {
+
         Optional<User> optionalUser = getUser();
 
         if (!optionalUser.isPresent()) {
@@ -128,6 +130,13 @@ public class UnitController extends BaseController {
         User user = optionalUser.get();
         if (!Role.ADMIN.equals(user.getRole()) && !user.getUnits().contains(unit)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Du är inte behörig till " + unit.getName() + ".");
+        }
+
+        String id = unit.getId().trim();
+        unit.setId(id);
+        if (!id.equals(URLEncoder.encode(id, "UTF-8"))) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiError("Endast a-z, siffror, - och _ är tillåtna tecken för ID."));
         }
 
         if (Boolean.TRUE.equals(newUnit) && unitService.unitExists(unit.getId())) {

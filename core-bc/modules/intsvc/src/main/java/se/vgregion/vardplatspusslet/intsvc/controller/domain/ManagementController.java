@@ -18,6 +18,8 @@ import se.vgregion.vardplatspusslet.repository.ManagementRepository;
 import se.vgregion.vardplatspusslet.service.ManagementService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,12 +56,20 @@ public class ManagementController extends BaseController{
     @ResponseBody
     @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
     public ResponseEntity<Object> saveManagement(@RequestBody Management management,
-                                                  @RequestParam(value = "newManagement", required = false) Boolean newManagement){
+                                                 @RequestParam(value = "newManagement", required = false) Boolean newManagement)
+            throws UnsupportedEncodingException {
 
-        if (Boolean.TRUE.equals(newManagement) && managementService.managementExists(management.getId())) {
+        String id = management.getId().trim();
+        management.setId(id);
+        if (!id.equals(URLEncoder.encode(id, "UTF-8"))) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiError("Endast a-z, siffror, - och _ är tillåtna tecken för ID."));
+        }
+
+        if (Boolean.TRUE.equals(newManagement) && managementService.managementExists(id)) {
 
             return new ResponseEntity<>(
-                    new ApiError("En förvaltning med ID=" + management.getId() + " finns redan."),
+                    new ApiError("En förvaltning med ID=" + id + " finns redan."),
                     new HttpHeaders(),
                     HttpStatus.BAD_REQUEST
             );

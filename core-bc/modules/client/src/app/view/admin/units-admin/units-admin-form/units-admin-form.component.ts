@@ -15,6 +15,7 @@ import {UnitPlannedIn} from "../../../../domain/unit-planned-in";
 import {DropdownItem} from "../../../../domain/DropdownItem";
 import {Management} from "../../../../domain/management";
 import {SelectableItem} from "vgr-komponentkartan";
+import {AuthService} from '../../../../service/auth.service';
 
 @Component({
   selector: 'app-units-admin-form',
@@ -59,7 +60,8 @@ export class UnitsAdminFormComponent implements OnInit {
 
 
   constructor(private http: HttpClient,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              protected authService: AuthService) {
     this.colorDropdownItems = [
       {displayName: 'Blå', value: 'BLUE'},
       {displayName: 'Grön', value: 'GREEN'},
@@ -669,5 +671,9 @@ export class UnitsAdminFormComponent implements OnInit {
       (this.unitForm.get('careBurdenValues') as FormArray).at(index).get('name').setValidators(Validators.pattern(/^[0-9]+$/));
       (this.unitForm.get('careBurdenValues') as FormArray).at(index).get('name').updateValueAndValidity();
     }
+  }
+
+  get admin(): boolean {
+    return this.authService.isAdmin();
   }
 }
