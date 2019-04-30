@@ -188,10 +188,18 @@
       </vgr-card-section>
 
       <vgr-card-section [expanded]="true" [title]="'Vårdtyngdsvärden'" [subtitle]="" class="clearfix">
-        <table class="vpp-table" *ngIf="!editBurdenValueGroup">
+        <table class="vpp-table left-align" *ngIf="!editBurdenValueGroup">
+          <thead>
+          <tr>
+            <th>I beräkning <span class="fa fa-question-circle" [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span></th>
+            <th>Namn</th>
+            <th>Färg</th>
+          </tr>
+          </thead>
 
           <tr *ngFor="let burden of unit?.careBurdenValues|| []">
-            <td><vgr-checkbox [checked]="burden.countedIn" [disabled]="true"></vgr-checkbox>{{burden.name}}</td>
+            <td><vgr-checkbox [checked]="burden.countedIn" [disabled]="true"></vgr-checkbox></td>
+            <td>{{burden.name}}</td>
             <td><span class="care-burden-value-color {{burden.color}}"></span></td>
           </tr>
 
@@ -202,20 +210,32 @@
         </table>
 
         <div *ngIf="editBurdenValueGroup">
-          <div formArrayName="careBurdenValues" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i" class="contain">
-              <vgr-checkbox formControlName="countedIn"></vgr-checkbox>
-              <vgr-input [ngClass]="{'warn': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)"  *ngIf="unitForm.get('careBurden').value == 'tal'" formControlName="name" placeholder="Siffra: 123..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input>
-              <vgr-input  *ngIf="unitForm.get('careBurden').value == 'text' || unitForm.get('careBurden').value == 'inget'" formControlName="name" placeholder="text.." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input>
-              <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg (valfritt)'">
-                <vgr-dropdown-item [value]="null">Välj färg (valfritt)</vgr-dropdown-item>
-                <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-              </vgr-dropdown-select>
+          <table class="left-align" formArrayName="careBurdenValues">
+            <thead>
+            <tr>
+              <th>I beräkning <span class="fa fa-question-circle" [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span></th>
+              <th>Namn</th>
+              <th>Färg</th>
+            </tr>
+            </thead>
 
-              <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-              <span *ngIf="getcareBurdenValidation(i)" class="is-invalid">Fältet kan innehålla bara siffror </span>
-            </div>
-          </div>
+            <tr [formGroupName]="i" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
+              <td><vgr-checkbox formControlName="countedIn"></vgr-checkbox></td>
+              <td *ngIf="unitForm.get('careBurden').value == 'tal'"><vgr-input [ngClass]="{'warn': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)" formControlName="name" placeholder="Siffra: 123..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input></td>
+              <td *ngIf="unitForm.get('careBurden').value == 'text' || unitForm.get('careBurden').value == 'inget'"><vgr-input formControlName="name" placeholder="text.." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input></td>
+              <td>
+                <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg (valfritt)'">
+                  <vgr-dropdown-item [value]="null">Välj färg (valfritt)</vgr-dropdown-item>
+                  <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                </vgr-dropdown-select>
+              </td>
+
+              <td>
+                <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+                <span *ngIf="getcareBurdenValidation(i)" class="is-invalid">Fältet kan innehålla bara siffror </span>
+              </td>
+            </tr>
+          </table>
           <div class="edit clearfix">
             <a (click)="addCareBurdenValues()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdsvärde</span></a>
           </div>

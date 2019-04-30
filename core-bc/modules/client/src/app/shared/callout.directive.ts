@@ -14,15 +14,12 @@ import {CalloutComponent} from './callout.component';
 
 
 @Directive({
-  selector: '[appCallout]',
-  host: {
-    '[style.position]': '"relative"'
-  }
+  selector: '[appCallout]'
 })
 export class CalloutDirective implements OnDestroy {
+
   @Input() appCallout: String = '';
 
-  private element: HTMLElement;
   private calloutRef: ComponentRef<CalloutComponent>;
 
   constructor(
@@ -40,21 +37,26 @@ export class CalloutDirective implements OnDestroy {
   @HostListener('mouseenter') onmouseenter() {
     if (this.appCallout && this.appCallout.length > 0) {
       this.calloutRef = this.createCallout(this.appCallout);
-      let calloutEl = this.calloutRef.location.nativeElement;
-      let targetPosX = this.elementRef.nativeElement.offsetLeft;
-      let targetPosY = this.elementRef.nativeElement.offsetTop;
+      const calloutEl = this.calloutRef.location.nativeElement;
+
+      const offset = this.offset(this.elementRef.nativeElement);
+      const targetPosX = offset.left;
+      const targetPosY = offset.top;
 
       calloutEl.style.left = (targetPosX + this.elementRef.nativeElement.offsetWidth + 12) + 'px';
       calloutEl.style.top = (targetPosY) + 'px';
     }
   }
 
-  @HostListener('mouseleave') onmouseleave() {
-    this.hideCallout();
+  offset(el) {
+    const rect = el.getBoundingClientRect(),
+      scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
   }
 
-  ngOnInit() {
-    this.element = this.elementRef.nativeElement;
+  @HostListener('mouseleave') onmouseleave() {
+    this.hideCallout();
   }
 
   ngOnDestroy() {

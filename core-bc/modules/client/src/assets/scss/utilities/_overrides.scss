@@ -34,6 +34,10 @@ html body {
   min-width: 0;
 }
 
-.list-item__content {
-  width: auto !important;
+body .list-item__content {
+  width: auto;
+}
+
+body .list__items:before {
+  width: auto;
 }
