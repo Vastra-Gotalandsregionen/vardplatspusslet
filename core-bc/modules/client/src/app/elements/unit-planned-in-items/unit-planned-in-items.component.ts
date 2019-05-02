@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Unit} from "../../domain/unit";
-import {HttpClient} from "@angular/common/http";
-import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
-import {Clinic} from "../../domain/clinic";
-import {DropdownItem} from "../../domain/DropdownItem";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Unit} from '../../domain/unit';
+import {HttpClient} from '@angular/common/http';
+import {SevenDaysPlaningUnit} from '../../domain/seven-days-planing-unit';
+import {Clinic} from '../../domain/clinic';
+import {DropdownItem} from '../../domain/DropdownItem';
 
 @Component({
   selector: 'app-unit-planned-in-items',
@@ -16,7 +16,7 @@ export class UnitPlannedInItemsComponent implements OnInit {
   sevendaysplans: SevenDaysPlaningUnit[] = [];
   plannedInDropdownUnits: DropdownItem<number>[];
   addSevenDaysPlaningUnitForm: FormGroup;
-  @Input('showPlus') showPlus: boolean
+  @Input('showPlus') showPlus: boolean;
   @Input('oldPost') oldPost: boolean;
   @Input('clinic') clinic: Clinic;
   @Input('unit') unit: Unit;
@@ -45,9 +45,9 @@ export class UnitPlannedInItemsComponent implements OnInit {
     this.unit.sevenDaysPlaningUnits = this.unit.sevenDaysPlaningUnits.sort((a: SevenDaysPlaningUnit, b: SevenDaysPlaningUnit) =>
       (a.date > b.date ? -1 : 1));
 
-    let today = new Date();
+    const today = new Date();
     today.setHours(0, 0, 0, 0);
-    let idag = today.getTime();
+    const idag = today.getTime();
     if (this.oldPost) {
       this.sevendaysplans = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() < idag);
     } else {
@@ -56,14 +56,14 @@ export class UnitPlannedInItemsComponent implements OnInit {
     // this.oldPost = false;
     const controlsConfig = this.buildSevenDaysPlaningGroup(this.sevendaysplans);
 
-    let formGroup = this.formBuilder.group({
+    const formGroup = this.formBuilder.group({
       sevenDaysPlaningUnits: this.formBuilder.array(controlsConfig, [this.SevenDaysArrayCompare.bind(this)])
     });
     return formGroup;
   }
 
-  private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {
-    if (!sevenDaysPlaningUnits|| sevenDaysPlaningUnits.length === 0) {
+  private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits: SevenDaysPlaningUnit[]): FormGroup[] {
+    if (!sevenDaysPlaningUnits || sevenDaysPlaningUnits.length === 0) {
       return [];
     }
     return sevenDaysPlaningUnits.map(sevenDaysPlaningUnit => {
@@ -73,27 +73,29 @@ export class UnitPlannedInItemsComponent implements OnInit {
         fromUnit: sevenDaysPlaningUnit.fromUnit.id,
         quantity: sevenDaysPlaningUnit.quantity,
         comment:  sevenDaysPlaningUnit.comment
-      })
+      });
     });
   }
 
-  SevenDaysArrayCompare(c: AbstractControl):{[key: string]: any} | null{
-    for (let element of c.value )
-    {
-      if(element.date !== null)
-      {
+  SevenDaysArrayCompare(c: AbstractControl): {[key: string]: any} | null {
+    for (const element of c.value ) {
+      if (element.date !== null) {
         element.date = new Date(element.date).getTime();
       }
     }
-    let array1 = c.value;
-    //array1 = array1.filter(x => x.id !== null);
-    let duplicatesArray = [];
-    array1.forEach((e1, index) => array1.forEach(e2 => {if (e1.date === e2.date && e1.fromUnit === e2.fromUnit && e1.id !== e2.id) {duplicatesArray[index] = true}}));
+    const array1 = c.value;
+    // array1 = array1.filter(x => x.id !== null);
+    const duplicatesArray = [];
+    array1.forEach((e1, index) => {
+      array1.forEach(e2 => {
+        if (e1.date === e2.date && e1.fromUnit === e2.fromUnit && e1.id !== e2.id) {
+          duplicatesArray[index] = true;
+        }
+      });
+    });
     if (duplicatesArray.length > 0) {
-      return {'duplicatesExist': duplicatesArray }
-    }
-    else
-    {
+      return {'duplicatesExist': duplicatesArray };
+    } else {
       return null;
     }
   }
@@ -104,7 +106,7 @@ export class UnitPlannedInItemsComponent implements OnInit {
 
   deleteSevenDaysPlaningUnit(id: number, index: number) {
     this.sevenDaysPlaningUnits.removeAt(index);
-    if (id !== null){
+    if (id !== null) {
       this.http.delete('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + id)
         .subscribe(() => {
         });
@@ -120,7 +122,7 @@ export class UnitPlannedInItemsComponent implements OnInit {
       id: null,
       date: [null, Validators.required],
       fromUnit: [null, Validators.required],
-      quantity: [null, [Validators.required, Validators.pattern("^[0-9]*$")]],
+      quantity: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],
       comment: null
     });
   }
@@ -129,25 +131,22 @@ export class UnitPlannedInItemsComponent implements OnInit {
     return !!(duplicates && duplicates.indexOf(id) > -1);
   }
 
-  getDropdownValidation(index : number)
-  {
+  getDropdownValidation(index: number) {
     return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').touched
       && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('fromUnit').valid ;
   }
 
-  getQuantityValidation(index: number)
-  {
+  getQuantityValidation(index: number) {
     return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').touched
       && !(this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('quantity').valid ;
   }
 
-  getDatepickerValidation(index: number)
-  {
+  getDatepickerValidation(index: number) {
     return (this.addSevenDaysPlaningUnitForm.get('sevenDaysPlaningUnits') as FormArray).at(index).get('date').touched;
   }
   saveFromEnhet() {
     let sevenDaysPlaningUnits = <SevenDaysPlaningUnit[]>[];
-    let sevenDaysPlaningUnitsModel = this.addSevenDaysPlaningUnitForm.value;
+    const sevenDaysPlaningUnitsModel = this.addSevenDaysPlaningUnitForm.value;
     sevenDaysPlaningUnits = sevenDaysPlaningUnitsModel.sevenDaysPlaningUnits.map(term => {
       return {
         id: term.id ? term.id : null,
@@ -155,7 +154,7 @@ export class UnitPlannedInItemsComponent implements OnInit {
         fromUnit: this.unit.unitsPlannedIn.find(plannedIn => plannedIn.id === term.fromUnit),
         quantity: term.quantity,
         comment: term.comment
-      }
+      };
     });
     this.http.put('/api/unit/' + this.clinic.id + '/' + this.unit.id + '/' + 'sevenDaysPlaningUnit', sevenDaysPlaningUnits)
       .subscribe(unit => {
@@ -163,7 +162,7 @@ export class UnitPlannedInItemsComponent implements OnInit {
       });
   }
 
-  cancle(){
+  cancle() {
     this.cancelPlaningUnitEvent.emit();
   }
 
