@@ -16,7 +16,7 @@ export class UnitPlannedInItemsComponent implements OnInit {
   sevendaysplans: SevenDaysPlaningUnit[] = [];
   plannedInDropdownUnits: DropdownItem<number>[];
   addSevenDaysPlaningUnitForm: FormGroup;
-  @Input('showPlus') showPlus : boolean
+  @Input('showPlus') showPlus: boolean
   @Input('oldPost') oldPost: boolean;
   @Input('clinic') clinic: Clinic;
   @Input('unit') unit: Unit;
@@ -27,11 +27,17 @@ export class UnitPlannedInItemsComponent implements OnInit {
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.update(this.unit);
+    const formGroup = this.calculateFormGroup();
+    this.addSevenDaysPlaningUnitForm = formGroup;
   }
 
   public update(unit: Unit) {
     this.unit = unit;
+    const formGroup = this.calculateFormGroup();
+    this.addSevenDaysPlaningUnitForm.patchValue(formGroup.value);
+  }
+
+  private calculateFormGroup() {
     this.plannedInDropdownUnits = this.unit.unitsPlannedIn.map(unitplannedIn => {
       return {displayName: unitplannedIn.name, value: unitplannedIn.id};
     });
@@ -47,10 +53,13 @@ export class UnitPlannedInItemsComponent implements OnInit {
     } else {
       this.sevendaysplans = this.unit.sevenDaysPlaningUnits.filter(x => (new Date(x.date)).getTime() >= idag);
     }
-    this.addSevenDaysPlaningUnitForm = this.formBuilder.group({
-      sevenDaysPlaningUnits: this.formBuilder.array(this.buildSevenDaysPlaningGroup(this.sevendaysplans), [this.SevenDaysArrayCompare.bind(this)])
+    // this.oldPost = false;
+    const controlsConfig = this.buildSevenDaysPlaningGroup(this.sevendaysplans);
+
+    let formGroup = this.formBuilder.group({
+      sevenDaysPlaningUnits: this.formBuilder.array(controlsConfig, [this.SevenDaysArrayCompare.bind(this)])
     });
-    this.oldPost = false;
+    return formGroup;
   }
 
   private buildSevenDaysPlaningGroup(sevenDaysPlaningUnits:SevenDaysPlaningUnit[]): FormGroup[] {

@@ -79,17 +79,6 @@ export class UnitComponent implements OnInit, OnDestroy {
             this.updateSskCategoryValueMatrix(unit);
             this.updateVacants(unit);
             this.inited = true;
-            if (this.thisUnitPlannedInTable) {
-              this.thisUnitPlannedInTable.update();
-            }
-
-            if (this.unitPlannedInItems) {
-              this.unitPlannedInItems.update(unit);
-            }
-
-            if (this.unitPlannedInItemsOld) {
-              this.unitPlannedInItemsOld.update(unit);
-            }
           } else {
             this.error = this.notFoundText;
           }
@@ -338,7 +327,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
   onUnitPlannedInItemsSave() {
-    this.updateView(this.clinic.id, this.unit.id);
+    this.checkForChanges();
   }
 
 
