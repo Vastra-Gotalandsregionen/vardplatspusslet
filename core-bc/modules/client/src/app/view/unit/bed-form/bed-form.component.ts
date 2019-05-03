@@ -352,6 +352,11 @@ export class BedFormComponent implements OnInit {
     this.patientExaminations.removeAt(index);
   }
 
+  cleanExamninationDate(index: number)
+  {
+    this.patientExaminations.at(index).get('examinationDate').setValue(null);
+  }
+
   get patientExaminations(): FormArray {
     return <FormArray>this.bedForm.get('patient.patientExaminations');
   }
@@ -394,6 +399,11 @@ export class BedFormComponent implements OnInit {
     this.patientEvents.removeAt(index);
   }
 
+  cleanDate(index:number)
+  {
+    this.patientEvents.at(index).get('eventDate').setValue(null);
+  }
+
   get patientEvents(): FormArray {
     return <FormArray>this.bedForm.get('patient.patientEvents');
   }
@@ -410,6 +420,11 @@ export class BedFormComponent implements OnInit {
   deleteDate() {
     this.bedForm.get('patient.plannedLeaveDate').setValue(null);
   }
+
+  deleteInterpreterDate() {
+    this.bedForm.get('patient.tolkGroup.interpretDate').setValue(null);
+  }
+
 
   deleteGickHemDate() {
     this.bedForm.get('patient.leftDate').setValue(null);

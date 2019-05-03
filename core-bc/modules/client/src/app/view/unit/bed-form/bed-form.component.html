@@ -71,7 +71,12 @@
           <p>Planerad hemgång</p>
           <div class="containers">
             <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
-            <a (click)="deleteDate()" class="div-left2"><i class="fa fa-times-rectangle-o child"></i></a>
+            <!--<a (click)="deleteDate()" class="div-left2"><i class="fa fa-times-rectangle-o child"></i></a>-->
+            <a (click)="deleteDate()" class="icon-link">
+              <span [appCallout]="'Rensa datum'" class="material-icons">
+                cancel_presentation
+              </span>
+            </a>
           </div>
         </div>
         <div *ngIf="unit.hasBackToHomeAlternativFeature" class="div-button10">
@@ -129,6 +134,11 @@
             <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
 
             <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+            <a (click)="cleanExamninationDate(i)" class="icon-link">
+              <span [appCallout]="'Rensa datum'" class="material-icons">
+                cancel_presentation
+              </span>
+            </a>
           </div>
         </div>
       </div>
@@ -145,6 +155,11 @@
             <input formControlName="eventTime" placeholder="tid..." class="child3"/>
             <input formControlName="eventInfo" class="child4"/>
             <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+            <a (click)="cleanDate(i)" class="icon-link">
+              <span [appCallout]="'Rensa datum'" class="material-icons">
+                cancel_presentation
+              </span>
+            </a>
           </div>
         </div>
       </div>
@@ -185,7 +200,12 @@
           <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
           <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
           <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
-          <vgr-input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"></vgr-input>
+          <input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
+          <a (click)="deleteInterpreterDate()" class="icon-link">
+            <span [appCallout]="'Rensa datum'" class="material-icons">
+              cancel_presentation
+            </span>
+          </a>
         </div>
       </div>
 
