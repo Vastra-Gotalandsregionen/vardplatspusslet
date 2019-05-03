@@ -44,13 +44,13 @@
           <vgr-checkbox label="Händelse" formControlName="hasHendelseFeature"></vgr-checkbox>
           <vgr-checkbox label="Infekterad" formControlName="hasInfekteradFeature"></vgr-checkbox>
           <vgr-checkbox label="Infektionskäsnlig" formControlName="hasInfectionSensitiveFeature"></vgr-checkbox>
+          <vgr-checkbox label="Inplanerade patienter" formControlName="hasUnitPlannedInFeature"></vgr-checkbox>
           <vgr-checkbox label="Kost" formControlName="hasKostFeature"></vgr-checkbox>
           <vgr-checkbox label="Kost Mor/Barn" formControlName="hasMotherChildDietFeature"></vgr-checkbox>
           <vgr-checkbox label="Kön kolumn" formControlName="hasGenderColumn"></vgr-checkbox>
           <vgr-checkbox label="Patientnamn kolumn" formControlName="hasPatientNameColumn"></vgr-checkbox>
           <vgr-checkbox label="Patient väntar" formControlName="hasPatientWaitesFeature"></vgr-checkbox>
           <vgr-checkbox label="PAL" formControlName="hasPalFeature"></vgr-checkbox>
-          <vgr-checkbox label="Planerad Enhet in" formControlName="hasUnitPlannedInFeature"></vgr-checkbox>
           <vgr-checkbox label="Rond" formControlName="hasRondFeature"></vgr-checkbox>
           <vgr-checkbox label="Rond Mor" formControlName="hasMorRondFeature"></vgr-checkbox>
           <vgr-checkbox label="Rond Barn" formControlName="hasBarnRondFeature"></vgr-checkbox>
@@ -316,7 +316,7 @@
           </div>
         </div>
       </vgr-card-section>
-      <vgr-card-section [expanded]="true" [title]="'Planerad Enhet In'" [subtitle]="" class="clearfix">
+      <vgr-card-section [expanded]="true" [title]="'Enheter för inplanerade patienter'" [subtitle]="" class="clearfix">
         <table class="vpp-table" *ngIf="!editUnitPlannedIn">
 
           <tr *ngFor="let enhet of unit?.unitsPlannedIn|| []">
@@ -346,6 +346,12 @@
   </vgr-card>
 
   <div class="containers">
+    <div class="delete-btn-wrap" *ngIf="admin">
+      <app-link-icon (click)="openDeleteModal(unit)" class="warning" label="Ta bort avdelning" icon="delete"></app-link-icon>
+    </div>
+
+    <span class="flex-fill"></span>
+
     <vgr-button default="true" (click)="saveUnit()" [disabled]="!(unitForm.valid)">Spara</vgr-button>
     <vgr-button buttonStyle="secondary" (click)="cancel()" >Avbryt</vgr-button>
   </div>

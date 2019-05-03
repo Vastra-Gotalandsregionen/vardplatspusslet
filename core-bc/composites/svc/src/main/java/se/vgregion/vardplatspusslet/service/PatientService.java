@@ -26,8 +26,10 @@ public class PatientService {
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+        // Query for patients who aren't in any bed nor any unit
         List<Long> orphanPatients = jdbcTemplate.queryForList("select p.id from patient p where p.id not in " +
-                "(select distinct patient_id from bed where patient_id is not null)", Long.class);
+                "(select distinct patient_id from bed where patient_id is not null) and p.id not in " +
+                "(select patients_id from unit_patient)", Long.class);
 
         if (orphanPatients.size() > 0) {
 

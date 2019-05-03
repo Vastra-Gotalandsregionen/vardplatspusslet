@@ -23,15 +23,15 @@ export class UnitPlannedInTableComponent implements OnInit {
 
 
   ngOnInit() {
-    this.update(this.unit);
+    this.update();
 
   }
 
-  public update(unit: Unit) {
+  public update() {
     this.daysAndMonths = [];
     this.CalculateDaysAndDate();
-    this.filterSevenDays(unit.sevenDaysPlaningUnits);
-    this.FillSevenDaysMatrix(unit);
+    this.filterSevenDays(this.unit.sevenDaysPlaningUnits);
+    this.FillSevenDaysMatrix(this.unit);
   }
 
   private CalculateDaysAndDate()

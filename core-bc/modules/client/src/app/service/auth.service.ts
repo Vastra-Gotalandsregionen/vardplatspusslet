@@ -6,6 +6,7 @@ import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/retry";
 import {HttpClient} from "@angular/common/http";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {TokenResponse} from '../domain/token-response';
 
 @Injectable()
 export class AuthService {
@@ -42,10 +43,10 @@ export class AuthService {
     }
 
     this.renewSubscription = interval(60000)
-      .switchMap(() => this.http.post('/api/login/renew', this.jwt, {responseType: 'text'}))
+      .switchMap(() => this.http.post('/api/login/renew', this.jwt))
       .retry(4)
       .subscribe(
-        response => this.jwt = response,
+        (response: TokenResponse) => this.jwt = response.token,
         error => {
           this.jwt = null;
           this.renewSubscription.unsubscribe();

@@ -37,6 +37,10 @@ public class AuthService {
 
         User user = userRepository.findUserById(userId);
 
+        if (user == null) {
+            return false;
+        }
+
         return user.getRole().equals(Role.ADMIN) || user.getUnits().contains(unitRepository.findOne(unitId));
     }
 

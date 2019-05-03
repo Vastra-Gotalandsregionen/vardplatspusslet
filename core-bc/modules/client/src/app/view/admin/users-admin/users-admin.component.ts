@@ -100,7 +100,6 @@ export class UsersAdminComponent implements OnInit {
     this.http.put('/api/user', userSaveRequest)
       .subscribe(() => {
         this.ngOnInit();
-        this.addUserId.nativeElement.focus();
       });
     this.collapse(element);
   }

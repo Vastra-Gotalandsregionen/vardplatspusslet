@@ -44,8 +44,7 @@ public class BedController {
 
     @RequestMapping(value = "/patientHasLeft", method = RequestMethod.POST)
     @ResponseBody
-//    @PreAuthorize("@authService.hasRole(authentication, 'ADMIN')")
-    @PreAuthorize("@authService.hasUnitPermission(authentication, bed.unit.id)")
+    @PreAuthorize("@authService.hasUnitPermission(authentication, #bed.unit.id)")
     public ResponseEntity<?> patientHasLeft(@RequestBody Bed bed) {
 
         if (bed.getPatient() == null) {

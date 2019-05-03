@@ -82,7 +82,6 @@ export class ClinicsAdminComponent implements OnInit {
     this.http.put('/api/clinic' + (newClinic ? '?newClinic=true' : ''), clinic)
       .subscribe(() => {
         this.ngOnInit();
-        this.addClinicId.nativeElement.focus();
       });
   }
 
