@@ -70,7 +70,7 @@ public class StatisticsController extends BaseController {
         headers.put("Content-Type", Collections.singletonList("application/excel"));
         headers.put("Content-Length", Collections.singletonList(bytes.length + ""));
         String filename = unit.getName() + "_" + fromDate + "_" + toDate + ".xlsx";
-        headers.put("Content-Disposition", Collections.singletonList("attachment; filename=" + filename));
+        headers.put("Content-Disposition", Collections.singletonList("attachment; filename=\"" + filename + "\""));
 
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
