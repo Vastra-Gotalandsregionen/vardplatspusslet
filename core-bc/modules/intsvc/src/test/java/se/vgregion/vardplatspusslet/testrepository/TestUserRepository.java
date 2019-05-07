@@ -28,6 +28,11 @@ public class TestUserRepository implements UserRepository {
     }
 
     @Override
+    public User findUserByIdIgnoreCase(String userId) {
+        return null;
+    }
+
+    @Override
     public List<User> findAll() {
         return null;
     }
