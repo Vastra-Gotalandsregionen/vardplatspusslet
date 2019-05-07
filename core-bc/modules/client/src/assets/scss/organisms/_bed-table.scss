@@ -21,6 +21,18 @@
         padding: 5px;
     }
 
+    td {
+      &.ssk {
+        color: #fff;
+        text-align: center;
+
+        &.WHITE {
+          color: #333;
+        }
+      }
+
+    }
+
     .header-row-primary {
         th {
             border-bottom: 9px solid #006298;
@@ -40,7 +52,7 @@
         border: 1px solid #f0f0f0;
         border-bottom: none;
         padding: 18px 0;
-  
+
         .bed-form-wrapper {
           background: #ffffff;
           border: 1px solid #888;
