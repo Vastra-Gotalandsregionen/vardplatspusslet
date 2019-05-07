@@ -43,7 +43,9 @@
 
       <td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>
 
-      <td *ngIf="bed.ssk?.color" class="ssk {{bed.ssk?.color}}" [appCallout]="bed.ssk.label">{{bed.ssk.label}}</td>
+      <td *ngIf="bed.ssk?.color" class="ssk {{bed.ssk?.color}}" [appCallout]="bed.ssk.label">
+          {{ (bed.ssk.label.length>8)? (bed.ssk.label | slice:0:6)+'..':(bed.ssk.label) }}
+      </td>
       <td *ngIf="bed.ssk && !bed.ssk?.color">{{bed.ssk.label}}</td>
       <td *ngIf="!bed.ssk"></td>
 
