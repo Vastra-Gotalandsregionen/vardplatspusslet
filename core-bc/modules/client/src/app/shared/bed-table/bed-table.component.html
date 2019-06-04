@@ -27,7 +27,7 @@
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
     <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
-    <th *ngIf="unit.hasCarePlan">Vårdplan</th>
+    <!--<th *ngIf="unit.hasCarePlan">Vårdplan</th>-->
    <!-- <th>Anteckningar</th>-->
     <th *ngIf="unit.hasBackToHomeAlternativFeature">Hem alt.</th>
     <!--<th *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfekteradFeature || unit.hasInfectionSensitiveFeature">Städ</th>-->
@@ -106,11 +106,11 @@
         <i class="fa fa-hourglass-half"></i>
       </span>
       </td>
-      <td *ngIf="unit.hasCarePlan">
+      <!--<td *ngIf="unit.hasCarePlan">
         <span class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
              [appCallout]="'Vårdplan: ' + bed.patient?.carePlan">{{bed.patient?.carePlan.length > 7 ? bed.patient?.carePlan.substr(0,7)+'...': bed.patient?.carePlan}}
         </span>
-      </td>
+      </td>-->
       <!--<td>
         <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
                 [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}

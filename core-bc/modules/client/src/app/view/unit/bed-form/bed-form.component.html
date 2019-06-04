@@ -56,7 +56,7 @@
         </div>
 
         <div *ngIf="unit.hasPalFeature" class="div-button10">
-          <label for="carePlan">PAL</label>
+          <div>PAL</div>
           <vgr-input formControlName="pal" width="15%"></vgr-input>
         </div>
 
@@ -96,11 +96,10 @@
           </div>
         </div>
 
-        <div *ngIf="unit.hasCarePlan" class="div-button10">
+        <!--<div *ngIf="unit.hasCarePlan" class="div-button10">
           <label for="carePlan">Vårdplan</label>
-          <!--<vgr-input id="carePlan" formControlName="carePlan"></vgr-input>-->
           <vgr-textarea  id="carePlan" formControlName="carePlan" width="85%"></vgr-textarea>
-        </div>
+        </div>-->
 
        <!-- <div class="div-button10">
           <div>Övriga anteckningar</div>
