@@ -96,8 +96,8 @@
       <td *ngIf="unit.hasPatientFromClinicFeature">{{bed.patient?.fromClinic?.name}}</td>
 
       <td>
-        <span class="ikon" *ngIf="bed.patient?.interpreter"
-               [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>
+        <span class="ikon" *ngIf="bed.patient?.interpreter">
+          <i class="fa fa-american-sign-language-interpreting purple"></i>
         </span>
       </td>
       <td class="patient-waits" *ngIf="unit.hasPatientWaitsFeature">
