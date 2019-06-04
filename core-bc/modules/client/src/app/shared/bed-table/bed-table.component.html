@@ -30,7 +30,8 @@
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
     <th>Anteckningar</th>
     <th *ngIf="unit.hasBackToHomeAlternativFeature">Hem alt.</th>
-    <th *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfekteradFeature || unit.hasInfectionSensitiveFeature">Städ</th>
+    <!--<th *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfekteradFeature || unit.hasInfectionSensitiveFeature">Städ</th>-->
+    <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
   </thead>
@@ -129,14 +130,14 @@
              [appCallout]="'Vanlig hemgång' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i>
         </span>
       </td>
-      <td *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfectionSensitiveFeature || unit.hasInfekteradFeature">
+     <!-- <td *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfectionSensitiveFeature || unit.hasInfekteradFeature">-->
+      <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
               [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')">
           <!-- <i class="'fa fa-leaf icon-colored-' + bed.cleaningAlternative?.color"></i>-->
           <i [ngClass]=" bed.cleaningAlternative?.color ? 'fa fa-leaf icon-colored-' +  bed.cleaningAlternative?.color : 'fa fa-leaf icon-colored-BLUE'"></i>
         </span>
-
-        <span class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
+        <!--<span class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
              [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
         </span>
 
@@ -147,7 +148,7 @@
         <span class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
              [appCallout]="'Infekterad'">
           <i class="fa fa-bug"></i>
-        </span>
+        </span>-->
 
       </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>

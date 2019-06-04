@@ -224,14 +224,14 @@
         </div>
       </div>-->
 
-      <div  *ngIf="unit.hasSmittaFeature" class="div-button10">
+      <!--<div  *ngIf="unit.hasSmittaFeature" class="div-button10">
         <p>Smitta</p>
         <div class="containers" formGroupName="smittaGroup">
           <vgr-checkbox formControlName="smitta"></vgr-checkbox>
           <input formControlName="smittaInfo" disabled *ngIf="!bedForm.get('patient.smittaGroup.smitta').value" class="width30"/>
           <input formControlName="smittaInfo" *ngIf="bedForm.get('patient.smittaGroup.smitta').value" class="width50"/>
         </div>
-      </div>
+      </div>-->
 
       <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
         <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
@@ -249,13 +249,13 @@
         <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
       </div>
 
-      <div *ngIf="unit.hasInfekteradFeature" class="div-button7">
+      <!--<div *ngIf="unit.hasInfekteradFeature" class="div-button7">
         <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
       </div>
 
       <div *ngIf="unit.hasInfectionSensitiveFeature" class="div-button7">
         <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
-      </div>
+      </div>-->
 
       <div *ngIf="unit.hasMorRondFeature" class="div-button7">
         <vgr-checkbox formControlName="morRond" label="Rond Mor"></vgr-checkbox>
