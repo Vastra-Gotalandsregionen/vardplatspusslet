@@ -56,7 +56,7 @@
         </div>
 
         <div *ngIf="unit.hasPalFeature" class="div-button10">
-          <label for="carePlan">PAL</label>
+          <div>PAL</div>
           <vgr-input formControlName="pal" width="15%"></vgr-input>
         </div>
 
@@ -96,16 +96,15 @@
           </div>
         </div>
 
-        <div *ngIf="unit.hasCarePlan" class="div-button10">
+        <!--<div *ngIf="unit.hasCarePlan" class="div-button10">
           <label for="carePlan">Vårdplan</label>
-          <!--<vgr-input id="carePlan" formControlName="carePlan"></vgr-input>-->
           <vgr-textarea  id="carePlan" formControlName="carePlan" width="85%"></vgr-textarea>
-        </div>
+        </div>-->
 
-        <div class="div-button10">
+       <!-- <div class="div-button10">
           <div>Övriga anteckningar</div>
           <vgr-textarea formControlName="relatedInformation" width="85%"></vgr-textarea>
-        </div>
+        </div>-->
       </div>
     </vgr-card-column>
     <vgr-card-column>
@@ -215,23 +214,23 @@
         </vgr-radio-group>
       </div>
 
-      <div  *ngIf="unit.hasSekretessFeature" class="div-button10">
+      <!--<div  *ngIf="unit.hasSekretessFeature" class="div-button10">
         <p>Sekretess</p>
         <div class="containers" formGroupName="sekretessGroup">
           <vgr-checkbox formControlName="sekretess"></vgr-checkbox>
           <input formControlName="sekretessInfo" disabled *ngIf="!bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
           <input formControlName="sekretessInfo" *ngIf="bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
         </div>
-      </div>
+      </div>-->
 
-      <div  *ngIf="unit.hasSmittaFeature" class="div-button10">
+      <!--<div  *ngIf="unit.hasSmittaFeature" class="div-button10">
         <p>Smitta</p>
         <div class="containers" formGroupName="smittaGroup">
           <vgr-checkbox formControlName="smitta"></vgr-checkbox>
           <input formControlName="smittaInfo" disabled *ngIf="!bedForm.get('patient.smittaGroup.smitta').value" class="width30"/>
           <input formControlName="smittaInfo" *ngIf="bedForm.get('patient.smittaGroup.smitta').value" class="width50"/>
         </div>
-      </div>
+      </div>-->
 
       <div *ngIf="unit.hasAkutPatientFeature" class="div-button7">
         <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
@@ -249,13 +248,13 @@
         <vgr-checkbox formControlName="vuxenPatient" label="Vuxen patient"></vgr-checkbox>
       </div>
 
-      <div *ngIf="unit.hasInfekteradFeature" class="div-button7">
+      <!--<div *ngIf="unit.hasInfekteradFeature" class="div-button7">
         <vgr-checkbox formControlName="infekterad" label="Infekterad"></vgr-checkbox>
       </div>
 
       <div *ngIf="unit.hasInfectionSensitiveFeature" class="div-button7">
         <vgr-checkbox formControlName="infectionSensitive" label="Infektionkänslig"></vgr-checkbox>
-      </div>
+      </div>-->
 
       <div *ngIf="unit.hasMorRondFeature" class="div-button7">
         <vgr-checkbox formControlName="morRond" label="Rond Mor"></vgr-checkbox>

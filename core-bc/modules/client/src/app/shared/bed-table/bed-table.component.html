@@ -27,10 +27,11 @@
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
     <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
-    <th *ngIf="unit.hasCarePlan">Vårdplan</th>
-    <th>Anteckningar</th>
+    <!--<th *ngIf="unit.hasCarePlan">Vårdplan</th>-->
+   <!-- <th>Anteckningar</th>-->
     <th *ngIf="unit.hasBackToHomeAlternativFeature">Hem alt.</th>
-    <th *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfekteradFeature || unit.hasInfectionSensitiveFeature">Städ</th>
+    <!--<th *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfekteradFeature || unit.hasInfectionSensitiveFeature">Städ</th>-->
+    <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
   </thead>
@@ -44,7 +45,7 @@
       <td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>
 
       <td *ngIf="bed.ssk?.color" class="ssk {{bed.ssk?.color}}" [appCallout]="bed.ssk.label">
-          {{ (bed.ssk.label.length>8)? (bed.ssk.label | slice:0:6)+'..':(bed.ssk.label) }}
+          <!--{{ (bed.ssk.label.length>8)? (bed.ssk.label | slice:0:6)+'..':(bed.ssk.label) }}-->
       </td>
       <td *ngIf="bed.ssk && !bed.ssk?.color">{{bed.ssk.label}}</td>
       <td *ngIf="!bed.ssk"></td>
@@ -95,8 +96,8 @@
       <td *ngIf="unit.hasPatientFromClinicFeature">{{bed.patient?.fromClinic?.name}}</td>
 
       <td>
-        <span class="ikon" *ngIf="bed.patient?.interpreter"
-               [appCallout]="bed.patient.interpretInfo"><i class="material-icons purple">translate</i>
+        <span class="ikon" *ngIf="bed.patient?.interpreter">
+          <i class="fa fa-american-sign-language-interpreting purple"></i>
         </span>
       </td>
       <td class="patient-waits" *ngIf="unit.hasPatientWaitsFeature">
@@ -105,16 +106,16 @@
         <i class="fa fa-hourglass-half"></i>
       </span>
       </td>
-      <td *ngIf="unit.hasCarePlan">
+      <!--<td *ngIf="unit.hasCarePlan">
         <span class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
              [appCallout]="'Vårdplan: ' + bed.patient?.carePlan">{{bed.patient?.carePlan.length > 7 ? bed.patient?.carePlan.substr(0,7)+'...': bed.patient?.carePlan}}
         </span>
-      </td>
-      <td>
+      </td>-->
+      <!--<td>
         <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
                 [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}
         </span>
-      </td>
+      </td>-->
       <td *ngIf="unit.hasBackToHomeAlternativFeature">
         <span class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasBackToHomeAlternativFeature"
              [appCallout]="'THG' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-undo purple"></i>
@@ -129,14 +130,14 @@
              [appCallout]="'Vanlig hemgång' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i>
         </span>
       </td>
-      <td *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfectionSensitiveFeature || unit.hasInfekteradFeature">
+     <!-- <td *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfectionSensitiveFeature || unit.hasInfekteradFeature">-->
+      <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
               [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')">
           <!-- <i class="'fa fa-leaf icon-colored-' + bed.cleaningAlternative?.color"></i>-->
           <i [ngClass]=" bed.cleaningAlternative?.color ? 'fa fa-leaf icon-colored-' +  bed.cleaningAlternative?.color : 'fa fa-leaf icon-colored-BLUE'"></i>
         </span>
-
-        <span class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
+        <!--<span class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
              [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
         </span>
 
@@ -147,7 +148,7 @@
         <span class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
              [appCallout]="'Infekterad'">
           <i class="fa fa-bug"></i>
-        </span>
+        </span>-->
 
       </td>
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
