@@ -28,7 +28,7 @@
     <th>Tolk</th>
     <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
     <th *ngIf="unit.hasCarePlan">Vårdplan</th>
-    <th>Anteckningar</th>
+   <!-- <th>Anteckningar</th>-->
     <th *ngIf="unit.hasBackToHomeAlternativFeature">Hem alt.</th>
     <!--<th *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfekteradFeature || unit.hasInfectionSensitiveFeature">Städ</th>-->
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
@@ -111,11 +111,11 @@
              [appCallout]="'Vårdplan: ' + bed.patient?.carePlan">{{bed.patient?.carePlan.length > 7 ? bed.patient?.carePlan.substr(0,7)+'...': bed.patient?.carePlan}}
         </span>
       </td>
-      <td>
+      <!--<td>
         <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
                 [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}
         </span>
-      </td>
+      </td>-->
       <td *ngIf="unit.hasBackToHomeAlternativFeature">
         <span class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasBackToHomeAlternativFeature"
              [appCallout]="'THG' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-undo purple"></i>
