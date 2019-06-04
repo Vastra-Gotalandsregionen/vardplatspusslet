@@ -215,14 +215,14 @@
         </vgr-radio-group>
       </div>
 
-      <div  *ngIf="unit.hasSekretessFeature" class="div-button10">
+      <!--<div  *ngIf="unit.hasSekretessFeature" class="div-button10">
         <p>Sekretess</p>
         <div class="containers" formGroupName="sekretessGroup">
           <vgr-checkbox formControlName="sekretess"></vgr-checkbox>
           <input formControlName="sekretessInfo" disabled *ngIf="!bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
           <input formControlName="sekretessInfo" *ngIf="bedForm.get('patient.sekretessGroup.sekretess').value" class="width30"/>
         </div>
-      </div>
+      </div>-->
 
       <div  *ngIf="unit.hasSmittaFeature" class="div-button10">
         <p>Smitta</p>
