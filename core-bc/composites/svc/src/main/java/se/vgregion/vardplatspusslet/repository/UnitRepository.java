@@ -15,14 +15,14 @@ public interface UnitRepository extends JpaRepository<Unit, String> {
 
     @EntityGraph(
             attributePaths = {"clinic", "ssks",
-                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
+                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues","allowedBedNames"},
             type = EntityGraph.EntityGraphType.LOAD
     )
     List<Unit> findDistinctByClinicIsLike(Clinic clinic);
 
     @EntityGraph(
             attributePaths = {"beds", "patients", "ssks",
-                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
+                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues", "allowedBedNames"},
             type = EntityGraph.EntityGraphType.LOAD
     )
     Unit findUnitByIdIsLikeAndClinicIsLike(String id, Clinic clinic);
@@ -32,7 +32,7 @@ public interface UnitRepository extends JpaRepository<Unit, String> {
 
     @EntityGraph(
             attributePaths = {"clinic", "clinic.management", "ssks",
-                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues"},
+                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues", "allowedBedNames"},
             type = EntityGraph.EntityGraphType.LOAD
     )
     List<Unit> findDistinctByIdIn(Collection<String> ids, Sort sort);

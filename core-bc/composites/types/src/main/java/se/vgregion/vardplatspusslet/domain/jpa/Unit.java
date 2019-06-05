@@ -164,6 +164,10 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean hasDatedBackHomeFeature;
 
+    @Column
+    @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<AllowedBedName> allowedBedNames = new TreeSet<>();
+
 
     public Unit() {
 
@@ -535,6 +539,14 @@ public class Unit implements Comparable<Unit> {
 
     public void setHasDatedBackHomeFeature(Boolean hasDatedBackHomeFeature) {
         this.hasDatedBackHomeFeature = hasDatedBackHomeFeature;
+    }
+
+    public Set<AllowedBedName> getAllowedBedNames() {
+        return allowedBedNames;
+    }
+
+    public void setAllowedBedNames(Set<AllowedBedName> allowedBedNames) {
+        this.allowedBedNames = allowedBedNames;
     }
 
     @Override

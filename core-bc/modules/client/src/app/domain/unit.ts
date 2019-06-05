@@ -12,6 +12,7 @@ import {DietForChild} from "./dietforchild";
 import {DietForPatient} from "./dietforpatient";
 import {UnitPlannedIn} from "./unit-planned-in";
 import {SevenDaysPlaningUnit} from "./seven-days-planing-unit";
+import { AllowedBedName } from "./allowedBedName";
 
 export class Unit {
   id: string;
@@ -59,4 +60,5 @@ export class Unit {
   hasPatientWaitsFeature: boolean;
   hasBackToHomeAlternativFeature: boolean;
   hasDatedBackHomeFeature: boolean;
+  allowedBedNames: AllowedBedName[];
 }

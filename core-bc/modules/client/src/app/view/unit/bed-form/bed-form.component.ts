@@ -77,7 +77,7 @@ export class BedFormComponent implements OnInit {
       id: [bed.id],
       //occupied: [bed.occupied],
       bedstatus: [bed.bedStatus != null ? bed.bedStatus : 'VACANT'],
-      label: [bed.label, [Validators.required]],
+      label: [bed.label, [Validators.required, Validators.pattern('[^a-zA-Z]{1,10}$')]],
       patient: this.formBuilder.group({
         id: [patient.id],
         label: [patient.label],
@@ -444,6 +444,11 @@ export class BedFormComponent implements OnInit {
 
   getChoiceFromPatient(patient: Patient, categoryId: number): CareBurdenChoice {
     return patient.careBurdenChoices.find(cbc => cbc.careBurdenCategory.id === categoryId);
+  }
+
+  getBedNameValidation()
+  {
+    return this.bedForm.get('label').hasError('pattern');
   }
 
 }

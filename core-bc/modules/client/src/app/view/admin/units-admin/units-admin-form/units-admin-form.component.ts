@@ -16,6 +16,7 @@ import {DropdownItem} from "../../../../domain/DropdownItem";
 import {Management} from "../../../../domain/management";
 import {SelectableItem} from "vgr-komponentkartan";
 import {AuthService} from '../../../../service/auth.service';
+import { AllowedBedName } from "../../../../domain/allowedBedName";
 
 @Component({
   selector: 'app-units-admin-form',
@@ -54,6 +55,7 @@ export class UnitsAdminFormComponent implements OnInit {
   editDietForChildGroup: boolean;
   editDietForPatientGroup: boolean;
   editUnitPlannedIn: boolean;
+  editBedName: boolean;
   managements: Management[] = [];
   careBurdenOptions: SelectableItem<string>[];
   careBurdenValueIsNumber: boolean = false;
@@ -156,7 +158,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasGenderColumn: [unit.hasGenderFeature],
       hasPatientWaitesFeature: [unit.hasPatientWaitsFeature],
       hasBackToHomeAlternativFeature: [unit.hasBackToHomeAlternativFeature],
-      hasDatedBackHomeFeature: [unit.hasDatedBackHomeFeature]
+      hasDatedBackHomeFeature: [unit.hasDatedBackHomeFeature],
+      allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames))
     });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
       if (mgId != null)
@@ -221,7 +224,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasGenderColumn: unit.hasGenderFeature,
       hasPatientWaitesFeature: unit.hasPatientWaitsFeature,
       hasBackToHomeAlternativFeature : unit.hasBackToHomeAlternativFeature,
-      hasDatedBackHomeFeature: unit.hasDatedBackHomeFeature
+      hasDatedBackHomeFeature: unit.hasDatedBackHomeFeature,
+      allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames))
     });
 
   }
@@ -282,6 +286,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasPatientWaitsFeature = unitModel.hasPatientWaitesFeature;
     unit.hasBackToHomeAlternativFeature = unitModel.hasBackToHomeAlternativFeature;
     unit.hasDatedBackHomeFeature = unitModel.hasDatedBackHomeFeature;
+    unit.allowedBedNames = unitModel.allowedBedNames;
 
     this.http.put('/api/unit?keepBeds=true' + (this.newUnit ? '&newUnit=true' : ''), unit)
       .subscribe(() => {
@@ -613,6 +618,37 @@ export class UnitsAdminFormComponent implements OnInit {
     this.unitsPlannedIn.removeAt(index);
   }
 
+  get allowedBedNames(): FormArray{
+    return <FormArray>this.unitForm.get('allowedBedNames')
+  }
+
+  addBedNameGroup(){
+    this.allowedBedNames.push(this.CreateBedNameGroup());
+  }
+
+  deleteBedNameGroup(index: number) {
+    this.allowedBedNames.removeAt(index);
+  }
+
+  CreateBedNameGroup(): FormGroup{
+    return this.formBuilder.group({
+      id: null,
+      name: [null, Validators.required]
+    });
+  }
+
+  private buildBedNameGroup(allowedBedNames: AllowedBedName[]): FormGroup[]
+  {
+    if (!allowedBedNames || allowedBedNames.length === 0) {
+      return [];
+    }
+    return allowedBedNames.map(bedName => {
+      return this.formBuilder.group( {
+        id: bedName.id,
+        name: bedName.name
+      })
+    });
+  }
   getCareTeamValidation(index: number): boolean
   {
     return (this.unitForm.get('ssks') as FormArray).at(index).get('label').touched;
@@ -664,6 +700,10 @@ export class UnitsAdminFormComponent implements OnInit {
     return (this.unitForm.get('unitsPlannedIn') as FormArray).at(index).get('name').touched;
   }
 
+  getAllowedBedNamesValidation(index: number)
+  {
+    return (this.unitForm.get('allowedBedNames') as FormArray).at(index).get('name').touched;
+  }
   checkCareBurdenFor(index: number)
   {
     if (this.careBurdenValueIsNumber || this.unit.careBurden == 'tal')

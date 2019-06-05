@@ -2,7 +2,9 @@
   <vgr-card>
     <vgr-card-column>
       <label for="bedName">Namn:</label>
-      <vgr-input id="bedName" formControlName="label" [showValidation]="!bedForm.get('label').valid"></vgr-input>
+      <span *ngIf="getBedNameValidation()" class="is-invalid">Inga bokstäver!!! Max 10 tecken!!</span>
+      <vgr-input id="bedName" formControlName="label" [showValidation]="!bedForm.get('label').valid"  placeholder="OBS! Inga bokstäver i det fältet!"></vgr-input>
+      <!--<span  [ngClass]="{'warn': getPatientNameValidation()}">Inga bokstäver!!!</span>-->
      <!-- <div class="div-button7">
         <vgr-checkbox formControlName="occupied" label="Upptagen {{busyInfo}}" (checkedChanged)="busyInfo = ''"></vgr-checkbox>
       </div>-->
