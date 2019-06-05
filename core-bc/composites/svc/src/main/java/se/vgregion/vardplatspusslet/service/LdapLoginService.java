@@ -93,7 +93,7 @@ public class LdapLoginService {
             return user;
         }
 
-        if (userRepository.findOne(username) == null) {
+        if (userRepository.findUserByIdIgnoreCase(username) == null) {
             throw new FailedLoginException("Du är inte behörig till tjänsten.");
         }
 
