@@ -3,12 +3,13 @@ import {Bed} from "../../../domain/bed";
 import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import {SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
 import {DropdownItem} from "../../../domain/DropdownItem";
+import { AllowedBedName } from "../../../domain/allowedBedName";
 
 @Component({
   selector: 'app-bed-form',
@@ -35,6 +36,8 @@ export class BedFormComponent implements OnInit {
   prevCleanInfo: string;
   busyInfo: string;
   bedStatusOptions: SelectableItem<string>[];
+  allowedBedNames: string[] = [];
+  allowedNames : string = "";
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -67,6 +70,14 @@ export class BedFormComponent implements OnInit {
     if (!bed) {
       bed = new Bed();
     }
+
+    for (var item of this.unit.allowedBedNames)
+    {
+      if (item != null){
+        this.allowedBedNames.push(item.name);
+        this.allowedNames = this.allowedBedNames.join(" , ");
+      }
+    }
     let patient;
     if (!bed.patient) {
       patient = new Patient();
@@ -77,7 +88,8 @@ export class BedFormComponent implements OnInit {
       id: [bed.id],
       //occupied: [bed.occupied],
       bedstatus: [bed.bedStatus != null ? bed.bedStatus : 'VACANT'],
-      label: [bed.label, [Validators.required, Validators.pattern('[^a-zA-Z]{1,10}$')]],
+      //label: [bed.label, [Validators.required, Validators.pattern('[^a-zA-Z]{1,10}$')]],
+      label: [bed.label, [Validators.required, this.allowedNameStrings.bind(this)]],
       patient: this.formBuilder.group({
         id: [patient.id],
         label: [patient.label],
@@ -451,4 +463,14 @@ export class BedFormComponent implements OnInit {
     return this.bedForm.get('label').hasError('pattern');
   }
 
+  allowedNameStrings(control: FormControl): {[s:string] : boolean} {
+    let value = control.value as string || '';
+
+    let match = value.match('.*[a-zA-Z]+.*');
+    if(match && match.length > 0 && this.allowedBedNames.indexOf(control.value) == -1) {
+
+      return {'nameIsForbidden' : true};
+    }
+    return null;
+  }
 }

@@ -2,16 +2,14 @@
   <vgr-card>
     <vgr-card-column>
       <label for="bedName">Namn:</label>
-      <span *ngIf="getBedNameValidation()" class="is-invalid">Inga bokstäver!!! Max 10 tecken!!</span>
-      <vgr-input id="bedName" formControlName="label" [showValidation]="!bedForm.get('label').valid"  placeholder="OBS! Inga bokstäver i det fältet!"></vgr-input>
-      <!--<span  [ngClass]="{'warn': getPatientNameValidation()}">Inga bokstäver!!!</span>-->
-     <!-- <div class="div-button7">
-        <vgr-checkbox formControlName="occupied" label="Upptagen {{busyInfo}}" (checkedChanged)="busyInfo = ''"></vgr-checkbox>
-      </div>-->
-
+      <div class="information" *ngIf="allowedNames.length > 0 && bedForm.get('label').value.length == 0 ">Dessa namn är också tilllåtna:</div>
+      <div class="information" *ngIf="allowedNames.length > 0 && bedForm.get('label').value.length == 0 ">{{allowedNames}}</div>
+      <span *ngIf="!bedForm.get('label').valid> 0" class="is-invalid">Inget valid namn!!</span>
+      <vgr-input id="bedName" formControlName="label" [showValidation]="!bedForm.get('label').valid"  placeholder={{allowedNames}}></vgr-input>
       <div>
         <vgr-radio-group formControlName="bedstatus" [options]="bedStatusOptions" [vertical]="true">
-      </vgr-radio-group></div>
+        </vgr-radio-group>
+      </div>
     </vgr-card-column>
     <vgr-card-column>
       <!-- The null option makes it at least 1, so therefore we check for >1. -->
