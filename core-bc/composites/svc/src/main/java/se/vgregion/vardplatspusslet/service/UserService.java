@@ -33,7 +33,7 @@ public class UserService {
     public List<User> getUsers(String userId) {
         User user = userRepository.findOne(userId);
 
-        if (user.getRole().equals(Role.USER)) {
+        if (user.getRole().equals(Role.USER) || user.getRole().equals(Role.UNIT_ADMIN)) {
             List<Unit> requestingUsersUnits = new ArrayList<>(user.getUnits());
 
             return userRepository.findAllByOrderById().stream().filter(u -> {

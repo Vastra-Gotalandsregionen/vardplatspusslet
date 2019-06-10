@@ -30,6 +30,10 @@ export class MenuComponent implements OnInit {
     return this.authService.isAdmin();
   }
 
+  get unitAdmin(): boolean {
+    return this.authService.isUnitAdmin();
+  }
+
   get loggedIn(): boolean {
     return this.authService.isAuthenticated();
   }

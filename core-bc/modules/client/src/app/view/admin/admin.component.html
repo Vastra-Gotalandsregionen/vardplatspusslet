@@ -28,10 +28,10 @@
                     <a routerLink="/admin/clinics" *ngIf="admin">Kliniker</a>
                 </li>
                 <li>
-                    <a routerLink="/admin/units">Avdelningar</a>
+                    <a routerLink="/admin/units" *ngIf="unitAdmin || admin">Avdelningar</a>
                 </li>
                 <li>
-                    <a routerLink="/admin/users">Användare</a>
+                    <a routerLink="/admin/users" *ngIf="unitAdmin || admin">Användare</a>
                 </li>
                 <li>
                     <a routerLink="/admin/statistics">Statistik</a>
