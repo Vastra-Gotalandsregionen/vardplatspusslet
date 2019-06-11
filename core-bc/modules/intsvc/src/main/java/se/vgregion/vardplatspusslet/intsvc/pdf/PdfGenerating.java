@@ -46,7 +46,7 @@ public class PdfGenerating {
                 /*String dietName = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? (bed.getPatient().getDiet() != null? bed.getPatient().getDiet().getName() : "" ) : "";
                 String info = (dietName.length() > 0 && bed.getPatient() != null)? bed.getPatient().getInfoDiet() : "";*/
 
-                String dietName = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? (bed.getPatient().getSpecialDiet() ? "Special kost" : "" ) : "";
+                String dietName = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDiet() != null &&  bed.getPatient().getSpecialDiet()) ? "Special kost" : "" ) : "";
                 String info = (dietName.length() > 0 && bed.getPatient() != null)? "Special kost" : "";
                 if (dietName.length() > 0)
                 {
@@ -66,8 +66,8 @@ public class PdfGenerating {
                 String infoMother = (dietMother.length() > 0 && bed.getPatient() != null)? bed.getPatient().getInfoDietMother(): "";
                 String infoChild = (dietChild.length() > 0 && bed.getPatient() != null) ? bed.getPatient().getInfoDietChild(): "";*/
 
-                String dietMother = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? (bed.getPatient().getSpecialDietMother()  ?  "Special kost" : "") : "";
-                String dietChild = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? (bed.getPatient().getSpecialDietChild() ? "Special kost" : "") : "";
+                String dietMother = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDietMother() != null && bed.getPatient().getSpecialDietMother())  ?  "Special kost" : "") : "";
+                String dietChild = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDietChild() != null && bed.getPatient().getSpecialDietChild()) ? "Special kost" : "") : "";
                 String infoMother = (dietMother.length() > 0 && bed.getPatient() != null)? "Special kost" : "";
                 String infoChild = (dietChild.length() > 0 && bed.getPatient() != null) ? "Special kost" : "";
                 if (dietMother.length() > 0 || dietChild.length() > 0)
@@ -93,9 +93,9 @@ public class PdfGenerating {
                 String infoChild = (dietChild.length() > 0 && bed.getPatient() != null) ? bed.getPatient().getInfoDietChild() : "";
                 String info = (dietPatient.length() > 0 && bed.getPatient() != null) ? bed.getPatient().getInfoDiet(): "";*/
 
-                String dietMother = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? (bed.getPatient().getSpecialDietMother() ?  "Special kost" : "") : "";
-                String dietChild = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? (bed.getPatient().getSpecialDietChild() ? "Special kost" : "") : "";
-                String dietPatient = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? (bed.getPatient().getSpecialDiet()  ?  "Special kost" : "") : "";
+                String dietMother = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDietMother() != null && bed.getPatient().getSpecialDietMother()) ?  "Special kost" : "") : "";
+                String dietChild = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDietChild() != null && bed.getPatient().getSpecialDietChild()) ? "Special kost" : "") : "";
+                String dietPatient = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDiet() != null && bed.getPatient().getSpecialDiet()) ?  "Special kost" : "") : "";
                 String infoMother = (dietMother.length() > 0 && bed.getPatient() != null) ?"Special kost" : "";
                 String infoChild = (dietChild.length() > 0 && bed.getPatient() != null) ? "Special kost" : "";
                 String info = (dietPatient.length() > 0 && bed.getPatient() != null) ?"Special kost" : "";

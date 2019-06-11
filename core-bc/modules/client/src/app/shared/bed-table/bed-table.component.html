@@ -57,17 +57,17 @@
       </td>
 
       <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">
-        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient.specialDietMother" class="fa fa-apple-alt purple"></i>
+        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient?.specialDietMother" class="fa fa-apple-alt purple"></i>
         </span>
       </td>
 
       <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature">
-        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient.specialDietChild" class="fa fa-apple-alt purple"></i>
+        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient?.specialDietChild" class="fa fa-apple-alt purple"></i>
         </span>
       </td>
 
       <td *ngIf="unit.hasKostFeature" [colSpan]="1">
-        <span class="ikon" [appCallout]="'special kost'"><i *ngIf="bed.patient.specialDiet" class="fa fa-apple-alt purple"></i>
+        <span class="ikon" [appCallout]="'special kost'"><i *ngIf="bed.patient?.specialDiet" class="fa fa-apple-alt purple"></i>
         </span>
       </td>
 
@@ -197,13 +197,17 @@
         <form [formGroup]="addBedForm" (ngSubmit)="saveAddBed()">
           <div class="containers">
             <div style="flex-grow: 8; flex-shrink: 0">
-              <div>Benämning</div>
+              <div>Benämning
+                <span *ngIf="addBedForm.get('label').hasError('nameIsForbidden')" class="isInvalid">Inget valid namn!!</span>
+              </div>
+              <div class="information" *ngIf="allowedNames?.length > 0 && !addBedForm.get('label').dirty || addBedForm.get('label').value?.length == 0">Dessa namn är också tilllåtna:</div>
+              <div class="information" *ngIf="allowedNames?.length > 0 && !addBedForm.get('label').dirty || addBedForm.get('label').value?.length == 0">{{allowedNames}}</div>
               <vgr-input formControlName="label"
-                         [showValidation]="false"></vgr-input>
+                         [showValidation]="true"></vgr-input>
             </div>
 
             <div class="clearfix button-row" style="flex-grow: 1; flex-shrink: 0">
-              <vgr-button (click)="saveAddBed()" [disabled]="!addBedForm.valid">Spara</vgr-button>
+              <vgr-button (click)="saveAddBed(); collapse(999)" [disabled]="!addBedForm.valid">Spara</vgr-button>
               <vgr-button buttonStyle="secondary" (click)="collapse(999)">Avbryt</vgr-button>
             </div>
           </div>

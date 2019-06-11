@@ -5,7 +5,7 @@ import {DropdownItem} from "../../domain/DropdownItem";
 import {SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
@@ -44,6 +44,8 @@ export class BedTableComponent implements OnInit {
   cleaningAlternativesDropdownItems: DropdownItem<number>[];
   expandedRows: Array<boolean>;
   delayedExpandedRows: Array<boolean>;
+  allowedBedNames: string[] = [];
+  allowedNames : string = "";
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -159,12 +161,20 @@ export class BedTableComponent implements OnInit {
       return {displayName: cg.description, value: cg.id};
     }));
 
+    for (var item of this.unit.allowedBedNames)
+    {
+      if (item != null){
+        this.allowedBedNames.push(item.name);
+        this.allowedNames = this.allowedBedNames.join(" , ");
+      }
+    }
+
   }
 
   private initAddBedForm() {
     this.addBedForm = this.formBuilder.group({
       id: null,
-      label: [null, Validators.required]
+      label: [null, [Validators.required, this.allowedNameStrings.bind(this)]]
     });
   }
 
@@ -203,5 +213,16 @@ export class BedTableComponent implements OnInit {
 
   formatDate(date: any) {
     return new Date(date).toLocaleDateString();
+  }
+
+  allowedNameStrings(control: FormControl): {[s:string] : boolean} {
+    let value = control.value as string || '';
+
+    let match = value.match('.*[a-zA-Z]+.*');
+    if(match && match.length > 0 && this.allowedBedNames.indexOf(control.value) == -1) {
+
+      return {'nameIsForbidden' : true};
+    }
+    return null;
   }
 }
