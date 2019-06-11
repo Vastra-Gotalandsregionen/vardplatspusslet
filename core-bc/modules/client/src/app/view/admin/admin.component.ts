@@ -18,4 +18,8 @@ export class AdminComponent implements OnInit {
   get admin(): boolean {
     return this.authService.isAdmin();
   }
+
+  get unitAdmin(): boolean {
+    return this.authService.isUnitAdmin();
+  }
 }

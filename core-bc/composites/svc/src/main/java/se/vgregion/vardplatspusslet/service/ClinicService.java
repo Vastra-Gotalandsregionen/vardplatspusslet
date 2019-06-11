@@ -38,7 +38,7 @@ public class ClinicService {
             return Collections.emptyList();
         }
 
-        if (user.getRole().equals(Role.USER)) {
+        if (user.getRole().equals(Role.USER) || user.getRole().equals(Role.UNIT_ADMIN)) {
             List<Unit> usersUnits = new ArrayList<>(user.getUnits());
 
             return usersUnits.stream()
@@ -57,7 +57,7 @@ public class ClinicService {
     public List<Clinic> getManagementClinics(String managementId, String userId) {
         User user = userRepository.findOne(userId);
 
-        if (user.getRole().equals(Role.USER)) {
+        if (user.getRole().equals(Role.USER) || user.getRole().equals(Role.UNIT_ADMIN)) {
 
             List<String> usersClinicIds = user.getUnits().stream()
                     .map(Unit::getClinic)

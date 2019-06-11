@@ -27,7 +27,7 @@ public class ManagementService {
     public List<Management> getManagements(String userId){
         User user = userRepository.findUserById(userId);
 
-        if (user.getRole().equals(Role.USER)) {
+        if (user.getRole().equals(Role.USER) || user.getRole().equals(Role.UNIT_ADMIN)) {
             return user.getUnits().stream()
                     .map(Unit::getClinic)
                     .filter(clinic -> clinic.getManagement() != null)

@@ -66,6 +66,7 @@ import { ManagementComponent } from './view/management/management.component';
 import { WidgetCareburdenWithTextCompactAltComponent } from './elements/widget-careburden-with-text-compact-alt/widget-careburden-with-text-compact-alt.component';
 import { SskIconComponent } from './elements/ssk-icon/ssk-icon.component';
 import { LoadingIndicatorComponent } from './elements/loading-indicator/loading-indicator.component';
+import {UnitAdminGuard} from "./guard/unit-admin.guard";
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -140,6 +141,7 @@ registerLocaleData(localeSv, "sv-SE");
   providers: [
     AuthService,
     AdminGuard,
+    UnitAdminGuard,
     UserLoggedInGuard,
     HasEditUnitPermissionGuard,
     ErrorDialogService,

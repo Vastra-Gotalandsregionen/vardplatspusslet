@@ -104,10 +104,18 @@ export class AuthService {
   }
 
   isAdmin() {
+    return this.hasRole('ADMIN');
+  }
+
+  isUnitAdmin() {
+    return this.hasRole('UNIT_ADMIN');
+  }
+
+  private hasRole(role: string) {
     const token = this.getToken();
     if (token) {
       const roles = <string[]>token.roles;
-      return roles.indexOf('ADMIN') > -1;
+      return roles.indexOf(role) > -1;
     }
 
     return false;
