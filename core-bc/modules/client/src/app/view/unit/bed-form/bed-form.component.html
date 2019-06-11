@@ -35,11 +35,11 @@
   <vgr-card formGroupName="patient" [ngStyle]="{display: bedForm.get('bedstatus').value == 'OCCUPIED' ? 'block' : 'none'}">
     <vgr-card-column>
       <div>
-        <div class="div-button10" [hidden]="!unit.hasPatientNameColumn">
+        <!--<div class="div-button10" [hidden]="!unit.hasPatientNameColumn">
           <div>Patient</div>
           <vgr-input formControlName="label" [showValidation]="!bedForm.get('patient.label').valid"></vgr-input>
-          <!--<span *ngIf="bedForm.get('patient.label').hasError('pattern')" class="help-text"> Inga siffror i namnet</span>-->
-        </div>
+          &lt;!&ndash;<span *ngIf="bedForm.get('patient.label').hasError('pattern')" class="help-text"> Inga siffror i namnet</span>&ndash;&gt;
+        </div>-->
 
         <div class="div-button10" *ngIf="unit.hasGenderFeature">
           <div>Kön</div>

@@ -1,8 +1,9 @@
 <table class="bed-table">
   <thead>
   <tr *ngIf="unit.careBurden !== 'inget' || unit.hasMotherChildDietFeature || unit.hasMorRondFeature || unit.hasBarnRondFeature" class="header-row">
-    <th *ngIf="unit.hasPatientNameColumn" [colSpan]="4"></th>
-    <th *ngIf="!unit.hasPatientNameColumn" [colSpan]="3"></th>
+    <!--<th *ngIf="unit.hasPatientNameColumn" [colSpan]="4"></th>
+    <th *ngIf="!unit.hasPatientNameColumn" [colSpan]="3"></th>-->
+    <th [colSpan]="3"></th>
     <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last" *ngIf="unit.careBurden !== 'inget'">Vårdtyngd</th>
     <th *ngIf="unit.hasMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
     <th *ngIf="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0) > 0" [colSpan]="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0)"></th>
@@ -12,7 +13,7 @@
   <tr class="header-row header-row-primary">
     <th>Rum/säng</th>
     <th>Status</th>
-    <th *ngIf="unit.hasPatientNameColumn">Patient</th>
+   <!-- <th *ngIf="unit.hasPatientNameColumn">Patient</th>-->
     <th>Team</th>
     <th class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index" [hidden]="unit.careBurden == 'inget'">{{cbc.name}}</th>
     <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature">Mor</th>
@@ -42,7 +43,7 @@
 
       <td><span class="{{bed.bedStatus == 'OCCUPIED' ? 'fa fa-bed' : bed.bedStatus == 'RESERVED' ? 'fa fa-registered' : ''}}" [appCallout]="bed.bedStatus == 'OCCUPIED'? 'Upptagen' : bed.bedStatus == 'VACANT' ? 'Ledig' :'Reserverad'"></span></td>
 
-      <td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>
+      <!--<td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>-->
 
       <td *ngIf="bed.ssk?.color" class="ssk {{bed.ssk?.color}}" [appCallout]="bed.ssk.label">
           <!--{{ (bed.ssk.label.length>8)? (bed.ssk.label | slice:0:6)+'..':(bed.ssk.label) }}-->
