@@ -52,6 +52,9 @@ export class Patient {
   infoDiet: string;
   relatedInformation: string;
   fromClinic: ServingClinic;
+  specialDietChild : boolean;
+  specialDietMother : boolean;
+  specialDiet : boolean;
 }
 
 enum LeaveStatus {

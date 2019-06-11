@@ -56,14 +56,20 @@
         </span>
       </td>
 
-      <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature"> <span class="ikon"
-                                                                                     [appCallout]="bed.patient?.infoDietMother">{{bed.patient?.dietMother?.name}}</span></td>
+      <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">
+        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient.specialDietMother" class="fa fa-apple-alt purple"></i>
+        </span>
+      </td>
 
-      <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature"><span class="ikon"
-                                                                                 [appCallout]="bed.patient?.infoDietChild">{{bed.patient?.dietChild?.name}}</span></td>
+      <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature">
+        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient.specialDietChild" class="fa fa-apple-alt purple"></i>
+        </span>
+      </td>
 
-      <td *ngIf="unit.hasKostFeature" [colSpan]="1"><span class="ikon"
-                                                          [appCallout]="bed.patient?.infoDiet">{{bed.patient?.diet?.name}}</span></td>
+      <td *ngIf="unit.hasKostFeature" [colSpan]="1">
+        <span class="ikon" [appCallout]="'special kost'"><i *ngIf="bed.patient.specialDiet" class="fa fa-apple-alt purple"></i>
+        </span>
+      </td>
 
       <td *ngIf="unit.hasAmningFeature">
         <span class="ikon" *ngIf="bed.patient?.amning === '2'"

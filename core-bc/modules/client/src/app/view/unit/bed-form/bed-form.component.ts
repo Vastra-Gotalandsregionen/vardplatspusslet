@@ -143,7 +143,11 @@ export class BedFormComponent implements OnInit {
         }),
         careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(patient)),
         relatedInformation: [patient.relatedInformation],
-        fromClinic: [patient.fromClinic != null ? patient.fromClinic.id : null]
+        fromClinic: [patient.fromClinic != null ? patient.fromClinic.id : null],
+
+        specialDietChild :[patient.specialDietChild],
+        specialDietMother : [patient.specialDietMother],
+        specialDiet: [patient.specialDiet]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -290,6 +294,10 @@ export class BedFormComponent implements OnInit {
 
       bed.patient.relatedInformation = bedModel.patient.relatedInformation;
       bed.patient.fromClinic = this.unit.servingClinics.find(klinik => klinik.id === bedModel.patient.fromClinic);
+
+      bed.patient.specialDietChild = bedModel.patient.specialDietChild;
+      bed.patient.specialDietMother = bedModel.patient.specialDietMother;
+      bed.patient.specialDiet = bedModel.patient.specialDiet;
 
 
     } else {

@@ -163,7 +163,7 @@
         </div>
       </div>
 
-      <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button10">
+     <!-- <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button10">
         <p>Kost Mor</p>
         <div class="containers" formGroupName="kostMorGroup">
           <vgr-dropdown-select  formControlName="dietMother" noItemSelectedLabel="Välj">
@@ -192,6 +192,8 @@
           <textarea formControlName="infoDiet" class="div-left5" cols="40"></textarea>
         </div>
       </div>
+-->
+
 
       <div class="div-button10">
         <p>Tolk</p>
@@ -212,6 +214,16 @@
         <div>Amning</div>
         <vgr-radio-group formControlName="amning" [options]="amningOptions" [vertical]="false">
         </vgr-radio-group>
+      </div>
+
+      <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button7">
+        <vgr-checkbox formControlName="specialDietMother" label="Special kost mor"></vgr-checkbox>
+      </div>
+      <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button7">
+        <vgr-checkbox formControlName="specialDietChild" label="Special kost barn"></vgr-checkbox>
+      </div>
+      <div  *ngIf="unit.hasKostFeature" class="div-button7">
+        <vgr-checkbox formControlName="specialDiet" label="Special kost"></vgr-checkbox>
       </div>
 
       <!--<div  *ngIf="unit.hasSekretessFeature" class="div-button10">

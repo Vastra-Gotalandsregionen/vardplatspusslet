@@ -136,6 +136,16 @@ public class Patient {
     @ManyToOne(fetch = FetchType.EAGER)
     private ServingClinic fromClinic;
 
+    @Column
+    private Boolean specialDietChild;
+
+    @Column
+    private Boolean specialDietMother;
+
+    @Column
+    private Boolean specialDiet;
+
+
     public Long getId() {
         return id;
     }
@@ -454,6 +464,30 @@ public class Patient {
 
     public void setFromClinic(ServingClinic fromClinic) {
         this.fromClinic = fromClinic;
+    }
+
+    public Boolean getSpecialDietChild() {
+        return specialDietChild;
+    }
+
+    public void setSpecialDietChild(Boolean specialDietChild) {
+        this.specialDietChild = specialDietChild;
+    }
+
+    public Boolean getSpecialDietMother() {
+        return specialDietMother;
+    }
+
+    public void setSpecialDietMother(Boolean specialDietMother) {
+        this.specialDietMother = specialDietMother;
+    }
+
+    public Boolean getSpecialDiet() {
+        return specialDiet;
+    }
+
+    public void setSpecialDiet(Boolean specialDiet) {
+        this.specialDiet = specialDiet;
     }
 
     @Override
