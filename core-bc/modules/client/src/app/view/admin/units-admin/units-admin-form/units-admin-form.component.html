@@ -213,7 +213,7 @@
           <table class="left-align" formArrayName="careBurdenValues">
             <thead>
             <tr>
-              <th>I beräkning <span class="fa fa-question-circle" [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span></th>
+              <th colspan="2">I beräkning <span class="fa fa-question-circle" [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span></th>
               <th>Namn</th>
               <th>Färg</th>
             </tr>
@@ -221,7 +221,7 @@
 
             <tr [formGroupName]="i" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
               <td><vgr-checkbox formControlName="countedIn"></vgr-checkbox></td>
-              <td *ngIf="unitForm.get('careBurden').value == 'tal'"><vgr-input [ngClass]="{'warn': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)" formControlName="name" placeholder="Siffra: 123..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input></td>
+              <td *ngIf="unitForm.get('careBurden').value == 'tal'"><vgr-input [ngClass]="{'isInvalid': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)" formControlName="name" placeholder="Siffra: 123..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input></td>
               <td *ngIf="unitForm.get('careBurden').value == 'text' || unitForm.get('careBurden').value == 'inget'"><vgr-input formControlName="name" placeholder="text.." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input></td>
               <td>
                 <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg (valfritt)'">
@@ -231,8 +231,10 @@
               </td>
 
               <td>
-                <a (click)= "deleteCareBurdenValues(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-                <span *ngIf="getcareBurdenValidation(i)" class="is-invalid">Fältet kan innehålla bara siffror </span>
+                <a (click)= "deleteCareBurdenValues(i)" class="icon-link">
+                  <span class="material-icons icon-tomato">delete</span>
+                  <span *ngIf="getcareBurdenValidation(i)" class="isInvalid">Fältet kan innehålla bara siffror </span>
+                </a>
               </td>
             </tr>
           </table>
