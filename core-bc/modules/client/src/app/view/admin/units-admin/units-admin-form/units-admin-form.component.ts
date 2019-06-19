@@ -75,6 +75,7 @@ export class UnitsAdminFormComponent implements OnInit {
     ];
 
     this.cleaningColorsDropdownItems = [
+      {displayName: 'Gul', value: 'YELLOW'},
       {displayName: 'Blå', value: 'BLUE'},
       {displayName: 'Röd', value: 'RED'}];
   }

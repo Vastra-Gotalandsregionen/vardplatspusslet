@@ -47,7 +47,7 @@
 
                     <div>
                       <div>Roll:</div>
-                      <vgr-radio-group formControlName="role" [options]="[{displayName: 'UNIT_ADMIN', value: 'UNIT_ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+                      <vgr-radio-group formControlName="role" [options]="roleOptions">
       
                       </vgr-radio-group>
                     </div>
@@ -96,7 +96,7 @@
                     </div>
                     <div>
                       <div>Roll:</div>
-                      <vgr-radio-group formControlName="role" [options]="[{displayName: 'UNIT_ADMIN', value: 'UNIT_ADMIN'}, {displayName: 'USER', value: 'USER'}]">
+                      <vgr-radio-group formControlName="role" [options]="roleOptions">
       
                       </vgr-radio-group>
                       <span *ngIf="!userForm.get('role').valid" style="color: red; background-color: mistyrose"> ! Fältet är Obligatoriskt</span>

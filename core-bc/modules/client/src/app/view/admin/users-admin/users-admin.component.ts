@@ -29,12 +29,20 @@ export class UsersAdminComponent implements OnInit {
 
   @ViewChild(DeleteModalComponent) appDeleteModal: DeleteModalComponent;
   @ViewChild("addUserId") addUserId: ElementRef;
+  roleOptions: any[] = [{displayName: 'UNIT_ADMIN', value: 'UNIT_ADMIN'}, {displayName: 'USER', value: 'USER'}];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+
+  }
 
   ngOnInit() {
+
+    if (this.authService.isAdmin()) {
+      this.roleOptions = [{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'UNIT_ADMIN', value: 'UNIT_ADMIN'}, {displayName: 'USER', value: 'USER'}];
+
+    }
 
     this.isFetchingUsers = true;
     this.http.get<User[]>('/api/user')
