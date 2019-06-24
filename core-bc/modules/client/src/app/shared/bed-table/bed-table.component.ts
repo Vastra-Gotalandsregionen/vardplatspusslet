@@ -5,9 +5,8 @@ import {DropdownItem} from "../../domain/DropdownItem";
 import {SelectableItem} from "vgr-komponentkartan";
 import {Bed} from "../../domain/bed";
 import {DeleteModalComponent} from "../../elements/delete-modal/delete-modal.component";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
-import {SevenDaysPlaningUnit} from "../../domain/seven-days-planing-unit";
 import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {Patient} from "../../domain/patient";
@@ -45,7 +44,7 @@ export class BedTableComponent implements OnInit {
   expandedRows: Array<boolean>;
   delayedExpandedRows: Array<boolean>;
   allowedBedNames: string[] = [];
-  allowedNames : string = "";
+  allowedNamesAsString : string = "";
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
@@ -161,20 +160,20 @@ export class BedTableComponent implements OnInit {
       return {displayName: cg.description, value: cg.id};
     }));
 
-    for (var item of this.unit.allowedBedNames)
+    for (const item of this.unit.allowedBedNames)
     {
       if (item != null){
         this.allowedBedNames.push(item.name);
-        this.allowedNames = this.allowedBedNames.join(" , ");
       }
     }
 
+    this.allowedNamesAsString = this.allowedBedNames.join(", ");
   }
 
   private initAddBedForm() {
     this.addBedForm = this.formBuilder.group({
       id: null,
-      label: [null, [Validators.required, this.allowedNameStrings.bind(this)]]
+      label: [null, [Validators.required, this.allowedNameStringsValidator.bind(this)]]
     });
   }
 
@@ -193,29 +192,11 @@ export class BedTableComponent implements OnInit {
     return careBurdenValue ? careBurdenValue : null;
   }
 
-  toInterpreterString(patient: Patient): string {
-    let text = 'Tolk: ';
-
-    if (patient.interpretDate) {
-      text += this.formatDate(patient.interpretDate);
-    }
-
-    if (patient.interpretDate && patient.interpretInfo) {
-      text += ', ';
-    }
-
-    if (patient.interpretInfo) {
-      text += patient.interpretInfo;
-    }
-
-    return text;
-  }
-
   formatDate(date: any) {
     return new Date(date).toLocaleDateString();
   }
 
-  allowedNameStrings(control: FormControl): {[s:string] : boolean} {
+  allowedNameStringsValidator(control: FormControl): {[s:string] : boolean} {
     let value = control.value as string || '';
 
     let match = value.match('.*[a-zA-Z]+.*');

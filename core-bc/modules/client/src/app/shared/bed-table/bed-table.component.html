@@ -1,8 +1,6 @@
 <table class="bed-table">
   <thead>
   <tr *ngIf="unit.careBurden !== 'inget' || unit.hasMotherChildDietFeature || unit.hasMorRondFeature || unit.hasBarnRondFeature" class="header-row">
-    <!--<th *ngIf="unit.hasPatientNameColumn" [colSpan]="4"></th>
-    <th *ngIf="!unit.hasPatientNameColumn" [colSpan]="3"></th>-->
     <th [colSpan]="3"></th>
     <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last" *ngIf="unit.careBurden !== 'inget'">Vårdtyngd</th>
     <th *ngIf="unit.hasMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
@@ -13,7 +11,6 @@
   <tr class="header-row header-row-primary">
     <th>Rum/säng</th>
     <th>Status</th>
-   <!-- <th *ngIf="unit.hasPatientNameColumn">Patient</th>-->
     <th>Team</th>
     <th class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index" [hidden]="unit.careBurden == 'inget'">{{cbc.name}}</th>
     <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature">Mor</th>
@@ -28,10 +25,7 @@
     <th *ngIf="unit.hasPatientFromClinicFeature">Klinik</th>
     <th>Tolk</th>
     <th *ngIf="unit.hasPatientWaitsFeature">Patient väntar</th>
-    <!--<th *ngIf="unit.hasCarePlan">Vårdplan</th>-->
-   <!-- <th>Anteckningar</th>-->
     <th *ngIf="unit.hasBackToHomeAlternativFeature">Hem alt.</th>
-    <!--<th *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfekteradFeature || unit.hasInfectionSensitiveFeature">Städ</th>-->
     <th *ngIf="unit.hasCleaningFeature">Städ</th>
     <th>Övrigt</th>
   </tr>
@@ -43,11 +37,7 @@
 
       <td><span class="{{bed.bedStatus == 'OCCUPIED' ? 'fa fa-bed' : bed.bedStatus == 'RESERVED' ? 'fa fa-registered' : ''}}" [appCallout]="bed.bedStatus == 'OCCUPIED'? 'Upptagen' : bed.bedStatus == 'VACANT' ? 'Ledig' :'Reserverad'"></span></td>
 
-      <!--<td *ngIf="unit.hasPatientNameColumn"><span>{{bed.patient?.label}}</span></td>-->
-
-      <td *ngIf="bed.ssk?.color" class="ssk {{bed.ssk?.color}}" [appCallout]="bed.ssk.label">
-          <!--{{ (bed.ssk.label.length>8)? (bed.ssk.label | slice:0:6)+'..':(bed.ssk.label) }}-->
-      </td>
+      <td *ngIf="bed.ssk?.color" class="ssk {{bed.ssk?.color}}" [appCallout]="bed.ssk.label"></td>
       <td *ngIf="bed.ssk && !bed.ssk?.color">{{bed.ssk.label}}</td>
       <td *ngIf="!bed.ssk"></td>
 
@@ -58,17 +48,17 @@
       </td>
 
       <td class="column-group first" *ngIf="unit.hasMotherChildDietFeature">
-        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient?.specialDietMother" class="fa fa-apple-alt purple"></i>
+        <span class="ikon" [appCallout]="'Specialkost'"><i  *ngIf="bed.patient?.specialDietMother" class="fa fa-apple-alt purple"></i>
         </span>
       </td>
 
       <td class="column-group last" *ngIf="unit.hasMotherChildDietFeature">
-        <span class="ikon" [appCallout]="'special kost'"><i  *ngIf="bed.patient?.specialDietChild" class="fa fa-apple-alt purple"></i>
+        <span class="ikon" [appCallout]="'Specialkost'"><i  *ngIf="bed.patient?.specialDietChild" class="fa fa-apple-alt purple"></i>
         </span>
       </td>
 
       <td *ngIf="unit.hasKostFeature" [colSpan]="1">
-        <span class="ikon" [appCallout]="'special kost'"><i *ngIf="bed.patient?.specialDiet" class="fa fa-apple-alt purple"></i>
+        <span class="ikon" [appCallout]="'Specialkost'"><i *ngIf="bed.patient?.specialDiet" class="fa fa-apple-alt purple"></i>
         </span>
       </td>
 
@@ -107,22 +97,14 @@
           <i class="fa fa-american-sign-language-interpreting purple"></i>
         </span>
       </td>
+
       <td class="patient-waits" *ngIf="unit.hasPatientWaitsFeature">
-      <span class="ikon purple" *ngIf="bed.patientWaits"
-            [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
-        <i class="fa fa-hourglass-half"></i>
-      </span>
+        <span class="ikon purple" *ngIf="bed.patientWaits"
+              [appCallout]="(bed.servingClinic?.name != null)? 'Ny patient väntar från: ' + bed.servingClinic?.name: 'Ny patient väntar'">
+          <i class="fa fa-hourglass-half"></i>
+        </span>
       </td>
-      <!--<td *ngIf="unit.hasCarePlan">
-        <span class="ikon" *ngIf="bed.patient?.carePlan?.length > 0"
-             [appCallout]="'Vårdplan: ' + bed.patient?.carePlan">{{bed.patient?.carePlan.length > 7 ? bed.patient?.carePlan.substr(0,7)+'...': bed.patient?.carePlan}}
-        </span>
-      </td>-->
-      <!--<td>
-        <span class="ikon" *ngIf="bed.patient?.relatedInformation?.length > 0"
-                [appCallout]="bed.patient?.relatedInformation">{{bed.patient?.relatedInformation.length > 15 ? bed.patient?.relatedInformation.substr(0,15)+'...': bed.patient?.relatedInformation}}
-        </span>
-      </td>-->
+
       <td *ngIf="unit.hasBackToHomeAlternativFeature">
         <span class="ikon" *ngIf="bed.patient?.information === '1' && unit.hasBackToHomeAlternativFeature"
              [appCallout]="'THG' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-undo purple"></i>
@@ -137,27 +119,14 @@
              [appCallout]="'Vanlig hemgång' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i>
         </span>
       </td>
-     <!-- <td *ngIf="unit.hasCleaningFeature || unit.hasSmittaFeature || unit.hasInfectionSensitiveFeature || unit.hasInfekteradFeature">-->
+
       <td *ngIf="unit.hasCleaningFeature">
         <span class="ikon" *ngIf="bed.cleaningalternativeExists && unit.hasCleaningFeature"
               [appCallout]="'Städ ' + ((bed.cleaningalternativeExists && bed.cleaningAlternative?.description) ? ': ' + bed.cleaningAlternative.description + (bed.cleaningInfo ? ', ' + bed.cleaningInfo : ''): '')">
-          <!-- <i class="'fa fa-leaf icon-colored-' + bed.cleaningAlternative?.color"></i>-->
           <i [ngClass]=" bed.cleaningAlternative?.color ? 'fa fa-leaf icon-colored-' +  bed.cleaningAlternative?.color : 'fa fa-leaf icon-colored-BLUE'"></i>
         </span>
-        <!--<span class="ikon" *ngIf="bed.patient?.smitta && unit.hasSmittaFeature"
-             [appCallout]="'Smitta'"><i class="fa fa-bug rod"></i>
-        </span>
-
-        <span class="ikon" *ngIf="bed.patient?.infectionSensitive && unit.hasInfectionSensitiveFeature"
-             [appCallout]="'Infektionskänslig'"><i class="material-icons rod">grain</i>
-        </span>
-
-        <span class="ikon" *ngIf="bed.patient?.infekterad && unit.hasInfekteradFeature"
-             [appCallout]="'Infekterad'">
-          <i class="fa fa-bug"></i>
-        </span>-->
-
       </td>
+
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
     </tr>
     <tr *ngIf="expandedRows[i]" class="bed-form-row {{delayedExpandedRows[i] ? 'visible' : 'hidden'}}">
@@ -199,10 +168,10 @@
           <div class="containers">
             <div style="flex-grow: 8; flex-shrink: 0">
               <div>Benämning
-                <span *ngIf="addBedForm.get('label').hasError('nameIsForbidden')" class="isInvalid">Inget valid namn!!</span>
+                <span *ngIf="addBedForm.get('label').hasError('nameIsForbidden')" class="isInvalid">Ogiltigt namn</span>
               </div>
-              <div class="information" *ngIf="allowedNames?.length > 0 && !addBedForm.get('label').dirty || addBedForm.get('label').value?.length == 0">Dessa namn är också tilllåtna:</div>
-              <div class="information" *ngIf="allowedNames?.length > 0 && !addBedForm.get('label').dirty || addBedForm.get('label').value?.length == 0">{{allowedNames}}</div>
+              <div class="information" *ngIf="allowedNamesAsString?.length > 0 && !addBedForm.get('label').dirty || addBedForm.get('label').value?.length == 0">Dessa namn är också tilllåtna:</div>
+              <div class="information" *ngIf="allowedNamesAsString?.length > 0 && !addBedForm.get('label').dirty || addBedForm.get('label').value?.length == 0">{{allowedNamesAsString}}</div>
               <vgr-input formControlName="label"
                          [showValidation]="true"></vgr-input>
             </div>

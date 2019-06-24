@@ -37,6 +37,10 @@
 
 table.left-align {
   text-align: left;
+
+  th {
+    text-align: left; /* Strangely IE needs this in addition to table.left-align */
+  }
 }
 
 table thead th {

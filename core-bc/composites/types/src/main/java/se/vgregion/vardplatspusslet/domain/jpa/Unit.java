@@ -97,19 +97,6 @@ public class Unit implements Comparable<Unit> {
     private Boolean hasVuxenPatientFeature;
 
     @Column
-    private Boolean hasSekretessFeature;
-
-    @Column
-    private Boolean hasInfekteradFeature;
-
-
-    @Column
-    private Boolean hasInfectionSensitiveFeature;
-
-    @Column
-    private Boolean hasSmittaFeature;
-
-    @Column
     private Boolean hasCleaningFeature;
 
     @Column
@@ -145,9 +132,6 @@ public class Unit implements Comparable<Unit> {
 
     @Column
     private Boolean hasUnitPlannedInFeature;
-
-    @Column
-    private Boolean hasPatientNameColumn;
 
     @Column
     private Boolean hasPatientFromClinicFeature;
@@ -269,44 +253,12 @@ public class Unit implements Comparable<Unit> {
         this.has24oFeature = has24oFeature;
     }
 
-    public Boolean getHasSekretessFeature() {
-        return hasSekretessFeature;
-    }
-
-    public void setHasSekretessFeature(Boolean hasSekretessFeature) {
-        this.hasSekretessFeature = hasSekretessFeature;
-    }
-
     public Boolean getHasVuxenPatientFeature() {
         return hasVuxenPatientFeature;
     }
 
     public void setHasVuxenPatientFeature(Boolean hasVuxenPatientFeature) {
         this.hasVuxenPatientFeature = hasVuxenPatientFeature;
-    }
-
-    public Boolean getHasInfekteradFeature() {
-        return hasInfekteradFeature;
-    }
-
-    public void setHasInfekteradFeature(Boolean hasInfekteradFeature) {
-        this.hasInfekteradFeature = hasInfekteradFeature;
-    }
-
-    public Boolean getHasInfectionSensitiveFeature() {
-        return hasInfectionSensitiveFeature;
-    }
-
-    public void setHasInfectionSensitiveFeature(Boolean hasInfectionSensitiveFeature) {
-        this.hasInfectionSensitiveFeature = hasInfectionSensitiveFeature;
-    }
-
-    public Boolean getHasSmittaFeature() {
-        return hasSmittaFeature;
-    }
-
-    public void setHasSmittaFeature(Boolean hasSmittaFeature) {
-        this.hasSmittaFeature = hasSmittaFeature;
     }
 
     public Set<CleaningAlternative> getCleaningAlternatives() {
@@ -491,14 +443,6 @@ public class Unit implements Comparable<Unit> {
 
     public void setCareBurden(String careBurden) {
         this.careBurden = careBurden;
-    }
-
-    public Boolean getHasPatientNameColumn() {
-        return hasPatientNameColumn;
-    }
-
-    public void setHasPatientNameColumn(Boolean hasPatientNameColumn) {
-        this.hasPatientNameColumn = hasPatientNameColumn;
     }
 
     public Boolean getHasPatientFromClinicFeature() {

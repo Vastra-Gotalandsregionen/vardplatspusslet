@@ -27,15 +27,10 @@ export class Unit {
   dietForChildren: DietForChild[];
   dietForPatients: DietForPatient[];
   hasLeftDateFeature: boolean;
-  hasCarePlan: boolean;
   hasAkutPatientFeature: boolean;
   has23oFeature: boolean;
   has24oFeature: boolean;
   hasVuxenPatientFeature: boolean;
-  hasSekretessFeature: boolean;
-  hasInfekteradFeature: boolean;
-  hasInfectionSensitiveFeature: boolean;
-  hasSmittaFeature: boolean;
   cleaningAlternatives: CleaningAlternative[];
   hasCleaningFeature: boolean;
   hasPalFeature: boolean;
@@ -54,7 +49,7 @@ export class Unit {
   unitsPlannedIn: UnitPlannedIn[];
   sevenDaysPlaningUnits: SevenDaysPlaningUnit[];
   careBurden: string;
-  hasPatientNameColumn: boolean;
+  // hasPatientNameColumn: boolean;
   hasPatientFromClinicFeature: boolean;
   hasGenderFeature: boolean;
   hasPatientWaitsFeature: boolean;

@@ -29,12 +29,6 @@ export class Patient {
   electiv23O: boolean;
   electiv24O: boolean;
   vuxenPatient: boolean;
-  sekretess: boolean;
-  sekretessInfo: string;
-  infekterad: boolean;
-  infectionSensitive: boolean;
-  smitta: boolean;
-  smittaInfo: string;
   pal: string;
   patientEvents: PatientEvent[];
   morRond: boolean;
@@ -44,12 +38,6 @@ export class Patient {
   information: string;
   kommentar: string;
   careBurdenChoices: CareBurdenChoice[];
-  dietMother: DietForMother;
-  infoDietMother: string;
-  dietChild: DietForChild;
-  infoDietChild: string;
-  diet: DietForPatient;
-  infoDiet: string;
   relatedInformation: string;
   fromClinic: ServingClinic;
   specialDietChild : boolean;

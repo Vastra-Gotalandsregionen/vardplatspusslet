@@ -41,7 +41,6 @@ export class UsersAdminComponent implements OnInit {
 
     if (this.authService.isAdmin()) {
       this.roleOptions = [{displayName: 'ADMIN', value: 'ADMIN'}, {displayName: 'UNIT_ADMIN', value: 'UNIT_ADMIN'}, {displayName: 'USER', value: 'USER'}];
-
     }
 
     this.isFetchingUsers = true;

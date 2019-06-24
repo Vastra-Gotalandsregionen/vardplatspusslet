@@ -131,16 +131,11 @@ export class UnitsAdminFormComponent implements OnInit {
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
       careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
       hasLeftDateFeature: [unit.hasLeftDateFeature],
-      hasCarePlan: unit.hasCarePlan,
       cleaningAlternatives: this.formBuilder.array(this.buildCleaningGroups(unit.cleaningAlternatives)),
       hasAkutPatientFeature: [unit.hasAkutPatientFeature],
       has23oFeature: [unit.has23oFeature],
       has24oFeature: [unit.has24oFeature],
       hasVuxenPatientFeature: [unit.hasVuxenPatientFeature],
-      hasSekretessFeature: [unit.hasSekretessFeature],
-      hasInfekteradFeature: [unit.hasInfekteradFeature],
-      hasInfectionSensitiveFeature: [unit.hasInfectionSensitiveFeature],
-      hasSmittaFeature: [unit.hasSmittaFeature],
       hasCleaningFeature: [unit.hasCleaningFeature],
       hasPalFeature: [unit.hasPalFeature],
       hasHendelseFeature: [unit.hasHendelseFeature],
@@ -154,7 +149,6 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
       hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature],
       careBurden: [unit.careBurden? unit.careBurden: "inget"],
-      hasPatientNameColumn: [unit.hasPatientNameColumn],
       hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature],
       hasGenderColumn: [unit.hasGenderFeature],
       hasPatientWaitesFeature: [unit.hasPatientWaitsFeature],
@@ -196,17 +190,12 @@ export class UnitsAdminFormComponent implements OnInit {
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
       careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
       hasLeftDateFeature: unit.hasLeftDateFeature,
-      hasCarePlan: unit.hasCarePlan,
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       cleaningAlternatives: this.formBuilder.array(this.buildCleaningGroups(unit.cleaningAlternatives)),
       hasAkutPatientFeature: unit.hasAkutPatientFeature,
       has23oFeature: unit.has23oFeature,
       has24oFeature: unit.has24oFeature,
       hasVuxenPatientFeature: unit.hasVuxenPatientFeature,
-      hasSekretessFeature: unit.hasSekretessFeature,
-      hasInfekteradFeature: unit.hasInfekteradFeature,
-      hasInfectionSensitiveFeature: unit.hasInfectionSensitiveFeature,
-      hasSmittaFeature: unit.hasSmittaFeature,
       hasCleaningFeature: unit.hasCleaningFeature,
       hasPalFeature: unit.hasPalFeature,
       hasHendelseFeature: unit.hasHendelseFeature,
@@ -220,7 +209,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMotherChildDietFeature: unit.hasMotherChildDietFeature,
       hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature,
       careBurden: unit.careBurden,
-      hasPatientNameColumn: unit.hasPatientNameColumn,
+      // hasPatientNameColumn: unit.hasPatientNameColumn,
       hasPatientFromClinicFeature : unit.hasPatientFromClinicFeature,
       hasGenderColumn: unit.hasGenderFeature,
       hasPatientWaitesFeature: unit.hasPatientWaitsFeature,
@@ -244,15 +233,10 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.id = unitModel.id;
     unit.name = unitModel.name;
     unit.hasLeftDateFeature = unitModel.hasLeftDateFeature;
-    unit.hasCarePlan = unitModel.hasCarePlan;
     unit.hasAkutPatientFeature = unitModel.hasAkutPatientFeature;
     unit.has23oFeature = unitModel.has23oFeature;
     unit.has24oFeature = unitModel.has24oFeature;
     unit.hasVuxenPatientFeature = unitModel.hasVuxenPatientFeature;
-    unit.hasSekretessFeature = unitModel.hasSekretessFeature;
-    unit.hasInfekteradFeature = unitModel.hasInfekteradFeature;
-    unit.hasInfectionSensitiveFeature = unitModel.hasInfectionSensitiveFeature;
-    unit.hasSmittaFeature = unitModel.hasSmittaFeature;
     unit.hasCleaningFeature = unitModel.hasCleaningFeature;
     unit.hasPalFeature = unitModel.hasPalFeature;
     unit.hasHendelseFeature = unitModel.hasHendelseFeature;
@@ -281,7 +265,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.cleaningAlternatives = unitModel.cleaningAlternatives;
     unit.unitsPlannedIn = unitModel.unitsPlannedIn;
     unit.careBurden = unitModel.careBurden;
-    unit.hasPatientNameColumn = unitModel.hasPatientNameColumn;
+    // unit.hasPatientNameColumn = unitModel.hasPatientNameColumn;
     unit.hasPatientFromClinicFeature = unitModel.hasPatientFromClinicFeature;
     unit.hasGenderFeature = unitModel.hasGenderColumn;
     unit.hasPatientWaitsFeature = unitModel.hasPatientWaitesFeature;

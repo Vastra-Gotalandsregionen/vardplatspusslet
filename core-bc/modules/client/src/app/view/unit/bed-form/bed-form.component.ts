@@ -3,13 +3,12 @@ import {Bed} from "../../../domain/bed";
 import {Patient} from "../../../domain/patient";
 import {Unit} from "../../../domain/unit";
 import {HttpClient} from "@angular/common/http";
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {SelectableItem} from "vgr-komponentkartan";
 import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
 import {DropdownItem} from "../../../domain/DropdownItem";
-import { AllowedBedName } from "../../../domain/allowedBedName";
 
 @Component({
   selector: 'app-bed-form',
@@ -34,7 +33,6 @@ export class BedFormComponent implements OnInit {
   prevSmitta: string;
   prevCleanGroup: string;
   prevCleanInfo: string;
-  busyInfo: string;
   bedStatusOptions: SelectableItem<string>[];
   allowedBedNames: string[] = [];
   allowedNames : string = "";
@@ -78,7 +76,7 @@ export class BedFormComponent implements OnInit {
         this.allowedNames = this.allowedBedNames.join(" , ");
       }
     }
-    let patient;
+    let patient: Patient;
     if (!bed.patient) {
       patient = new Patient();
     } else {
@@ -107,31 +105,8 @@ export class BedFormComponent implements OnInit {
         electiv23O: [patient.electiv23O],
         electiv24O: [patient.electiv24O],
         vuxenPatient: [patient.vuxenPatient],
-        sekretessGroup: this.formBuilder.group({
-          sekretess: [patient.sekretess],
-          sekretessInfo: [patient.sekretessInfo]
-        }),
-        kostMorGroup: this.formBuilder.group({
-          dietMother: [patient.dietMother ? patient.dietMother.id : null],
-          infoDietMother: [patient.infoDietMother]
-        }),
-        kostBarnGroup: this.formBuilder.group({
-          dietChild: [patient.dietChild ? patient.dietChild.id : null],
-          infoDietChild: [patient.infoDietChild]
-        }),
-        kostGroup: this.formBuilder.group({
-          diet: [patient.diet ? patient.diet.id : null],
-          infoDiet: [patient.infoDiet]
-        }),
-
-        infekterad: [patient.infekterad],
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(patient.patientExaminations)),
         patientEvents: this.formBuilder.array(this.buildEventGroup(patient.patientEvents)),
-        infectionSensitive: [patient.infectionSensitive],
-        smittaGroup: this.formBuilder.group({
-          smitta: [patient.smitta],
-          smittaInfo: [patient.smittaInfo]
-        }),
         pal: [patient.pal],
         morRond: [patient.morRond],
         barnRond: [patient.barnRond],
@@ -204,30 +179,6 @@ export class BedFormComponent implements OnInit {
           }
         }
       });
-
-    this.bedForm.get('patient.sekretessGroup.sekretess').valueChanges
-      .subscribe((checked: boolean) => {
-        if (!checked || checked == null) {
-          this.prevSekret = this.bedForm.get('patient.sekretessGroup.sekretessInfo').value;
-          this.bedForm.get('patient.sekretessGroup.sekretessInfo').setValue(null);
-        } else if (checked) {
-          if (this.bedForm.get('patient.sekretessGroup.sekretessInfo').value == null) {
-            this.bedForm.get('patient.sekretessGroup.sekretessInfo').setValue(this.prevSekret);
-          }
-        }
-      });
-
-    this.bedForm.get('patient.smittaGroup.smitta').valueChanges
-      .subscribe((checked: boolean) => {
-        if (!checked || checked == null) {
-          this.prevSmitta = this.bedForm.get('patient.smittaGroup.smitta').value;
-          this.bedForm.get('patient.sekretessGroup.smittaInfo').setValue(null);
-        } else if (checked) {
-          if (this.bedForm.get('patient.smittaGroup.smittaInfo').value == null) {
-            this.bedForm.get('patient.smittaGroup.smittaInfo').setValue(this.prevSmitta);
-          }
-        }
-      });
   }
 
   save() {
@@ -254,12 +205,6 @@ export class BedFormComponent implements OnInit {
       bed.patient.electiv24O = bedModel.patient.electiv24O ? bedModel.patient.electiv24O : null;
       bed.patient.vuxenPatient = bedModel.patient.vuxenPatient ? bedModel.patient.vuxenPatient : null;
       bed.patient.patientExaminations = bedModel.patient.patientExaminations ? this.filterExams(bedModel.patient.patientExaminations) : null;
-      bed.patient.sekretess = bedModel.patient.sekretessGroup.sekretess ? bedModel.patient.sekretessGroup.sekretess : null;
-      bed.patient.sekretessInfo = bedModel.patient.sekretessGroup.sekretessInfo ? bedModel.patient.sekretessGroup.sekretessInfo : null;
-      bed.patient.infekterad = bedModel.patient.infekterad ? bedModel.patient.infekterad : null;
-      bed.patient.infectionSensitive = bedModel.patient.infectionSensitive ? bedModel.patient.infectionSensitive : null;
-      bed.patient.smitta = bedModel.patient.smittaGroup.smitta ? bedModel.patient.smittaGroup.smitta : null;
-      bed.patient.smittaInfo = bedModel.patient.smittaGroup.smittaInfo ? bedModel.patient.smittaGroup.smittaInfo : null;
       bed.patient.pal = bedModel.patient.pal ? bedModel.patient.pal : null;
       bed.patient.patientEvents = bedModel.patient.patientEvents ? this.filterEvents(bedModel.patient.patientEvents) : null;
       bed.patient.morRond = bedModel.patient.morRond ? bedModel.patient.morRond : null;
@@ -268,21 +213,6 @@ export class BedFormComponent implements OnInit {
       bed.patient.amning = bedModel.patient.amning ? bedModel.patient.amning : null;
       bed.patient.information = bedModel.patient.infoGroup.information ? bedModel.patient.infoGroup.information : null;
       bed.patient.kommentar = bedModel.patient.infoGroup.kommentar ? bedModel.patient.infoGroup.kommentar : null;
-      bed.patient.dietMother = bedModel.patient.kostMorGroup.dietMother ? bedModel.patient.kostMorGroup.dietMother : null;
-      if (bedModel.patient.kostMorGroup.dietMother) {
-        bed.patient.dietMother = this.unit.dietForMothers.find(diet => diet.id == bedModel.patient.kostMorGroup.dietMother)
-      }
-      bed.patient.infoDietMother = bedModel.patient.kostMorGroup.infoDietMother ? bedModel.patient.kostMorGroup.infoDietMother : null;
-
-      if (bedModel.patient.kostBarnGroup.dietChild) {
-        bed.patient.dietChild = this.unit.dietForChildren.find(diet => diet.id == bedModel.patient.kostBarnGroup.dietChild)
-      }
-      bed.patient.infoDietChild = bedModel.patient.kostBarnGroup.infoDietChild ? bedModel.patient.kostBarnGroup.infoDietChild : null;
-
-      if (bedModel.patient.kostGroup.diet) {
-        bed.patient.diet = this.unit.dietForPatients.find(diet => diet.id == bedModel.patient.kostGroup.diet)
-      }
-      bed.patient.infoDiet = bedModel.patient.kostGroup.infoDiet ? bedModel.patient.kostGroup.infoDiet : null;
       bed.patient.careBurdenChoices = bedModel.patient.careBurdenChoices ? bedModel.patient.careBurdenChoices.map(
         cbc => {
           return {
