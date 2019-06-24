@@ -94,7 +94,7 @@ export class BedFormComponent implements OnInit {
         leaveStatus: [patient.leaveStatus],
         gender: [patient.gender],
         leftDate: [patient.leftDate],
-        plannedLeaveDate: [patient.plannedLeaveDate],
+        plannedLeaveDate: [patient.plannedLeaveDate ? new Date(patient.plannedLeaveDate) : null],
         carePlan: [patient.carePlan],
         tolkGroup: this.formBuilder.group({
           interpreter: [patient.interpreter],
