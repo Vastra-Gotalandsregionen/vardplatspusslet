@@ -71,11 +71,6 @@
                       </div>
                     </div>
       
-                    <!--<div class="clearfix button-row save-cancel-delete">
-                      <vgr-save-cancel (save)="saveUser()" (cancel)="theListItem.toggleExpand()"
-                                        [hideLock]="true"></vgr-save-cancel>
-                      <vgr-button class="error" (click)="openDeleteModal(user)">Radera</vgr-button>
-                    </div>-->
                   </form>
                 </vgr-list-item-content>
               </vgr-list-item>
@@ -109,8 +104,6 @@
                       </vgr-dropdown-select>
                     </div>
       
-                    <!-- <vgr-save-cancel (save)="saveUser()" (cancel)="addListItem.toggleExpand()"
-                                      [hideLock]="true"></vgr-save-cancel>-->
                     <div class="containers">
                       <vgr-button default="true" (click)="saveUser(addListItem)" [disabled]="!(userForm.valid)">Spara</vgr-button>
                       <vgr-button buttonStyle="secondary" (click)="collapse(addListItem)" >Avbryt</vgr-button>
