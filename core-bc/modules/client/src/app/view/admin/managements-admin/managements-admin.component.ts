@@ -86,7 +86,7 @@ export class ManagementsAdminComponent implements OnInit {
 
   collapse(element: ListItemComponent) {
     this.managementForm.reset();
-    element.toggleExpand();
+    element.toggleExpanded();
   }
 
 }

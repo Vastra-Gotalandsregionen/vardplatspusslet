@@ -64,7 +64,7 @@
         <div class="div-button10" *ngIf="unit.hasDatedBackHomeFeature">
           <p>Planerad hemgång</p>
           <div class="containers">
-            <vgr-datepicker formControlName="plannedLeaveDate"></vgr-datepicker>
+            <vgr-datepicker formControlName="plannedLeaveDate" [selectedDate]="bedForm.get('patient.plannedLeaveDate').value"></vgr-datepicker>
             <a (click)="deleteDate()" class="icon-link">
               <span [appCallout]="'Rensa datum'" class="material-icons">
                 cancel_presentation
@@ -112,7 +112,7 @@
         <div  formArrayName="patientExaminations" *ngFor="let examination of patientExaminations.controls let i = index;" class="clearfix">
           <div [formGroupName]="i" class="containers">
             <input formControlName="examination" class="child1"/>
-            <vgr-datepicker formControlName="examinationDate"></vgr-datepicker>
+            <vgr-datepicker formControlName="examinationDate" [selectedDate]="bedForm.get('patient.patientExaminations').controls[i].get('examinationDate').value"></vgr-datepicker>
             <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
 
             <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
@@ -133,7 +133,7 @@
         <div  formArrayName="patientEvents" *ngFor="let event of patientEvents.controls let i = index;" class="clearfix">
           <div [formGroupName]="i" class="containers">
             <input formControlName="event" class="child1"/>
-            <vgr-datepicker formControlName="eventDate"></vgr-datepicker>
+            <vgr-datepicker formControlName="eventDate" [selectedDate]="bedForm.get('patient.patientEvents').controls[i].get('eventDate').value"></vgr-datepicker>
             <input formControlName="eventTime" placeholder="tid..." class="child3"/>
             <input formControlName="eventInfo" class="child4"/>
             <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
@@ -150,7 +150,7 @@
         <p>Tolk</p>
         <div class="containers" formGroupName="tolkGroup">
           <vgr-checkbox formControlName="interpreter"></vgr-checkbox>
-          <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value"></vgr-datepicker>
+          <vgr-datepicker formControlName="interpretDate" [disabled]="!bedForm.get('patient.tolkGroup.interpreter').value" [selectedDate]="bedForm.get('patient.tolkGroup.interpretDate').value"></vgr-datepicker>
           <input formControlName="interpretInfo" disabled *ngIf="!bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
           <input formControlName="interpretInfo"  *ngIf="bedForm.get('patient.tolkGroup.interpreter').value" class="div-left5" [placeholder]="'Info...'"/>
           <a (click)="deleteInterpreterDate()" class="icon-link">

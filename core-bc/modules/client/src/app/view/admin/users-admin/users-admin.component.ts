@@ -133,6 +133,6 @@ export class UsersAdminComponent implements OnInit {
 
   collapse(element: ListItemComponent) {
     this.userForm.reset();
-    element.toggleExpand();
+    element.toggleExpanded();
   }
 }

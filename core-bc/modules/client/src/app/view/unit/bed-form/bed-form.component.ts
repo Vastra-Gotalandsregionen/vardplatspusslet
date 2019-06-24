@@ -98,7 +98,7 @@ export class BedFormComponent implements OnInit {
         carePlan: [patient.carePlan],
         tolkGroup: this.formBuilder.group({
           interpreter: [patient.interpreter],
-          interpretDate: [patient.interpretDate],
+          interpretDate: [patient.interpretDate ? new Date(patient.interpretDate) : null],
           interpretInfo: [patient.interpretInfo]
         }),
         akutPatient: [patient.akutPatient],
@@ -283,7 +283,7 @@ export class BedFormComponent implements OnInit {
       return this.formBuilder.group({
         id: examinationklinik.id,
         examination: examinationklinik.examination,
-        examinationDate: examinationklinik.examinationDate,
+        examinationDate: examinationklinik.examinationDate ? new Date(examinationklinik.examinationDate) : null,
         examinationtime: examinationklinik.examinationtime
       })
     });
@@ -328,7 +328,7 @@ export class BedFormComponent implements OnInit {
       return this.formBuilder.group({
         id: patientevent.id,
         event: patientevent.event,
-        eventDate: patientevent.eventDate,
+        eventDate: patientevent.eventDate ? new Date(patientevent.eventDate) : null,
         eventTime: patientevent.eventTime,
         eventInfo: patientevent.eventInfo
       })

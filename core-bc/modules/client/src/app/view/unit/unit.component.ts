@@ -322,7 +322,7 @@ export class UnitComponent implements OnInit, OnDestroy {
   }
 
     collapse(element: ListItemComponent) {
-    element.toggleExpand();
+    element.toggleExpanded();
     this.ngOnInit();
   }
 
