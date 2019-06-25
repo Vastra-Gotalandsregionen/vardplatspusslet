@@ -50,7 +50,7 @@
                                         [newUnit]="false"
                                         [showId]="false"
                                         [showDelete]="true"
-                                        (cancelEvent)="theListItem.toggleExpanded()"
+                                        (cancelEvent)="theListItem.toggleExpand()"
                                         (openDeleteEvent)="openDeleteModal(unit)"
                                         (saveEvent)="save(theListItem)"
                                         *ngIf="clinics && theListItem.expanded"
@@ -73,7 +73,7 @@
                                         [newUnit]="true"
                                         [showId]="true"
                                         [showDelete]="false"
-                                        (cancelEvent)="addListItem.toggleExpanded()"
+                                        (cancelEvent)="addListItem.toggleExpand()"
                                         (saveEvent)="save(addListItem)"
                                         *ngIf="clinics">
       

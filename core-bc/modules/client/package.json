@@ -35,7 +35,7 @@
     "rxjs": "~6.3.3",
     "rxjs-compat": "~6.3.3",
     "tslib": "^1.10.0",
-    "vgr-komponentkartan": "^4.2.0",
+    "vgr-komponentkartan": "4.0.0",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {

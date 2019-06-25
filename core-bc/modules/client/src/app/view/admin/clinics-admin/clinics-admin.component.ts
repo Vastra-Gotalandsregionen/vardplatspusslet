@@ -99,7 +99,7 @@ export class ClinicsAdminComponent implements OnInit {
 
   collapse(element: ListItemComponent) {
     this.clinicForm.reset();
-    element.toggleExpanded();
+    element.toggleExpand();
   }
 
 }
