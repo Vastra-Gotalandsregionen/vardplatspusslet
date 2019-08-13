@@ -44,6 +44,9 @@ public class Message implements Comparable<Message> {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Unit unit;
 
+    @Column
+    private Boolean pinned;
+
     public Long getId() {
         return id;
     }
@@ -94,18 +97,28 @@ public class Message implements Comparable<Message> {
         this.unit = unit;
     }
 
+    public Boolean getPinned() {
+        return pinned;
+    }
+
+    public void setPinned(Boolean pinned) {
+        this.pinned = pinned;
+    }
+
     @Override
     public int compareTo(Message o) {
         if (this == o) {
             return 0;
         }
 
+        Comparator<Message> pinned = comparing(m1 -> m1.pinned, nullsLast(naturalOrder()));
         Comparator<Message> dayOfWeek = comparing(m1 -> m1.dayOfWeek, nullsFirst(naturalOrder()));
         Comparator<Message> date = comparing(m1 -> m1.date, nullsFirst(naturalOrder()));
         Comparator<Message> heading = comparing(m1 -> m1.heading, nullsFirst(naturalOrder()));
         Comparator<Message> id = comparing(m1 -> m1.id, nullsFirst(naturalOrder()));
 
         return dayOfWeek
+                .thenComparing(pinned)
                 .thenComparing(date)
                 .thenComparing(heading)
                 .thenComparing(id)

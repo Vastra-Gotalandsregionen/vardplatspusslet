@@ -5,9 +5,10 @@
         <vgr-expandable-div-content>
             <div class="date">
                 <span *ngIf="message.date">
-                    {{message.date | date : 'yyyy-MM-dd'}}   
+                    {{message.date | date : 'yyyy-MM-dd'}}
                 </span>
                 <span *ngIf="dayOfWeekLabel">{{dayOfWeekLabel}}</span>
+                <span *ngIf="message.pinned" style="font-style: italic">Stående</span>
             </div>
             <div [innerHTML]="getHtml(message.text)"></div>
         </vgr-expandable-div-content>

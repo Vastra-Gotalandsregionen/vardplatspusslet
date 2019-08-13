@@ -31,7 +31,7 @@ public class MessageService {
 
         Date today = new Date();
 
-        return messageRepository.findAllByUnitEqualsToday(
+        return messageRepository.findAllByUnitToday(
                 unitRepository.getOne(unitId),
                 dayOfWeek,
                 today);

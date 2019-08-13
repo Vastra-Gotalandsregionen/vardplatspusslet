@@ -14,8 +14,8 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     TreeSet<Message> findAllByUnitEquals(Unit unit);
 
-    @Query("select m from Message m where m.unit = ?1 and (m.dayOfWeek = ?2 or m.date = ?3)")
-    TreeSet<Message> findAllByUnitEqualsToday(Unit unit, DayOfWeek dayOfWeek, Date date);
+    @Query("select m from Message m where m.unit = ?1 and (m.dayOfWeek = ?2 or m.date = ?3 or m.pinned = true)")
+    TreeSet<Message> findAllByUnitToday(Unit unit, DayOfWeek dayOfWeek, Date date);
 
     @Query("select m from Message m join fetch m.unit where m.id = :id")
     Message findByIdWithUnit(@Param("id") Long id);

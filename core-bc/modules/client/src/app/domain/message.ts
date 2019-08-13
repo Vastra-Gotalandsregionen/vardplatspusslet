@@ -7,4 +7,5 @@ export class Message {
   date: Date;
   dayOfWeek: string;
   unit: Unit;
+  pinned: boolean;
 }
