@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import se.vgregion.vardplatspusslet.domain.jpa.Bed;
 import se.vgregion.vardplatspusslet.domain.jpa.Clinic;
 import se.vgregion.vardplatspusslet.domain.jpa.Patient;
+import se.vgregion.vardplatspusslet.domain.jpa.Ssk;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.repository.BedRepository;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
@@ -44,6 +45,8 @@ public class BedServiceTest {
     @Autowired
     private PatientRepository patientRepository;
 
+    private Ssk ssk = new Ssk();
+
     @Before
     public void setup() {
         Clinic clinic = new Clinic("clinic1", "Klinik 1");
@@ -52,8 +55,10 @@ public class BedServiceTest {
         Unit unit = new Unit();
         unit.setId("unit1");
         unit.setClinic(clinic);
+        unit.getSsks().add(ssk);
 
-        unitRepository.save(unit);
+        unit = unitRepository.save(unit);
+        ssk = unit.getSsks().iterator().next();
 
         Patient patient = new Patient();
         patient.setLabel("pat1");
@@ -61,6 +66,7 @@ public class BedServiceTest {
         Bed bed = new Bed();
         bed.setPatient(patient);
         bed.setUnit(unit);
+        bed.setSsk(ssk);
 
         bedService.save("clinic1", "unit1", bed);
     }
@@ -76,10 +82,28 @@ public class BedServiceTest {
     public void patientHasLeft() {
         assertEquals(1, patientRepository.findAll().size());
 
-        bedService.patientHasLeft(bedRepository.findAll().get(0));
+        Bed bed = bedRepository.findAll().get(0);
+        bedService.patientHasLeft(bed);
 
-        assertNull(bedRepository.findAll().get(0).getPatient());
+        assertNull(bed.getPatient());
         assertEquals(0, patientRepository.findAll().size());
+
+        assertEquals(ssk, bed.getSsk());
+    }
+
+    @Test
+    public void patientHasLeftResetSsk() {
+        assertEquals(1, patientRepository.findAll().size());
+
+        Bed bed = bedRepository.findAll().get(0);
+        bed.getUnit().setResetSskOnHasLeft(true);
+
+        bedService.patientHasLeft(bed);
+
+        assertNull(bed.getPatient());
+        assertEquals(0, patientRepository.findAll().size());
+
+        assertNull(bed.getSsk());
     }
 
 }

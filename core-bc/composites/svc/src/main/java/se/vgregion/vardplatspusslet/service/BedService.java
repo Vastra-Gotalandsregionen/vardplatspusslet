@@ -97,6 +97,11 @@ public class BedService {
 
         bed.setPatient(null);
         bed.setBedStatus(BedStatus.VACANT);
+
+        if (Boolean.TRUE.equals(bed.getUnit().getResetSskOnHasLeft())) {
+            bed.setSsk(null);
+        }
+
         bedRepository.save(bed);
 
         patientRepository.delete(patient);
