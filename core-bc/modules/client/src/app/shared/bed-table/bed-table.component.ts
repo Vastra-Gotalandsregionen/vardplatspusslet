@@ -124,6 +124,7 @@ export class BedTableComponent implements OnInit {
     ];
 
     this.informationOptions = [
+      {displayName: 'Ej valt', value: 5},
       {displayName: 'THG', value: 1},
       {displayName: 'THG/Barn', value: 2},
       {displayName: 'Föräldrarum', value: 3},
