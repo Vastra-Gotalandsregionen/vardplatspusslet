@@ -56,4 +56,5 @@ export class Unit {
   hasBackToHomeAlternativFeature: boolean;
   hasDatedBackHomeFeature: boolean;
   allowedBedNames: AllowedBedName[];
+  resetSskOnHasLeft: boolean;
 }

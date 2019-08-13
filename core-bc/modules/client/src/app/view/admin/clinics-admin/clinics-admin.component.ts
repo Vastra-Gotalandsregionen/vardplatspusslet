@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Clinic} from "../../../domain/clinic";
-import {HttpClient} from "../../../../../node_modules/@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DeleteModalComponent} from "../../../elements/delete-modal/delete-modal.component";
 import {ListItemComponent} from "vgr-komponentkartan";

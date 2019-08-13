@@ -152,6 +152,8 @@ public class Unit implements Comparable<Unit> {
     @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AllowedBedName> allowedBedNames = new TreeSet<>();
 
+    @Column
+    private Boolean resetSskOnHasLeft;
 
     public Unit() {
 
@@ -491,6 +493,14 @@ public class Unit implements Comparable<Unit> {
 
     public void setAllowedBedNames(Set<AllowedBedName> allowedBedNames) {
         this.allowedBedNames = allowedBedNames;
+    }
+
+    public Boolean getResetSskOnHasLeft() {
+        return resetSskOnHasLeft;
+    }
+
+    public void setResetSskOnHasLeft(Boolean resetSskOnHasLeft) {
+        this.resetSskOnHasLeft = resetSskOnHasLeft;
     }
 
     @Override

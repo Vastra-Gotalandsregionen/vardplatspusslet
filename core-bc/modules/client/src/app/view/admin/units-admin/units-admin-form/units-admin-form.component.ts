@@ -154,7 +154,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasPatientWaitesFeature: [unit.hasPatientWaitsFeature],
       hasBackToHomeAlternativFeature: [unit.hasBackToHomeAlternativFeature],
       hasDatedBackHomeFeature: [unit.hasDatedBackHomeFeature],
-      allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames))
+      allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames)),
+      resetSskOnHasLeft: [unit.resetSskOnHasLeft]
     });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
       if (mgId != null)
@@ -215,7 +216,8 @@ export class UnitsAdminFormComponent implements OnInit {
       hasPatientWaitesFeature: unit.hasPatientWaitsFeature,
       hasBackToHomeAlternativFeature : unit.hasBackToHomeAlternativFeature,
       hasDatedBackHomeFeature: unit.hasDatedBackHomeFeature,
-      allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames))
+      allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames)),
+      resetSskOnHasLeft: [unit.resetSskOnHasLeft]
     });
 
   }
@@ -272,6 +274,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasBackToHomeAlternativFeature = unitModel.hasBackToHomeAlternativFeature;
     unit.hasDatedBackHomeFeature = unitModel.hasDatedBackHomeFeature;
     unit.allowedBedNames = unitModel.allowedBedNames;
+    unit.resetSskOnHasLeft = unitModel.resetSskOnHasLeft;
 
     this.http.put('/api/unit?keepBeds=true' + (this.newUnit ? '&newUnit=true' : ''), unit)
       .subscribe(() => {
