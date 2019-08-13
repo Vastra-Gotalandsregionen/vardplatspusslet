@@ -48,12 +48,11 @@ public class PdfGenerating {
 
                 String dietName = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDiet() != null &&  bed.getPatient().getSpecialDiet()) ? "Specialkost" : "" ) : "";
                 String info = (dietName.length() > 0 && bed.getPatient() != null)? "Specialkost" : "";
-                if (dietName.length() > 0)
-                {
+                //if (dietName.length() > 0) {
                     table.addCell(bedName);
                     table.addCell(dietName);
                     table.addCell(info);
-                }
+                //}
             }
         } else if (antalColumn == 1 && isTrue(unit.getHasMotherChildDietFeature())) {
             String header[] = {"Säng", "Kost Mor", "Info", "Kost barn",  "Info"};
@@ -66,14 +65,13 @@ public class PdfGenerating {
                 String dietChild = isTrue(bed.getBedStatus() == BedStatus.OCCUPIED && bed.getPatient() != null) ? ((bed.getPatient().getSpecialDietChild() != null && bed.getPatient().getSpecialDietChild()) ? "Specialkost" : "") : "";
                 String infoMother = (dietMother.length() > 0 && bed.getPatient() != null)? "Specialkost" : "";
                 String infoChild = (dietChild.length() > 0 && bed.getPatient() != null) ? "Specialkost" : "";
-                if (dietMother.length() > 0 || dietChild.length() > 0)
-                {
+//                if (dietMother.length() > 0 || dietChild.length() > 0){
                     table.addCell(bedName);
                     table.addCell(dietMother);
                     table.addCell(infoMother);
                     table.addCell(dietChild);
                     table.addCell(infoChild);
-                }
+//                }
             }
         }
         else if (antalColumn == 2) {
@@ -89,7 +87,7 @@ public class PdfGenerating {
                 String infoMother = (dietMother.length() > 0 && bed.getPatient() != null) ?"Specialkost" : "";
                 String infoChild = (dietChild.length() > 0 && bed.getPatient() != null) ? "Specialkost" : "";
                 String info = (dietPatient.length() > 0 && bed.getPatient() != null) ?"Specialkost" : "";
-                if (dietMother.length() > 0 || dietChild.length() > 0 || dietPatient.length() > 0) {
+                //if (dietMother.length() > 0 || dietChild.length() > 0 || dietPatient.length() > 0) {
                     table.addCell(bedName);
                     table.addCell(dietMother);
                     table.addCell(infoMother);
@@ -97,7 +95,7 @@ public class PdfGenerating {
                     table.addCell(infoChild);
                     table.addCell(dietPatient);
                     table.addCell(info);
-                }
+                //}
             }
         }
         document.add(table);
