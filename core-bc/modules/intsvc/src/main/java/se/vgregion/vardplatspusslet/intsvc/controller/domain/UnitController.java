@@ -75,7 +75,6 @@ public class UnitController extends BaseController {
     private void sortCollections(Unit unit) {
         // To sort. Has been tricky to sort by JPA.
         unit.setSsks(new TreeSet<>(unit.getSsks()));
-        unit.setCareBurdenCategories(new TreeSet<>(unit.getCareBurdenCategories()));
         unit.setCareBurdenValues(new TreeSet<>(unit.getCareBurdenValues()));
         unit.setCleaningAlternatives(new TreeSet<>(unit.getCleaningAlternatives()));
     }

@@ -21,6 +21,7 @@ import se.vgregion.vardplatspusslet.domain.jpa.SevenDaysPlaningUnit;
 import se.vgregion.vardplatspusslet.domain.jpa.Unit;
 import se.vgregion.vardplatspusslet.domain.jpa.UnitPlannedIn;
 import se.vgregion.vardplatspusslet.domain.jpa.User;
+import se.vgregion.vardplatspusslet.repository.CareBurdenCategoryRepository;
 import se.vgregion.vardplatspusslet.repository.ClinicRepository;
 import se.vgregion.vardplatspusslet.repository.DietForChildRepository;
 import se.vgregion.vardplatspusslet.repository.DietForMotherRepository;
@@ -65,7 +66,7 @@ public class UnitService {
     private DietForPatientRepository dietForPatientRepository;
 
     @Autowired
-    private  SevenDaysPlaningRepository sevenDaysPlaningRepository;
+    private SevenDaysPlaningRepository sevenDaysPlaningRepository;
 
     @Autowired
     private DataSource dataSource;
@@ -160,6 +161,12 @@ public class UnitService {
             parameters = new MapSqlParameterSource();
             parameters.addValue("careBurdenCategoriesToRemove", careBurdenCategoriesToRemove);
 
+            update = namedParameterJdbcTemplate.update(sql, parameters);
+
+            sql = "delete from unit_careburdencategory where careburdencategories_id in (:careBurdenCategoriesToRemove)";
+            update = namedParameterJdbcTemplate.update(sql, parameters);
+
+            sql = "delete from careburdencategory where id in (:careBurdenCategoriesToRemove)";
             update = namedParameterJdbcTemplate.update(sql, parameters);
         }
     }

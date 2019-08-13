@@ -55,8 +55,9 @@ public class Unit implements Comparable<Unit> {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ssk> ssks = new TreeSet<>();
 
+    @OrderColumn(name = "order_")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CareBurdenCategory> careBurdenCategories = new LinkedHashSet<>();
+    private List<CareBurdenCategory> careBurdenCategories = new ArrayList<>();
 
     // TODO Remove the @OneToMany relationships and fetch these separately, and fetch (over http) containers (DTO) including all these, and make requests in a similar way.
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -327,11 +328,11 @@ public class Unit implements Comparable<Unit> {
         this.hasAmningFeature = hasAmningFeature;
     }
 
-    public Set<CareBurdenCategory> getCareBurdenCategories() {
+    public List<CareBurdenCategory> getCareBurdenCategories() {
         return careBurdenCategories;
     }
 
-    public void setCareBurdenCategories(Set<CareBurdenCategory> burdenKategories) {
+    public void setCareBurdenCategories(List<CareBurdenCategory> burdenKategories) {
         this.careBurdenCategories = burdenKategories;
     }
 
