@@ -113,7 +113,7 @@ export class BedFormComponent implements OnInit {
         rond: [patient.rond],
         amning: +[patient.amning],
         infoGroup: this.formBuilder.group({
-          information: +[patient.information],
+          information: [patient.information ? +patient.information : 5],
           kommentar: [patient.kommentar]
         }),
         careBurdenChoices: this.formBuilder.array(this.buildCareBurdenChoiceGroup(patient)),
