@@ -137,7 +137,7 @@ export class UnitsAdminFormComponent implements OnInit {
       has24oFeature: [unit.has24oFeature],
       hasVuxenPatientFeature: [unit.hasVuxenPatientFeature],
       hasCleaningFeature: [unit.hasCleaningFeature],
-      hasPalFeature: [unit.hasPalFeature],
+      /*hasPalFeature: [unit.hasPalFeature],*/
       hasHendelseFeature: [unit.hasHendelseFeature],
       hasMorRondFeature: [unit.hasMorRondFeature],
       hasBarnRondFeature: [unit.hasBarnRondFeature],
@@ -198,7 +198,7 @@ export class UnitsAdminFormComponent implements OnInit {
       has24oFeature: unit.has24oFeature,
       hasVuxenPatientFeature: unit.hasVuxenPatientFeature,
       hasCleaningFeature: unit.hasCleaningFeature,
-      hasPalFeature: unit.hasPalFeature,
+     /* hasPalFeature: unit.hasPalFeature,*/
       hasHendelseFeature: unit.hasHendelseFeature,
       hasMorRondFeature: unit.hasMorRondFeature,
       hasBarnRondFeature: unit.hasBarnRondFeature,
@@ -240,7 +240,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.has24oFeature = unitModel.has24oFeature;
     unit.hasVuxenPatientFeature = unitModel.hasVuxenPatientFeature;
     unit.hasCleaningFeature = unitModel.hasCleaningFeature;
-    unit.hasPalFeature = unitModel.hasPalFeature;
+    /*unit.hasPalFeature = unitModel.hasPalFeature;*/
     unit.hasHendelseFeature = unitModel.hasHendelseFeature;
     unit.hasMorRondFeature = unitModel.hasMorRondFeature;
     unit.hasBarnRondFeature = unitModel.hasBarnRondFeature;

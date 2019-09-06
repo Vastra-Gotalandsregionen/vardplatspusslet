@@ -33,7 +33,7 @@ export class Unit {
   hasVuxenPatientFeature: boolean;
   cleaningAlternatives: CleaningAlternative[];
   hasCleaningFeature: boolean;
-  hasPalFeature: boolean;
+ /* hasPalFeature: boolean;*/
   hasHendelseFeature: boolean;
   hasMorRondFeature: boolean;
   hasBarnRondFeature: boolean;

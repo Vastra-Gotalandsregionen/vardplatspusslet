@@ -29,7 +29,7 @@ export class Patient {
   electiv23O: boolean;
   electiv24O: boolean;
   vuxenPatient: boolean;
-  pal: string;
+  /*pal: string;*/
   patientEvents: PatientEvent[];
   morRond: boolean;
   barnRond: boolean;

@@ -100,8 +100,8 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean hasCleaningFeature;
 
-    @Column
-    private Boolean hasPalFeature;
+   /* @Column
+    private Boolean hasPalFeature;*/
 
     @Column
     private Boolean hasHendelseFeature;
@@ -280,13 +280,13 @@ public class Unit implements Comparable<Unit> {
         this.hasCleaningFeature = hasCleaningFeature;
     }
 
-    public Boolean getHasPalFeature() {
+    /*public Boolean getHasPalFeature() {
         return hasPalFeature;
     }
 
     public void setHasPalFeature(Boolean hasPalFeature) {
         this.hasPalFeature = hasPalFeature;
-    }
+    }*/
 
     public Boolean getHasHendelseFeature() {
         return hasHendelseFeature;

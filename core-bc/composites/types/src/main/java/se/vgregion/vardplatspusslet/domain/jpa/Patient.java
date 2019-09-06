@@ -81,8 +81,8 @@ public class Patient {
     @Column
     private String smittaInfo;
 
-    @Column
-    private String Pal;
+   /* @Column
+    private String Pal;*/
 
     @Column
     private String information;
@@ -330,13 +330,13 @@ public class Patient {
         this.infectionSensitive = infectionSensitive;
     }
 
-    public String getPal() {
+    /*public String getPal() {
         return Pal;
     }
 
     public void setPal(String pal) {
         Pal = pal;
-    }
+    }*/
 
     public Set<PatientEvent> getPatientEvents() {
         return patientEvents;

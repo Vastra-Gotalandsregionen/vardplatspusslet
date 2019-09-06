@@ -107,7 +107,7 @@ export class BedFormComponent implements OnInit {
         vuxenPatient: [patient.vuxenPatient],
         patientExaminations: this.formBuilder.array(this.buildExaminationGroup(patient.patientExaminations)),
         patientEvents: this.formBuilder.array(this.buildEventGroup(patient.patientEvents)),
-        pal: [patient.pal],
+      /*  pal: [patient.pal],*/
         morRond: [patient.morRond],
         barnRond: [patient.barnRond],
         rond: [patient.rond],
@@ -205,7 +205,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.electiv24O = bedModel.patient.electiv24O ? bedModel.patient.electiv24O : null;
       bed.patient.vuxenPatient = bedModel.patient.vuxenPatient ? bedModel.patient.vuxenPatient : null;
       bed.patient.patientExaminations = bedModel.patient.patientExaminations ? this.filterExams(bedModel.patient.patientExaminations) : null;
-      bed.patient.pal = bedModel.patient.pal ? bedModel.patient.pal : null;
+      /*bed.patient.pal = bedModel.patient.pal ? bedModel.patient.pal : null;*/
       bed.patient.patientEvents = bedModel.patient.patientEvents ? this.filterEvents(bedModel.patient.patientEvents) : null;
       bed.patient.morRond = bedModel.patient.morRond ? bedModel.patient.morRond : null;
       bed.patient.barnRond = bedModel.patient.barnRond ? bedModel.patient.barnRond : null;
@@ -271,7 +271,7 @@ export class BedFormComponent implements OnInit {
     this.collapseEvent.emit();
   }
 
-  openDeleteModal(bed: Bed) {
+  openDeleteModal() {
     this.openDeleteModalEvent.emit();
   }
 
