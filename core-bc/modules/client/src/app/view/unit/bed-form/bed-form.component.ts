@@ -283,8 +283,8 @@ export class BedFormComponent implements OnInit {
       return this.formBuilder.group({
         id: examinationklinik.id,
         examination: examinationklinik.examination,
-        examinationDate: examinationklinik.examinationDate ? new Date(examinationklinik.examinationDate) : null,
-        examinationtime: examinationklinik.examinationtime
+        examinationDate: examinationklinik.examinationDate ? new Date(examinationklinik.examinationDate) : null/*,
+        examinationtime: examinationklinik.examinationtime*/
       })
     });
   }
@@ -293,8 +293,8 @@ export class BedFormComponent implements OnInit {
     return this.formBuilder.group({
       id: null,
       examination: null,
-      examinationDate: null,
-      examinationtime: null
+      examinationDate: null/*,
+      examinationtime: null*/
     });
   }
 
@@ -317,7 +317,7 @@ export class BedFormComponent implements OnInit {
   }
 
   private filterExams(src: Patientexamination[]) {
-    return src.filter(exam => exam.examination != null && exam.examinationDate != null)
+    return src.filter(exam => exam.examinationDate != null)
   }
 
   private buildEventGroup(patientEvents: PatientEvent[]): FormGroup[] {
@@ -328,9 +328,9 @@ export class BedFormComponent implements OnInit {
       return this.formBuilder.group({
         id: patientevent.id,
         event: patientevent.event,
-        eventDate: patientevent.eventDate ? new Date(patientevent.eventDate) : null,
-        eventTime: patientevent.eventTime,
-        eventInfo: patientevent.eventInfo
+        eventDate: patientevent.eventDate ? new Date(patientevent.eventDate) : null/*,
+        eventTime: [patientevent.eventTime, [Validators.pattern('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$')]],
+        eventInfo: patientevent.eventInfo*/
       })
     });
   }
@@ -339,9 +339,9 @@ export class BedFormComponent implements OnInit {
     return this.formBuilder.group({
       id: null,
       event: null,
-      eventDate: null,
+      eventDate: null/*,
       eventTime: null,
-      eventInfo: null
+      eventInfo: null*/
     });
   }
 
@@ -358,13 +358,17 @@ export class BedFormComponent implements OnInit {
     return <FormArray>this.bedForm.get('patient.patientEvents');
   }
 
+  getTimeEventError(index : number):boolean {
+    return this.patientEvents.at(index).get('eventTime').hasError('pattern');
+  }
+
 
   addPatientEvent() {
     this.patientEvents.push(this.CreateSPatientEvent());
   }
 
   private filterEvents(src: PatientEvent[]) {
-    return src.filter(event => event.event != null && event.eventDate != null)
+    return src.filter(event => event.eventDate != null)
   }
 
   deleteDate() {

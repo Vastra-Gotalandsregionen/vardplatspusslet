@@ -17,21 +17,21 @@ public class PatientEvent {
     @Column
     private Date eventDate;
 
-    @Column
+   /* @Column
     private String  eventTime;
 
     @Column
-    private String eventInfo;
+    private String eventInfo;*/
 
     public PatientEvent() {
     }
 
-    public PatientEvent(Long id, String event, Date eventDate, String eventTime, String eventInfo) {
+    public PatientEvent(Long id, String event, Date eventDate/*, String eventTime, String eventInfo*/) {
         this.id = id;
         this.event = event;
         this.eventDate = eventDate;
-        this.eventTime = eventTime;
-        this.eventInfo = eventInfo;
+       /* this.eventTime = eventTime;
+        this.eventInfo = eventInfo;*/
     }
 
     public Long getId() {
@@ -58,7 +58,7 @@ public class PatientEvent {
         this.eventDate = eventDate;
     }
 
-    public String getEventTime() {
+    /*public String getEventTime() {
         return eventTime;
     }
 
@@ -72,6 +72,6 @@ public class PatientEvent {
 
     public void setEventInfo(String eventInfo) {
         this.eventInfo = eventInfo;
-    }
+    }*/
 }
 

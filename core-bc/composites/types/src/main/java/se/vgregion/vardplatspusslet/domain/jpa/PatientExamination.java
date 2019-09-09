@@ -17,17 +17,17 @@ public class PatientExamination {
     @Column
     private Date examinationDate;
 
-    @Column
-    private String  examinationtime;
+   /* @Column
+    private String  examinationtime;*/
 
     public PatientExamination() {
     }
 
-    public PatientExamination(Long id, String examination, Date examinationDate, String examinatioTime) {
+    public PatientExamination(Long id, String examination, Date examinationDate/*, String examinatioTime*/) {
         this.id = id;
         this.examination = examination;
         this.examinationDate = examinationDate;
-        this.examinationtime = examinatioTime;
+       /* this.examinationtime = examinatioTime;*/
     }
 
     public Long getId() {
@@ -53,11 +53,11 @@ public class PatientExamination {
     public void setExaminationDate(Date examinationDate) {
         this.examinationDate = examinationDate;
     }
-    public String getExaminationtime() {
+    /*public String getExaminationtime() {
         return examinationtime;
     }
 
     public void setExaminationtime(String examinationtime) {
         this.examinationtime = examinationtime;
-    }
+    }*/
 }

@@ -111,10 +111,9 @@
         </div>
         <div  formArrayName="patientExaminations" *ngFor="let examination of patientExaminations.controls let i = index;" class="clearfix">
           <div [formGroupName]="i" class="containers">
-            <input formControlName="examination" class="child1"/>
-            <vgr-datepicker formControlName="examinationDate" [selectedDate]="bedForm.get('patient.patientExaminations').controls[i].get('examinationDate').value"></vgr-datepicker>
-            <input formControlName="examinationtime" placeholder="tid..." class="child3"/>
-
+            <input formControlName="examination" class="child1" placeholder="Se journalen" disabled/>
+            <vgr-datepicker formControlName="examinationDate" [selectedDate]="patientExaminations.at(i).get('examinationDate').value"></vgr-datepicker>
+            <!--<input formControlName="examinationtime" placeholder="hh:mm" class="child3"/>-->
             <a (click)="deleteExamination(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             <a (click)="cleanExamninationDate(i)" class="icon-link">
               <span [appCallout]="'Rensa datum'" class="material-icons">
@@ -132,10 +131,10 @@
         </div>
         <div  formArrayName="patientEvents" *ngFor="let event of patientEvents.controls let i = index;" class="clearfix">
           <div [formGroupName]="i" class="containers">
-            <input formControlName="event" class="child1"/>
-            <vgr-datepicker formControlName="eventDate" [selectedDate]="bedForm.get('patient.patientEvents').controls[i].get('eventDate').value"></vgr-datepicker>
-            <input formControlName="eventTime" placeholder="tid..." class="child3"/>
-            <input formControlName="eventInfo" class="child4"/>
+            <input formControlName="event" class="child1" placeholder="Se journalen" disabled/>
+            <vgr-datepicker formControlName="eventDate" [selectedDate]="patientEvents.at(i).get('eventDate').value"></vgr-datepicker>
+            <!--<input formControlName="eventTime" placeholder="hh:mm" class="child3" [ngClass]="{'isInvalid': getTimeEventError(i) }"/>-->
+           <!-- <input formControlName="eventInfo" class="child4"/>-->
             <a (click)="deletePatientEvent(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             <a (click)="cleanDate(i)" class="icon-link">
               <span [appCallout]="'Rensa datum'" class="material-icons">
