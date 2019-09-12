@@ -70,14 +70,14 @@ public class Unit implements Comparable<Unit> {
     @Transient
     private List<SevenDaysPlaningUnit> sevenDaysPlaningUnits = new ArrayList<>();
 
-    @Transient
+    /*@Transient
     private List<DietForMother> dietForMothers = new ArrayList<>();
 
     @Transient
     private List<DietForChild> dietForChildren = new ArrayList<>();
 
     @Transient
-    private List<DietForPatient> dietForPatients = new ArrayList<>();
+    private List<DietForPatient> dietForPatients = new ArrayList<>();*/
 
     @Column
     private Boolean hasLeftDateFeature;
@@ -368,7 +368,7 @@ public class Unit implements Comparable<Unit> {
         this.hasKostFeature = hasKostFeature;
     }
 
-    public List<DietForMother> getDietForMothers() {
+    /*public List<DietForMother> getDietForMothers() {
         return dietForMothers;
     }
 
@@ -399,7 +399,7 @@ public class Unit implements Comparable<Unit> {
         for (DietForPatient dietForPatient : dietForPatients) {
             dietForPatient.setUnit(this);
         }
-    }
+    }*/
 
     public List<UnitPlannedIn> getUnitsPlannedIn() {
         return unitsPlannedIn;

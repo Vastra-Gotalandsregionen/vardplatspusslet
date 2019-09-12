@@ -23,9 +23,9 @@ export class Unit {
   ssks: Ssk[];
   messages: Message[];
   servingClinics: ServingClinic[];
-  dietForMothers: DietForMother[];
+  /*dietForMothers: DietForMother[];
   dietForChildren: DietForChild[];
-  dietForPatients: DietForPatient[];
+  dietForPatients: DietForPatient[];*/
   hasLeftDateFeature: boolean;
   hasAkutPatientFeature: boolean;
   has23oFeature: boolean;

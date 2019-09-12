@@ -131,7 +131,7 @@ export class BedTableComponent implements OnInit {
       {displayName: 'Vanlig hemgång', value: 4},
     ];
 
-    this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.unit.dietForMothers.map(diet => {
+   /* this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.unit.dietForMothers.map(diet => {
       return {displayName: diet.name, value: diet.id};
     }));
 
@@ -141,7 +141,7 @@ export class BedTableComponent implements OnInit {
 
     this.dietDropdownItems = [{displayName: 'Välj', value: null}].concat(this.unit.dietForPatients.map(diet => {
       return {displayName: diet.name, value: diet.id};
-    }));
+    }));*/
 
     this.leaveStatusesDropdownItems = [
       {displayName: 'Välj', value: null},

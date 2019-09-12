@@ -123,9 +123,9 @@ export class UnitsAdminFormComponent implements OnInit {
       clinic: [unit.clinic ? unit.clinic.id : null, Validators.required],
       management: [unit.clinic && unit.clinic.management ? unit.clinic.management.id : null, Validators.required],
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
-      dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
+      /*dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
       dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
-      dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),
+      dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),*/
       unitsPlannedIn: this.formBuilder.array(this.buildPlannedInUnits(unit.unitsPlannedIn)),
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
@@ -184,9 +184,9 @@ export class UnitsAdminFormComponent implements OnInit {
       name: unit.name ? unit.name : null,
       clinic: unit.clinic ? (unit.clinic.id ? unit.clinic.id : null) : null,
       ssks: this.formBuilder.array(this.toFormGroups(unit.ssks)),
-      dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
+      /*dietForMothers: this.formBuilder.array(this.buildDietGroupForMother(unit.dietForMothers)),
       dietForChildren: this.formBuilder.array(this.buildDietGroupForChildren(unit.dietForChildren)),
-      dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),
+      dietForPatients: this.formBuilder.array(this.buildDietGroupForPatient(unit.dietForPatients)),*/
       unitsPlannedIn: this.formBuilder.array(this.buildPlannedInUnits(unit.unitsPlannedIn)),
       careBurdenCategories: this.formBuilder.array(this.buildBurdenCategoryGroups(unit.careBurdenCategories)),
       careBurdenValues: this.formBuilder.array(this.buildBurdenValueGroups(unit.careBurdenValues)),
@@ -259,9 +259,9 @@ export class UnitsAdminFormComponent implements OnInit {
     }
     unit.ssks = unitModel.ssks;
     unit.servingClinics = unitModel.servingClinics;
-    unit.dietForPatients = unitModel.dietForPatients;
+    /*unit.dietForPatients = unitModel.dietForPatients;
     unit.dietForChildren = unitModel.dietForChildren;
-    unit.dietForMothers = unitModel.dietForMothers;
+    unit.dietForMothers = unitModel.dietForMothers;*/
     unit.careBurdenCategories = unitModel.careBurdenCategories;
     unit.careBurdenValues = unitModel.careBurdenValues;
     unit.cleaningAlternatives = unitModel.cleaningAlternatives;
@@ -479,7 +479,7 @@ export class UnitsAdminFormComponent implements OnInit {
   }
 
 
-  get dietForMothers(): FormArray{
+ /* get dietForMothers(): FormArray{
     return <FormArray>this.unitForm.get('dietForMothers');
   }
   private buildDietGroupForMother(diets: DietForMother[]): FormGroup[] {
@@ -509,9 +509,9 @@ export class UnitsAdminFormComponent implements OnInit {
       name: [null, Validators.required]
     });
   }
+*/
 
-
-  get dietForChildren(): FormArray{
+  /*get dietForChildren(): FormArray{
     return <FormArray>this.unitForm.get('dietForChildren');
   }
   private buildDietGroupForChildren(diets: DietForChild[]): FormGroup[] {
@@ -540,9 +540,9 @@ export class UnitsAdminFormComponent implements OnInit {
       id: null,
       name: [null, Validators.required]
     });
-  }
+  }*/
 
-  get dietForPatients(): FormArray{
+  /*get dietForPatients(): FormArray{
     return <FormArray>this.unitForm.get('dietForPatients');
   }
   private buildDietGroupForPatient(diets: DietForPatient[]): FormGroup[] {
@@ -571,7 +571,7 @@ export class UnitsAdminFormComponent implements OnInit {
       id: null,
       name: [null, Validators.required]
     });
-  }
+  }*/
 
   private buildPlannedInUnits (plannedUnits: UnitPlannedIn[]): FormGroup[] {
     if (!plannedUnits || plannedUnits.length === 0) {

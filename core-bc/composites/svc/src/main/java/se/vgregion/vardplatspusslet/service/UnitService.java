@@ -101,7 +101,7 @@ public class UnitService {
             beds = unit.getBeds();
         }
 
-        updateDiets(unit);
+        //updateDiets(unit);
         updatePlannedIns(unit);
         cascadeDeleteCareBurdenCategories(unit);
 
@@ -173,21 +173,21 @@ public class UnitService {
 
     private void updateDiets(Unit unit) {
         // Save the transient collections, but first remove all items not in the incoming collection
-        DietForChild example1 = new DietForChild();
+       /* DietForChild example1 = new DietForChild();
         DietForMother example2 = new DietForMother();
         DietForPatient example3 = new DietForPatient();
 
         example1.setUnit(unit);
         example2.setUnit(unit);
-        example3.setUnit(unit);
+        example3.setUnit(unit);*/
 
-        removeItemsNotInIncomingCollection(dietForChildRepository, example1, unit.getDietForChildren());
+        /*removeItemsNotInIncomingCollection(dietForChildRepository, example1, unit.getDietForChildren());
         removeItemsNotInIncomingCollection(dietForMotherRepository, example2, unit.getDietForMothers());
         removeItemsNotInIncomingCollection(dietForPatientRepository, example3, unit.getDietForPatients());
 
         dietForChildRepository.save(unit.getDietForChildren());
         dietForMotherRepository.save(unit.getDietForMothers());
-        dietForPatientRepository.save(unit.getDietForPatients());
+        dietForPatientRepository.save(unit.getDietForPatients());*/
     }
 
     @SuppressWarnings("unchecked")
@@ -221,7 +221,7 @@ public class UnitService {
                     new Sort("clinic.management.name", "clinic.name", "name"));
 
             for (Unit unit : units) {
-                populateWithDiets(unit);
+                //populateWithDiets(unit);
                 populateWithUnitPlannedIns(unit);
                 populateWithSevendaysPlannedIn(unit);
 
@@ -279,7 +279,7 @@ public class UnitService {
     }
 
     private void populateWithDiets(Unit unit) {
-        DietForMother example1 = new DietForMother();
+        /*DietForMother example1 = new DietForMother();
         DietForChild example2 = new DietForChild();
         DietForPatient example3 = new DietForPatient();
 
@@ -292,10 +292,10 @@ public class UnitService {
         List<DietForMother> dietForMothers = dietForMotherRepository.findAll(Example.of(example1), sort);
         List<DietForChild> dietForChildren = dietForChildRepository.findAll(Example.of(example2), sort);
         List<DietForPatient> dietForPatients = dietForPatientRepository.findAll(Example.of(example3), sort);
-
-        unit.setDietForMothers(dietForMothers);
+*/
+       /* unit.setDietForMothers(dietForMothers);
         unit.setDietForChildren(dietForChildren);
-        unit.setDietForPatients(dietForPatients);
+        unit.setDietForPatients(dietForPatients);*/
     }
 
     private  void populateWithUnitPlannedIns(Unit unit)
