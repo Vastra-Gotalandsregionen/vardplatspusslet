@@ -67,6 +67,7 @@ import { WidgetCareburdenWithTextCompactAltComponent } from './elements/widget-c
 import { SskIconComponent } from './elements/ssk-icon/ssk-icon.component';
 import { LoadingIndicatorComponent } from './elements/loading-indicator/loading-indicator.component';
 import {UnitAdminGuard} from "./guard/unit-admin.guard";
+import {NoCacheInterceptor} from "./interceptor/no-cache-interceptor.service";
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -146,7 +147,8 @@ registerLocaleData(localeSv, "sv-SE");
     HasEditUnitPermissionGuard,
     ErrorDialogService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtHttpInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: NoCacheInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

@@ -53,6 +53,17 @@ public class PatientService {
                     new HashMap<>()
             );
 
+            // Remove patientEvents
+            namedParameterJdbcTemplate.update(
+                    "delete from patient_patientevent ppe where ppe.patient_id in (:ids)",
+                    parameters
+            );
+            namedParameterJdbcTemplate.update(
+                    "delete from patientevent pe where pe.id not in " +
+                            "(select distinct patientevents_id from patient_patientevent)",
+                    new HashMap<>()
+            );
+
             // Remove patients
             int update = namedParameterJdbcTemplate.update("delete from patient where id in (:ids)", parameters);
 
