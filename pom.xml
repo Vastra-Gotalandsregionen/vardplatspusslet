@@ -52,5 +52,6 @@
     <slf4j.version>1.6.1</slf4j.version>
     <spring.fw.version>4.3.14.RELEASE</spring.fw.version>
     <hibernate.version>5.4.4.Final</hibernate.version>
+    <h2.version>1.4.199</h2.version>
   </properties>
 </project>

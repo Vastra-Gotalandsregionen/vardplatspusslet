@@ -3,6 +3,7 @@ package se.vgregion.vardplatspusslet.service;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import se.vgregion.vardplatspusslet.domain.jpa.CareBurdenCategory;
@@ -29,6 +30,7 @@ public class UnitServiceTest {
     private CareBurdenCategoryRepository careBurdenCategoryRepository;
 
     @Test
+    @DirtiesContext
     public void save() {
         Unit unit = new Unit();
         unit.setId("unit1");
@@ -39,6 +41,7 @@ public class UnitServiceTest {
     }
 
     @Test
+    @DirtiesContext
     public void repeatSave() {
         Unit unit = new Unit();
         unit.setId("unit1");
