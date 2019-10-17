@@ -1,5 +1,6 @@
 package se.vgregion.vardplatspusslet.intsvc.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,9 +14,12 @@ import java.net.URL;
 @RequestMapping("/appInfo")
 public class AppInfoController {
 
+    @Value("${header.message}")
+    private String headerMessage;
+
     @RequestMapping(value = "/compiledTimestamp", method = RequestMethod.GET)
     @ResponseBody
-    public String compiledTimestamp() throws URISyntaxException {
+    public String compiledTimestamp() {
         URL resource = getClass().getResource(getClass().getSimpleName() + ".class");
 
         if (resource == null) {
@@ -25,7 +29,11 @@ public class AppInfoController {
 
         if (resource.getProtocol().equals("file")) {
 
-            return new File(resource.toURI()).lastModified() + "";
+            try {
+                return new File(resource.toURI()).lastModified() + "";
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
 
         } else if (resource.getProtocol().equals("jar")) {
 
@@ -38,5 +46,11 @@ public class AppInfoController {
                     resource.getProtocol() + " for class: " +
                     getClass().getName() + " resource: " + resource.toString());
         }
+    }
+
+    @RequestMapping(value = "/headerMessage", method = RequestMethod.GET)
+    @ResponseBody
+    public String headerMessage() {
+        return headerMessage;
     }
 }

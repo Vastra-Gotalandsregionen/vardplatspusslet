@@ -57,7 +57,7 @@
         <property name="password" value="${jdbc.password}" />
         <!-- pool sizing -->
         <property name="initialPoolSize" value="3" />
-        <property name="minPoolSize" value="6" />
+        <property name="minPoolSize" value="3" />
         <property name="maxPoolSize" value="25" />
         <property name="acquireIncrement" value="3" />
         <property name="maxStatements" value="0" />

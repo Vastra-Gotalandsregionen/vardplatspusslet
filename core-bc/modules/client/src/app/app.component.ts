@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'vardplatspusslet';
   newVersionAvailable = false;
   compiledTimestamp;
+  headerMessage: string;
 
   constructor(@Inject(ErrorDialogService) errorDialogService,
               @Inject(ViewContainerRef) viewContainerRef,
@@ -28,7 +29,21 @@ export class AppComponent {
           this.newVersionAvailable = true;
         }
       });
+
+      this.checkHeaderMessage();
     }, 60000);
+
+    this.checkHeaderMessage();
+  }
+
+  private checkHeaderMessage() {
+    this.http.get('/api/appInfo/headerMessage', {responseType: 'text'}).subscribe(headerMessage => {
+      if (headerMessage) {
+        this.headerMessage = headerMessage;
+      } else {
+        this.headerMessage = null;
+      }
+    });
   }
 
   getLoggedInDisplayName() {

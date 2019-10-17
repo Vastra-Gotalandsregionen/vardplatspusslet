@@ -3,6 +3,11 @@
   <div class="alert" *ngIf="newVersionAvailable">
     En ny version av Vårdplatspusslet finns tillgänglig. <a onclick="javascript: location.reload()">Ladda om sidan </a> för att uppdatera.
   </div>
+
+  <div class="alert" *ngIf="headerMessage">
+    {{headerMessage}}
+  </div>
+
   <vgr-header textColor="black" circleColor="#ffffff" [userName]="getLoggedInDisplayName()">
   </vgr-header>
 
