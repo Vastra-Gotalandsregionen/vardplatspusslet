@@ -9,6 +9,8 @@ import {Patientexamination} from "../../../domain/patientexamination";
 import {PatientEvent} from "../../../domain/patient-event";
 import {CareBurdenChoice} from "../../../domain/careburdenchoice";
 import {DropdownItem} from "../../../domain/DropdownItem";
+import { Mothersdiet } from "../../../domain/mothersdiet";
+import { Childrensdiet } from "../../../domain/childrensdiet";
 
 @Component({
   selector: 'app-bed-form',
@@ -36,6 +38,8 @@ export class BedFormComponent implements OnInit {
   bedStatusOptions: SelectableItem<string>[];
   allowedBedNames: string[] = [];
   allowedNames : string = "";
+  dietsForMothers: Mothersdiet[] = [];
+  dietsForChildren: Childrensdiet[] = [];
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -54,7 +58,11 @@ export class BedFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initForm(this.bed);
+    this.http.get<Mothersdiet[]>('api/mothersdiet').subscribe(result => {this.dietsForMothers = result;
+      this.http.get<Childrensdiet[]>('api/childrensdiet').subscribe(result => {
+        this.dietsForChildren= result;
+        this.initForm(this.bed);
+      })})
   }
 
   private initForm(bed: Bed) {
@@ -122,7 +130,9 @@ export class BedFormComponent implements OnInit {
 
         specialDietChild :[patient.specialDietChild],
         specialDietMother : [patient.specialDietMother],
-        specialDiet: [patient.specialDiet]
+        specialDiet: [patient.specialDiet],
+        mothersDiet: [patient.mothersDiet? patient.mothersDiet.id : null],
+        childrensDiet: [patient.childrensDiet? patient.childrensDiet.id : null]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -228,6 +238,14 @@ export class BedFormComponent implements OnInit {
       bed.patient.specialDietChild = bedModel.patient.specialDietChild;
       bed.patient.specialDietMother = bedModel.patient.specialDietMother;
       bed.patient.specialDiet = bedModel.patient.specialDiet;
+      bed.patient.mothersDiet = bedModel.patient.mothersDiet;
+      bed.patient.childrensDiet = bedModel.patient.childrensDiet;
+      if (bedModel.patient.mothersDiet) {
+        bed.patient.mothersDiet = this.dietsForMothers.find(diet => diet.id == bedModel.patient.mothersDiet)
+      }
+      if (bedModel.patient.childrensDiet) {
+        bed.patient.childrensDiet = this.dietsForChildren.find(diet => diet.id == bedModel.patient.childrensDiet)
+      }
 
 
     } else {

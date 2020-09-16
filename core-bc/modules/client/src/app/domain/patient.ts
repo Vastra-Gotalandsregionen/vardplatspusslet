@@ -5,6 +5,8 @@ import {DietForMother} from "./dietformother";
 import {DietForChild} from "./dietforchild";
 import {DietForPatient} from "./dietforpatient";
 import {ServingClinic} from "./servingclinic";
+import { Mothersdiet } from "./mothersdiet";
+import { Childrensdiet } from "./childrensdiet";
 
 export class Patient {
 
@@ -43,6 +45,8 @@ export class Patient {
   specialDietChild : boolean;
   specialDietMother : boolean;
   specialDiet : boolean;
+  mothersDiet: Mothersdiet;
+  childrensDiet: Childrensdiet;
 }
 
 enum LeaveStatus {

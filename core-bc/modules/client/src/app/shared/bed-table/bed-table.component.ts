@@ -11,6 +11,8 @@ import {CareBurdenChoice} from "../../domain/careburdenchoice";
 import {CareBurdenCategory} from "../../domain/careBurdenCategory";
 import {Patient} from "../../domain/patient";
 import {CareBurdenValue} from "../../domain/careburdenvalue";
+import { Mothersdiet } from "../../domain/mothersdiet";
+import { Childrensdiet } from "../../domain/childrensdiet";
 
 @Component({
   selector: 'app-bed-table',
@@ -45,14 +47,32 @@ export class BedTableComponent implements OnInit {
   delayedExpandedRows: Array<boolean>;
   allowedBedNames: string[] = [];
   allowedNamesAsString : string = "";
+  mothersDiet: Mothersdiet[];
+  childrenDite: Childrensdiet[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    if (this.unit.hasDetailedDietFeature)
+    {
+      this.http.get<Mothersdiet[]>('api/mothersdiet').subscribe(result => {this.mothersDiet = result;
+       this.http.get<Childrensdiet[]>('api/childrensdiet').subscribe( result => {
+         this.childrenDite = result;
+         this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.mothersDiet.map(diet => {
+           return {displayName: diet.name, value: diet.id};
+         }));
 
-    this.initThings();
-
+         this.dietChildDropdownItems = [{displayName: 'Välj', value: null}].concat(this.childrenDite.map(diet => {
+           return {displayName: diet.name, value: diet.id};
+         }));
+         this.initThings();
+       })})
+    }
+    else
+    {
+      this.initThings();
+    }
   }
 
   openDeleteModal(bed: Bed) {
@@ -131,15 +151,15 @@ export class BedTableComponent implements OnInit {
       {displayName: 'Vanlig hemgång', value: 4},
     ];
 
-   /* this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.unit.dietForMothers.map(diet => {
+  /* this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.mothersDiet.map(diet => {
       return {displayName: diet.name, value: diet.id};
     }));
 
-    this.dietChildDropdownItems = [{displayName: 'Välj', value: null}].concat(this.unit.dietForChildren.map(diet => {
+    this.dietChildDropdownItems = [{displayName: 'Välj', value: null}].concat(this.childrenDite.map(diet => {
       return {displayName: diet.name, value: diet.id};
-    }));
+    }));*/
 
-    this.dietDropdownItems = [{displayName: 'Välj', value: null}].concat(this.unit.dietForPatients.map(diet => {
+   /* this.dietDropdownItems = [{displayName: 'Välj', value: null}].concat(this.unit.dietForPatients.map(diet => {
       return {displayName: diet.name, value: diet.id};
     }));*/
 

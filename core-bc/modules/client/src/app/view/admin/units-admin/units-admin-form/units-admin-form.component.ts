@@ -147,6 +147,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnKostFeature : [unit.hasBarnKostFeature],
       hasKostFeature : [unit.hasKostFeature],
       hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
+      hasDetailedDietFeature: [unit.hasDetailedDietFeature],
       hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature],
       careBurden: [unit.careBurden? unit.careBurden: "inget"],
       hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature],
@@ -208,6 +209,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnKostFeature : unit.hasBarnKostFeature,
       hasKostFeature : unit.hasKostFeature,
       hasMotherChildDietFeature: unit.hasMotherChildDietFeature,
+      hasDetailedDietFeature: unit.hasDetailedDietFeature,
       hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature,
       careBurden: unit.careBurden,
       // hasPatientNameColumn: unit.hasPatientNameColumn,
@@ -250,6 +252,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasBarnKostFeature = unitModel.hasBarnKostFeature;
     unit.hasKostFeature = unitModel.hasKostFeature;
     unit.hasMotherChildDietFeature = unitModel.hasMotherChildDietFeature;
+    unit.hasDetailedDietFeature = unitModel.hasDetailedDietFeature;
     unit.hasUnitPlannedInFeature = unitModel.hasUnitPlannedInFeature;
     if (unitModel.clinic) {
       unit.clinic = new Clinic();

@@ -111,6 +111,13 @@ public class Patient {
     @Column
     private String relatedInformation;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private MothersDiet  mothersDiet;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private ChildrensDiet  childrensDiet;
+
+
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PatientExamination> patientExaminations = new LinkedHashSet<>();
@@ -145,6 +152,21 @@ public class Patient {
     @Column
     private Boolean specialDiet;
 
+    public MothersDiet getMothersDiet() {
+        return mothersDiet;
+    }
+
+    public void setMothersDiet(MothersDiet mothersDiet) {
+        this.mothersDiet = mothersDiet;
+    }
+
+    public ChildrensDiet getChildrensDiet() {
+        return childrensDiet;
+    }
+
+    public void setChildrensDiet(ChildrensDiet childrensDiet) {
+        this.childrensDiet = childrensDiet;
+    }
 
     public Long getId() {
         return id;

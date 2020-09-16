@@ -166,6 +166,20 @@
         </vgr-radio-group>
       </div>
 
+      <div  *ngIf="unit.hasDetailedDietFeature" class="div-button10">
+        <p>Kost mor</p>
+        <vgr-dropdown-select  formControlName="mothersDiet" noItemSelectedLabel="Välj">
+          <vgr-dropdown-item *ngFor="let item of dietMotherDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+        </vgr-dropdown-select>
+      </div>
+
+      <div  *ngIf="unit.hasDetailedDietFeature" class="div-button10">
+        <p>Kost barn</p>
+        <vgr-dropdown-select  formControlName="childrensDiet" noItemSelectedLabel="Välj">
+          <vgr-dropdown-item *ngFor="let item of dietChildDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+        </vgr-dropdown-select>
+      </div>
+
       <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button7">
         <vgr-checkbox formControlName="specialDietMother" label="Specialkost mor"></vgr-checkbox>
       </div>

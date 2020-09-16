@@ -156,6 +156,9 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean resetSskOnHasLeft;
 
+    @Column
+    private Boolean hasDetailedDietFeature;
+
     public Unit() {
 
     }
@@ -502,6 +505,14 @@ public class Unit implements Comparable<Unit> {
 
     public void setResetSskOnHasLeft(Boolean resetSskOnHasLeft) {
         this.resetSskOnHasLeft = resetSskOnHasLeft;
+    }
+
+    public Boolean getHasDetailedDietFeature() {
+        return hasDetailedDietFeature;
+    }
+
+    public void setHasDetailedDietFeature(Boolean hasDetailedDietFeature) {
+        this.hasDetailedDietFeature = hasDetailedDietFeature;
     }
 
     @Override
