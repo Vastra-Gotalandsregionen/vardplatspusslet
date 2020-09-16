@@ -152,6 +152,9 @@ public class Patient {
     @Column
     private Boolean specialDiet;
 
+    @Column
+    private String allergier;
+
     public MothersDiet getMothersDiet() {
         return mothersDiet;
     }
@@ -510,6 +513,14 @@ public class Patient {
 
     public void setSpecialDiet(Boolean specialDiet) {
         this.specialDiet = specialDiet;
+    }
+
+    public String getAllergier() {
+        return allergier;
+    }
+
+    public void setAllergier(String allergier) {
+        this.allergier = allergier;
     }
 
     @Override

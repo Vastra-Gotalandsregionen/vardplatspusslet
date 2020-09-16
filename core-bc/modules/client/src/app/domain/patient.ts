@@ -47,6 +47,7 @@ export class Patient {
   specialDiet : boolean;
   mothersDiet: Mothersdiet;
   childrensDiet: Childrensdiet;
+  allergier: string;
 }
 
 enum LeaveStatus {

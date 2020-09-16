@@ -132,7 +132,8 @@ export class BedFormComponent implements OnInit {
         specialDietMother : [patient.specialDietMother],
         specialDiet: [patient.specialDiet],
         mothersDiet: [patient.mothersDiet? patient.mothersDiet.id : null],
-        childrensDiet: [patient.childrensDiet? patient.childrensDiet.id : null]
+        childrensDiet: [patient.childrensDiet? patient.childrensDiet.id : null],
+        allergier: [patient.allergier]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
       waitingforbedGroup: this.formBuilder.group({
@@ -238,14 +239,13 @@ export class BedFormComponent implements OnInit {
       bed.patient.specialDietChild = bedModel.patient.specialDietChild;
       bed.patient.specialDietMother = bedModel.patient.specialDietMother;
       bed.patient.specialDiet = bedModel.patient.specialDiet;
-      bed.patient.mothersDiet = bedModel.patient.mothersDiet;
-      bed.patient.childrensDiet = bedModel.patient.childrensDiet;
       if (bedModel.patient.mothersDiet) {
         bed.patient.mothersDiet = this.dietsForMothers.find(diet => diet.id == bedModel.patient.mothersDiet)
       }
       if (bedModel.patient.childrensDiet) {
         bed.patient.childrensDiet = this.dietsForChildren.find(diet => diet.id == bedModel.patient.childrensDiet)
       }
+      bed.patient.allergier = bedModel.patient.allergier;
 
 
     } else {
