@@ -67,13 +67,13 @@
         <span class="ikon" >{{bed.patient?.childrensDiet?.name}}</span>
       </td>
 
+      <td *ngIf="unit.hasDetailedDietFeature" [colSpan]="1">
+        <span class="ikon">{{bed.patient?.allergier}}</span>
+      </td>
+
       <td *ngIf="unit.hasKostFeature" [colSpan]="1">
         <span class="ikon" [appCallout]="'Specialkost'"><i *ngIf="bed.patient?.specialDiet" class="fa fa-apple-alt purple"></i>
         </span>
-      </td>
-
-      <td *ngIf="unit.hasDetailedDietFeature" [colSpan]="1">
-        <span class="ikon">{{bed.patient?.allergier}}</span>
       </td>
 
       <td *ngIf="unit.hasAmningFeature">

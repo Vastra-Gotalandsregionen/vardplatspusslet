@@ -158,6 +158,16 @@ export class UnitsAdminFormComponent implements OnInit {
       allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames)),
       resetSskOnHasLeft: [unit.resetSskOnHasLeft]
     });
+    this.unitForm.get('hasDetailedDietFeature').valueChanges.subscribe((checked: boolean) =>{
+      if(checked){
+        this.unitForm.get('hasMotherChildDietFeature').setValue(false);
+      }
+    });
+    this.unitForm.get('hasMotherChildDietFeature').valueChanges.subscribe((checked: boolean) =>{
+      if(checked){
+        this.unitForm.get('hasDetailedDietFeature').setValue(false);
+      }
+    });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
       if (mgId != null)
       {
