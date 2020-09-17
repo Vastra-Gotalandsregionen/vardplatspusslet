@@ -170,14 +170,14 @@
         <p>Allergier</p>
         <input formControlName="allergier" class="width59" placeholder="Allergier..."/>
       </div>
-      <div  *ngIf="unit.hasDetailedDietFeature" class="div-button10">
+      <div  *ngIf="unit.hasDetailedMotherChildDietFeature" class="div-button10">
         <p>Kost mor</p>
         <vgr-dropdown-select  formControlName="mothersDiet" noItemSelectedLabel="Välj">
           <vgr-dropdown-item *ngFor="let item of dietMotherDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
         </vgr-dropdown-select>
       </div>
 
-      <div  *ngIf="unit.hasDetailedDietFeature" class="div-button10">
+      <div  *ngIf="unit.hasDetailedMotherChildDietFeature" class="div-button10">
         <p>Kost barn</p>
         <vgr-dropdown-select  formControlName="childrensDiet" noItemSelectedLabel="Välj">
           <vgr-dropdown-item *ngFor="let item of dietChildDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>

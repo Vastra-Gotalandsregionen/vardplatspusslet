@@ -157,7 +157,7 @@ public class Unit implements Comparable<Unit> {
     private Boolean resetSskOnHasLeft;
 
     @Column
-    private Boolean hasDetailedDietFeature;
+    private Boolean hasDetailedMotherChildDietFeature;
 
     @Column
     private Boolean hasAllergiFeature;
@@ -510,12 +510,12 @@ public class Unit implements Comparable<Unit> {
         this.resetSskOnHasLeft = resetSskOnHasLeft;
     }
 
-    public Boolean getHasDetailedDietFeature() {
-        return hasDetailedDietFeature;
+    public Boolean getHasDetailedMotherChildDietFeature() {
+        return hasDetailedMotherChildDietFeature;
     }
 
-    public void setHasDetailedDietFeature(Boolean hasDetailedDietFeature) {
-        this.hasDetailedDietFeature = hasDetailedDietFeature;
+    public void setHasDetailedMotherChildDietFeature(Boolean hasDetailedMotherChildDietFeature) {
+        this.hasDetailedMotherChildDietFeature = hasDetailedMotherChildDietFeature;
     }
 
     public Boolean getHasAllergiFeature() {

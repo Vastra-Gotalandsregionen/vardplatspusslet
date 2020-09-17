@@ -147,7 +147,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnKostFeature : [unit.hasBarnKostFeature],
       hasKostFeature : [unit.hasKostFeature],
       hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
-      hasDetailedDietFeature: [unit.hasDetailedDietFeature],
+      hasDetailedMotherChildDietFeature: [unit.hasDetailedMotherChildDietFeature],
       hasAllergiFeature: [unit.hasAllergiFeature],
       hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature],
       careBurden: [unit.careBurden? unit.careBurden: "inget"],
@@ -159,14 +159,14 @@ export class UnitsAdminFormComponent implements OnInit {
       allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames)),
       resetSskOnHasLeft: [unit.resetSskOnHasLeft]
     });
-    this.unitForm.get('hasDetailedDietFeature').valueChanges.subscribe((checked: boolean) =>{
+    this.unitForm.get('hasDetailedMotherChildDietFeature').valueChanges.subscribe((checked: boolean) =>{
       if(checked){
         this.unitForm.get('hasMotherChildDietFeature').setValue(false);
       }
     });
     this.unitForm.get('hasMotherChildDietFeature').valueChanges.subscribe((checked: boolean) =>{
       if(checked){
-        this.unitForm.get('hasDetailedDietFeature').setValue(false);
+        this.unitForm.get('hasDetailedMotherChildDietFeature').setValue(false);
       }
     });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
@@ -220,7 +220,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasBarnKostFeature : unit.hasBarnKostFeature,
       hasKostFeature : unit.hasKostFeature,
       hasMotherChildDietFeature: unit.hasMotherChildDietFeature,
-      hasDetailedDietFeature: unit.hasDetailedDietFeature,
+      hasDetailedMotherChildDietFeature: unit.hasDetailedMotherChildDietFeature,
       hasAllergiFeature: unit.hasAllergiFeature,
       hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature,
       careBurden: unit.careBurden,
@@ -264,7 +264,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasBarnKostFeature = unitModel.hasBarnKostFeature;
     unit.hasKostFeature = unitModel.hasKostFeature;
     unit.hasMotherChildDietFeature = unitModel.hasMotherChildDietFeature;
-    unit.hasDetailedDietFeature = unitModel.hasDetailedDietFeature;
+    unit.hasDetailedMotherChildDietFeature = unitModel.hasDetailedMotherChildDietFeature;
     unit.hasAllergiFeature = unitModel.hasAllergiFeature;
     unit.hasUnitPlannedInFeature = unitModel.hasUnitPlannedInFeature;
     if (unitModel.clinic) {

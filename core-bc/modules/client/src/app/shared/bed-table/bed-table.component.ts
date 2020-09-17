@@ -54,7 +54,7 @@ export class BedTableComponent implements OnInit {
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    if (this.unit.hasDetailedDietFeature)
+    if (this.unit.hasDetailedMotherChildDietFeature)
     {
       this.http.get<Mothersdiet[]>('api/mothersdiet').subscribe(result => {this.mothersDiet = result;
        this.http.get<Childrensdiet[]>('api/childrensdiet').subscribe( result => {

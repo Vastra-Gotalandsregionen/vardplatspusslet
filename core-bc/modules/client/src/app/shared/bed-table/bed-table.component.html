@@ -1,10 +1,10 @@
 <table class="bed-table">
   <thead>
-  <tr *ngIf="unit.careBurden !== 'inget' || unit.hasMotherChildDietFeature || unit.hasMorRondFeature || unit.hasBarnRondFeature || unit.hasDetailedDietFeature" class="header-row">
+  <tr *ngIf="unit.careBurden !== 'inget' || unit.hasMotherChildDietFeature || unit.hasMorRondFeature || unit.hasBarnRondFeature || unit.hasDetailedMotherChildDietFeature" class="header-row">
     <th [colSpan]="3"></th>
     <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last" *ngIf="unit.careBurden !== 'inget'">Vårdtyngd</th>
     <th *ngIf="unit.hasMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
-    <th *ngIf="unit.hasDetailedDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
+    <th *ngIf="unit.hasDetailedMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
     <th *ngIf="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0)  + (unit.hasAllergiFeature ? 1 : 0) > 0" [colSpan]="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0) + (unit.hasAllergiFeature ? 1 : 0)"></th>
     <th *ngIf="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0) > 0" [colSpan]="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0)" class="column-group first last">Ronder</th>
     <th [colSpan]="50"></th>
@@ -14,8 +14,8 @@
     <th>Status</th>
     <th>Team</th>
     <th class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index" [hidden]="unit.careBurden == 'inget'">{{cbc.name}}</th>
-    <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedDietFeature">Mor</th>
-    <th class="column-group last" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedDietFeature">Barn</th>
+    <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedMotherChildDietFeature">Mor</th>
+    <th class="column-group last" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedMotherChildDietFeature">Barn</th>
     <th *ngIf="unit.hasKostFeature">Kost</th>
     <th *ngIf="unit.hasAllergiFeature">Allergier</th>
     <th *ngIf="unit.hasAmningFeature">Amning</th>
@@ -59,11 +59,11 @@
         </span>
       </td>
 
-      <td class="column-group first" *ngIf="unit.hasDetailedDietFeature">
+      <td class="column-group first" *ngIf="unit.hasDetailedMotherChildDietFeature">
         <span class="ikon" >{{bed.patient?.mothersDiet?.name}}</span>
       </td>
 
-      <td class="column-group first" *ngIf="unit.hasDetailedDietFeature">
+      <td class="column-group first" *ngIf="unit.hasDetailedMotherChildDietFeature">
         <span class="ikon" >{{bed.patient?.childrensDiet?.name}}</span>
       </td>
 
