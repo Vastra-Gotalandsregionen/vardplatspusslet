@@ -58,4 +58,5 @@ export class Unit {
   allowedBedNames: AllowedBedName[];
   resetSskOnHasLeft: boolean;
   hasDetailedDietFeature: boolean;
+  hasAllergiFeature: boolean;
 }

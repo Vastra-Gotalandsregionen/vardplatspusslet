@@ -148,6 +148,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasKostFeature : [unit.hasKostFeature],
       hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
       hasDetailedDietFeature: [unit.hasDetailedDietFeature],
+      hasAllergiFeature: [unit.hasAllergiFeature],
       hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature],
       careBurden: [unit.careBurden? unit.careBurden: "inget"],
       hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature],
@@ -220,6 +221,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasKostFeature : unit.hasKostFeature,
       hasMotherChildDietFeature: unit.hasMotherChildDietFeature,
       hasDetailedDietFeature: unit.hasDetailedDietFeature,
+      hasAllergiFeature: unit.hasAllergiFeature,
       hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature,
       careBurden: unit.careBurden,
       // hasPatientNameColumn: unit.hasPatientNameColumn,
@@ -263,6 +265,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasKostFeature = unitModel.hasKostFeature;
     unit.hasMotherChildDietFeature = unitModel.hasMotherChildDietFeature;
     unit.hasDetailedDietFeature = unitModel.hasDetailedDietFeature;
+    unit.hasAllergiFeature = unitModel.hasAllergiFeature;
     unit.hasUnitPlannedInFeature = unitModel.hasUnitPlannedInFeature;
     if (unitModel.clinic) {
       unit.clinic = new Clinic();
