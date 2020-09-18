@@ -1,4 +1,4 @@
-<vgr-panel-container class="block" *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature">
+<vgr-panel-container class="block" *ngIf="unit?.hasMotherChildDietFeature || unit?.hasKostFeature || unit.hasDetailedDietFeature || unit.hasDetailedMotherChildDietFeature">
     <vgr-panel width="12">
 
         <a [href]="'/api/unit/' + clinic.id + '/' + unit.id + '/kostLista'" target="_blank" style="text-decoration: none ">
