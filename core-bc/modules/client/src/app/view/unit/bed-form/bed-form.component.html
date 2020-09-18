@@ -184,6 +184,13 @@
         </vgr-dropdown-select>
       </div>
 
+      <div  *ngIf="unit.hasDetailedDietFeature" class="div-button10">
+        <p>Kost</p>
+        <vgr-dropdown-select  formControlName="diet" noItemSelectedLabel="Välj">
+          <vgr-dropdown-item *ngFor="let item of dietDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+        </vgr-dropdown-select>
+      </div>
+
       <div  *ngIf="unit.hasMotherChildDietFeature" class="div-button7">
         <vgr-checkbox formControlName="specialDietMother" label="Specialkost mor"></vgr-checkbox>
       </div>

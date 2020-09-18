@@ -149,6 +149,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMotherChildDietFeature: [unit.hasMotherChildDietFeature],
       hasDetailedMotherChildDietFeature: [unit.hasDetailedMotherChildDietFeature],
       hasAllergiFeature: [unit.hasAllergiFeature],
+      hasDetailedDietFeature : [unit.hasDetailedDietFeature],
       hasUnitPlannedInFeature: [unit.hasUnitPlannedInFeature],
       careBurden: [unit.careBurden? unit.careBurden: "inget"],
       hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature],
@@ -167,6 +168,17 @@ export class UnitsAdminFormComponent implements OnInit {
     this.unitForm.get('hasMotherChildDietFeature').valueChanges.subscribe((checked: boolean) =>{
       if(checked){
         this.unitForm.get('hasDetailedMotherChildDietFeature').setValue(false);
+      }
+    });
+
+    this.unitForm.get('hasDetailedDietFeature').valueChanges.subscribe((checked: boolean) =>{
+      if(checked){
+        this.unitForm.get('hasKostFeature').setValue(false);
+      }
+    });
+    this.unitForm.get('hasKostFeature').valueChanges.subscribe((checked: boolean) =>{
+      if(checked){
+        this.unitForm.get('hasDetailedDietFeature').setValue(false);
       }
     });
     this.unitForm.get('management').valueChanges.subscribe((mgId: string)=>{
@@ -222,6 +234,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasMotherChildDietFeature: unit.hasMotherChildDietFeature,
       hasDetailedMotherChildDietFeature: unit.hasDetailedMotherChildDietFeature,
       hasAllergiFeature: unit.hasAllergiFeature,
+      hasDetailedDietFeature: unit.hasDetailedDietFeature,
       hasUnitPlannedInFeature: unit.hasUnitPlannedInFeature,
       careBurden: unit.careBurden,
       // hasPatientNameColumn: unit.hasPatientNameColumn,
@@ -266,6 +279,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasMotherChildDietFeature = unitModel.hasMotherChildDietFeature;
     unit.hasDetailedMotherChildDietFeature = unitModel.hasDetailedMotherChildDietFeature;
     unit.hasAllergiFeature = unitModel.hasAllergiFeature;
+    unit.hasDetailedDietFeature = unitModel.hasDetailedDietFeature;
     unit.hasUnitPlannedInFeature = unitModel.hasUnitPlannedInFeature;
     if (unitModel.clinic) {
       unit.clinic = new Clinic();

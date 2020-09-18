@@ -59,4 +59,5 @@ export class Unit {
   resetSskOnHasLeft: boolean;
   hasDetailedMotherChildDietFeature: boolean;
   hasAllergiFeature: boolean;
+  hasDetailedDietFeature: boolean;
 }

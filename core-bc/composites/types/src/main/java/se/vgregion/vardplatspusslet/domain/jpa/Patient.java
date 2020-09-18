@@ -117,6 +117,9 @@ public class Patient {
     @ManyToOne(fetch = FetchType.EAGER)
     private ChildrensDiet  childrensDiet;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Diet  detailedDiet;
+
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -169,6 +172,14 @@ public class Patient {
 
     public void setChildrensDiet(ChildrensDiet childrensDiet) {
         this.childrensDiet = childrensDiet;
+    }
+
+    public Diet getDetailedDiet() {
+        return detailedDiet;
+    }
+
+    public void setDetailedDiet(Diet detailedDiet) {
+        this.detailedDiet = detailedDiet;
     }
 
     public Long getId() {

@@ -11,6 +11,7 @@ import {CareBurdenChoice} from "../../../domain/careburdenchoice";
 import {DropdownItem} from "../../../domain/DropdownItem";
 import { Mothersdiet } from "../../../domain/mothersdiet";
 import { Childrensdiet } from "../../../domain/childrensdiet";
+import { Diet } from "../../../domain/diet";
 
 @Component({
   selector: 'app-bed-form',
@@ -40,6 +41,7 @@ export class BedFormComponent implements OnInit {
   allowedNames : string = "";
   dietsForMothers: Mothersdiet[] = [];
   dietsForChildren: Childrensdiet[] = [];
+  diets : Diet[] = [];
 
   @Input('genderDropdownItems') genderDropdownItems: DropdownItem<string>[];
   @Input('sskDropdownItems') sskDropdownItems: DropdownItem<number>[];
@@ -58,11 +60,16 @@ export class BedFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get<Mothersdiet[]>('api/mothersdiet').subscribe(result => {this.dietsForMothers = result;
+    this.http.get<Mothersdiet[]>('api/mothersdiet').subscribe(result => {
+      this.dietsForMothers = result;
       this.http.get<Childrensdiet[]>('api/childrensdiet').subscribe(result => {
-        this.dietsForChildren= result;
-        this.initForm(this.bed);
-      })})
+        this.dietsForChildren = result;
+        this.http.get<Diet[]>('api/diet').subscribe(result => {
+          this.diets = result;
+          this.initForm(this.bed);
+        })
+      })
+    })
   }
 
   private initForm(bed: Bed) {
@@ -133,6 +140,7 @@ export class BedFormComponent implements OnInit {
         specialDiet: [patient.specialDiet],
         mothersDiet: [patient.mothersDiet? patient.mothersDiet.id : null],
         childrensDiet: [patient.childrensDiet? patient.childrensDiet.id : null],
+        diet: [patient.detailedDiet? patient.detailedDiet.id: null],
         allergier: [patient.allergier]
       }),
       ssk: bed.ssk ? bed.ssk.id : null,
@@ -244,6 +252,10 @@ export class BedFormComponent implements OnInit {
       }
       if (bedModel.patient.childrensDiet) {
         bed.patient.childrensDiet = this.dietsForChildren.find(diet => diet.id == bedModel.patient.childrensDiet)
+      }
+
+      if (bedModel.patient.diet) {
+        bed.patient.detailedDiet = this.diets.find(diet => diet.id == bedModel.patient.diet)
       }
       bed.patient.allergier = bedModel.patient.allergier;
 

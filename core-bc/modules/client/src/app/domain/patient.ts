@@ -7,6 +7,7 @@ import {DietForPatient} from "./dietforpatient";
 import {ServingClinic} from "./servingclinic";
 import { Mothersdiet } from "./mothersdiet";
 import { Childrensdiet } from "./childrensdiet";
+import { Diet } from "./diet";
 
 export class Patient {
 
@@ -48,6 +49,7 @@ export class Patient {
   mothersDiet: Mothersdiet;
   childrensDiet: Childrensdiet;
   allergier: string;
+  detailedDiet: Diet;
 }
 
 enum LeaveStatus {

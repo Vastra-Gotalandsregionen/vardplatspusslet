@@ -162,6 +162,9 @@ public class Unit implements Comparable<Unit> {
     @Column
     private Boolean hasAllergiFeature;
 
+    @Column
+    private Boolean hasDetailedDietFeature;
+
     public Unit() {
 
     }
@@ -524,6 +527,14 @@ public class Unit implements Comparable<Unit> {
 
     public void setHasAllergiFeature(Boolean hasAllergiFeature) {
         this.hasAllergiFeature = hasAllergiFeature;
+    }
+
+    public Boolean getHasDetailedDietFeature() {
+        return hasDetailedDietFeature;
+    }
+
+    public void setHasDetailedDietFeature(Boolean hasDetailedDietFeature) {
+        this.hasDetailedDietFeature = hasDetailedDietFeature;
     }
 
     @Override

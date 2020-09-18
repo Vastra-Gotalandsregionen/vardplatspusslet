@@ -13,6 +13,7 @@ import {Patient} from "../../domain/patient";
 import {CareBurdenValue} from "../../domain/careburdenvalue";
 import { Mothersdiet } from "../../domain/mothersdiet";
 import { Childrensdiet } from "../../domain/childrensdiet";
+import { Diet } from "../../domain/diet";
 
 @Component({
   selector: 'app-bed-table',
@@ -49,29 +50,51 @@ export class BedTableComponent implements OnInit {
   allowedNamesAsString : string = "";
   mothersDiet: Mothersdiet[];
   childrenDite: Childrensdiet[];
+  diets: Diet[];
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    if (this.unit.hasDetailedMotherChildDietFeature)
-    {
-      this.http.get<Mothersdiet[]>('api/mothersdiet').subscribe(result => {this.mothersDiet = result;
-       this.http.get<Childrensdiet[]>('api/childrensdiet').subscribe( result => {
-         this.childrenDite = result;
-         this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.mothersDiet.map(diet => {
-           return {displayName: diet.name, value: diet.id};
-         }));
+    if (this.unit.hasDetailedMotherChildDietFeature) {
+      this.http.get<Mothersdiet[]>('api/mothersdiet').subscribe(result => {
+        this.mothersDiet = result;
+        this.http.get<Childrensdiet[]>('api/childrensdiet').subscribe(result => {
+          this.childrenDite = result;
+          this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.mothersDiet.map(diet => {
+            return {displayName: diet.name, value: diet.id};
+          }));
+          this.dietChildDropdownItems = [{displayName: 'Välj', value: null}].concat(this.childrenDite.map(diet => {
+            return {displayName: diet.name, value: diet.id};
+          }));
+          if (this.unit.hasDetailedDietFeature) {
+            this.http.get<Diet[]>('api/diet').subscribe(result => {
+              this.diets = result;
+              this.dietDropdownItems = [{displayName: 'Välj', value: null}].concat(this.diets.map(diet => {
+                return {displayName: diet.name, value: diet.id};
+              }));
+              this.initThings();
+            })
+          } else {
+            this.initThings();
+          }
 
-         this.dietChildDropdownItems = [{displayName: 'Välj', value: null}].concat(this.childrenDite.map(diet => {
-           return {displayName: diet.name, value: diet.id};
-         }));
-         this.initThings();
-       })})
+        })
+      })
     }
     else
     {
-      this.initThings();
+      if (this.unit.hasDetailedDietFeature) {
+        this.http.get<Diet[]>('api/diet').subscribe(result => {
+          this.diets = result;
+          this.dietDropdownItems = [{displayName: 'Välj', value: null}].concat(this.diets.map(diet => {
+            return {displayName: diet.name, value: diet.id};
+          }));
+          this.initThings();
+        })
+      } else {
+        this.initThings();
+      }
     }
   }
 

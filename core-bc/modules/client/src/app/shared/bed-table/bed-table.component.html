@@ -5,7 +5,8 @@
     <th [colSpan]="unit.careBurdenCategories.length" class="column-group first last" *ngIf="unit.careBurden !== 'inget'">Vårdtyngd</th>
     <th *ngIf="unit.hasMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
     <th *ngIf="unit.hasDetailedMotherChildDietFeature" [colSpan]="2" class="column-group first last">Kost</th>
-    <th *ngIf="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0)  + (unit.hasAllergiFeature ? 1 : 0) > 0" [colSpan]="(unit.hasKostFeature ? 1 : 0) + (unit.hasAmningFeature ? 1 : 0) + (unit.hasAllergiFeature ? 1 : 0)"></th>
+    <th *ngIf="unit.hasKostFeature || unit.hasDetailedDietFeature" class="column-group first last"></th>
+    <th *ngIf="(unit.hasAmningFeature ? 1 : 0)  + (unit.hasAllergiFeature ? 1 : 0) > 0" [colSpan]="(unit.hasAmningFeature ? 1 : 0) + (unit.hasAllergiFeature ? 1 : 0)"></th>
     <th *ngIf="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0) > 0" [colSpan]="(unit.hasMorRondFeature ? 1 : 0) + (unit.hasBarnRondFeature ? 1 : 0)" class="column-group first last">Ronder</th>
     <th [colSpan]="50"></th>
   </tr>
@@ -16,7 +17,7 @@
     <th class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index" [hidden]="unit.careBurden == 'inget'">{{cbc.name}}</th>
     <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedMotherChildDietFeature">Mor</th>
     <th class="column-group last" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedMotherChildDietFeature">Barn</th>
-    <th *ngIf="unit.hasKostFeature">Kost</th>
+    <th *ngIf="unit.hasKostFeature || unit.hasDetailedDietFeature">Kost</th>
     <th *ngIf="unit.hasAllergiFeature">Allergier</th>
     <th *ngIf="unit.hasAmningFeature">Amning</th>
     <th class="column-group first" *ngIf="unit.hasMorRondFeature">Mor</th>
@@ -69,6 +70,11 @@
 
       <td *ngIf="unit.hasKostFeature" [colSpan]="1">
         <span class="ikon" [appCallout]="'Specialkost'"><i *ngIf="bed.patient?.specialDiet" class="fa fa-apple-alt purple"></i>
+        </span>
+      </td>
+
+      <td *ngIf="unit.hasDetailedDietFeature" [colSpan]="1">
+        <span class="ikon">{{bed.patient?.detailedDiet?.name}}
         </span>
       </td>
 
