@@ -172,7 +172,7 @@ export class BedTableComponent implements OnInit {
       {displayName: 'THG/Barn', value: 2},
       {displayName: 'Föräldrarum', value: 3},
       {displayName: 'Vanlig hemgång', value: 4},
-      {displayName: 'Hemgång eftermiddag', value: 5}
+      {displayName: 'Hemgång eftermiddag', value: 6}
     ];
 
   /* this.dietMotherDropdownItems = [{displayName: 'Välj', value: null}].concat(this.mothersDiet.map(diet => {
