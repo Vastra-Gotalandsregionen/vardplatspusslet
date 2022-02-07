@@ -138,6 +138,9 @@
         <span class="ikon" *ngIf="bed.patient?.information === '4' && unit.hasBackToHomeAlternativFeature"
              [appCallout]="'Vanlig hemgång' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i>
         </span>
+        <span class="ikon" *ngIf="bed.patient?.information === '5' && unit.hasBackToHomeAlternativFeature"
+              [appCallout]="'Hemgång eftermiddag' + (bed.patient.kommentar ? ': ' + bed.patient.kommentar : '')"><i class="fa fa-arrow-right purple"></i><i class="fa fa-clock purple"></i>
+        </span>
       </td>
 
       <td *ngIf="unit.hasCleaningFeature">
