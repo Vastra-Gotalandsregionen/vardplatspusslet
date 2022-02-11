@@ -44,6 +44,7 @@ export class Unit {
   hasMorKostFeature: boolean;
   hasBarnKostFeature: boolean;
   hasKostFeature: boolean;
+  hasFiktivPlatsFeature: boolean;
   hasMotherChildDietFeature: boolean;
   hasUnitPlannedInFeature: boolean;
   unitsPlannedIn: UnitPlannedIn[];

@@ -150,6 +150,9 @@ public class Unit implements Comparable<Unit> {
     private Boolean hasDatedBackHomeFeature;
 
     @Column
+    private Boolean hasFiktivPlatsFeature;
+
+    @Column
     @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<AllowedBedName> allowedBedNames = new TreeSet<>();
 
@@ -553,5 +556,13 @@ public class Unit implements Comparable<Unit> {
     @Override
     public int compareTo(Unit o) {
         return this.getId().compareTo(o.getId());
+    }
+
+    public Boolean getHasFiktivPlatsFeature() {
+        return hasFiktivPlatsFeature;
+    }
+
+    public void setHasFiktivPlatsFeature(Boolean hasFiktivPlatsFeature) {
+        this.hasFiktivPlatsFeature = hasFiktivPlatsFeature;
     }
 }

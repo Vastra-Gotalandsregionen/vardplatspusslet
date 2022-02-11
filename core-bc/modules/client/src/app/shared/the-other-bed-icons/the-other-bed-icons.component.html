@@ -6,6 +6,10 @@
      [appCallout]="'Akut patient'"><i class="fa fa-ambulance purple"></i>
 </div>
 
+<div class="ikon" *ngIf="bed.patient?.fiktivPlats && unit.hasFiktivPlatsFeature"
+     [appCallout]="'Fiktiv plats'"><i class="fa fa-ghost purple"></i>
+</div>
+
 <div class="ikon" *ngIf="bed.patient?.electiv23O && unit.has23oFeature"
      [appCallout]="'Electiv 23O'"><i class="fa fa-bed purple"></i>
 </div>

@@ -31,6 +31,7 @@ export class Patient {
   akutPatient: boolean;
   electiv23O: boolean;
   electiv24O: boolean;
+  fiktivPlats: boolean;
   vuxenPatient: boolean;
   /*pal: string;*/
   patientEvents: PatientEvent[];

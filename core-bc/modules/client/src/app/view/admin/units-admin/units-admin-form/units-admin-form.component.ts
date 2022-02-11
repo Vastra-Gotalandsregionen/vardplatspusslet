@@ -155,6 +155,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasPatientFromClinicFeature: [unit.hasPatientFromClinicFeature],
       hasGenderColumn: [unit.hasGenderFeature],
       hasPatientWaitesFeature: [unit.hasPatientWaitsFeature],
+      hasFiktivPlatsFeature : [unit.hasFiktivPlatsFeature],
       hasBackToHomeAlternativFeature: [unit.hasBackToHomeAlternativFeature],
       hasDatedBackHomeFeature: [unit.hasDatedBackHomeFeature],
       allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames)),
@@ -241,6 +242,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasPatientFromClinicFeature : unit.hasPatientFromClinicFeature,
       hasGenderColumn: unit.hasGenderFeature,
       hasPatientWaitesFeature: unit.hasPatientWaitsFeature,
+      hasFiktivPlatsFeature: unit.hasFiktivPlatsFeature,
       hasBackToHomeAlternativFeature : unit.hasBackToHomeAlternativFeature,
       hasDatedBackHomeFeature: unit.hasDatedBackHomeFeature,
       allowedBedNames: this.formBuilder.array(this.buildBedNameGroup(unit.allowedBedNames)),
@@ -301,6 +303,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.hasPatientFromClinicFeature = unitModel.hasPatientFromClinicFeature;
     unit.hasGenderFeature = unitModel.hasGenderColumn;
     unit.hasPatientWaitsFeature = unitModel.hasPatientWaitesFeature;
+    unit.hasFiktivPlatsFeature = unitModel.hasFiktivPlatsFeature;
     unit.hasBackToHomeAlternativFeature = unitModel.hasBackToHomeAlternativFeature;
     unit.hasDatedBackHomeFeature = unitModel.hasDatedBackHomeFeature;
     unit.allowedBedNames = unitModel.allowedBedNames;

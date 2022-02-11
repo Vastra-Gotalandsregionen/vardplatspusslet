@@ -124,6 +124,7 @@ export class BedFormComponent implements OnInit {
         patientEvents: this.formBuilder.array(this.buildEventGroup(patient.patientEvents)),
       /*  pal: [patient.pal],*/
         morRond: [patient.morRond],
+        fiktivPlats: [patient.fiktivPlats],
         barnRond: [patient.barnRond],
         rond: [patient.rond],
         amning: +[patient.amning],
@@ -227,6 +228,7 @@ export class BedFormComponent implements OnInit {
       /*bed.patient.pal = bedModel.patient.pal ? bedModel.patient.pal : null;*/
       bed.patient.patientEvents = bedModel.patient.patientEvents ? this.filterEvents(bedModel.patient.patientEvents) : null;
       bed.patient.morRond = bedModel.patient.morRond ? bedModel.patient.morRond : null;
+      bed.patient.fiktivPlats = bedModel.patient.fiktivPlats ? bedModel.patient.fiktivPlats : null;
       bed.patient.barnRond = bedModel.patient.barnRond ? bedModel.patient.barnRond : null;
       bed.patient.rond = bedModel.patient.rond ? bedModel.patient.rond : null;
       bed.patient.amning = bedModel.patient.amning ? bedModel.patient.amning : null;

@@ -81,6 +81,9 @@ public class Patient {
     @Column
     private String smittaInfo;
 
+    @Column
+    private Boolean fiktivPlats;
+
    /* @Column
     private String Pal;*/
 
@@ -545,5 +548,13 @@ public class Patient {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Boolean getFiktivPlats() {
+        return fiktivPlats;
+    }
+
+    public void setFiktivPlats(Boolean fiktivPlats) {
+        this.fiktivPlats = fiktivPlats;
     }
 }
