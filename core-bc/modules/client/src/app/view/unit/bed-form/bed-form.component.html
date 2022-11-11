@@ -209,6 +209,10 @@
         <vgr-checkbox formControlName="akutPatient" label="Akut patient"></vgr-checkbox>
       </div>
 
+      <div *ngIf="unit.hasCoCareByUnit34" class="div-button7">
+        <vgr-checkbox formControlName="coCareByUnit34" label="Avdelning 34 samvårdas"></vgr-checkbox>
+      </div>
+
       <div *ngIf="unit.has23oFeature" class="div-button7">
         <vgr-checkbox formControlName="electiv23O" label="Electiv 23O"></vgr-checkbox>
       </div>

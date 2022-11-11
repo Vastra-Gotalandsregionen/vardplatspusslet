@@ -29,6 +29,7 @@ export class Patient {
   interpretDate: Date;
   patientExaminations: Patientexamination[];
   akutPatient: boolean;
+  coCareByUnit34: boolean;
   electiv23O: boolean;
   electiv24O: boolean;
   fiktivPlats: boolean;

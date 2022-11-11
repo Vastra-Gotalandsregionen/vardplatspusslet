@@ -55,6 +55,8 @@ public class Patient {
     private Boolean akutPatient;
 
     @Column
+    private Boolean coCareByUnit34;
+    @Column
     private Boolean Electiv23O;
 
     @Column
@@ -556,5 +558,13 @@ public class Patient {
 
     public void setFiktivPlats(Boolean fiktivPlats) {
         this.fiktivPlats = fiktivPlats;
+    }
+
+    public Boolean getCoCareByUnit34() {
+        return coCareByUnit34;
+    }
+
+    public void setCoCareByUnit34(Boolean coCareByUnit34) {
+        this.coCareByUnit34 = coCareByUnit34;
     }
 }

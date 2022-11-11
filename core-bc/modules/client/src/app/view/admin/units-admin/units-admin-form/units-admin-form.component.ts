@@ -132,6 +132,7 @@ export class UnitsAdminFormComponent implements OnInit {
       hasLeftDateFeature: [unit.hasLeftDateFeature],
       cleaningAlternatives: this.formBuilder.array(this.buildCleaningGroups(unit.cleaningAlternatives)),
       hasAkutPatientFeature: [unit.hasAkutPatientFeature],
+      hasCoCareByUnit34: [unit.hasCoCareByUnit34],
       has23oFeature: [unit.has23oFeature],
       has24oFeature: [unit.has24oFeature],
       hasVuxenPatientFeature: [unit.hasVuxenPatientFeature],
@@ -224,6 +225,7 @@ export class UnitsAdminFormComponent implements OnInit {
       servingClinics: this.formBuilder.array(this.buildKlinikGroup(unit.servingClinics)),
       cleaningAlternatives: this.formBuilder.array(this.buildCleaningGroups(unit.cleaningAlternatives)),
       hasAkutPatientFeature: unit.hasAkutPatientFeature,
+      hasCoCareByUnit34: unit.hasCoCareByUnit34,
       has23oFeature: unit.has23oFeature,
       has24oFeature: unit.has24oFeature,
       hasVuxenPatientFeature: unit.hasVuxenPatientFeature,
@@ -271,6 +273,7 @@ export class UnitsAdminFormComponent implements OnInit {
     unit.name = unitModel.name;
     unit.hasLeftDateFeature = unitModel.hasLeftDateFeature;
     unit.hasAkutPatientFeature = unitModel.hasAkutPatientFeature;
+    unit.hasCoCareByUnit34 = unitModel.hasCoCareByUnit34;
     unit.has23oFeature = unitModel.has23oFeature;
     unit.has24oFeature = unitModel.has24oFeature;
     unit.hasVuxenPatientFeature = unitModel.hasVuxenPatientFeature;

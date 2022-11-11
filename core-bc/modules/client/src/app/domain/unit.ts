@@ -28,6 +28,7 @@ export class Unit {
   dietForPatients: DietForPatient[];*/
   hasLeftDateFeature: boolean;
   hasAkutPatientFeature: boolean;
+  hasCoCareByUnit34: boolean;
   has23oFeature: boolean;
   has24oFeature: boolean;
   hasVuxenPatientFeature: boolean;
