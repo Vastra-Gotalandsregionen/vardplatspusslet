@@ -152,7 +152,7 @@
 
       <td><app-the-other-bed-icons [bed]="bed" [unit]="unit"></app-the-other-bed-icons></td>
     </tr>
-    <tr *ngIf="expandedRows[i]" class="bed-form-row {{delayedExpandedRows[i] ? 'visible' : 'hidden'}}">
+    <tr *ngIf="expandedRows && expandedRows[i]" class="bed-form-row {{delayedExpandedRows[i] ? 'visible' : 'hidden'}}">
       <td [colSpan]="50">
         <div class="bed-form-wrapper">
           <app-bed-form [clinicId]="clinic.id"
@@ -184,7 +184,7 @@
       <span style="display: inline;" class="add-row vgr-icon-plus"></span> Lägg till säng
     </td>
   </tr>
-  <tr *ngIf="expandedRows[999]" class="bed-form-row {{delayedExpandedRows[999] ? 'visible' : 'hidden'}}">
+  <tr *ngIf="expandedRows && expandedRows[999]" class="bed-form-row {{delayedExpandedRows[999] ? 'visible' : 'hidden'}}">
     <td [colSpan]="50">
       <div class="bed-form-wrapper">
         <form [formGroup]="addBedForm" (ngSubmit)="saveAddBed()">

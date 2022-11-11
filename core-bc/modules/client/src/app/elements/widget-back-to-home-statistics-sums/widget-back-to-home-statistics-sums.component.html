@@ -1,0 +1,23 @@
+<table class="center">
+  <thead>
+    <tr>
+      <th colspan="2">
+        Hemgång
+      </th>
+    </tr>
+    <tr>
+      <th>Vårdlag</th>
+      <th>Antal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ssk of unit.ssks">
+      <td>
+        <app-ssk-icon [ssk]="ssk"></app-ssk-icon>
+      </td>
+      <td class="right-border">
+        {{getBackToHomeStatistics(ssk)}}
+      </td>
+    </tr>
+  </tbody>
+</table>

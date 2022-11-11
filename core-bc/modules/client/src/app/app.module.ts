@@ -68,6 +68,7 @@ import { SskIconComponent } from './elements/ssk-icon/ssk-icon.component';
 import { LoadingIndicatorComponent } from './elements/loading-indicator/loading-indicator.component';
 import {UnitAdminGuard} from "./guard/unit-admin.guard";
 import {NoCacheInterceptor} from "./interceptor/no-cache-interceptor.service";
+import { WidgetBackToHomeStatisticsSumsComponent } from './elements/widget-back-to-home-statistics-sums/widget-back-to-home-statistics-sums.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -122,6 +123,7 @@ registerLocaleData(localeSv, "sv-SE");
     WidgetCareburdenWithTextCompactAltComponent,
     SskIconComponent,
     LoadingIndicatorComponent,
+    WidgetBackToHomeStatisticsSumsComponent,
   ],
   imports: [
     // BrowserModule,

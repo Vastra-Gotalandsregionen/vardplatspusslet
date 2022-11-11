@@ -147,6 +147,9 @@ public class Unit implements Comparable<Unit> {
     private Boolean hasBackToHomeAlternativFeature;
 
     @Column
+    private Boolean hasBackToHomeStatistics;
+
+    @Column
     private Boolean hasDatedBackHomeFeature;
 
     @Column
@@ -564,5 +567,13 @@ public class Unit implements Comparable<Unit> {
 
     public void setHasFiktivPlatsFeature(Boolean hasFiktivPlatsFeature) {
         this.hasFiktivPlatsFeature = hasFiktivPlatsFeature;
+    }
+
+    public Boolean getHasBackToHomeStatistics() {
+        return hasBackToHomeStatistics;
+    }
+
+    public void setHasBackToHomeStatistics(Boolean hasBackToHomeStatistics) {
+        this.hasBackToHomeStatistics = hasBackToHomeStatistics;
     }
 }

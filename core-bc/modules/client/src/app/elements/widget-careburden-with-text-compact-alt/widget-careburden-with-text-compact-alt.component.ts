@@ -13,16 +13,17 @@ export class WidgetCareburdenWithTextCompactAltComponent implements OnInit {
 
   @Input('unit') unit: Unit;
   @Input('sskCategoryValueMatrix') sskCategoryValueMatrix: {};
-  cbvs : CareBurdenValue[] = [];
+  cbvs: CareBurdenValue[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.cbvs = this.unit.careBurdenValues.filter(cbv => cbv.countedIn);
   }
 
   getMatrixValue(ssk: Ssk, cbk: CareBurdenCategory, cbv: CareBurdenValue): string {
-    if (this.sskCategoryValueMatrix[ssk.label] && this.sskCategoryValueMatrix[ssk.label][cbk.name] && this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name]) {
+    if (this.sskCategoryValueMatrix && ssk && ssk.label && this.sskCategoryValueMatrix[ssk.label] && this.sskCategoryValueMatrix[ssk.label][cbk.name] && this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name]) {
       return this.sskCategoryValueMatrix[ssk.label][cbk.name][cbv.name];
     } else {
       return '0';

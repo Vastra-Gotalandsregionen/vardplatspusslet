@@ -55,6 +55,7 @@ export class Unit {
   hasGenderFeature: boolean;
   hasPatientWaitsFeature: boolean;
   hasBackToHomeAlternativFeature: boolean;
+  hasBackToHomeStatistics: boolean;
   hasDatedBackHomeFeature: boolean;
   allowedBedNames: AllowedBedName[];
   resetSskOnHasLeft: boolean;

@@ -17,7 +17,7 @@
 <app-layout *ngIf="unit; else loading">
 
   <app-layout-row>
-    
+
     <app-layout-column width=9>
       <div>
         <vgr-page-block *ngIf="unit" class="{{showChangeBedOrder ? '' : 'transparent'}}">
@@ -94,10 +94,10 @@
                             </vgr-list-column>
                           </vgr-list-item-header>
                           <vgr-list-item-content [indentContent]="true">
-                              <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>  
+                              <app-unit-planned-in-table #thisUnitPlannedInTable [unit]="unit"></app-unit-planned-in-table>
                           </vgr-list-item-content>
                       </vgr-list-item>
-      
+
                       <vgr-list-item [expanded]="false" *ngFor="let unit of allUnitsOnSameClinic">
                           <vgr-list-item-header>
                               <vgr-list-column width="12">
@@ -108,13 +108,13 @@
                                 <app-unit-planned-in-table [unit]="unit" ></app-unit-planned-in-table>
                             </vgr-list-item-content>
                         </vgr-list-item>
-      
+
                   </vgr-list>
-                  
+
               </vgr-panel>
             </vgr-panel-container>
          <vgr-panel-container class="block">
-          <vgr-panel *ngIf="unit?.hasUnitPlannedInFeature || unit?.careBurden == 'text'">
+          <vgr-panel *ngIf="unit?.hasUnitPlannedInFeature || unit?.careBurden == 'text' || (unit.hasBackToHomeStatistics && unit.careBurden != 'text')">
             <vgr-list [flexibleHeader]="false">
               <vgr-list-item #plannedunit *ngIf="unit?.hasUnitPlannedInFeature">
                 <vgr-list-item-header class="row-layout  panel-heading">
@@ -163,11 +163,45 @@
                     </div>
                   </vgr-list-column>
                 </vgr-list-item-header>
+
                 <vgr-list-item-content [indentContent]="true">
-                  <app-widget-careburden-with-text-compact-alt [unit]="unit"
-                                                               [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text-compact-alt>
+                  <div class="row">
+                    <div class="col">
+                      <app-widget-careburden-with-text-compact-alt [unit]="unit"></app-widget-careburden-with-text-compact-alt>
+                    </div>
+                    <div class="col">
+                      <app-widget-back-to-home-statistics-sums [unit]="unit"
+                                                               *ngIf="unit.hasBackToHomeStatistics">
+                      </app-widget-back-to-home-statistics-sums>
+                    </div>
+                  </div>
                 </vgr-list-item-content>
+
               </vgr-list-item>
+
+              <vgr-list-item *ngIf="unit.hasBackToHomeStatistics && unit.careBurden != 'text'">
+                <vgr-list-item-header class="row-layout  panel-heading">
+                  <vgr-list-column width="12">
+                    <div class="row-layout">
+                      <span class="fa fa-weight-hanging"></span>
+                      <div class="panel-heading-text">
+                        <strong>Hemgång per vårdlag: </strong>
+                      </div>
+                    </div>
+                  </vgr-list-column>
+                </vgr-list-item-header>
+
+                <vgr-list-item-content [indentContent]="true">
+                  <div class="row">
+                    <div class="col">
+                      <app-widget-back-to-home-statistics-sums [unit]="unit">
+                      </app-widget-back-to-home-statistics-sums>
+                    </div>
+                  </div>
+                </vgr-list-item-content>
+
+              </vgr-list-item>
+
             </vgr-list>
           </vgr-panel>
          </vgr-panel-container>
@@ -183,20 +217,20 @@
         </vgr-page-block>
       </div>
     </app-layout-column>
-    
+
     <app-layout-column width=3>
         <vgr-page-block class="transparent">
 
             <app-widget-messages [messages]="messages" [hasEditUnitPermission]="hasEditUnitPermission()"></app-widget-messages>
-    
+
             <app-widget-diet-list [clinic]="clinic" [unit]="unit"></app-widget-diet-list>
-    
+
             <app-widget-ssks [unit]="unit"></app-widget-ssks>
-    
+
             <app-widget-careburden-average [unit]="unit" [bedsExpanded]="false"></app-widget-careburden-average>
 
             <app-widget-careburden-with-text [unit]="unit"  [cbvs]="cbvs"  [sskCategoryValueMatrix]="sskCategoryValueMatrix"></app-widget-careburden-with-text>
-    
+
           </vgr-page-block>
     </app-layout-column>
 
