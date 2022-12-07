@@ -23,25 +23,11 @@ export class WidgetBackToHomeStatisticsSumsComponent implements OnInit {
     }
   }
 
-  getBackToHomeStatistics(forSsk: Ssk): number {
-    let result = 0;
-    for (const bed of this.unit.beds) {
-      if (bed && bed.ssk && forSsk && bed.ssk.id === forSsk.id) {
-        const patient = bed.patient;
-        if (patient) {
-          const inf = patient.information;
-          result += (!inf || inf === '5') ? 0 : 1;
-        }
-      }
-    }
-    return result;
-  }
-
   getAllClasses(): string[] {
     const classSet = new Set();
-    const allElements = document.getElementsByTagName("*");
+    const allElements = document.getElementsByTagName('*');
     for (let i = 0, n = allElements.length; i < n; i++) {
-      allElements[i].classList.forEach(cls => classSet.add(cls))
+      allElements[i].classList.forEach(cls => classSet.add(cls));
     }
     return Array.from(classSet);
   }

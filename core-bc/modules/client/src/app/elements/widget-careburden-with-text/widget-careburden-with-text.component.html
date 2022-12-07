@@ -44,6 +44,10 @@
         <th *ngFor="let cbk of unit?.careBurdenCategories" class="riddght right-border left-border"
             [colSpan]="cbvs.length">{{cbk.name}}
         </th>
+        <th *ngIf="unit.hasBackToHomeStatistics" rowspan="2">
+          Hem-<br/>
+          gång
+        </th>
       </tr>
       <tr>
         <th>Vårdlag</th>
@@ -65,6 +69,9 @@
             {{getMatrixValue(ssk, cbk, value)}}
           </td>
         </ng-container>
+        <td *ngIf="unit.hasBackToHomeStatistics">
+          <app-widget-ssk-leave-for-home-sum [unit]="unit" [ssk]="ssk"></app-widget-ssk-leave-for-home-sum>
+        </td>
       </tr>
     </table>
 

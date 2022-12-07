@@ -69,6 +69,7 @@ import { LoadingIndicatorComponent } from './elements/loading-indicator/loading-
 import {UnitAdminGuard} from "./guard/unit-admin.guard";
 import {NoCacheInterceptor} from "./interceptor/no-cache-interceptor.service";
 import { WidgetBackToHomeStatisticsSumsComponent } from './elements/widget-back-to-home-statistics-sums/widget-back-to-home-statistics-sums.component';
+import { WidgetSskLeaveForHomeSumComponent } from './elements/widget-ssk-leave-for-home-sum/widget-ssk-leave-for-home-sum.component';
 
 registerLocaleData(localeSv, "sv-SE");
 
@@ -124,6 +125,7 @@ registerLocaleData(localeSv, "sv-SE");
     SskIconComponent,
     LoadingIndicatorComponent,
     WidgetBackToHomeStatisticsSumsComponent,
+    WidgetSskLeaveForHomeSumComponent,
   ],
   imports: [
     // BrowserModule,
