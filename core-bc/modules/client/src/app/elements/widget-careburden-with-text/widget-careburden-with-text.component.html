@@ -4,7 +4,10 @@
 
     <div class="row-layout panel-heading">
       <div class="panel-heading-text">
-        <strong>Vårdtyngd per kategori</strong>
+        <strong>
+          Vårdtyngd per kategori
+          <span class="fr" *ngIf="unit.hasBackToHomeStatistics"> (samt antal hemgångar)</span>
+        </strong>
       </div>
     </div>
 
@@ -15,6 +18,9 @@
         <div class="careburden-text-ssk-label">
           Vårdlag
           <app-ssk-icon [ssk]="ssk"></app-ssk-icon>
+          <span *ngIf="unit.hasBackToHomeStatistics" class="fr">
+            (Hemgångar: <app-widget-ssk-leave-for-home-sum [unit]="unit" [ssk]="ssk"></app-widget-ssk-leave-for-home-sum>)
+          </span>
         </div>
 
         <table class="vpp-table">

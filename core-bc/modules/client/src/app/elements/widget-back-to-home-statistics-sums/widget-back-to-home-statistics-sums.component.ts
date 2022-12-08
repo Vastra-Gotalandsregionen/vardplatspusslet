@@ -15,12 +15,6 @@ export class WidgetBackToHomeStatisticsSumsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Classes:');
-    for (const allClass of this.getAllClasses()) {
-      if (allClass.startsWith('fa-')) {
-        console.log(allClass);
-      }
-    }
   }
 
   getAllClasses(): string[] {
