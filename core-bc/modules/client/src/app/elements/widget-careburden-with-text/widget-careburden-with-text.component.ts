@@ -32,4 +32,15 @@ export class WidgetCareBurdenWithTextComponent implements OnInit {
       return '0';
     }
   }
+
+  justCareBurdenItems(ssks: Ssk[]): Ssk[] {
+    const result: Ssk[] = [];
+    for (const ssk of ssks) {
+      if (ssk.showCareBurden) {
+        result.push(ssk);
+      }
+    }
+    return result;
+  }
+
 }

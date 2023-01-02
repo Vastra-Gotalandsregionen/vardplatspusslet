@@ -1,12 +1,6 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import static java.util.Comparator.*;
 
@@ -28,6 +22,8 @@ public class Ssk implements Comparable<Ssk> {
 
     @Enumerated
     private Color color;
+    @Column
+    private Boolean showCareBurden;
 
     public Ssk() {
     }
@@ -59,5 +55,13 @@ public class Ssk implements Comparable<Ssk> {
     @Override
     public int compareTo(Ssk o) {
         return comparing(Ssk::getLabel, nullsLast(naturalOrder())).compare(this, o);
+    }
+
+    public Boolean getShowCareBurden() {
+        return showCareBurden;
+    }
+
+    public void setShowCareBurden(Boolean showCareBurden) {
+        this.showCareBurden = showCareBurden;
     }
 }

@@ -6,20 +6,19 @@
       <div class="panel-heading-text">
         <strong>
           Vårdtyngd per kategori
-          <span class="fr" *ngIf="unit.hasBackToHomeStatistics"> (samt antal hemgångar)</span>
         </strong>
       </div>
     </div>
 
     <div class="careburden-text-wrap"
          *ngIf="!(unit?.careBurdenCategories.length <=2 && cbvs.length <= 2)">
-      <div class="careburden-text-ssk" *ngFor="let ssk of unit?.ssks">
+      <div class="careburden-text-ssk" *ngFor="let ssk of justCareBurdenItems(unit?.ssks)">
 
         <div class="careburden-text-ssk-label">
           Vårdlag
           <app-ssk-icon [ssk]="ssk"></app-ssk-icon>
           <span *ngIf="unit.hasBackToHomeStatistics" class="fr">
-            (Hemgångar: <app-widget-ssk-leave-for-home-sum [unit]="unit" [ssk]="ssk"></app-widget-ssk-leave-for-home-sum>)
+            ( Hemgångar: <app-widget-ssk-leave-for-home-sum [unit]="unit" [ssk]="ssk"></app-widget-ssk-leave-for-home-sum> )
           </span>
         </div>
 
@@ -50,7 +49,7 @@
         <th *ngFor="let cbk of unit?.careBurdenCategories" class="riddght right-border left-border"
             [colSpan]="cbvs.length">{{cbk.name}}
         </th>
-        <th *ngIf="unit.hasBackToHomeStatistics" rowspan="2">
+        <th *ngIf="unit.hasBackToHomeStatistics" rowspan="2" class="left-border">
           Hem-<br/>
           gång
         </th>
@@ -65,7 +64,7 @@
         </ng-container>
       </tr>
       </thead>
-      <tr *ngFor="let ssk of unit?.ssks">
+      <tr *ngFor="let ssk of justCareBurdenItems(unit?.ssks)">
         <td>
           <app-ssk-icon [ssk]="ssk"></app-ssk-icon>
         </td>
@@ -75,7 +74,7 @@
             {{getMatrixValue(ssk, cbk, value)}}
           </td>
         </ng-container>
-        <td *ngIf="unit.hasBackToHomeStatistics">
+        <td *ngIf="unit.hasBackToHomeStatistics" class="left-border">
           <app-widget-ssk-leave-for-home-sum [unit]="unit" [ssk]="ssk"></app-widget-ssk-leave-for-home-sum>
         </td>
       </tr>

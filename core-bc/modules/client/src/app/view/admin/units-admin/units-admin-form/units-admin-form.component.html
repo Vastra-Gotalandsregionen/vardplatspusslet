@@ -75,12 +75,18 @@
     <vgr-card-column>
       <vgr-card-section [expanded]="true" [title]="'Vårdlag'" [subtitle]="" class="clearfix">
         <table class="vpp-table" *ngIf="!editSsks">
-
+          <thead>
+            <tr>
+              <td>Namn</td>
+              <td>I vård-<br />tyngd?</td>
+              <td>Färg</td>
+            </tr>
+          </thead>
           <tr *ngFor="let ssk of unit?.ssks || []">
             <td>{{ssk.label}}</td>
+            <td><vgr-checkbox [checked]="ssk.showCareBurden" [disabled]="true"></vgr-checkbox></td>
             <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
           </tr>
-
           <tfoot>
           <tr>
             <td><a (click)="editSsks = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
@@ -91,7 +97,7 @@
           <div formArrayName="ssks" *ngFor="let ssk of unitForm?.get('ssks').controls; let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
               <vgr-input [small]="true" formControlName="label" [showValidation]="getCareTeamValidation(i)"></vgr-input>
-
+              <vgr-checkbox formControlName="showCareBurden"></vgr-checkbox>
               <vgr-dropdown-select [showValidation]="getSskValidation(i)" formControlName="color">
                 <vgr-dropdown-item [value]="null">Välj färg (valfritt)</vgr-dropdown-item>
                 <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>

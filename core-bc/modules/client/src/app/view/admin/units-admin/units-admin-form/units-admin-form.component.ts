@@ -359,7 +359,8 @@ export class UnitsAdminFormComponent implements OnInit {
       return this.formBuilder.group({
         id: ssk.id,
         label: ssk.label,
-        color: ssk.color
+        color: ssk.color,
+        showCareBurden: ssk.showCareBurden
       })
     });
   }
