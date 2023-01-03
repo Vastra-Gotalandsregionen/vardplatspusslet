@@ -44,7 +44,8 @@ td > vgr-checkbox
   display: inline-block;
 }
 
-.vpp-table thead tr {
+.vpp-table thead > * > * {
   font-weight: bold;
   border-bottom: 1px solid #aaa;
+  text-align: left;
 }

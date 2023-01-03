@@ -4,11 +4,13 @@
     <vgr-panel [width]="6" [noborder]="true">
       <div *ngIf="showId">
         <div>ID:</div>
-        <vgr-input formControlName="id" [showValidation]="!unitForm.get('id').valid && unitForm.get('id').touched"></vgr-input>
+        <vgr-input formControlName="id"
+                   [showValidation]="!unitForm.get('id').valid && unitForm.get('id').touched"></vgr-input>
       </div>
       <div>
         <div>Namn:</div>
-        <vgr-input formControlName="name" [showValidation]="!unitForm.get('name').valid && unitForm.get('name').touched"></vgr-input>
+        <vgr-input formControlName="name"
+                   [showValidation]="!unitForm.get('name').valid && unitForm.get('name').touched"></vgr-input>
       </div>
     </vgr-panel>
 
@@ -16,14 +18,18 @@
 
       <div>Förvaltning:</div>
 
-      <vgr-dropdown-select formControlName="management" [showValidation]="!unitForm.get('management').valid && unitForm.get('management').touched">
-        <vgr-dropdown-item *ngFor="let item of managementDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+      <vgr-dropdown-select formControlName="management"
+                           [showValidation]="!unitForm.get('management').valid && unitForm.get('management').touched">
+        <vgr-dropdown-item *ngFor="let item of managementDropdownItems"
+                           [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
       </vgr-dropdown-select>
 
       <div>Klinik:</div>
 
-      <vgr-dropdown-select formControlName="clinic" [showValidation]="!unitForm.get('clinic').valid && unitForm.get('clinic').touched">
-        <vgr-dropdown-item *ngFor="let item of clinicDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+      <vgr-dropdown-select formControlName="clinic"
+                           [showValidation]="!unitForm.get('clinic').valid && unitForm.get('clinic').touched">
+        <vgr-dropdown-item *ngFor="let item of clinicDropdownItems"
+                           [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
       </vgr-dropdown-select>
     </vgr-panel>
 
@@ -41,14 +47,16 @@
           <vgr-checkbox label="Från klinik" formControlName="hasPatientFromClinicFeature"></vgr-checkbox>
           <vgr-checkbox label="Gick hem" formControlName="hasLeftDateFeature"></vgr-checkbox>
           <vgr-checkbox label="Hemgång alternativ" formControlName="hasBackToHomeAlternativFeature"></vgr-checkbox>
-          <vgr-checkbox label="Hemgångar per vårdlag" formControlName="hasBackToHomeStatistics" #hasBackToHomeStatisticsTag></vgr-checkbox>
+          <vgr-checkbox label="Hemgångar per vårdlag" formControlName="hasBackToHomeStatistics"
+                        #hasBackToHomeStatisticsTag></vgr-checkbox>
           <vgr-checkbox label="Hemgång datum" formControlName="hasDatedBackHomeFeature"></vgr-checkbox>
           <vgr-checkbox label="Händelse" formControlName="hasHendelseFeature"></vgr-checkbox>
           <vgr-checkbox label="Inplanerade patienter" formControlName="hasUnitPlannedInFeature"></vgr-checkbox>
           <vgr-checkbox label="Kost" formControlName="hasKostFeature"></vgr-checkbox>
           <vgr-checkbox label="Specificerad kost" formControlName="hasDetailedDietFeature"></vgr-checkbox>
           <vgr-checkbox label="Kost Mor/Barn" formControlName="hasMotherChildDietFeature"></vgr-checkbox>
-          <vgr-checkbox label="Specificerad Mor/Barn kost" formControlName="hasDetailedMotherChildDietFeature"></vgr-checkbox>
+          <vgr-checkbox label="Specificerad Mor/Barn kost"
+                        formControlName="hasDetailedMotherChildDietFeature"></vgr-checkbox>
           <vgr-checkbox label="Allergier" formControlName="hasAllergiFeature"></vgr-checkbox>
           <vgr-checkbox label="Kön kolumn" formControlName="hasGenderColumn"></vgr-checkbox>
           <vgr-checkbox label="Patient väntar" formControlName="hasPatientWaitesFeature"></vgr-checkbox>
@@ -62,7 +70,7 @@
           <vgr-checkbox label="Nollställ team vid hemgång" formControlName="resetSskOnHasLeft"></vgr-checkbox>
           <br>
           <div>
-            <div>Vårdtyngdsval: </div>
+            <div>Vårdtyngdsval:</div>
             <vgr-radio-group formControlName="careBurden" [options]="careBurdenOptions" [vertical]="false">
             </vgr-radio-group>
           </div>
@@ -76,39 +84,67 @@
       <vgr-card-section [expanded]="true" [title]="'Vårdlag'" [subtitle]="" class="clearfix">
         <table class="vpp-table" *ngIf="!editSsks">
           <thead>
-            <tr>
-              <td>Namn</td>
-              <td>I vård-<br />tyngd?</td>
-              <td>Färg</td>
-            </tr>
+          <tr>
+            <th>Namn</th>
+            <th>I vård-<br/>tyngd?</th>
+            <th>Färg</th>
+          </tr>
           </thead>
           <tr *ngFor="let ssk of unit?.ssks || []">
             <td>{{ssk.label}}</td>
-            <td><vgr-checkbox [checked]="ssk.showCareBurden" [disabled]="true"></vgr-checkbox></td>
+            <td>
+              <vgr-checkbox [checked]="ssk.showCareBurden" [disabled]="true"></vgr-checkbox>
+            </td>
             <td><span class="ssk-color ssk-{{ssk.color}}"></span></td>
           </tr>
           <tfoot>
           <tr>
-            <td><a (click)="editSsks = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editSsks = true;" class="icon-link icon-link-with-text"><span
+              class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td>
+          </tr>
           </tfoot>
         </table>
 
-        <div *ngIf="editSsks">
-          <div formArrayName="ssks" *ngFor="let ssk of unitForm?.get('ssks').controls; let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i" class="contain">
-              <vgr-input [small]="true" formControlName="label" [showValidation]="getCareTeamValidation(i)"></vgr-input>
-              <vgr-checkbox formControlName="showCareBurden"></vgr-checkbox>
-              <vgr-dropdown-select [showValidation]="getSskValidation(i)" formControlName="color">
-                <vgr-dropdown-item [value]="null">Välj färg (valfritt)</vgr-dropdown-item>
-                <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
-              </vgr-dropdown-select>
-              <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-            </div>
-          </div>
-          <div  class="edit clearfix">
-            <a (click)="addSsk()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdlag</span></a>
-          </div>
-        </div>
+        <table *ngIf="editSsks" class="vpp-table">
+
+          <thead>
+          <tr>
+            <th>Namn</th>
+            <th>I vård-<br/>tyngd?</th>
+            <th>Färg</th>
+            <th>Ta<br/>bort</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <ng-container formArrayName="ssks" *ngFor="let ssk of unitForm?.get('ssks').controls; let i = index;"
+                        class="edit-ssk-row">
+            <tr [formGroupName]="i">
+              <td>
+                <vgr-input [small]="true" formControlName="label"
+                           [showValidation]="getCareTeamValidation(i)"></vgr-input>
+              </td>
+              <td>
+                <vgr-checkbox formControlName="showCareBurden"></vgr-checkbox>
+              </td>
+              <td>
+                <vgr-dropdown-select [showValidation]="getSskValidation(i)" formControlName="color">
+                  <vgr-dropdown-item [value]="null">Välj färg (valfritt)</vgr-dropdown-item>
+                  <vgr-dropdown-item *ngFor="let item of colorDropdownItems"
+                                     [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                </vgr-dropdown-select>
+              </td>
+              <td>
+                <a (click)="deleteSsk(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+          <tfoot>
+            <a (click)="addSsk()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span
+              class="icon-text">Lägg till vårdlag</span></a>
+          </tfoot>
+        </table>
       </vgr-card-section>
 
       <vgr-card-section [expanded]="true" [title]="'Ursprungskliniker'" [subtitle]="" class="clearfix">
@@ -120,19 +156,25 @@
 
           <tfoot>
           <tr>
-            <td><a (click)="editKlinik = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editKlinik = true;" class="icon-link icon-link-with-text"><span
+              class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td>
+          </tr>
           </tfoot>
         </table>
 
         <div *ngIf="editKlinik">
-          <div formArrayName="servingClinics" *ngFor="let klinik of servingClinics.controls let i = index;" class="edit-ssk-row">
+          <div formArrayName="servingClinics" *ngFor="let klinik of servingClinics.controls let i = index;"
+               class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
-              <vgr-input [small]="true" [showValidation]="getServingClinicValidation(i)" formControlName="name" placeholder="Klinik..."></vgr-input>
-              <a (click)="deleteServingClinic(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+              <vgr-input [small]="true" [showValidation]="getServingClinicValidation(i)" formControlName="name"
+                         placeholder="Klinik..."></vgr-input>
+              <a (click)="deleteServingClinic(i)" class="icon-link"><span
+                class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit clearfix">
-            <a (click)="addServingClinic()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till upsprungs klinik</span></a>
+            <a (click)="addServingClinic()" class="icon-link icon-link-with-text"><span
+              class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till upsprungs klinik</span></a>
           </div>
         </div>
       </vgr-card-section>
@@ -147,23 +189,30 @@
 
           <tfoot>
           <tr>
-            <td><a (click)="editCleanGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editCleanGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span
+              class="icon-text">Redigera</span></a></td>
+          </tr>
           </tfoot>
         </table>
 
         <div *ngIf="editCleanGroup">
-          <div formArrayName="cleaningAlternatives" *ngFor="let cleanAlt of cleaningAlternatives.controls let i = index;" class="edit-ssk-row">
+          <div formArrayName="cleaningAlternatives"
+               *ngFor="let cleanAlt of cleaningAlternatives.controls let i = index;" class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
-              <vgr-input formControlName="description" [small]="true" placeholder="städ alternative..." [showValidation]="getCleaniningValidation(i)"></vgr-input>
+              <vgr-input formControlName="description" [small]="true" placeholder="städ alternative..."
+                         [showValidation]="getCleaniningValidation(i)"></vgr-input>
               <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg'">
                 <vgr-dropdown-item [value]="null">Välj färg</vgr-dropdown-item>
-                <vgr-dropdown-item *ngFor="let item of cleaningColorsDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                <vgr-dropdown-item *ngFor="let item of cleaningColorsDropdownItems"
+                                   [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
               </vgr-dropdown-select>
-              <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+              <a (click)=" deleteCleaningGroup(i)" class="icon-link"><span
+                class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit clearfix">
-            <a (click)="addCleaningAlternative()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till städningsalternativ</span></a>
+            <a (click)="addCleaningAlternative()" class="icon-link icon-link-with-text"><span
+              class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till städningsalternativ</span></a>
           </div>
         </div>
       </vgr-card-section>
@@ -177,19 +226,24 @@
 
           <tfoot>
           <tr>
-            <td><a (click)="editCategoryGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editCategoryGroup = true;" class="icon-link icon-link-with-text"><span
+              class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td>
+          </tr>
           </tfoot>
         </table>
 
         <div *ngIf="editCategoryGroup">
-          <div formArrayName="careBurdenCategories" *ngFor="let burden of careBurdenCategories.controls let i = index;" class="edit-ssk-row">
+          <div formArrayName="careBurdenCategories" *ngFor="let burden of careBurdenCategories.controls let i = index;"
+               class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
-              <vgr-input formControlName="name" placeholder="Kategori..." [small]="true" [showValidation]="getCareBurdenCategoriValidation(i)"></vgr-input>
-              <a (click)= "deleteCareBurdenCategories(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+              <vgr-input formControlName="name" placeholder="Kategori..." [small]="true"
+                         [showValidation]="getCareBurdenCategoriValidation(i)"></vgr-input>
+              <a (click)="deleteCareBurdenCategories(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit clearfix">
-            <a (click)="addCareBurdenCategories()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdskategori</span></a>
+            <a (click)="addCareBurdenCategories()" class="icon-link icon-link-with-text"><span
+              class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdskategori</span></a>
           </div>
         </div>
       </vgr-card-section>
@@ -198,21 +252,26 @@
         <table class="vpp-table left-align" *ngIf="!editBurdenValueGroup">
           <thead>
           <tr>
-            <th>I beräkning <span class="fa fa-question-circle" [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span></th>
+            <th>I beräkning <span class="fa fa-question-circle" [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span>
+            </th>
             <th>Namn</th>
             <th>Färg</th>
           </tr>
           </thead>
 
           <tr *ngFor="let burden of unit?.careBurdenValues|| []">
-            <td><vgr-checkbox [checked]="burden.countedIn" [disabled]="true"></vgr-checkbox></td>
+            <td>
+              <vgr-checkbox [checked]="burden.countedIn" [disabled]="true"></vgr-checkbox>
+            </td>
             <td>{{burden.name}}</td>
             <td><span class="care-burden-value-color {{burden.color}}"></span></td>
           </tr>
 
           <tfoot>
           <tr>
-            <td><a (click)="editBurdenValueGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editBurdenValueGroup = true;" class="icon-link icon-link-with-text"><span
+              class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td>
+          </tr>
           </tfoot>
         </table>
 
@@ -220,25 +279,37 @@
           <table class="left-align" formArrayName="careBurdenValues">
             <thead>
             <tr>
-              <th colspan="2">I beräkning <span class="fa fa-question-circle" [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span></th>
+              <th colspan="2">I beräkning <span class="fa fa-question-circle"
+                                                [appCallout]="'Inkludera i vårdtyngdsberäkning'"></span></th>
               <th>Namn</th>
               <th>Färg</th>
             </tr>
             </thead>
 
-            <tr [formGroupName]="i" *ngFor="let burden of careBurdenValues.controls let i = index;" class="edit-ssk-row">
-              <td><vgr-checkbox formControlName="countedIn"></vgr-checkbox></td>
-              <td *ngIf="unitForm.get('careBurden').value == 'tal'"><vgr-input [ngClass]="{'isInvalid': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)" formControlName="name" placeholder="Siffra: 123..." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"> </vgr-input></td>
-              <td *ngIf="unitForm.get('careBurden').value == 'text' || unitForm.get('careBurden').value == 'inget'"><vgr-input formControlName="name" placeholder="text.." [small]="true" [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input></td>
+            <tr [formGroupName]="i" *ngFor="let burden of careBurdenValues.controls let i = index;"
+                class="edit-ssk-row">
+              <td>
+                <vgr-checkbox formControlName="countedIn"></vgr-checkbox>
+              </td>
+              <td *ngIf="unitForm.get('careBurden').value == 'tal'">
+                <vgr-input [ngClass]="{'isInvalid': getcareBurdenValidation(i)}" (click)="checkCareBurdenFor(i)"
+                           formControlName="name" placeholder="Siffra: 123..." [small]="true"
+                           [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input>
+              </td>
+              <td *ngIf="unitForm.get('careBurden').value == 'text' || unitForm.get('careBurden').value == 'inget'">
+                <vgr-input formControlName="name" placeholder="text.." [small]="true"
+                           [showValidation]="getCareBurdenValuesValidation(i)"></vgr-input>
+              </td>
               <td>
                 <vgr-dropdown-select formControlName="color" [noItemSelectedLabel]="'Välj färg (valfritt)'">
                   <vgr-dropdown-item [value]="null">Välj färg (valfritt)</vgr-dropdown-item>
-                  <vgr-dropdown-item *ngFor="let item of colorDropdownItems" [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
+                  <vgr-dropdown-item *ngFor="let item of colorDropdownItems"
+                                     [value]="item.value">{{item.displayName}}</vgr-dropdown-item>
                 </vgr-dropdown-select>
               </td>
 
               <td>
-                <a (click)= "deleteCareBurdenValues(i)" class="icon-link">
+                <a (click)="deleteCareBurdenValues(i)" class="icon-link">
                   <span class="material-icons icon-tomato">delete</span>
                   <span *ngIf="getcareBurdenValidation(i)" class="isInvalid">Fältet kan innehålla bara siffror </span>
                 </a>
@@ -246,85 +317,86 @@
             </tr>
           </table>
           <div class="edit clearfix">
-            <a (click)="addCareBurdenValues()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdsvärde</span></a>
+            <a (click)="addCareBurdenValues()" class="icon-link icon-link-with-text"><span
+              class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till vårdtyngdsvärde</span></a>
           </div>
         </div>
       </vgr-card-section>
-     <!-- <vgr-card-section [expanded]="true" [title]="'Kost Mor'" [subtitle]="" class="clearfix">
-        <table class="vpp-table" *ngIf="!editDietForMotherGroup">
+      <!-- <vgr-card-section [expanded]="true" [title]="'Kost Mor'" [subtitle]="" class="clearfix">
+         <table class="vpp-table" *ngIf="!editDietForMotherGroup">
 
-          <tr *ngFor="let diet of unit?.dietForMothers|| []">
-            <td>{{diet.name}}</td>
-          </tr>
+           <tr *ngFor="let diet of unit?.dietForMothers|| []">
+             <td>{{diet.name}}</td>
+           </tr>
 
-          <tfoot>
-          <tr>
-            <td><a (click)="editDietForMotherGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
-          </tfoot>
-        </table>
+           <tfoot>
+           <tr>
+             <td><a (click)="editDietForMotherGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+           </tfoot>
+         </table>
 
-        <div *ngIf="editDietForMotherGroup">
-          <div formArrayName="dietForMothers" *ngFor="let diet of dietForMothers.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i" class="contain">
-              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getMotherDietValidation(i)"></vgr-input>
-              <a (click)= "deleteDietForMother(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-            </div>
-          </div>
-          <div class="edit clearfix">
-            <a (click)="addDietForMother()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för mor</span></a>
-          </div>
-        </div>
-      </vgr-card-section>
-      <vgr-card-section [expanded]="true" [title]="'Kost Barn'" [subtitle]="" class="clearfix">
-        <table class="vpp-table" *ngIf="!editDietForChildGroup">
+         <div *ngIf="editDietForMotherGroup">
+           <div formArrayName="dietForMothers" *ngFor="let diet of dietForMothers.controls let i = index;" class="edit-ssk-row">
+             <div [formGroupName]="i" class="contain">
+               <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getMotherDietValidation(i)"></vgr-input>
+               <a (click)= "deleteDietForMother(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+             </div>
+           </div>
+           <div class="edit clearfix">
+             <a (click)="addDietForMother()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för mor</span></a>
+           </div>
+         </div>
+       </vgr-card-section>
+       <vgr-card-section [expanded]="true" [title]="'Kost Barn'" [subtitle]="" class="clearfix">
+         <table class="vpp-table" *ngIf="!editDietForChildGroup">
 
-          <tr *ngFor="let diet of unit?.dietForChildren|| []">
-            <td>{{diet.name}}</td>
-          </tr>
+           <tr *ngFor="let diet of unit?.dietForChildren|| []">
+             <td>{{diet.name}}</td>
+           </tr>
 
-          <tfoot>
-          <tr>
-            <td><a (click)="editDietForChildGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
-          </tfoot>
-        </table>
+           <tfoot>
+           <tr>
+             <td><a (click)="editDietForChildGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+           </tfoot>
+         </table>
 
-        <div *ngIf="editDietForChildGroup">
-          <div formArrayName="dietForChildren" *ngFor="let diet of dietForChildren.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i" class="contain">
-              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getChildDietValidation(i)"></vgr-input>
-              <a (click)= "deleteDietForChild(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-            </div>
-          </div>
-          <div class="edit clearfix">
-            <a (click)="addDietForChild()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för barn</span></a>
-          </div>
-        </div>
-      </vgr-card-section>
-      <vgr-card-section [expanded]="true" [title]="'Kost'" [subtitle]="" class="clearfix">
-        <table class="vpp-table" *ngIf="!editDietForPatientGroup">
+         <div *ngIf="editDietForChildGroup">
+           <div formArrayName="dietForChildren" *ngFor="let diet of dietForChildren.controls let i = index;" class="edit-ssk-row">
+             <div [formGroupName]="i" class="contain">
+               <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getChildDietValidation(i)"></vgr-input>
+               <a (click)= "deleteDietForChild(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+             </div>
+           </div>
+           <div class="edit clearfix">
+             <a (click)="addDietForChild()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost för barn</span></a>
+           </div>
+         </div>
+       </vgr-card-section>
+       <vgr-card-section [expanded]="true" [title]="'Kost'" [subtitle]="" class="clearfix">
+         <table class="vpp-table" *ngIf="!editDietForPatientGroup">
 
-          <tr *ngFor="let diet of unit?.dietForPatients|| []">
-            <td>{{diet.name}}</td>
-          </tr>
+           <tr *ngFor="let diet of unit?.dietForPatients|| []">
+             <td>{{diet.name}}</td>
+           </tr>
 
-          <tfoot>
-          <tr>
-            <td><a (click)="editDietForPatientGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
-          </tfoot>
-        </table>
+           <tfoot>
+           <tr>
+             <td><a (click)="editDietForPatientGroup = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+           </tfoot>
+         </table>
 
-        <div *ngIf="editDietForPatientGroup">
-          <div formArrayName="dietForPatients" *ngFor="let diet of dietForPatients.controls let i = index;" class="edit-ssk-row">
-            <div [formGroupName]="i" class="contain">
-              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getPatientDietValidation(i)"></vgr-input>
-              <a (click)= "deleteDietForPatient(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
-            </div>
-          </div>
-          <div>
-            <a (click)="addDietForPatient()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost</span></a>
-          </div>
-        </div>
-      </vgr-card-section>-->
+         <div *ngIf="editDietForPatientGroup">
+           <div formArrayName="dietForPatients" *ngFor="let diet of dietForPatients.controls let i = index;" class="edit-ssk-row">
+             <div [formGroupName]="i" class="contain">
+               <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getPatientDietValidation(i)"></vgr-input>
+               <a (click)= "deleteDietForPatient(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+             </div>
+           </div>
+           <div>
+             <a (click)="addDietForPatient()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till Kost</span></a>
+           </div>
+         </div>
+       </vgr-card-section>-->
       <vgr-card-section [expanded]="true" [title]="'Enheter för inplanerade patienter'" [subtitle]="" class="clearfix">
         <table class="vpp-table" *ngIf="!editUnitPlannedIn">
 
@@ -334,19 +406,24 @@
 
           <tfoot>
           <tr>
-            <td><a (click)="editUnitPlannedIn = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editUnitPlannedIn = true;" class="icon-link icon-link-with-text"><span
+              class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td>
+          </tr>
           </tfoot>
         </table>
 
         <div *ngIf="editUnitPlannedIn">
-          <div formArrayName="unitsPlannedIn" *ngFor="let enhet of unitsPlannedIn.controls let i = index;" class="edit-ssk-row">
+          <div formArrayName="unitsPlannedIn" *ngFor="let enhet of unitsPlannedIn.controls let i = index;"
+               class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
-              <vgr-input formControlName="name" placeholder="" [small]="true" [showValidation]="getPlannedUnitValidation(i)"></vgr-input>
-              <a (click)= "deletePlannedUnit(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+              <vgr-input formControlName="name" placeholder="" [small]="true"
+                         [showValidation]="getPlannedUnitValidation(i)"></vgr-input>
+              <a (click)="deletePlannedUnit(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div>
-            <a (click)="addPlannedUnit()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till enhet</span></a>
+            <a (click)="addPlannedUnit()" class="icon-link icon-link-with-text"><span
+              class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till enhet</span></a>
           </div>
         </div>
       </vgr-card-section>
@@ -360,19 +437,25 @@
 
           <tfoot>
           <tr>
-            <td><a (click)="editBedName = true;" class="icon-link icon-link-with-text"><span class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td></tr>
+            <td><a (click)="editBedName = true;" class="icon-link icon-link-with-text"><span
+              class="material-icons">edit</span><span class="icon-text">Redigera</span></a></td>
+          </tr>
           </tfoot>
         </table>
 
         <div *ngIf="editBedName">
-          <div formArrayName="allowedBedNames" *ngFor="let allowedBedName of allowedBedNames.controls let i = index;" class="edit-ssk-row">
+          <div formArrayName="allowedBedNames" *ngFor="let allowedBedName of allowedBedNames.controls let i = index;"
+               class="edit-ssk-row">
             <div [formGroupName]="i" class="contain">
-              <vgr-input [small]="true" [showValidation]="getAllowedBedNamesValidation(i)" formControlName="name" placeholder="Säng beteckning..."></vgr-input>
-              <a (click)="deleteBedNameGroup(i)" class="icon-link"><span class="material-icons icon-tomato">delete</span></a>
+              <vgr-input [small]="true" [showValidation]="getAllowedBedNamesValidation(i)" formControlName="name"
+                         placeholder="Säng beteckning..."></vgr-input>
+              <a (click)="deleteBedNameGroup(i)" class="icon-link"><span
+                class="material-icons icon-tomato">delete</span></a>
             </div>
           </div>
           <div class="edit clearfix">
-            <a (click)="addBedNameGroup()" class="icon-link icon-link-with-text"><span class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till säng beteckning</span></a>
+            <a (click)="addBedNameGroup()" class="icon-link icon-link-with-text"><span
+              class="add-row vgr-icon-plus"></span><span class="icon-text">Lägg till säng beteckning</span></a>
           </div>
         </div>
       </vgr-card-section>
@@ -383,13 +466,14 @@
 
   <div class="containers">
     <div class="delete-btn-wrap" *ngIf="admin">
-      <app-link-icon (click)="openDeleteModal(unit)" class="warning" label="Ta bort avdelning" icon="delete"></app-link-icon>
+      <app-link-icon (click)="openDeleteModal(unit)" class="warning" label="Ta bort avdelning"
+                     icon="delete"></app-link-icon>
     </div>
 
     <span class="flex-fill"></span>
 
     <vgr-button default="true" (click)="saveUnit()" [disabled]="!(unitForm.valid)">Spara</vgr-button>
-    <vgr-button buttonStyle="secondary" (click)="cancel()" >Avbryt</vgr-button>
+    <vgr-button buttonStyle="secondary" (click)="cancel()">Avbryt</vgr-button>
   </div>
 </form>
 
