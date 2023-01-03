@@ -373,7 +373,8 @@ export class UnitsAdminFormComponent implements OnInit {
     return this.formBuilder.group({
       id: null,
       label: [null, Validators.required],
-      color: [null]
+      color: [null],
+      showCareBurden: true
     });
   }
 
