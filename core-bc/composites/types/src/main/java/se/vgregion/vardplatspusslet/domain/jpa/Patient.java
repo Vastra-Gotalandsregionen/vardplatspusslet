@@ -56,6 +56,9 @@ public class Patient {
 
     @Column
     private Boolean coCareByUnit34;
+
+    @Column
+    private Boolean coCareByUnitBB;
     @Column
     private Boolean Electiv23O;
 
@@ -566,5 +569,13 @@ public class Patient {
 
     public void setCoCareByUnit34(Boolean coCareByUnit34) {
         this.coCareByUnit34 = coCareByUnit34;
+    }
+
+    public Boolean getCoCareByUnitBB() {
+        return coCareByUnitBB;
+    }
+
+    public void setCoCareByUnitBB(Boolean coCareByUnitBB) {
+        this.coCareByUnitBB = coCareByUnitBB;
     }
 }

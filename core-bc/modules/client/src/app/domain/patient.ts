@@ -30,6 +30,7 @@ export class Patient {
   patientExaminations: Patientexamination[];
   akutPatient: boolean;
   coCareByUnit34: boolean;
+  coCareByUnitBB: boolean;
   electiv23O: boolean;
   electiv24O: boolean;
   fiktivPlats: boolean;

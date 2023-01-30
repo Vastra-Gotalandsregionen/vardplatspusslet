@@ -213,6 +213,10 @@
         <vgr-checkbox formControlName="coCareByUnit34" label="Avdelning 34 samvårdas"></vgr-checkbox>
       </div>
 
+      <div *ngIf="unit.hasCoCareByUnitBB" class="div-button7">
+        <vgr-checkbox formControlName="coCareByUnitBB" label="Samvård BB"></vgr-checkbox>
+      </div>
+
       <div *ngIf="unit.has23oFeature" class="div-button7">
         <vgr-checkbox formControlName="electiv23O" label="Electiv 23O"></vgr-checkbox>
       </div>

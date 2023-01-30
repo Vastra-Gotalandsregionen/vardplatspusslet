@@ -90,6 +90,10 @@ public class Unit implements Comparable<Unit> {
 
     @Column
     private Boolean hasCoCareByUnit34;
+
+    @Column
+    private Boolean hasCoCareByUnitBB;
+
     @Column
     private Boolean has23oFeature;
 
@@ -585,5 +589,13 @@ public class Unit implements Comparable<Unit> {
 
     public void setHasCoCareByUnit34(Boolean hasCoCareByUnit34) {
         this.hasCoCareByUnit34 = hasCoCareByUnit34;
+    }
+
+    public Boolean getHasCoCareByUnitBB() {
+        return hasCoCareByUnitBB;
+    }
+
+    public void setHasCoCareByUnitBB(Boolean hasCoCareByUnitBB) {
+        this.hasCoCareByUnitBB = hasCoCareByUnitBB;
     }
 }

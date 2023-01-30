@@ -118,6 +118,7 @@ export class BedFormComponent implements OnInit {
         }),
         akutPatient: [patient.akutPatient],
         coCareByUnit34: [patient.coCareByUnit34],
+        coCareByUnitBB: [patient.coCareByUnitBB],
         electiv23O: [patient.electiv23O],
         electiv24O: [patient.electiv24O],
         vuxenPatient: [patient.vuxenPatient],
@@ -223,6 +224,7 @@ export class BedFormComponent implements OnInit {
       bed.patient.interpretInfo = bedModel.patient.tolkGroup.interpretInfo ? bedModel.patient.tolkGroup.interpretInfo : null;
       bed.patient.akutPatient = bedModel.patient.akutPatient ? bedModel.patient.akutPatient : null;
       bed.patient.coCareByUnit34 = bedModel.patient.coCareByUnit34 ? bedModel.patient.coCareByUnit34 : null;
+      bed.patient.coCareByUnitBB = bedModel.patient.coCareByUnitBB ? bedModel.patient.coCareByUnitBB : null;
       bed.patient.electiv23O = bedModel.patient.electiv23O ? bedModel.patient.electiv23O : null;
       bed.patient.electiv24O = bedModel.patient.electiv24O ? bedModel.patient.electiv24O : null;
       bed.patient.vuxenPatient = bedModel.patient.vuxenPatient ? bedModel.patient.vuxenPatient : null;

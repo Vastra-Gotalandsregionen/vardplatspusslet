@@ -29,6 +29,7 @@ export class Unit {
   hasLeftDateFeature: boolean;
   hasAkutPatientFeature: boolean;
   hasCoCareByUnit34: boolean;
+  hasCoCareByUnitBB: boolean;
   has23oFeature: boolean;
   has24oFeature: boolean;
   hasVuxenPatientFeature: boolean;

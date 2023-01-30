@@ -25,6 +25,13 @@
   </i>
 </div>
 
+<div class="ikon" *ngIf="bed.patient?.coCareByUnitBB && unit.hasCoCareByUnitBB"
+     [appCallout]="'Samvård BB'">
+  <i class="fa fa-bed purple">
+    <span style="left: -1.5em; position: relative; color: #FFC0CB; font-size: 0.6em; border-radius: 50%; background: white; vertical-align: middle; height: 18px; width: 18px; border: thin solid white;">BB</span>
+  </i>
+</div>
+
 <div class="ikon" *ngIf="bed.patient?.vuxenPatient && bed.patient.gender !== 'BARN' && unit.hasVuxenPatientFeature"
      [appCallout]="'Vuxen Patient'">
   <i class="fa fa-male purple" *ngIf="bed.patient.gender === 'MAN'"></i>
