@@ -76,7 +76,7 @@ div.save-cancel {
   .delete-btn-wrap {
     float: left;
   }
-  
+
   .main-btn-wrap {
     float: right;
   }
@@ -154,6 +154,10 @@ div.save-cancel {
   background-color:$primary-color--yellow;
 }
 
+.ssk-ORANGE, .ORANGE {
+  background-color:$primary-color--orange;
+}
+
 .ssk-PURPLE, .PURPLE {
   background-color:$primary-color--purple;
 }
@@ -182,6 +186,10 @@ div.save-cancel {
 
 .icon-colored-YELLOW {
   color: $primary-color--yellow;
+}
+
+.icon-colored-ORANGE {
+  color: $primary-color--orange;
 }
 
 .icon-colored-PURPLE {

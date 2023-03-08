@@ -9,14 +9,14 @@
         content: "";
         flex: auto;
     }
-  
+
 
     .cb-circle-item {
 
         display: block;
         margin: 0 0 20px 0;
         width: 110px;
-        
+
 
         .cb-circle {
             display: block;
@@ -43,7 +43,7 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
-            text-align: center;            
+            text-align: center;
         }
 
         .cb-circle-label {
@@ -91,6 +91,16 @@
             }
         }
 
+        &.cb-circle-item-ORANGE {
+          .cb-circle-outer {
+            background: $primary-color--orange;
+            border-color: $primary-color--orange;
+          }
+          .cb-circle-inner {
+            border-color: $primary-color--orange;
+          }
+        }
+
         &.cb-circle-item-PURPLE {
             .cb-circle-outer {
                 background: $primary-color--purple;
@@ -124,8 +134,7 @@
 
     }
 
-    
+
 
 
 }
-  
