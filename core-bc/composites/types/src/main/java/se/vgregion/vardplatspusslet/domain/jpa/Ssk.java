@@ -1,6 +1,7 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
 import javax.persistence.*;
+import java.util.List;
 
 import static java.util.Comparator.*;
 
@@ -24,6 +25,9 @@ public class Ssk implements Comparable<Ssk> {
     private Color color;
     @Column
     private Boolean showCareBurden;
+
+    @OneToMany(mappedBy = "ssk", fetch = FetchType.LAZY)
+    private List<Bed> beds;
 
     public Ssk() {
     }
@@ -63,5 +67,20 @@ public class Ssk implements Comparable<Ssk> {
 
     public void setShowCareBurden(Boolean showCareBurden) {
         this.showCareBurden = showCareBurden;
+    }
+
+    public List<Bed> getBeds() {
+        return beds;
+    }
+
+    public void setBeds(List<Bed> beds) {
+        this.beds = beds;
+    }
+
+    @PreRemove
+    public void decoupleBeds() {
+        for (Bed bed : getBeds()) {
+            bed.setSsk(null);
+        }
     }
 }

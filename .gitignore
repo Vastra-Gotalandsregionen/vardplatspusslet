@@ -55,3 +55,6 @@ deploy-client-test.sh
 deploy-client.sh
 deploy-server-test.sh
 deploy-server.sh
+/core-bc/modules/client/scp.to.test.prod.sh
+
+/*.js
