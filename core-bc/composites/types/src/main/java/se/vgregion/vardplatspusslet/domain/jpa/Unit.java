@@ -33,10 +33,10 @@ public class Unit implements Comparable<Unit> {
     @ManyToOne(fetch = FetchType.LAZY)
     private Clinic clinic;
 
-    @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ServingClinic> servingClinics = new TreeSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CleaningAlternative> cleaningAlternatives= new LinkedHashSet<>();
 
     @Column
@@ -46,13 +46,13 @@ public class Unit implements Comparable<Unit> {
     private String careBurden;
 
     @OrderColumn(name = "order_")
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Bed> beds = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Patient> patients = new LinkedHashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ssk> ssks = new TreeSet<>();
 
     @OrderColumn(name = "order_")

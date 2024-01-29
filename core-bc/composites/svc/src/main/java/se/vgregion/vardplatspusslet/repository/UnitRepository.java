@@ -21,8 +21,8 @@ public interface UnitRepository extends JpaRepository<Unit, String> {
     List<Unit> findDistinctByClinicIsLike(Clinic clinic);
 
     @EntityGraph(
-            attributePaths = {"beds", "patients", "ssks",
-                    "servingClinics", "cleaningAlternatives", "careBurdenCategories", "careBurdenValues", "allowedBedNames"},
+            attributePaths = {
+                    "careBurdenCategories", "careBurdenValues", "allowedBedNames"},
             type = EntityGraph.EntityGraphType.LOAD
     )
     Unit findUnitByIdIsLikeAndClinicIsLike(String id, Clinic clinic);
