@@ -26,8 +26,10 @@ public class Ssk implements Comparable<Ssk> {
     @Column
     private Boolean showCareBurden;
 
+/*
     @OneToMany(mappedBy = "ssk", fetch = FetchType.LAZY)
     private List<Bed> beds;
+*/
 
     public Ssk() {
     }
@@ -69,18 +71,18 @@ public class Ssk implements Comparable<Ssk> {
         this.showCareBurden = showCareBurden;
     }
 
-    public List<Bed> getBeds() {
+/*    public List<Bed> getBeds() {
         return beds;
     }
 
     public void setBeds(List<Bed> beds) {
         this.beds = beds;
-    }
+    }*/
 
-    @PreRemove
+    /*@PreRemove
     public void decoupleBeds() {
         for (Bed bed : getBeds()) {
             bed.setSsk(null);
         }
-    }
+    }*/
 }
