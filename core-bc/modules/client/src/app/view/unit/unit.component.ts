@@ -54,7 +54,7 @@ export class UnitComponent implements OnInit, OnDestroy {
               protected route: ActivatedRoute,
               protected authService: AuthService) {
 
-    this.timerSubscription = interval(10000).subscribe(() => this.checkForChanges());
+    this.timerSubscription = interval(20000).subscribe(() => this.checkForChanges());
   }
 
 
@@ -191,7 +191,6 @@ export class UnitComponent implements OnInit, OnDestroy {
     if (this.unitPlannedInItemsOld) {
       this.unitPlannedInItemsOld.update(unit);
     }
-
     this.http.get<Unit[]>('/api/unit?clinic=' + clinicId).subscribe(unitArray => {
 
       // We also include this unit, so we don't filter.
