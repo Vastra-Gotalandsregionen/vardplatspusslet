@@ -15,12 +15,12 @@
     <th>Status</th>
     <th>Team</th>
     <th class="column-group {{i == 0 ? 'first' : ''}} {{i == unit.careBurdenCategories.length - 1 ? 'last' : ''}}" *ngFor="let cbc of unit.careBurdenCategories; let i = index" [hidden]="unit.careBurden == 'inget'">{{cbc.name}}</th>
-    <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedMotherChildDietFeature">Mor</th>
+    <th class="column-group first" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedMotherChildDietFeature">Vuxen</th>
     <th class="column-group last" *ngIf="unit.hasMotherChildDietFeature || unit.hasDetailedMotherChildDietFeature">Barn</th>
     <th *ngIf="unit.hasKostFeature || unit.hasDetailedDietFeature">Kost</th>
     <th *ngIf="unit.hasAllergiFeature">Allergier</th>
     <th *ngIf="unit.hasAmningFeature">Amning</th>
-    <th class="column-group first" *ngIf="unit.hasMorRondFeature">Mor</th>
+    <th class="column-group first" *ngIf="unit.hasMorRondFeature">Vuxen</th>
     <th class="column-group last" *ngIf="unit.hasBarnRondFeature">Barn</th>
     <th *ngIf="unit.hasRondFeature">Rond</th>
     <th *ngIf="unit.hasGenderFeature">Kön</th>
