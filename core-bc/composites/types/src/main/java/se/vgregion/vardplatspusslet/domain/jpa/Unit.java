@@ -1,5 +1,8 @@
 package se.vgregion.vardplatspusslet.domain.jpa;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,12 +50,15 @@ public class Unit implements Comparable<Unit> {
 
     @OrderColumn(name = "order_")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     private List<Bed> beds = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     private Set<Patient> patients = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SELECT)
     private Set<Ssk> ssks = new TreeSet<>();
 
     @OrderColumn(name = "order_")

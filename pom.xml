@@ -44,8 +44,8 @@
   </build>
 
   <properties>
-    <compileSource>1.8</compileSource> <!-- TODO Set 11 -->
-    <compileTarget>1.8</compileTarget> <!-- TODO Set 11 -->
+    <compileSource>11</compileSource>
+    <compileTarget>11</compileTarget>
     <junit.version>4.8.1</junit.version>
     <log4j.version>1.2.16</log4j.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
