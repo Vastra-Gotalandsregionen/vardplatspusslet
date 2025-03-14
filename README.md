@@ -1,6 +1,10 @@
 # Vårdplatspusslet
 
+Detta Github-projekt är arkiverat. Projektet har flyttats till VGRs interna kodhanteringsmiljö och underhålls
+där från och med 2025-03-14.
+
 ## Quick start development
+
 * Start webapp in servlet container on port 8080 with context path "/vardplatspusslet".
 * Cd to core-bc/modules/client.
 * Type "npm install".
